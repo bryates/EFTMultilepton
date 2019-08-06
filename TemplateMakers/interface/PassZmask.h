@@ -1,8 +1,8 @@
 #ifndef _PassZmask_h
 #define _PassZmask_h
 
-#include  "ttH-13TeVMultiLeptons/TemplateMakers/interface/KinematicVariable.h"
-#include  "ttH-13TeVMultiLeptons/TemplateMakers/interface/TwoObjectKinematic.h"
+#include  "EFTMultilepton/TemplateMakers/interface/KinematicVariable.h"
+#include  "EFTMultilepton/TemplateMakers/interface/TwoObjectKinematic.h"
 
 class PassZmask: public KinematicVariable<int> {
   

@@ -13,14 +13,14 @@
 #include <math.h>
 #include "TLorentzVector.h"
 #include "DataFormats/Math/interface/deltaR.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/src/classes.h"
+#include "EFTMultilepton/TemplateMakers/src/classes.h"
 #include "TMVA/Config.h"
 #include "TMVA/Tools.h"
 #include "TMVA/Reader.h"
 #include "TMVA/MethodCuts.h"
 #include "selection.h"
 #include "treeTools.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/test/signalExtractionTreeMaker.h"
+#include "EFTMultilepton/TemplateMakers/test/signalExtractionTreeMaker.h"
 
 /////////////////////////////////////////
 ///

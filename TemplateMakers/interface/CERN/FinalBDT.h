@@ -5,8 +5,8 @@
 #include "TMVA/Reader.h"
 #include "TMVA/MethodCuts.h"
 
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/KinematicVariable.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/BranchInfo.h"
+#include "EFTMultilepton/TemplateMakers/interface/KinematicVariable.h"
+#include "EFTMultilepton/TemplateMakers/interface/BranchInfo.h"
 #include <typeinfo>
 
 class FinalBDT: public KinematicVariable<double> {
@@ -77,7 +77,7 @@ FinalBDT::FinalBDT(GenericCollectionMember<double, BNleptonCollection> * _allLep
     reader[jj]->AddVariable( "MT_met_lep1", &varMT_met_lep1 );
     reader[jj]->AddVariable( "sum_pt", &varsum_pt );
 
-    TString dir = (string(getenv("CMSSW_BASE"))+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/BDT_weights/").c_str();
+    TString dir = (string(getenv("CMSSW_BASE"))+"/src/EFTMultilepton/TemplateMakers/data/CERN/BDT_weights/").c_str();
     TString label = catList[jj];
     TString file_name = "TMVAClassification_BDTG.weights.xml";
     //TString file_name = "TMVAClassification_CFMlpANN.weights.xml";

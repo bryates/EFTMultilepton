@@ -17,8 +17,8 @@
 #include <array>
 #include <unordered_map>
 //#include "/afs/cern.ch/user/g/gesmith/nicepalette.h"
-//#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/objectClasses.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/src/classes.h"
+//#include "EFTMultilepton/TemplateMakers/interface/objectClasses.h"
+#include "EFTMultilepton/TemplateMakers/src/classes.h"
 #include "DataFormats/Math/interface/deltaR.h"
 
 ttH::Lepton findRecoMatch(ttH::GenParticle gen_lep, vector<ttH::Electron> reco_eles, vector<ttH::Muon> reco_mus)

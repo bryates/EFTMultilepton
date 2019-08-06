@@ -27,8 +27,8 @@ public:
 RecoIDIsoSIPSFs::RecoIDIsoSIPSFs(int _numLeps, BNleptonCollection **_tightLoosePreselectedLeptons, string _option):
   numLeps(_numLeps),
   tightLoosePreselectedLeptons(_tightLoosePreselectedLeptons),
-  electronFile((string(getenv("CMSSW_BASE"))+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/eff_ele12.root").c_str()),
-  muonFile((string(getenv("CMSSW_BASE"))+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/eff_mu12.root").c_str()),
+  electronFile((string(getenv("CMSSW_BASE"))+"/src/EFTMultilepton/TemplateMakers/data/CERN/eff_ele12.root").c_str()),
+  muonFile((string(getenv("CMSSW_BASE"))+"/src/EFTMultilepton/TemplateMakers/data/CERN/eff_mu12.root").c_str()),
   option(_option)
 {
   this->resetVal = KinematicVariableConstants::DOUBLE_INIT;

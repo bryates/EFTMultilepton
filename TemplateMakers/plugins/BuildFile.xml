@@ -11,7 +11,7 @@
 <use   name="FWCore/PluginManager"/>
 <use   name="FWCore/ParameterSet"/>
 <use   name="FWCore/Utilities"/>
-<use   name="ttH-13TeVMultiLeptons/TemplateMakers" />
+<use   name="EFTMultilepton/TemplateMakers" />
 <!--<use   name="HLTrigger/HLTcore"/>!-->
 <library name="multilepton_plugins" file="*.cc">
 	<flags   EDM_PLUGIN="1"/>

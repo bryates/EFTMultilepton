@@ -1,9 +1,9 @@
 #! /usr/bin/env python
 import optparse
 import os
-from ttH-13TeVMultiLeptons.DrawPlots.utilities.configparser import *
-from ttH-13TeVMultiLeptons.DrawPlots.utilities.ordereddict import *
-from ttH-13TeVMultiLeptons.DrawPlots.utilities.prettytable import *
+from EFTMultilepton.DrawPlots.utilities.configparser import *
+from EFTMultilepton.DrawPlots.utilities.ordereddict import *
+from EFTMultilepton.DrawPlots.utilities.prettytable import *
 from argparse import ArgumentParser
 import ROOT
 

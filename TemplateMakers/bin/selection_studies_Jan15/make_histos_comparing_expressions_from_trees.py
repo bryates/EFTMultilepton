@@ -8,10 +8,10 @@ import os
 import math
 import copy
 from argparse import ArgumentParser
-from ttH-13TeVMultiLeptons.DrawPlots.utilities.configparser import *
+from EFTMultilepton.DrawPlots.utilities.configparser import *
 import ROOT
 #from ROOT import gStyle
-import ttH-13TeVMultiLeptons.DrawPlots.utilities.plot_helper as plot_helper
+import EFTMultilepton.DrawPlots.utilities.plot_helper as plot_helper
 import yaml
 import collections
 ROOT.gROOT.SetBatch(True)

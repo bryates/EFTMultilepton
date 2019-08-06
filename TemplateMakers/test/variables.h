@@ -9,7 +9,7 @@
 #include "Math/LorentzVector.h"
 #include "TLorentzVector.h"
 #include "TMatrix.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/src/classes.h"
+#include "EFTMultilepton/TemplateMakers/src/classes.h"
 using namespace std;
 
 ////////////////////////////////////////////////////////////////////////////

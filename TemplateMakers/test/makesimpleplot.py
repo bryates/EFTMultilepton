@@ -7,7 +7,7 @@ from time import sleep
 import os
 import glob
 
-ROOT.gSystem.Load('libttH-13TeVMultiLeptonsTemplateMakers.so')
+ROOT.gSystem.Load('libEFTMultileptonTemplateMakers.so')
 
 ############################################################
 # Script to make simple plots from trees. 

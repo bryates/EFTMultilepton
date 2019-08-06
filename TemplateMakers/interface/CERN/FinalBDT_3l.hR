@@ -5,8 +5,8 @@
 #include "TMVA/Reader.h"
 #include "TMVA/MethodCuts.h"
 
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/KinematicVariable.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/BranchInfo.h"
+#include "EFTMultilepton/TemplateMakers/interface/KinematicVariable.h"
+#include "EFTMultilepton/TemplateMakers/interface/BranchInfo.h"
 #include <typeinfo>
 
 class FinalBDT_3l: public KinematicVariable<double> {
@@ -73,7 +73,7 @@ FinalBDT_3l::FinalBDT_3l(ThreeObjectKinematic<BNjetCollection,BNjetCollection,BN
     reader[jj]->AddVariable( "htJet25", &varhtJet25 );
     reader[jj]->AddVariable( "htJet25ratio1224Lep", &varhtJet25ratio1224Lep );
 
-    TString dir = (string(getenv("CMSSW_BASE"))+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/BDT_weights/").c_str();
+    TString dir = (string(getenv("CMSSW_BASE"))+"/src/EFTMultilepton/TemplateMakers/data/CERN/BDT_weights/").c_str();
     TString label = catList[jj];
     TString file_name = "3l_mix_BDTG.weights.xml";
     //TString file_name = "TMVAClassification_BDTG.weights.xml";

@@ -21,29 +21,29 @@
 #include "FWCore/FWLite/interface/AutoLibraryLoader.h"
 #include <TRandom3.h>
 #include <vector>
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/GenericCollectionMember.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/GenericCollectionMethod.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/GenericCollectionSizeVariable.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/GenericCollection.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/TwoObjectKinematic.h"
+#include "EFTMultilepton/TemplateMakers/interface/GenericCollectionMember.h"
+#include "EFTMultilepton/TemplateMakers/interface/GenericCollectionMethod.h"
+#include "EFTMultilepton/TemplateMakers/interface/GenericCollectionSizeVariable.h"
+#include "EFTMultilepton/TemplateMakers/interface/GenericCollection.h"
+#include "EFTMultilepton/TemplateMakers/interface/TwoObjectKinematic.h"
 
-// #include "ttH-13TeVMultiLeptons/TemplateMakers/interface/minDr_leplep.h"
-// #include "ttH-13TeVMultiLeptons/TemplateMakers/interface/minDr_leplep_dxyz.h"
-// #include "ttH-13TeVMultiLeptons/TemplateMakers/interface/minDr_leplep2.h"
-// #include "ttH-13TeVMultiLeptons/TemplateMakers/interface/minDr_leplep3.h"
+// #include "EFTMultilepton/TemplateMakers/interface/minDr_leplep.h"
+// #include "EFTMultilepton/TemplateMakers/interface/minDr_leplep_dxyz.h"
+// #include "EFTMultilepton/TemplateMakers/interface/minDr_leplep2.h"
+// #include "EFTMultilepton/TemplateMakers/interface/minDr_leplep3.h"
 
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/GenPt.h"
+#include "EFTMultilepton/TemplateMakers/interface/GenPt.h"
 
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/SingleObjectVariable.h"
+#include "EFTMultilepton/TemplateMakers/interface/SingleObjectVariable.h"
 
 #include "SimDataFormats/GeneratorProducts/interface/LHEEventProduct.h"
 #include "SimDataFormats/GeneratorProducts/interface/GenEventInfoProduct.h"
 
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/EGammaMvaEleEstimatorFWLite.h"
+#include "EFTMultilepton/TemplateMakers/interface/EGammaMvaEleEstimatorFWLite.h"
 
 ///-------------- Kinematic Variables ------------------
 //done
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/JobParameters.h"
+#include "EFTMultilepton/TemplateMakers/interface/JobParameters.h"
 //needs work
 #include "MiniAOD/MiniAODHelper/interface/MiniAODHelper.h"
 

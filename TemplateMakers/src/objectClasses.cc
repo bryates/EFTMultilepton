@@ -1,9 +1,9 @@
 #include "TObject.h"
 
-//#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/WCPoint.h"
-//#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/WCFit.h"
-//#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/TH1EFT.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/objectClasses.h"
+//#include "EFTMultilepton/TemplateMakers/interface/WCPoint.h"
+//#include "EFTMultilepton/TemplateMakers/interface/WCFit.h"
+//#include "EFTMultilepton/TemplateMakers/interface/TH1EFT.h"
+#include "EFTMultilepton/TemplateMakers/interface/objectClasses.h"
 
 //ClassImp(WCPoint::WCPoint);
 //ClassImp(WCFit::WCFit);

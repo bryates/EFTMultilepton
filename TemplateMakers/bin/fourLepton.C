@@ -1,12 +1,12 @@
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/BEANFileInterface.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/HelperLeptonCore.h"
+#include "EFTMultilepton/TemplateMakers/interface/BEANFileInterface.h"
+#include "EFTMultilepton/TemplateMakers/interface/HelperLeptonCore.h"
 
 ///-------------- Kinematic Variables ------------------
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/EveryVariable.h"
+#include "EFTMultilepton/TemplateMakers/interface/EveryVariable.h"
 
 #include "BEAN/BEANmaker/interface/BtagWeight.h"
 #include "BEAN/BEANmaker/interface/BEANhelper.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/JobParameters.h"
+#include "EFTMultilepton/TemplateMakers/interface/JobParameters.h"
 
 #include "Reflex/Object.h"
 #include "Reflex/Type.h"

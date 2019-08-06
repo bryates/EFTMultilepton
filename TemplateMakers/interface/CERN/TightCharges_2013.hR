@@ -1,7 +1,7 @@
 #ifndef _TightCharges_h
 #define _TightCharges_h
 
-#include  "ttH-13TeVMultiLeptons/TemplateMakers/interface/KinematicVariable.h"
+#include  "EFTMultilepton/TemplateMakers/interface/KinematicVariable.h"
 
 class TightCharges: public KinematicVariable<int> {
 

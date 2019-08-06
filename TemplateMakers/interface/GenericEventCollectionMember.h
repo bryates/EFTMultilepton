@@ -2,7 +2,7 @@
 #ifndef _GenericEventCollectionMember_h
 #define _GenericEventCollectionMember_h
 
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/GenericCollectionMemberBase.h"
+#include "EFTMultilepton/TemplateMakers/interface/GenericCollectionMemberBase.h"
 
 
 

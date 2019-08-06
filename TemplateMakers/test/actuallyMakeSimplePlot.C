@@ -15,7 +15,7 @@
 #include <cmath>
 #include <array>
 
-#include "ttH-13TeVMultiLeptons/TemplateMakers/src/classes.h"
+#include "EFTMultilepton/TemplateMakers/src/classes.h"
 
 
 void actuallyMakeSimplePlot(TString inputfiles="input.root")

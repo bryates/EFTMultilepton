@@ -1,6 +1,6 @@
 // Created by Andrew Wightman
 
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/EFTLHEReader.h"
+#include "EFTMultilepton/TemplateMakers/interface/EFTLHEReader.h"
 
 EFTLHEReader::EFTLHEReader(const edm::ParameterSet& constructparams)
 {

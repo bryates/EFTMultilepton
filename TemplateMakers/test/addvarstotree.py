@@ -7,7 +7,7 @@ from time import sleep
 import os
 import glob
 
-ROOT.gSystem.Load('libttH-13TeVMultiLeptonsTemplateMakers.so')
+ROOT.gSystem.Load('libEFTMultileptonTemplateMakers.so')
 ROOT.gROOT.SetBatch(1)
 
 infilestring = sys.argv[1]

@@ -1,5 +1,5 @@
 {
-	gSystem->Load("libttH-13TeVMultiLeptonsTemplateMakers.so");
+	gSystem->Load("libEFTMultileptonTemplateMakers.so");
 	//#include "Math/LorentzVector.h"
 	//#include "DataFormats/Math/interface/LorentzVector.h"
 	

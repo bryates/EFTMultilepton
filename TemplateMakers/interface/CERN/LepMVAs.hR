@@ -1,8 +1,8 @@
 #ifndef _LepMVAs_h
 #define _LepMVAs_h
 
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/KinematicVariable.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/BranchInfo.h" 
+#include "EFTMultilepton/TemplateMakers/interface/KinematicVariable.h"
+#include "EFTMultilepton/TemplateMakers/interface/BranchInfo.h" 
 #include <typeinfo>
 
 template <class collectionType>

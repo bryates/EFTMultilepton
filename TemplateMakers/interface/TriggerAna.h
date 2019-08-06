@@ -1,6 +1,6 @@
 // created by Geoff Smith
 
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/MultileptonAna.h"
+#include "EFTMultilepton/TemplateMakers/interface/MultileptonAna.h"
 
 class TriggerAna: public MultileptonAna, public edm::EDAnalyzer
 {

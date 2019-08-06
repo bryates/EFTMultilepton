@@ -1,8 +1,8 @@
 #ifndef _SingleObjectVariable_h
 #define _SingleObjectVariable_h
 
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/KinematicVariable.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/BranchInfo.h"
+#include "EFTMultilepton/TemplateMakers/interface/KinematicVariable.h"
+#include "EFTMultilepton/TemplateMakers/interface/BranchInfo.h"
 #include <typeinfo>
 
 //Takes two collections; may be the same, or different

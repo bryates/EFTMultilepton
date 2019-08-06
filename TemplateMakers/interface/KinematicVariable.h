@@ -51,8 +51,8 @@
 #include "TMVA/MethodCuts.h"
 
 
-//#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/BEANFileInterface.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/BranchInfo.h"
+//#include "EFTMultilepton/TemplateMakers/interface/BEANFileInterface.h"
+#include "EFTMultilepton/TemplateMakers/interface/BranchInfo.h"
 
 using namespace std;
 

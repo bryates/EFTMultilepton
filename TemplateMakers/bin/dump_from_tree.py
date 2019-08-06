@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 import os
 import re
-from ttH-13TeVMultiLeptons.DrawPlots.utilities.prettytable import *
+from EFTMultilepton.DrawPlots.utilities.prettytable import *
 from argparse import ArgumentParser
 import ROOT
 

@@ -17,9 +17,9 @@
 #include "CSVReweight.h"
 #include "Fertilizer.h"
 //for signal extraction piece
-#include "ttH-13TeVMultiLeptons/TemplateMakers/test/eventReconstructor_factorized.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/test/hTaggerBDT.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/test/signalExtractionTreeMaker.h"
+#include "EFTMultilepton/TemplateMakers/test/eventReconstructor_factorized.h"
+#include "EFTMultilepton/TemplateMakers/test/hTaggerBDT.h"
+#include "EFTMultilepton/TemplateMakers/test/signalExtractionTreeMaker.h"
 
 
 /////////////////////////////////////////

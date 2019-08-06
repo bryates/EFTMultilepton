@@ -1,8 +1,8 @@
 #ifndef _TwoObjectKinematic_h
 #define _TwoObjectKinematic_h
 
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/KinematicVariable.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/BranchInfo.h"
+#include "EFTMultilepton/TemplateMakers/interface/KinematicVariable.h"
+#include "EFTMultilepton/TemplateMakers/interface/BranchInfo.h"
 #include <typeinfo>
 
 // //Anna's fix to make BNleptonCollection work just like any other collection

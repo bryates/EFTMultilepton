@@ -1,8 +1,8 @@
 #ifndef _DataDrivenFR_h
 #define _DataDrivenFR_h
 
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/KinematicVariable.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/BranchInfo.h"
+#include "EFTMultilepton/TemplateMakers/interface/KinematicVariable.h"
+#include "EFTMultilepton/TemplateMakers/interface/BranchInfo.h"
 #include <typeinfo>
 
 template <class collectionType>
@@ -64,7 +64,7 @@ DataDrivenFR<collectionType>::DataDrivenFR(HelperLeptonCore *_myHelper, collecti
   branches[branchNameNP].branchVal = 1.0;
   branches[branchNameQF].branchVal = 1.0;
 
-  string directory = (string(getenv("CMSSW_BASE"))+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/fakerate/").c_str();
+  string directory = (string(getenv("CMSSW_BASE"))+"/src/EFTMultilepton/TemplateMakers/data/CERN/fakerate/").c_str();
   TString weight_file_name_NP = Form("%s%s.root", directory.c_str(), file_name_NP.c_str());
   weight_file_NP = TFile::Open(weight_file_name_NP);
 

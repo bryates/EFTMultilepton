@@ -15,7 +15,7 @@
 #include <cmath>
 #include "Math/Vector4D.h"
 #include "Math/VectorUtil.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/src/classes.h"
+#include "EFTMultilepton/TemplateMakers/src/classes.h"
 #include "TMVA/Config.h"
 #include "TMVA/Tools.h"
 #include "TMVA/Reader.h"

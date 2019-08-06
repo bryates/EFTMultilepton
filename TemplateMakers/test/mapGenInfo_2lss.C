@@ -11,7 +11,7 @@
 #include "TFile.h"
 #include <cmath>
 #include "DataFormats/Math/interface/deltaR.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/src/classes.h"
+#include "EFTMultilepton/TemplateMakers/src/classes.h"
 #include "TMVA/Config.h"
 #include "TMVA/Tools.h"
 #include "TMVA/Reader.h"
