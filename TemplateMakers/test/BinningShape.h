@@ -7,7 +7,7 @@ class BinningShape
  public:
   BinningShape(){
     
-    TString file_str = "/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/binning_2l.root"
+    TString file_str = "/src/EFTMultilepton/TemplateMakers/data/CERN/binning_2l.root"
     const char* env_p = std::getenv("CMSSW_BASE");
     std::string env_p_str = env_p;
     env_p_str += file_str;

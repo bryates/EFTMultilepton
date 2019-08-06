@@ -331,9 +331,9 @@ if (isdata):
 
     ## lumimasks (data only!) ##
     ## golden json 2016:
-    #lumimask = cmsswbase+'/src/ttH-13TeVMultiLeptons/TemplateMakers/data/JSON/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt'
+    #lumimask = cmsswbase+'/src/EFTMultilepton/TemplateMakers/data/JSON/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt'
     ## golden json 2017:
-    lumimask = cmsswbase+'/src/ttH-13TeVMultiLeptons/TemplateMakers/data/JSON/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON.txt'
+    lumimask = cmsswbase+'/src/EFTMultilepton/TemplateMakers/data/JSON/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON.txt'
     supplement = "_data"
 
 if (singleSamp is not None):

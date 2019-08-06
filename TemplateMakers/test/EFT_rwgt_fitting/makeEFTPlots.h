@@ -5,8 +5,8 @@
 #include <vector>
 #include <algorithm>
 
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/WCPoint.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/WCFit.h"
+#include "EFTMultilepton/TemplateMakers/interface/WCPoint.h"
+#include "EFTMultilepton/TemplateMakers/interface/WCFit.h"
 
 #include "TString.h"
 #include "TCanvas.h"

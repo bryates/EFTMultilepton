@@ -86,8 +86,8 @@ class eventReconstructor
  public:
   eventReconstructor(){
 
-    TMVAReader_bTight_ = bookMVA("/src/ttH-13TeVMultiLeptons/simpleweights/reconstruction_bdt_weights/jan25_weights/TMVAClassification_btight_BDTG.weights.xml");
-    TMVAReader_bLoose_ = bookMVA("/src/ttH-13TeVMultiLeptons/simpleweights/reconstruction_bdt_weights/jan25_weights/TMVAClassification_bloose_BDTG.weights.xml");
+    TMVAReader_bTight_ = bookMVA("/src/EFTMultilepton/simpleweights/reconstruction_bdt_weights/jan25_weights/TMVAClassification_btight_BDTG.weights.xml");
+    TMVAReader_bLoose_ = bookMVA("/src/EFTMultilepton/simpleweights/reconstruction_bdt_weights/jan25_weights/TMVAClassification_bloose_BDTG.weights.xml");
 
   } // default constructor
 

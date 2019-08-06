@@ -46,8 +46,8 @@
 #include "../variables.h"
 #include "../sample_lists.h"
 
-#include "ttH-13TeVMultiLeptons/TemplateMakers/test/eventReconstructor.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/src/classes.h"
+#include "EFTMultilepton/TemplateMakers/test/eventReconstructor.h"
+#include "EFTMultilepton/TemplateMakers/src/classes.h"
 
 #if not defined(__CINT__) || defined(__MAKECINT__)
 // needs to be included when makecint runs (ACLIC)

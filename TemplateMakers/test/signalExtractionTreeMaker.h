@@ -67,7 +67,7 @@ class signalExtractionTreeMaker
     ss2l_tree->Branch("final_shape", &final_shape);
     ss2l_tree->Branch("final_shape_BDTv8", &final_shape_BDTv8);
     
-    const std::string base = std::string(getenv("CMSSW_BASE")) + "/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/BDT_weights/moriond2017";
+    const std::string base = std::string(getenv("CMSSW_BASE")) + "/src/EFTMultilepton/TemplateMakers/data/CERN/BDT_weights/moriond2017";
     
     TMVAReader_ttbar_ = new TMVA::Reader( "!Color:!Silent" );
     TMVAReader_ttbar_->AddVariable( "max(abs(LepGood_eta[iLepFO_Recl[0]]),abs(LepGood_eta[iLepFO_Recl[1]]))", &max_lep_eta_branch );

@@ -199,8 +199,8 @@ for samp in mysamples:
 
 
 # This doesn't do what you would think:
-#sandbox = cmssw.Sandbox(include=['ttH-13TeVMultiLeptons/TemplateMakers/test/MakeGoodPlot2'])
-sandbox = cmssw.Sandbox(include=['ttH-13TeVMultiLeptons/TemplateMakers/src','ttH-13TeVMultiLeptons/TemplateMakers/data'])
+#sandbox = cmssw.Sandbox(include=['EFTMultilepton/TemplateMakers/test/MakeGoodPlot2'])
+sandbox = cmssw.Sandbox(include=['EFTMultilepton/TemplateMakers/src','EFTMultilepton/TemplateMakers/data'])
 # Most stuff has to be added "by hand":
 extra_inputs=[]
 extra_inputs.append('../variables.h')

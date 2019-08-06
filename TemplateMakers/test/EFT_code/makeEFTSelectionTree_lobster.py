@@ -46,7 +46,7 @@ data = [
     ('ttjets_dilep', 'TTJets_Dilept_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8/crab_EFT_test_6_12_17__ttJets_Dilept/171207_104152/0000/')
 ]
 
-sandbox = cmssw.Sandbox(include=['ttH-13TeVMultiLeptons/TemplateMakers/src'])
+sandbox = cmssw.Sandbox(include=['EFTMultilepton/TemplateMakers/src'])
 
 for label, dirs in data:
     ttH = Workflow(

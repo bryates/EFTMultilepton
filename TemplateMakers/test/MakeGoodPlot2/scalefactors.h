@@ -3,19 +3,19 @@ void HistMaker::setupSFs()
     // This function is run in the HistMaker constructor
     
     TString basedir = getenv("CMSSW_BASE");
-    auto pudatafile = TFile::Open(basedir+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/PU/2017PU_SFstest2.root");
+    auto pudatafile = TFile::Open(basedir+"/src/EFTMultilepton/TemplateMakers/data/PU/2017PU_SFstest2.root");
     pileupSFs = (TH1D*)pudatafile->Get("pileupSF");
     pileupSFs_up = (TH1D*)pudatafile->Get("pileupSF_UP");
     pileupSFs_down = (TH1D*)pudatafile->Get("pileupSF_DOWN");
     
-    auto hffile = TFile::Open(basedir+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/btag/Deepcsv_rwt_fit_hf_v2_final_2018_2_12test.root");
-    auto lffile = TFile::Open(basedir+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/btag/Deepcsv_rwt_fit_lf_v2_final_2018_2_12test.root");
+    auto hffile = TFile::Open(basedir+"/src/EFTMultilepton/TemplateMakers/data/btag/Deepcsv_rwt_fit_hf_v2_final_2018_2_12test.root");
+    auto lffile = TFile::Open(basedir+"/src/EFTMultilepton/TemplateMakers/data/btag/Deepcsv_rwt_fit_lf_v2_final_2018_2_12test.root");
     fillCSVhistos(hffile,lffile);
     
-    auto muSFfile1 = TFile::Open(basedir+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/leptonSF/fits_mu_trkEffSF_2017_allTracks.root");
-    auto muSFfile2 = TFile::Open(basedir+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/leptonSF/RunBCDEF_SF_ID.root");
-    auto muSFfile2b = TFile::Open(basedir+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/leptonSF/RunBCDEF_SF_ID_ptLt30.root");
-    auto muSFfile3 = TFile::Open(basedir+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/leptonSF/loose_mu_to_ttH_loose_Sergio.root");
+    auto muSFfile1 = TFile::Open(basedir+"/src/EFTMultilepton/TemplateMakers/data/CERN/leptonSF/fits_mu_trkEffSF_2017_allTracks.root");
+    auto muSFfile2 = TFile::Open(basedir+"/src/EFTMultilepton/TemplateMakers/data/CERN/leptonSF/RunBCDEF_SF_ID.root");
+    auto muSFfile2b = TFile::Open(basedir+"/src/EFTMultilepton/TemplateMakers/data/CERN/leptonSF/RunBCDEF_SF_ID_ptLt30.root");
+    auto muSFfile3 = TFile::Open(basedir+"/src/EFTMultilepton/TemplateMakers/data/CERN/leptonSF/loose_mu_to_ttH_loose_Sergio.root");
     
     muh1 = (TGraphAsymmErrors*)muSFfile1->Get("ratio_eff_eta3_dr030e030_corr");
     //muh2 = (TH2D*)muSFfile2->Get("NUM_MediumID_DEN_genTracks_pt_abseta"); // <- should be LooseID
@@ -23,18 +23,18 @@ void HistMaker::setupSFs()
     muh2b = (TH2D*)muSFfile2b->Get("NUM_LooseID_DEN_genTracks_pt_abseta");
     muh3 = (TH2D*)muSFfile3->Get("NUM_ttHLoo_DEN_LooseID");
 
-    auto eleSFfile1a = TFile::Open(basedir+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/leptonSF/egammaEffi.txt_EGM2D_runBCDEF_passingRECO.root");
-    auto eleSFfile1b = TFile::Open(basedir+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/leptonSF/egammaEffi.txt_EGM2D_runBCDEF_passingRECO_lowEt.root");
-    auto eleSFfile2 = TFile::Open(basedir+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/leptonSF/el_reco_loose_SF.root");
+    auto eleSFfile1a = TFile::Open(basedir+"/src/EFTMultilepton/TemplateMakers/data/CERN/leptonSF/egammaEffi.txt_EGM2D_runBCDEF_passingRECO.root");
+    auto eleSFfile1b = TFile::Open(basedir+"/src/EFTMultilepton/TemplateMakers/data/CERN/leptonSF/egammaEffi.txt_EGM2D_runBCDEF_passingRECO_lowEt.root");
+    auto eleSFfile2 = TFile::Open(basedir+"/src/EFTMultilepton/TemplateMakers/data/CERN/leptonSF/el_reco_loose_SF.root");
      
     eleh1 = (TH2D*)eleSFfile1a->Get("EGamma_SF2D");
     eleh1lowpt = (TH2D*)eleSFfile1b->Get("EGamma_SF2D");
     eleh2 = (TH2D*)eleSFfile2->Get("EGamma_SF2D");
 
-    auto lepMVASFfile_m_2lss = TFile::Open(basedir+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/leptonSF/lepMVAEffSF2017_m_2lss.root");
-    auto lepMVASFfile_e_3l = TFile::Open(basedir+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/leptonSF/lepMVAEffSF2017_e_3l.root");
-    auto lepMVASFfile_e_2lss = TFile::Open(basedir+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/leptonSF/lepMVAEffSF2017_e_2lss.root");
-    auto lepMVASFfile_m_3l = TFile::Open(basedir+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/leptonSF/lepMVAEffSF2017_m_3l.root");
+    auto lepMVASFfile_m_2lss = TFile::Open(basedir+"/src/EFTMultilepton/TemplateMakers/data/CERN/leptonSF/lepMVAEffSF2017_m_2lss.root");
+    auto lepMVASFfile_e_3l = TFile::Open(basedir+"/src/EFTMultilepton/TemplateMakers/data/CERN/leptonSF/lepMVAEffSF2017_e_3l.root");
+    auto lepMVASFfile_e_2lss = TFile::Open(basedir+"/src/EFTMultilepton/TemplateMakers/data/CERN/leptonSF/lepMVAEffSF2017_e_2lss.root");
+    auto lepMVASFfile_m_3l = TFile::Open(basedir+"/src/EFTMultilepton/TemplateMakers/data/CERN/leptonSF/lepMVAEffSF2017_m_3l.root");
     
     muh4_2l = (TH2F*)lepMVASFfile_m_2lss->Get("sf");
     muh4_3l = (TH2F*)lepMVASFfile_m_3l->Get("sf");
@@ -42,11 +42,11 @@ void HistMaker::setupSFs()
     eleh4_3l = (TH2F*)lepMVASFfile_e_3l->Get("sf");
     
     // "SFs" for data-driven bkgds
-    auto QFSFfile = TFile::Open(basedir+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/fakerate/ElectronChargeMisIdRates_2017.root");
+    auto QFSFfile = TFile::Open(basedir+"/src/EFTMultilepton/TemplateMakers/data/CERN/fakerate/ElectronChargeMisIdRates_2017.root");
     //min pt: 15, max pt : 1000
     elQFsfs = (TH2D*)QFSFfile->Get("eChargeMisIdRates");
-    //auto FRSFfile = TFile::Open(basedir+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/fakerate/leptonFakeRates_Tallinn_2018May24.root");     // 2017 old
-    auto FRSFfile = TFile::Open(basedir+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/CERN/fakerate/FR_lep_ttH_mva090_2017_CERN_2018May29.root"); // 2017 new
+    //auto FRSFfile = TFile::Open(basedir+"/src/EFTMultilepton/TemplateMakers/data/CERN/fakerate/leptonFakeRates_Tallinn_2018May24.root");     // 2017 old
+    auto FRSFfile = TFile::Open(basedir+"/src/EFTMultilepton/TemplateMakers/data/CERN/fakerate/FR_lep_ttH_mva090_2017_CERN_2018May29.root"); // 2017 new
     
     elFRsfs = (TH2D*)FRSFfile->Get("FR_mva090_el_data_comb_NC"); // comb_NC -> conversion-corrected
     muFRsfs = (TH2D*)FRSFfile->Get("FR_mva090_mu_data_comb");

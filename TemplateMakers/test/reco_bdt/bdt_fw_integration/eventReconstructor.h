@@ -59,7 +59,7 @@ class eventReconstructor
 
     const char* env_p = std::getenv("CMSSW_BASE");
     std::string weight_file = env_p;
-    std::string file_str = "/src/ttH-13TeVMultiLeptons/simpleweights/reconstruction_bdt_weights/TMVAClassification_BDTG_slimmed_v8.weights.xml"; 
+    std::string file_str = "/src/EFTMultilepton/simpleweights/reconstruction_bdt_weights/TMVAClassification_BDTG_slimmed_v8.weights.xml"; 
     weight_file += file_str;
 
     TMVAReader_->BookMVA("BDTG method", weight_file);

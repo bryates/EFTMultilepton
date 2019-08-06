@@ -37,7 +37,7 @@ private:
 public:
   hTagger(void)
   {
-    hj_mva = bookHJMVA("/src/ttH-13TeVMultiLeptons/simpleweights/higgs_tagger/Hj_csv_BDTG.weights.xml");
+    hj_mva = bookHJMVA("/src/EFTMultilepton/simpleweights/higgs_tagger/Hj_csv_BDTG.weights.xml");
   }
 
   ~hTagger(){}

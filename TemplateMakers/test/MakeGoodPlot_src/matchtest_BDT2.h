@@ -85,7 +85,7 @@ void MakeGoodPlot::MatchTester_ttW_SS(std::vector<int> samps)
     TH1 * ratio_dR_jet_jet;
 
 
-    string directory = (string(getenv("CMSSW_BASE"))+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/NOVa/matchbox/").c_str();
+    string directory = (string(getenv("CMSSW_BASE"))+"/src/EFTMultilepton/TemplateMakers/data/NOVa/matchbox/").c_str();
     //TString weight_file_name = Form("%smatch_ttbarZ_3l.root", directory.c_str());
     //TString weight_file_name = Form("%smatch_ttbar_lj.root", directory.c_str());
     TString weight_file_name = Form("%smatch_ttbar_lj_by_nJet_plus_dR.root", directory.c_str());

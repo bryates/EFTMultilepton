@@ -8,7 +8,7 @@
 //#include "genToolsEFT.h"
 
 #include "TLorentzVector.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/src/classes.h"
+#include "EFTMultilepton/TemplateMakers/src/classes.h"
 #include "DataFormats/Math/interface/deltaR.h"
 
 TString padLeft(TString str,char pad_char,int pad_num=0) {

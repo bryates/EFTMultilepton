@@ -11,13 +11,13 @@
 #include "TFile.h"
 #include <cmath>
 #include "TLorentzVector.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/src/classes.h"
+#include "EFTMultilepton/TemplateMakers/src/classes.h"
 #include "TMVA/Config.h"
 #include "TMVA/Tools.h"
 #include "TMVA/Reader.h"
 #include "TMVA/MethodCuts.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/test/variables.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/test/treeTools.h"
+#include "EFTMultilepton/TemplateMakers/test/variables.h"
+#include "EFTMultilepton/TemplateMakers/test/treeTools.h"
 #include "trainingTreeHelper.h"
 //#include "../FakeRateEvaluator.h"
 

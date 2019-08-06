@@ -25,7 +25,7 @@ def main ():
     if args.hadoop:
         outDir = '/hadoop/users/%s/tree_files' % os.environ['USER']
     else:
-        outDir = '%s/src/ttH-13TeVMultiLeptons/DrawPlots/tree_files/' % os.environ['CMSSW_BASE']
+        outDir = '%s/src/EFTMultilepton/DrawPlots/tree_files/' % os.environ['CMSSW_BASE']
 
 
     print "Directory label %s" % args.project_label

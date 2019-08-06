@@ -7,10 +7,10 @@
 
 #include <math.h>
 
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/WCPoint.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/WCFit.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/TH1EFT.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/interface/split_string.h"
+#include "EFTMultilepton/TemplateMakers/interface/WCPoint.h"
+#include "EFTMultilepton/TemplateMakers/interface/WCFit.h"
+#include "EFTMultilepton/TemplateMakers/interface/TH1EFT.h"
+#include "EFTMultilepton/TemplateMakers/interface/split_string.h"
 #include "makeEFTPlots.h"
 
 #include "TString.h"

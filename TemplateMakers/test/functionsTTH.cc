@@ -119,7 +119,7 @@ float _get_recoToLoose_leptonSF_ttH(int pdgid, float pt, float eta, int nlep, fl
   
   auto cmsswprefix = getenv("CMSSW_BASE");
   TString mypfx(cmsswprefix);
-  mypfx = mypfx+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/";
+  mypfx = mypfx+"/src/EFTMultilepton/TemplateMakers/data/";
   
   if (!_histo_recoToLoose_leptonSF_mu1) {
     _file_recoToLoose_leptonSF_mu1 = new TFile(mypfx+"CERN/leptonSF/TnP_NUM_LooseID_DENOM_generalTracks_VAR_map_pt_eta.root","read");
@@ -211,7 +211,7 @@ float _get_looseToTight_leptonSF_ttH(int pdgid, float pt, float eta, int nlep, f
 
   auto cmsswprefix = getenv("CMSSW_BASE");
   TString mypfx(cmsswprefix);
-  mypfx = mypfx+"/src/ttH-13TeVMultiLeptons/TemplateMakers/data/";
+  mypfx = mypfx+"/src/EFTMultilepton/TemplateMakers/data/";
 
   if (!_histo_looseToTight_leptonSF_mu_2lss) {
     _file_looseToTight_leptonSF_mu_2lss = new TFile(mypfx+"CERN/leptonSF/lepMVAEffSF_m_2lss.root","read");

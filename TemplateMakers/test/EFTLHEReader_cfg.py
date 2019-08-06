@@ -24,7 +24,7 @@ process.source = cms.Source("PoolSource",
     )
 )
 
-process.load("ttH-13TeVMultiLeptons.TemplateMakers.EFTLHEReader_cfi")
+process.load("EFTMultilepton.TemplateMakers.EFTLHEReader_cfi")
 
 process.TFileService = cms.Service("TFileService",
     fileName = cms.string("output_tree.root")

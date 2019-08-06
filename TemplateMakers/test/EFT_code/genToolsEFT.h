@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "TLorentzVector.h"
-#include "ttH-13TeVMultiLeptons/TemplateMakers/src/classes.h"
+#include "EFTMultilepton/TemplateMakers/src/classes.h"
 
 // Maps a pdg_id to a specific particle name
 TString getParticleName(int pdg_id) {

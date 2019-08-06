@@ -271,9 +271,9 @@ cmsswbase = os.environ['CMSSW_BASE']
 if isData:
     import FWCore.PythonUtilities.LumiList as LumiList
     ## 2016 golden json
-    #process.source.lumisToProcess = LumiList.LumiList(filename = cmsswbase+'/src/ttH-13TeVMultiLeptons/TemplateMakers/data/JSON/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt').getVLuminosityBlockRange()
+    #process.source.lumisToProcess = LumiList.LumiList(filename = cmsswbase+'/src/EFTMultilepton/TemplateMakers/data/JSON/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt').getVLuminosityBlockRange()
     ## 2017 golden json    
-    process.source.lumisToProcess = LumiList.LumiList(filename = cmsswbase+'/src/ttH-13TeVMultiLeptons/TemplateMakers/data/JSON/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON.txt').getVLuminosityBlockRange()
+    process.source.lumisToProcess = LumiList.LumiList(filename = cmsswbase+'/src/EFTMultilepton/TemplateMakers/data/JSON/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON.txt').getVLuminosityBlockRange()
 
 #################################################
 ## JEC & Redo BTagging
@@ -320,7 +320,7 @@ updateJetCollection(
 process.load("L1Prefiring.EventWeightProducer.L1ECALPrefiringWeightProducer_cfi")
 process.load("RecoEgamma.ElectronIdentification.ElectronMVAValueMapProducer_cfi")
 process.load("ttH.LeptonID.ttHLeptons_cfi")
-process.load("ttH-13TeVMultiLeptons.TemplateMakers.OSTwoLepAna_cfi")
+process.load("EFTMultilepton.TemplateMakers.OSTwoLepAna_cfi")
 
 ### You can re-define the parameters in OSTwoLepAna_cfi.py here (without having to re-compile)
 

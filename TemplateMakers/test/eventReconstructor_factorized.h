@@ -92,24 +92,24 @@ class eventReconstructor
 
  public:
   eventReconstructor(void){
-    /* TMVAReader_bTight_ = bookMVA("/src/ttH-13TeVMultiLeptons/simpleweights/reconstruction_bdt_weights/classifiers/weights/TMVAClassification_BDTG_v1p5_bTight.weights.xml"); */
-    /* TMVAReader_bLoose_ = bookMVA("/src/ttH-13TeVMultiLeptons/simpleweights/reconstruction_bdt_weights/classifiers/weights/TMVAClassification_BDTG_v1p5_bLoose.weights.xml"); */
-    //TMVAReader_bTight_ = bookMVA("/src/ttH-13TeVMultiLeptons/simpleweights/reconstruction_bdt_weights/weights/TMVAClassification_BDTG.weights_factorized_bTight.xml");
-    //TMVAReader_bLoose_ = bookMVA("/src/ttH-13TeVMultiLeptons/simpleweights/reconstruction_bdt_weights/weights/TMVAClassification_BDTG.weights_factorized_bLoose.xml");
-    TMVAReader_bTight_ = bookMVA("/src/ttH-13TeVMultiLeptons/simpleweights/reconstruction_bdt_weights/jan25_weights/TMVAClassification_btight_BDTG.weights.xml");
-    TMVAReader_bLoose_ = bookMVA("/src/ttH-13TeVMultiLeptons/simpleweights/reconstruction_bdt_weights/jan25_weights/TMVAClassification_bloose_BDTG.weights.xml");
+    /* TMVAReader_bTight_ = bookMVA("/src/EFTMultilepton/simpleweights/reconstruction_bdt_weights/classifiers/weights/TMVAClassification_BDTG_v1p5_bTight.weights.xml"); */
+    /* TMVAReader_bLoose_ = bookMVA("/src/EFTMultilepton/simpleweights/reconstruction_bdt_weights/classifiers/weights/TMVAClassification_BDTG_v1p5_bLoose.weights.xml"); */
+    //TMVAReader_bTight_ = bookMVA("/src/EFTMultilepton/simpleweights/reconstruction_bdt_weights/weights/TMVAClassification_BDTG.weights_factorized_bTight.xml");
+    //TMVAReader_bLoose_ = bookMVA("/src/EFTMultilepton/simpleweights/reconstruction_bdt_weights/weights/TMVAClassification_BDTG.weights_factorized_bLoose.xml");
+    TMVAReader_bTight_ = bookMVA("/src/EFTMultilepton/simpleweights/reconstruction_bdt_weights/jan25_weights/TMVAClassification_btight_BDTG.weights.xml");
+    TMVAReader_bLoose_ = bookMVA("/src/EFTMultilepton/simpleweights/reconstruction_bdt_weights/jan25_weights/TMVAClassification_bloose_BDTG.weights.xml");
 
     //8020 genfilter samples
-    /* TMVAReader_bTight_ = bookMVA("/src/ttH-13TeVMultiLeptons/simpleweights/reconstruction_bdt_weights/weights/TMVAClassification_BDTG.weights_factorized_genFilter_bTight.xml"); */
-    /* TMVAReader_bLoose_ = bookMVA("/src/ttH-13TeVMultiLeptons/simpleweights/reconstruction_bdt_weights/weights/TMVAClassification_BDTG.weights_factorized_genFilter_bLoose.xml"); */
+    /* TMVAReader_bTight_ = bookMVA("/src/EFTMultilepton/simpleweights/reconstruction_bdt_weights/weights/TMVAClassification_BDTG.weights_factorized_genFilter_bTight.xml"); */
+    /* TMVAReader_bLoose_ = bookMVA("/src/EFTMultilepton/simpleweights/reconstruction_bdt_weights/weights/TMVAClassification_BDTG.weights_factorized_genFilter_bLoose.xml"); */
 
     //Feb11 ttW signal test
-    //TMVAReader_bTight_ = bookMVA("/src/ttH-13TeVMultiLeptons/simpleweights/reconstruction_bdt_weights/feb10_weights_recoBdt_weights_factorized/TMVAClassification_btight_BDTG.weights.xml");
-    //TMVAReader_bLoose_ = bookMVA("/src/ttH-13TeVMultiLeptons/simpleweights/reconstruction_bdt_weights/feb10_weights_recoBdt_weights_factorized/TMVAClassification_bloose_BDTG.weights.xml");
+    //TMVAReader_bTight_ = bookMVA("/src/EFTMultilepton/simpleweights/reconstruction_bdt_weights/feb10_weights_recoBdt_weights_factorized/TMVAClassification_btight_BDTG.weights.xml");
+    //TMVAReader_bLoose_ = bookMVA("/src/EFTMultilepton/simpleweights/reconstruction_bdt_weights/feb10_weights_recoBdt_weights_factorized/TMVAClassification_bloose_BDTG.weights.xml");
     
     //Feb14 only hadtop objs test
-    //TMVAReader_bTight_ = bookMVA("/src/ttH-13TeVMultiLeptons/simpleweights/reconstruction_bdt_weights/feb14_weights_recoBdt_weights_factorized/TMVAClassification_inclusive_BDTG.weights.xml");
-    //TMVAReader_bLoose_ = bookMVA("/src/ttH-13TeVMultiLeptons/simpleweights/reconstruction_bdt_weights/feb14_weights_recoBdt_weights_factorized/TMVAClassification_inclusive_BDTG.weights.xml");
+    //TMVAReader_bTight_ = bookMVA("/src/EFTMultilepton/simpleweights/reconstruction_bdt_weights/feb14_weights_recoBdt_weights_factorized/TMVAClassification_inclusive_BDTG.weights.xml");
+    //TMVAReader_bLoose_ = bookMVA("/src/EFTMultilepton/simpleweights/reconstruction_bdt_weights/feb14_weights_recoBdt_weights_factorized/TMVAClassification_inclusive_BDTG.weights.xml");
     
   } // default constructor
 
