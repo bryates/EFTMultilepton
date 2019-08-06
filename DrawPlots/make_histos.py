@@ -5,11 +5,11 @@ import time
 import os
 import numpy as n
 import importlib
-plot_helper = importlib.import_module('ttH-13TeVMultiLeptons.DrawPlots.utilities.plot_helper', None)
+plot_helper = importlib.import_module('EFTMultilepton.DrawPlots.utilities.plot_helper', None)
 from argparse import ArgumentParser
 import ROOT
 import yaml
-ROOT.gSystem.Load('libttH-13TeVMultiLeptonsTemplateMakers.so')
+ROOT.gSystem.Load('libEFTMultileptonTemplateMakers.so')
 
 def main():
     ROOT.gROOT.SetBatch(1)

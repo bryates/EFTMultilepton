@@ -42,7 +42,7 @@ if (cmsswbase.Length() > 0)
   gSystem->Load("libDataFormatsPatCandidates.so");
   
 
-  gSystem->Load("libttH-13TeVMultiLeptonsTemplateMakers.so");
+  gSystem->Load("libEFTMultileptonTemplateMakers.so");
 
 }	
    	

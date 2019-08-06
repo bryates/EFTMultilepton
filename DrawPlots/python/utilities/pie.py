@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import plot_helper
 #from ttHMultileptonAnalysis.DrawPlots.utilities.prettytable import PrettyTable
 import importlib
-PrettyTablemod = importlib.import_module('ttH-13TeVMultiLeptons.DrawPlots.utilities.prettytable', None)
+PrettyTablemod = importlib.import_module('EFTMultilepton.DrawPlots.utilities.prettytable', None)
 PrettyTable = getattr(PrettyTablemod, 'PrettyTable')
 
 

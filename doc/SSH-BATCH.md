@@ -11,7 +11,7 @@ To make trees:
 
 To make and hadd histograms:
 
-   	cd ttH-13TeVMultiLeptons/DrawPlots
+   	cd EFTMultilepton/DrawPlots
 	./launchmakehistos.sh
    	./haddhistos.sh
 
@@ -19,5 +19,5 @@ To make and hadd histograms:
 
 To make stack plots from histograms:
 
-      cd ttH-13TeVMultiLeptons/DrawPlots
+      cd EFTMultilepton/DrawPlots
       ./DrawStackPlots.py -w stack_plot_configuration.yaml

@@ -10,7 +10,7 @@ import itertools
 import numpy
 import importlib
 
-DefaultOrderedDictmod = importlib.import_module('ttH-13TeVMultiLeptons.DrawPlots.utilities.ordereddict', None)
+DefaultOrderedDictmod = importlib.import_module('EFTMultilepton.DrawPlots.utilities.ordereddict', None)
 DefaultOrderedDict = getattr(DefaultOrderedDictmod, 'DefaultOrderedDict')
 
 def append_integral_histo(config):
@@ -69,7 +69,7 @@ def update_indexes(directory):
         files_snippet = '\n'.join([snippet.format(location=location, name=name, mod_time=mod_time) for (location, name, mod_time) in zip(non_image_item_locations, non_image_item_names, non_image_mod_times)])
         snippet = '<div class="pic photo-link smoothbox" id="{png}"><a href="{pdf}" rel="gallery"><img src="{png}" class="pic"/></a></div>'
         image_snippet = '\n'.join([snippet.format(pdf=pdf, png=png) for (pdf, png) in zip(pdf_images, png_images)])
-        with open(os.path.join(os.environ['CMSSW_BASE'], 'src/ttH-13TeVMultiLeptons/DrawPlots/python/utilities/index.html'), 'r') as f:
+        with open(os.path.join(os.environ['CMSSW_BASE'], 'src/EFTMultilepton/DrawPlots/python/utilities/index.html'), 'r') as f:
             index = f.read()
         with open(os.path.join(root, 'index.html'), 'w') as f:
             segment = index[index.find("<body>"):] #Have to do this because all of the javascript looks like python formatting statements
@@ -82,7 +82,7 @@ def setup_www_directory(directory, depth=1, *extra_files_to_post):
     head = directory
     for level in range(depth):
         if not os.path.exists(os.path.join(head, '/index.html')):
-            file_util.copy_file(os.path.join(os.environ['CMSSW_BASE'], 'src/ttH-13TeVMultiLeptons/DrawPlots/python/utilities/index.html'), head)
+            file_util.copy_file(os.path.join(os.environ['CMSSW_BASE'], 'src/EFTMultilepton/DrawPlots/python/utilities/index.html'), head)
         head, tail = os.path.split(head)
 
     for file in extra_files_to_post:
