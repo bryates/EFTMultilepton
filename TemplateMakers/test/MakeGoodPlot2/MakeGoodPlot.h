@@ -3,7 +3,7 @@
 //   Re-written from previous 2012-2017 version, 
 //   with some functionality moved to HistMaker 
 //   class and various helper functions/scripts.
-// See github.com/cms-ttH/EFTMultilepton/tree/EFT_code/TemplateMakers/test/MakeGoodPlot2.
+// See github.com/cms-govner/EFTMultilepton/tree/EFT_code/TemplateMakers/test/MakeGoodPlot2.
 // 
 
 class MakeGoodPlot
