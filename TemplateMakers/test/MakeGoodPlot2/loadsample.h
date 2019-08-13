@@ -208,9 +208,14 @@ TString loadsample(const int samp)
     //TString thisround = "lobster_trees__EFT_test_just_powheg_ttH_again_for_pdfs_11_10_18";
     //TString thisround = "lobster_trees__EFT_test_all_mc_bkds_for_pdfs_1_11_18_b";
     //TString thisround = "lobster_trees__EFT_test_ttlnu_no_rewgt_0Jet_29_5_19";
-    TString thisround = "lobster_trees__EFT_test_ttH_actuallySMreweightedNumInitialWeightedMCevents_10M_7_6_19";
+    //TString thisround = "lobster_trees__EFT_test_ttH_actuallySMreweightedNumInitialWeightedMCevents_10M_7_6_19";
+    //TString thisround = "analysisTrees/private_sgnl_2019_07_31/v1";
+    //TString thisround = "analysisTrees/private_sgnl_2019_08_02/v2";
+    //TString thisround = "analysisTrees/private_sgnl_2019_08_05/v1";
+    TString thisround = "analysisTrees/special/tllq4f_SM_t-channel_2019_08_08_0partons/v1";
     
-    TString basedir = "/hadoop/store/user/gesmith/"+thisround+"/";  // The directory on hadoop where your samples are located.
+    //TString basedir = "/hadoop/store/user/gesmith/"+thisround+"/";  // The directory on hadoop where your samples are located.
+    TString basedir = "/hadoop/store/user/awightma/"+thisround+"/";  // The directory on hadoop where your samples are located.
     if (!atND) basedir = "/store/ndpc6disk2/gesmith/crab/";         // The directory on ndpc disk where your samples are located.
 
     

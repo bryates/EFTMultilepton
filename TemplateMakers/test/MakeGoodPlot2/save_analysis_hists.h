@@ -99,41 +99,40 @@ void MakeGoodPlot::save_analysis_hists()
     {     
         for (const auto syst : allSysts)
         {
-	      int thisSamp = samples[i];
-	      cout << i << ", " << thisSamp << ", " << syst << endl;
+	        int thisSamp = samples[i];
+	        cout << i << ", " << thisSamp << ", " << syst << endl;
 
-//             auto combohist1 = (TH1EFT*)hist[i].FindObject("2lss_p_ee_1b."+syst); //->Clone("2lss."+syst);
-//             combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_p_emu_1b."+syst));
-//             combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_p_mumu_1b."+syst));
-//             combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_m_ee_1b."+syst));
-//             combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_m_emu_1b."+syst));
-//             combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_m_mumu_1b."+syst));
-//             combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_p_ee_2b."+syst));
-//             combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_p_emu_2b."+syst));
-//             combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_p_mumu_2b."+syst));
-//             combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_m_ee_2b."+syst));
-//             combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_m_emu_2b."+syst));
-//             combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_m_mumu_2b."+syst));            
-//             if (debug) combohist1->DumpFits();
-//             if (debug) cout << "Should be same as: " << endl;
-//             if (debug) ((TH1EFT*)hist[i].FindObject("2lss_p_ee_1b."+syst))->DumpFits();
-//             //hist[i].Add(combohist1);
-//             
-//             auto combohist2 = (TH1EFT*)hist[i].FindObject("3l_ppp_1b."+syst); //->Clone("3l."+syst);
-//             combohist2->Add((TH1EFT*)hist[i].FindObject("3l_mmm_1b."+syst));
-//             combohist2->Add((TH1EFT*)hist[i].FindObject("3l_mix_1b."+syst));
-//             combohist2->Add((TH1EFT*)hist[i].FindObject("3l_mix_sfz_1b."+syst));
-//             combohist2->Add((TH1EFT*)hist[i].FindObject("3l_ppp_2b."+syst));
-//             combohist2->Add((TH1EFT*)hist[i].FindObject("3l_mmm_2b."+syst));
-//             combohist2->Add((TH1EFT*)hist[i].FindObject("3l_mix_2b."+syst));
-//             combohist2->Add((TH1EFT*)hist[i].FindObject("3l_mix_sfz_2b."+syst));            
-//             if (debug) combohist2->DumpFits();
-//             if (debug) cout << "Should be same as: " << endl;
-//             if (debug) ((TH1EFT*)hist[i].FindObject("3l_ppp_1b."+syst))->DumpFits();
-//             //hist[i].Add(combohist2);            
+            //auto combohist1 = (TH1EFT*)hist[i].FindObject("2lss_p_ee_1b."+syst); //->Clone("2lss."+syst);
+            //combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_p_emu_1b."+syst));
+            //combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_p_mumu_1b."+syst));
+            //combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_m_ee_1b."+syst));
+            //combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_m_emu_1b."+syst));
+            //combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_m_mumu_1b."+syst));
+            //combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_p_ee_2b."+syst));
+            //combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_p_emu_2b."+syst));
+            //combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_p_mumu_2b."+syst));
+            //combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_m_ee_2b."+syst));
+            //combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_m_emu_2b."+syst));
+            //combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_m_mumu_2b."+syst));            
+            //if (debug) combohist1->DumpFits();
+            //if (debug) cout << "Should be same as: " << endl;
+            //if (debug) ((TH1EFT*)hist[i].FindObject("2lss_p_ee_1b."+syst))->DumpFits();
+            //hist[i].Add(combohist1);
+            //
+            //auto combohist2 = (TH1EFT*)hist[i].FindObject("3l_ppp_1b."+syst); //->Clone("3l."+syst);
+            //combohist2->Add((TH1EFT*)hist[i].FindObject("3l_mmm_1b."+syst));
+            //combohist2->Add((TH1EFT*)hist[i].FindObject("3l_mix_1b."+syst));
+            //combohist2->Add((TH1EFT*)hist[i].FindObject("3l_mix_sfz_1b."+syst));
+            //combohist2->Add((TH1EFT*)hist[i].FindObject("3l_ppp_2b."+syst));
+            //combohist2->Add((TH1EFT*)hist[i].FindObject("3l_mmm_2b."+syst));
+            //combohist2->Add((TH1EFT*)hist[i].FindObject("3l_mix_2b."+syst));
+            //combohist2->Add((TH1EFT*)hist[i].FindObject("3l_mix_sfz_2b."+syst));            
+            //if (debug) combohist2->DumpFits();
+            //if (debug) cout << "Should be same as: " << endl;
+            //if (debug) ((TH1EFT*)hist[i].FindObject("3l_ppp_1b."+syst))->DumpFits();
+            //hist[i].Add(combohist2);            
 
-	    if (!(thisSamp>=84 && thisSamp<=88) && (syst=="ADHOCNJUP" || syst=="ADHOCNJDOWN")) continue;
-
+	        if (!(thisSamp>=84 && thisSamp<=88) && (syst=="ADHOCNJUP" || syst=="ADHOCNJDOWN")) continue;
             auto combohist1 = (TH1EFT*)hist[i].FindObject("3l_mix_p_1b."+syst); //->Clone("3l."+syst);
             combohist1->Add((TH1EFT*)hist[i].FindObject("3l_ppp_1b."+syst));
             
@@ -145,9 +144,6 @@ void MakeGoodPlot::save_analysis_hists()
             
             auto combohist4 = (TH1EFT*)hist[i].FindObject("3l_mix_m_2b."+syst); //->Clone("3l."+syst);
             combohist4->Add((TH1EFT*)hist[i].FindObject("3l_mmm_2b."+syst));
-            
-
-
         }
     } 
 
@@ -174,10 +170,10 @@ void MakeGoodPlot::save_analysis_hists()
     {    
         int thisSamp = samples[i];
         
-//         cout << " " << endl;
-//         cout << " " << endl;
-//         cout << "Doing " << sample_names[thisSamp] << endl;
-//         cout << " " << endl; 
+        //cout << " " << endl;
+        //cout << " " << endl;
+        //cout << "Doing " << sample_names[thisSamp] << endl;
+        //cout << " " << endl; 
         
         
         string strtochg = TString2string(sample_names_reg[thisSamp]);
@@ -186,20 +182,20 @@ void MakeGoodPlot::save_analysis_hists()
         sample_names_reg[thisSamp] = strtochg.c_str();
         
   
-//         cout << "\\hline" << endl;
-//         cout << " & 2lss ($e^{+}e^{+}$)";
-//         cout << " & 2lss ($e^{+}\\mu^{+}$)";
-//         cout << " & 2lss ($\\mu^{+}\\mu^{+}$)";
-//         cout << " & 2lss ($e^{-}e^{-}$)";
-//         cout << " & 2lss ($e^{-}\\mu^{-}$)";
-//         cout << " & 2lss ($\\mu^{-}\\mu^{-}$)";
-//         cout << " & 3l (1b)";
-//         cout << " & 3l ($\\geq$2b)";
-//         cout << " & 3l (SFOS Z, 1b)";
-//         cout << " & 3l (SFOS Z, $\\geq$2b)";
-//         cout << " & $\\geq$4l";
-//         cout << " \\\\ " << endl;
-//         cout << "\\hline" << endl;
+        //cout << "\\hline" << endl;
+        //cout << " & 2lss ($e^{+}e^{+}$)";
+        //cout << " & 2lss ($e^{+}\\mu^{+}$)";
+        //cout << " & 2lss ($\\mu^{+}\\mu^{+}$)";
+        //cout << " & 2lss ($e^{-}e^{-}$)";
+        //cout << " & 2lss ($e^{-}\\mu^{-}$)";
+        //cout << " & 2lss ($\\mu^{-}\\mu^{-}$)";
+        //cout << " & 3l (1b)";
+        //cout << " & 3l ($\\geq$2b)";
+        //cout << " & 3l (SFOS Z, 1b)";
+        //cout << " & 3l (SFOS Z, $\\geq$2b)";
+        //cout << " & $\\geq$4l";
+        //cout << " \\\\ " << endl;
+        //cout << "\\hline" << endl;
   
         vector<double> nomylds;
         for (const TString thissyst : allSysts)
@@ -273,8 +269,17 @@ void MakeGoodPlot::save_analysis_hists()
                 else if(thisSamp>=84 && thisSamp<90) 
                 {
                     double addlfactor = 1.;
-                    //if (thisSamp==87 && (thiscat=="3l_mix_p_1b." || thiscat=="3l_mix_m_1b." || thiscat=="3l_mix_p_2b." || thiscat=="3l_mix_m_2b.")) addlfactor = extra_tllq_factor_3lnonZ;
-                    //else if (thisSamp==87 && (thiscat=="2lss_p_ee_2b." || thiscat=="2lss_p_emu_2b." || thiscat=="2lss_p_mumu_2b." || thiscat=="2lss_m_ee_2b." || thiscat=="2lss_m_emu_2b." || thiscat=="2lss_m_mumu_2b.")) addlfactor = extra_tllq_factor_2lss;
+                    //if (thisSamp==87 && (thiscat=="3l_mix_p_1b." || thiscat=="3l_mix_m_1b." || thiscat=="3l_mix_p_2b." || thiscat=="3l_mix_m_2b."))
+                    //{
+                    //    addlfactor = extra_tllq_factor_3lnonZ;
+                    //}
+                    //else if (thisSamp==87 && 
+                    //            (thiscat=="2lss_p_ee_2b." || thiscat=="2lss_p_emu_2b." || thiscat=="2lss_p_mumu_2b." ||
+                    //             thiscat=="2lss_m_ee_2b." || thiscat=="2lss_m_emu_2b." || thiscat=="2lss_m_mumu_2b.")
+                    //        )
+                    //{
+                    //    addlfactor = extra_tllq_factor_2lss;
+                    //}
                     
                     //thishist->ScaleFits(addlfactor*lumi*xsec[thisSamp]); // see rateinfo.h
                     thishist->ScaleFits(lumi*xsec[thisSamp]/numgen[thisSamp]); // using updated norm method for EFT samps
@@ -297,8 +302,8 @@ void MakeGoodPlot::save_analysis_hists()
                 else if (thisSamp==104)
                 {
                     //cout << "hey" << endl;
-//                     if (thisSamp==100) data = (TH1EFT*)hist[i].FindObject(thiscat+thissyst+sample_names_reg[thisSamp])->Clone();
-//                     else data->Add(thishist);
+                    //if (thisSamp==100) data = (TH1EFT*)hist[i].FindObject(thiscat+thissyst+sample_names_reg[thisSamp])->Clone();
+                    //else data->Add(thishist);
                     
                     // The following assumes that you're including all the data samples (100-104), and that 104 was the last sample included.
                     auto data = (TH1EFT*)hist[i].FindObject(thiscat+sample_names_reg[thisSamp]);
@@ -348,22 +353,22 @@ void MakeGoodPlot::save_analysis_hists()
             
             cout << " \\\\ " << endl;   
             
-//             for (const TString thiscat : cats)
-//             {   
-//                 if (debug) cout << thiscat+thissyst << endl;
-//                 auto thishist = (TH1EFT*)hist[i].FindObject(thiscat+thissyst);
-//                 
-//                 if (thissyst=="") thishist->SetName(thishist->GetName()+sample_names_reg[thisSamp]);
-//                 else thishist->SetName(thishist->GetName()+string(".")+sample_names_reg[thisSamp]);
-//                 
-//                 if (thisSamp<40) thishist->Scale(lumi*xsec[thisSamp]/numgen[thisSamp]);
-//                 else if(thisSamp>=40 && thisSamp<94) 
-//                 {
-//                     thishist->ScaleFits(lumi);
-//                 }
-//                 
-//                 canvas.Add(thishist); //<-- last step 
-//             }
+            //for (const TString thiscat : cats)
+            //{   
+            //    if (debug) cout << thiscat+thissyst << endl;
+            //    auto thishist = (TH1EFT*)hist[i].FindObject(thiscat+thissyst);
+            //    
+            //    if (thissyst=="") thishist->SetName(thishist->GetName()+sample_names_reg[thisSamp]);
+            //    else thishist->SetName(thishist->GetName()+string(".")+sample_names_reg[thisSamp]);
+            //    
+            //    if (thisSamp<40) thishist->Scale(lumi*xsec[thisSamp]/numgen[thisSamp]);
+            //    else if(thisSamp>=40 && thisSamp<94) 
+            //    {
+            //        thishist->ScaleFits(lumi);
+            //    }
+            //    
+            //    canvas.Add(thishist); //<-- last step 
+            //}
 
         }
         

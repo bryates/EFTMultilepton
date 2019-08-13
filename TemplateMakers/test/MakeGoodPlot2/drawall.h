@@ -20,10 +20,10 @@ void MakeGoodPlot::drawAll()
     //lepeff_plots();
     //jetcleaning_plots();
     //triggerstudies_plots();
-    standard_plots();
+    //standard_plots();
     //standard_plots_normalized();
     //mc_validation_plots();
-    //save_analysis_hists();
+    save_analysis_hists();
     //th1eft_test_plots();
     //fr_studies_plots();
     //pdf_studies_plots();
@@ -78,7 +78,8 @@ void MakeGoodPlot::drawAllToFile(string plotfile, string plotoption)
     }    
     
     else cout << "Invalid option for saving plots. Choose from png, pdf or root" << endl;
-    
+
+    std::cout << "Done: drawAllToFile" << std::endl;
 }
 
 void MakeGoodPlot::drawAllToWebArea(string plotfile, string plotoption)

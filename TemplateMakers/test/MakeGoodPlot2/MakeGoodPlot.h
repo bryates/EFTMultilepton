@@ -79,6 +79,8 @@ class MakeGoodPlot
         MakeGoodPlot() { cout << "Default constructor of MakeGoodPlot doesn't do anything. Use a different constructor." << endl; }
         MakeGoodPlot(std::vector<int> thesamps, TString histdir="");
         MakeGoodPlot(std::vector<int> thesamps, std::vector<TObjArray> exthists);
+
+        ~MakeGoodPlot();
         
         void drawAll();
         void drawAllToScreen() { drawAll(); }
@@ -158,3 +160,15 @@ MakeGoodPlot::MakeGoodPlot(std::vector<int> thesamps, std::vector<TObjArray> ext
     
     setup();
 }
+
+//Note: This still does not fix the issue of root hanging when trying to end/close the anatest making script
+MakeGoodPlot::~MakeGoodPlot()
+{
+    std::cout << "Cleaning up" << std::endl;
+    for (uint i=0; i < this->files.size(); i++) {
+        this->files.at(i)->Close();
+        delete this->files.at(i);
+    }
+    std::cout << "Finished cleaning!" << std::endl;
+}
+

@@ -19,13 +19,16 @@ options.register("skim", False,                                                 
 options.register("skipHiggs", False,
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.bool, "Skip events with Higgs.")
+options.register("debug", False,
+                 VarParsing.VarParsing.multiplicity.singleton,
+                 VarParsing.VarParsing.varType.bool, "Turn on debug output.")
 options.register("hip",False,
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.bool, "Run hip safe muID.")
 options.register("globalTag", "94X_mc2017_realistic_v13",
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.string, "Global tag to use") #80X_dataRun2_2016SeptRepro_v7 # 80X_mcRun2_asymptotic_2016_TrancheIV_v8 # 94X_mc2017_realistic_v13
-#options.parseArguments()
+options.parseArguments()
 
 from Configuration.StandardSequences.Eras import eras
 process = cms.Process("Demo", eras.Run2_2017)
@@ -352,7 +355,7 @@ process.OSTwoLepAna.btags.btagdisc = "pfCombinedInclusiveSecondaryVertexV2BJetTa
 #process.OSTwoLepAna.btags.btagdisc = "DeepCSV" # "DeepCSV" adds probb+probbb, otherwise full disc required
 process.OSTwoLepAna.triggers.hltlabel = "HLT"
 
-process.OSTwoLepAna.debug = False
+process.OSTwoLepAna.debug = cms.bool( options.debug ) 
 process.OSTwoLepAna.jetCleanFakeable = cms.bool( options.jetCleanFakeable )
 process.OSTwoLepAna.skim = cms.bool( options.skim )
 process.OSTwoLepAna.skipHiggs = cms.bool( options.skipHiggs )
