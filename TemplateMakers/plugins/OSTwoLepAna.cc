@@ -893,7 +893,7 @@ void OSTwoLepAna::beginRun(edm::Run const& run, edm::EventSetup const& evsetup)
         //   run.getByLabel(lheRunToken_, runInfo); //getByToken not work
         run.getByLabel("externalLHEProducer", runInfo);
 
-        std::string weightTag,startStr,setStr,endStr
+        std::string weightTag,startStr,setStr,endStr;
         // was "default" (prob. don't use):
         //weightTag = "initrwgt";
         //startStr  = "<weight id="; // "&lt;weight id="
