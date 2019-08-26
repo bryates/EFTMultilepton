@@ -529,28 +529,28 @@ TH1D* h_csv_wgt_lf[9][4][3];
 // 
 //       /////
 //       if ( isHF ){
-// 	if(isCSV){
-// 	  h_Data_jet_csv[iPt][iEta] = new TH1D(h_Data_Name, h_Data_Name, nBins, xBins_hf); 
-// 	  h_MC_b_jet_csv[iPt][iEta] = new TH1D(h_b_Name, h_b_Name, nBins, xBins_hf); 
-// 	  h_MC_nonb_jet_csv[iPt][iEta] = new TH1D(h_nonb_Name, h_nonb_Name, nBins, xBins_hf); 
-// 	}
-// 	else{
-// 	  h_Data_jet_csv[iPt][iEta] = new TH1D(h_Data_Name, h_Data_Name, nBins, xBins_hf_cMVA); 
-// 	  h_MC_b_jet_csv[iPt][iEta] = new TH1D(h_b_Name, h_b_Name, nBins, xBins_hf_cMVA); 
-// 	  h_MC_nonb_jet_csv[iPt][iEta] = new TH1D(h_nonb_Name, h_nonb_Name, nBins, xBins_hf_cMVA); 
-// 	}
+//  if(isCSV){
+//    h_Data_jet_csv[iPt][iEta] = new TH1D(h_Data_Name, h_Data_Name, nBins, xBins_hf); 
+//    h_MC_b_jet_csv[iPt][iEta] = new TH1D(h_b_Name, h_b_Name, nBins, xBins_hf); 
+//    h_MC_nonb_jet_csv[iPt][iEta] = new TH1D(h_nonb_Name, h_nonb_Name, nBins, xBins_hf); 
+//  }
+//  else{
+//    h_Data_jet_csv[iPt][iEta] = new TH1D(h_Data_Name, h_Data_Name, nBins, xBins_hf_cMVA); 
+//    h_MC_b_jet_csv[iPt][iEta] = new TH1D(h_b_Name, h_b_Name, nBins, xBins_hf_cMVA); 
+//    h_MC_nonb_jet_csv[iPt][iEta] = new TH1D(h_nonb_Name, h_nonb_Name, nBins, xBins_hf_cMVA); 
+//  }
 //       }
 //       else { 
-// 	if(isCSV){
-// 	  h_Data_jet_csv[iPt][iEta] = new TH1D(h_Data_Name, h_Data_Name, nBins, xBins_lf); 
-// 	  h_MC_b_jet_csv[iPt][iEta] = new TH1D(h_b_Name, h_b_Name, nBins, xBins_lf); 
-// 	  h_MC_nonb_jet_csv[iPt][iEta] = new TH1D(h_nonb_Name, h_nonb_Name, nBins, xBins_lf); 
-// 	}
-// 	else{
-// 	  h_Data_jet_csv[iPt][iEta] = new TH1D(h_Data_Name, h_Data_Name, nBins, xBins_lf_cMVA); 
-// 	  h_MC_b_jet_csv[iPt][iEta] = new TH1D(h_b_Name, h_b_Name, nBins, xBins_lf_cMVA); 
-// 	  h_MC_nonb_jet_csv[iPt][iEta] = new TH1D(h_nonb_Name, h_nonb_Name, nBins, xBins_lf_cMVA); 
-// 	}
+//  if(isCSV){
+//    h_Data_jet_csv[iPt][iEta] = new TH1D(h_Data_Name, h_Data_Name, nBins, xBins_lf); 
+//    h_MC_b_jet_csv[iPt][iEta] = new TH1D(h_b_Name, h_b_Name, nBins, xBins_lf); 
+//    h_MC_nonb_jet_csv[iPt][iEta] = new TH1D(h_nonb_Name, h_nonb_Name, nBins, xBins_lf); 
+//  }
+//  else{
+//    h_Data_jet_csv[iPt][iEta] = new TH1D(h_Data_Name, h_Data_Name, nBins, xBins_lf_cMVA); 
+//    h_MC_b_jet_csv[iPt][iEta] = new TH1D(h_b_Name, h_b_Name, nBins, xBins_lf_cMVA); 
+//    h_MC_nonb_jet_csv[iPt][iEta] = new TH1D(h_nonb_Name, h_nonb_Name, nBins, xBins_lf_cMVA); 
+//  }
 //       }   
 //     }
 //   }
@@ -593,7 +593,7 @@ TH1D* h_csv_wgt_lf[9][4][3];
 // 
 //     if( ievt==1 )        std::cout << "     Event " << ievt << std::endl;
 //     if( ievt%10000==0 && ievt!=1 ) std::cout << "           " << ievt << "\t" 
-// 					     << int(double(ievt-firstEvent)/double(NeventsPerJob)*100) << "% done" << std::endl;
+//               << int(double(ievt-firstEvent)/double(NeventsPerJob)*100) << "% done" << std::endl;
 // 
 //     //if( ievt==(maxNentries+1) ) break;
 //     if( ievt==(maxNentries+1) && ievt!=0 ) break;
@@ -606,8 +606,8 @@ TH1D* h_csv_wgt_lf[9][4][3];
 // 
 //     // if( int(double(ievt-firstEvent)/double(NeventsPerJob)*100) >= 65 && int(double(ievt-firstEvent)/double(NeventsPerJob)*100) < 66){
 //     //   if(eve->run_ == 283408 && (eve->lumi_ == 1157 || eve->lumi_ == 1156 || eve->lumi_ == 1129 || eve->lumi_ == 1130 || eve->lumi_ == 1128)) {
-//     // 	//	continue;
-//     // 	std::cout<< "------run:event:lumi=" << eve->run_ << ":" << eve->evt_ << ":" << eve->lumi_ << std::endl;
+//     //   //  continue;
+//     //   std::cout<< "------run:event:lumi=" << eve->run_ << ":" << eve->evt_ << ":" << eve->lumi_ << std::endl;
 //     //   }
 //     // }
 //     // else continue;
@@ -624,9 +624,9 @@ TH1D* h_csv_wgt_lf[9][4][3];
 //     //   vstring hlt_paths = eve->TriggerPaths_ ;
 //     //   vint hlt_acceps = eve->TriggerAcceps_ ;
 //     //   for( unsigned int iPath=0; iPath<hlt_paths.size(); iPath++ ){
-//     // 	std::string pathName = hlt_paths[iPath];
-//     // 	int accept = hlt_acceps[iPath];
-//     // 	std::cout << "trigger path name " << pathName << " ; acceptance is " << accept  << std::endl;
+//     //   std::string pathName = hlt_paths[iPath];
+//     //   int accept = hlt_acceps[iPath];
+//     //   std::cout << "trigger path name " << pathName << " ; acceptance is " << accept  << std::endl;
 // 
 //     //   }
 //     //   std::cout << "----------------------------" << std::endl;
@@ -648,10 +648,10 @@ TH1D* h_csv_wgt_lf[9][4][3];
 //       int runNumber = eve->run_;
 //       bool skipEvent = false;
 //       for(int iRun=0; iRun<int(runs.size()); iRun++ ){
-// 	if(runNumber == runs[iRun]) {
-// 	  skipEvent = true;
-// 	  break;
-// 	}
+//  if(runNumber == runs[iRun]) {
+//    skipEvent = true;
+//    break;
+//  }
 //       }
 //       if (skipEvent) continue;
 //     }
@@ -681,9 +681,9 @@ TH1D* h_csv_wgt_lf[9][4][3];
 //         else if(MuonElectron) triggerWgt = 0.901382; //0.887031; //0.916678; //0.905494; //0.517857;//0.67727; //0.7948;
 // 
 //         if(applyPU){
-// 	  if(TwoMuon)           triggerWgt = (isHF) ? 0.8205 : 0.843079; //0.814563 : 0.8218; //0.965642 : 1.06555; //0.7277 : 0.8035; ///
-// 	  else if(TwoElectron)  triggerWgt = (isHF) ? 0.733543 : 0.76543; //0.730297 : 0.745902; //0.939641 : 1.03338; //0.753 : 0.844;
-// 	  else if(MuonElectron) triggerWgt = 0.796456; //0.784816; //0.919479; //0.7863;
+//    if(TwoMuon)           triggerWgt = (isHF) ? 0.8205 : 0.843079; //0.814563 : 0.8218; //0.965642 : 1.06555; //0.7277 : 0.8035; ///
+//    else if(TwoElectron)  triggerWgt = (isHF) ? 0.733543 : 0.76543; //0.730297 : 0.745902; //0.939641 : 1.03338; //0.753 : 0.844;
+//    else if(MuonElectron) triggerWgt = 0.796456; //0.784816; //0.919479; //0.7863;
 //         }
 //       }
 //     wgt *= triggerWgt;
@@ -747,8 +747,8 @@ TH1D* h_csv_wgt_lf[9][4][3];
 //     ///// for iteration
 //     if (verNum !=0 && insample>=0) {
 //       if( verNum < 3 ){
-// 	if ( isHF ) wgt *= csvWgtLF; // applying lfSFs
-// 	else        wgt *= csvWgtHF; // applying lfSFs
+//  if ( isHF ) wgt *= csvWgtLF; // applying lfSFs
+//  else        wgt *= csvWgtHF; // applying lfSFs
 //       }
 //       else      wgt *= newCSVwgt;
 //     }
@@ -824,36 +824,36 @@ TH1D* h_csv_wgt_lf[9][4][3];
 //     //   // myLep1.SetPxPyPzE( lepton_vect_TLV[iLep][0], lepton_vect_TLV[iLep][1], lepton_vect_TLV[iLep][2], lepton_vect_TLV[iLep][3] );
 // 
 //     //   for( int jLep=iLep+1; jLep<int(lepton_vect_TLV.size()); jLep++ ){
-//     // 	if( iLep==jLep ) continue;
-//     // 	bool isLoose2 = lepton_isLoose[jLep];
-//     // 	if( !isLoose2 ) continue;
+//     //   if( iLep==jLep ) continue;
+//     //   bool isLoose2 = lepton_isLoose[jLep];
+//     //   if( !isLoose2 ) continue;
 // 
-//     // 	int charge2 = lepton_trkCharge[jLep];
+//     //   int charge2 = lepton_trkCharge[jLep];
 // 
-//     // 	TLorentzVector myLep2;
-//     // 	myLep2.SetPxPyPzE( lepton_vect_TLV[jLep][0], lepton_vect_TLV[jLep][1], lepton_vect_TLV[jLep][2], lepton_vect_TLV[jLep][3] );
+//     //   TLorentzVector myLep2;
+//     //   myLep2.SetPxPyPzE( lepton_vect_TLV[jLep][0], lepton_vect_TLV[jLep][1], lepton_vect_TLV[jLep][2], lepton_vect_TLV[jLep][3] );
 // 
-//     // 	TLorentzVector sum = myLep1 + myLep2;
-//     // 	mass_leplep = sum.M();
+//     //   TLorentzVector sum = myLep1 + myLep2;
+//     //   mass_leplep = sum.M();
 // 
-//     // 	dR_leplep = myLep1.DeltaR(myLep2);
+//     //   dR_leplep = myLep1.DeltaR(myLep2);
 // 
-//     // 	if( (charge1 * charge2)==-1 )     oppositeLepCharge = 1;
-//     // 	else if( (charge1 * charge2)==1 ) oppositeLepCharge = 0;
-//     // 	else if( charge1==-99 )           oppositeLepCharge = -1;
-//     // 	else if( charge2==-99 )           oppositeLepCharge = -2;
-//     // 	else                              oppositeLepCharge = -3;
+//     //   if( (charge1 * charge2)==-1 )     oppositeLepCharge = 1;
+//     //   else if( (charge1 * charge2)==1 ) oppositeLepCharge = 0;
+//     //   else if( charge1==-99 )           oppositeLepCharge = -1;
+//     //   else if( charge2==-99 )           oppositeLepCharge = -2;
+//     //   else                              oppositeLepCharge = -3;
 //     //   }
 //     // }
 // 
 //     // h_numLooseLeptons->Fill(numLooseLeptons,wgt);
 // 
 //     // bool PassZmask = ( MuonElectron || 
-//     // 		       (mass_leplep < (65.5 + 3*MHT/8)) || 
-//     // 		       (mass_leplep > (108 - MHT/4)) || 
-//     // 		       (mass_leplep < (79 - 3*MHT/4)) || 
-//     // 		       (mass_leplep > (99 + MHT/2)) 
-//     // 		       );
+//     //            (mass_leplep < (65.5 + 3*MHT/8)) || 
+//     //            (mass_leplep > (108 - MHT/4)) || 
+//     //            (mass_leplep < (79 - 3*MHT/4)) || 
+//     //            (mass_leplep > (99 + MHT/2)) 
+//     //            );
 // 
 //     
 // 
@@ -918,51 +918,51 @@ TH1D* h_csv_wgt_lf[9][4][3];
 //     if( isDoubleMuTriggerPass || isDoubleElectronTriggerPass || isMuEGTriggerPass ){
 //       h_hf_event_selection->Fill(2.5, wgt);
 //       if( TwoMuon || TwoElectron || MuonElectron ){
-// 	h_hf_event_selection->Fill(3.5, wgt);
-// 	if( oppositeLepCharge == 1 ){
-// 	  h_hf_event_selection->Fill(4.5, wgt);
-// 	  if( (dR_leplep > 0.2) ){
-// 	    h_hf_event_selection->Fill(5.5, wgt);
-// 	    if( mass_leplep > 12 ){
-// 	      h_hf_event_selection->Fill(6.5, wgt);
-// 	      if( fabs(mass_leplep-91)>10 ){
-// 	      // if( PassZmask==1 && fabs(mass_leplep-91)>10 ){
-// 		h_hf_event_selection->Fill(7.5, wgt);
-// 		if( met_pt>30 ){
-// 		  h_hf_event_selection->Fill(8.5, wgt);
-// 		  if( passTightBtag ){
-// 		    h_hf_event_selection->Fill(9.5, wgt);
-// 		  }
-// 		}
-// 	      }
-// 	    }
-// 	  }
-// 	}
+//  h_hf_event_selection->Fill(3.5, wgt);
+//  if( oppositeLepCharge == 1 ){
+//    h_hf_event_selection->Fill(4.5, wgt);
+//    if( (dR_leplep > 0.2) ){
+//      h_hf_event_selection->Fill(5.5, wgt);
+//      if( mass_leplep > 12 ){
+//        h_hf_event_selection->Fill(6.5, wgt);
+//        if( fabs(mass_leplep-91)>10 ){
+//        // if( PassZmask==1 && fabs(mass_leplep-91)>10 ){
+//    h_hf_event_selection->Fill(7.5, wgt);
+//    if( met_pt>30 ){
+//      h_hf_event_selection->Fill(8.5, wgt);
+//      if( passTightBtag ){
+//        h_hf_event_selection->Fill(9.5, wgt);
+//      }
+//    }
+//        }
+//      }
+//    }
+//  }
 //       }
 //     }
 // 
 //     if( isDoubleMuTriggerPass || isDoubleElectronTriggerPass ){
 //       h_lf_event_selection->Fill(2.5, wgt);
 //       if( TwoMuon || TwoElectron ){
-// 	h_lf_event_selection->Fill(3.5, wgt);
-// 	if( oppositeLepCharge == 1 ){
-// 	  h_lf_event_selection->Fill(4.5, wgt);
-// 	  if( (dR_leplep > 0.2) ){
-// 	    h_lf_event_selection->Fill(5.5, wgt);
-// 	    if( mass_leplep > 12 ){
-// 	      h_lf_event_selection->Fill(6.5, wgt);
-// 	      if( PassZmask==0 && fabs(mass_leplep-91)<10 ){
-// 		h_lf_event_selection->Fill(7.5, wgt);
-// 		if( met_pt<30 ){
-// 		  h_lf_event_selection->Fill(8.5, wgt);
-// 		  if( failLooseBtag ){
-// 		    h_lf_event_selection->Fill(9.5, wgt);
-// 		  }
-// 		}
-// 	      }
-// 	    }
-// 	  }
-// 	}
+//  h_lf_event_selection->Fill(3.5, wgt);
+//  if( oppositeLepCharge == 1 ){
+//    h_lf_event_selection->Fill(4.5, wgt);
+//    if( (dR_leplep > 0.2) ){
+//      h_lf_event_selection->Fill(5.5, wgt);
+//      if( mass_leplep > 12 ){
+//        h_lf_event_selection->Fill(6.5, wgt);
+//        if( PassZmask==0 && fabs(mass_leplep-91)<10 ){
+//    h_lf_event_selection->Fill(7.5, wgt);
+//    if( met_pt<30 ){
+//      h_lf_event_selection->Fill(8.5, wgt);
+//      if( failLooseBtag ){
+//        h_lf_event_selection->Fill(9.5, wgt);
+//      }
+//    }
+//        }
+//      }
+//    }
+//  }
 //       }
 //     }
 // 
@@ -1024,8 +1024,8 @@ TH1D* h_csv_wgt_lf[9][4][3];
 //       /// PU jets
 //       int passPUWPLoose = jet_PUID_passWPLoose[iJet];
 //       if(!rmPUJet && !passPUWPLoose){
-// 	h_PU_jet_pt->Fill(myJetPt, wgt);
-// 	h_PU_jet_csv->Fill(myCSV, wgt);
+//  h_PU_jet_pt->Fill(myJetPt, wgt);
+//  h_PU_jet_csv->Fill(myCSV, wgt);
 //       }
 // 
 //       h_all_jet_pt->Fill(myJetPt, wgt);
@@ -1036,45 +1036,45 @@ TH1D* h_csv_wgt_lf[9][4][3];
 // 
 //       // if( iJet==0 ){
 //       if( (tpj && numJets30==1) || (!tpj && iJet==0) ){ //tpj
-// 	first_jet_pt = myJetPt;
-// 	first_jet_eta = myJetEta;
-// 	first_jet_csv = myCSV;
-// 	first_jet_flavour = myFlavor;
-// 	first_jet_partonflavour = mypartonFlavor;
+//  first_jet_pt = myJetPt;
+//  first_jet_eta = myJetEta;
+//  first_jet_csv = myCSV;
+//  first_jet_flavour = myFlavor;
+//  first_jet_partonflavour = mypartonFlavor;
 // 
-// 	// for( int iLep=0; iLep<int(lepton_vect_TLV.size()); iLep++ ){
-// 	//   TLorentzVector myLep;
-// 	//   myLep.SetPxPyPzE( lepton_vect_TLV[iLep][0], lepton_vect_TLV[iLep][1], lepton_vect_TLV[iLep][2], lepton_vect_TLV[iLep][3] );
+//  // for( int iLep=0; iLep<int(lepton_vect_TLV.size()); iLep++ ){
+//  //   TLorentzVector myLep;
+//  //   myLep.SetPxPyPzE( lepton_vect_TLV[iLep][0], lepton_vect_TLV[iLep][1], lepton_vect_TLV[iLep][2], lepton_vect_TLV[iLep][3] );
 // 
-// 	//   double dR = myLep.DeltaR(myJet);
-// 	//   if( dR<minDR_lepton_first_jet ) minDR_lepton_first_jet = dR;
+//  //   double dR = myLep.DeltaR(myJet);
+//  //   if( dR<minDR_lepton_first_jet ) minDR_lepton_first_jet = dR;
 // 
-// 	//   TLorentzVector sum = myLep + myJet;
-// 	//   h_mass_lepton_first_jet->Fill(sum.M());
-// 	//   if( lepton_isTight[iLep] ) h_mass_tight_lepton_first_jet->Fill(sum.M());
-// 	// }
+//  //   TLorentzVector sum = myLep + myJet;
+//  //   h_mass_lepton_first_jet->Fill(sum.M());
+//  //   if( lepton_isTight[iLep] ) h_mass_tight_lepton_first_jet->Fill(sum.M());
+//  // }
 //       }
 //       // if( iJet==1 ){
 //       if( (tpj && numJets30==2) || (!tpj && iJet==1) ){ //tpj
-// 	second_jet_pt = myJetPt;
-// 	second_jet_eta = myJetEta;
-// 	second_jet_csv = myCSV;
-// 	second_jet_flavour = myFlavor;
-// 	second_jet_partonflavour = mypartonFlavor;
+//  second_jet_pt = myJetPt;
+//  second_jet_eta = myJetEta;
+//  second_jet_csv = myCSV;
+//  second_jet_flavour = myFlavor;
+//  second_jet_partonflavour = mypartonFlavor;
 // 
-// 	// for( int iLep=0; iLep<int(lepton_vect_TLV.size()); iLep++ ){
-// 	//   TLorentzVector myLep;
-// 	//   myLep.SetPxPyPzE( lepton_vect_TLV[iLep][0], lepton_vect_TLV[iLep][1], lepton_vect_TLV[iLep][2], lepton_vect_TLV[iLep][3] );
+//  // for( int iLep=0; iLep<int(lepton_vect_TLV.size()); iLep++ ){
+//  //   TLorentzVector myLep;
+//  //   myLep.SetPxPyPzE( lepton_vect_TLV[iLep][0], lepton_vect_TLV[iLep][1], lepton_vect_TLV[iLep][2], lepton_vect_TLV[iLep][3] );
 // 
-// 	//   double dR = myLep.DeltaR(myJet);
-// 	//   if( dR<minDR_lepton_second_jet ) minDR_lepton_second_jet = dR;
+//  //   double dR = myLep.DeltaR(myJet);
+//  //   if( dR<minDR_lepton_second_jet ) minDR_lepton_second_jet = dR;
 // 
-// 	//   TLorentzVector sum = myLep + myJet;
-// 	//   h_mass_lepton_second_jet->Fill(sum.M());
-// 	//   h_mass_lepton_second_jet_eta->Fill(second_jet_eta,sum.M());
-// 	//   if( lepton_isTight[iLep] ) h_mass_tight_lepton_second_jet->Fill(sum.M());
+//  //   TLorentzVector sum = myLep + myJet;
+//  //   h_mass_lepton_second_jet->Fill(sum.M());
+//  //   h_mass_lepton_second_jet_eta->Fill(second_jet_eta,sum.M());
+//  //   if( lepton_isTight[iLep] ) h_mass_tight_lepton_second_jet->Fill(sum.M());
 // 
-// 	// }
+//  // }
 //       }
 // 
 // 
@@ -1121,9 +1121,9 @@ TH1D* h_csv_wgt_lf[9][4][3];
 //     else  {
 //       if(abs(first_jet_partonflavour) != 0) h_first_lfjet_csv->Fill(first_jet_csv, wgt);
 //       else  {
-// 	h_first_otherjet_csv->Fill(first_jet_csv, wgt);
-// 	if (TwoElectron) h_first_otherjet_csv_ee->Fill(first_jet_csv, wgt);
-// 	else if (TwoMuon) h_first_otherjet_csv_mm->Fill(first_jet_csv, wgt);
+//  h_first_otherjet_csv->Fill(first_jet_csv, wgt);
+//  if (TwoElectron) h_first_otherjet_csv_ee->Fill(first_jet_csv, wgt);
+//  else if (TwoMuon) h_first_otherjet_csv_mm->Fill(first_jet_csv, wgt);
 //       }
 //     }
 // 
@@ -1132,9 +1132,9 @@ TH1D* h_csv_wgt_lf[9][4][3];
 //     else  {
 //       if(abs(second_jet_partonflavour) != 0) h_second_lfjet_csv->Fill(second_jet_csv, wgt);
 //       else  {
-// 	h_second_otherjet_csv->Fill(second_jet_csv, wgt);
-// 	if (TwoElectron) h_second_otherjet_csv_ee->Fill(second_jet_csv, wgt);
-// 	else if (TwoMuon) h_second_otherjet_csv_mm->Fill(second_jet_csv, wgt);
+//  h_second_otherjet_csv->Fill(second_jet_csv, wgt);
+//  if (TwoElectron) h_second_otherjet_csv_ee->Fill(second_jet_csv, wgt);
+//  else if (TwoMuon) h_second_otherjet_csv_mm->Fill(second_jet_csv, wgt);
 //       }
 //     }
 // 
@@ -1209,16 +1209,16 @@ TH1D* h_csv_wgt_lf[9][4][3];
 //       double jetCSV = -99;
 // 
 //       if( useFirstJet ){
-// 	jetPt = first_jet_pt;
-// 	jetAbsEta = fabs(first_jet_eta);
-// 	jetB = firstjetb;
-// 	jetCSV = first_jet_csv;
+//  jetPt = first_jet_pt;
+//  jetAbsEta = fabs(first_jet_eta);
+//  jetB = firstjetb;
+//  jetCSV = first_jet_csv;
 //       }
 //       else{
-// 	jetPt = second_jet_pt;
-// 	jetAbsEta = fabs(second_jet_eta);
-// 	jetB = secondjetb;
-// 	jetCSV = second_jet_csv;
+//  jetPt = second_jet_pt;
+//  jetAbsEta = fabs(second_jet_eta);
+//  jetB = secondjetb;
+//  jetCSV = second_jet_csv;
 //       }
 // 
 //       int iPt = -1; int iEta = -1;
@@ -1231,12 +1231,12 @@ TH1D* h_csv_wgt_lf[9][4][3];
 // 
 //       ////
 //       if(isHF){
-// 	if (jetPt >=19.99 && jetPt<30) iPt = 0;
-// 	else if (jetPt >=30 && jetPt<50) iPt = 1;
-// 	else if (jetPt >=50 && jetPt<70) iPt = 2;
-// 	else if (jetPt >=70 && jetPt<100) iPt = 3;
-// 	else if (jetPt >=100 && jetPt<160) iPt = 4;
-// 	else if (jetPt >=160 && jetPt<10000) iPt = 5;
+//  if (jetPt >=19.99 && jetPt<30) iPt = 0;
+//  else if (jetPt >=30 && jetPt<50) iPt = 1;
+//  else if (jetPt >=50 && jetPt<70) iPt = 2;
+//  else if (jetPt >=70 && jetPt<100) iPt = 3;
+//  else if (jetPt >=100 && jetPt<160) iPt = 4;
+//  else if (jetPt >=160 && jetPt<10000) iPt = 5;
 //       }
 // 
 //       if (jetAbsEta >=0 &&  jetAbsEta<0.8 ) iEta = 0;
@@ -1247,14 +1247,14 @@ TH1D* h_csv_wgt_lf[9][4][3];
 //       if (!isHF && iPt>3) iPt=3;
 //       if (isHF && iPt>4) iPt=4;
 // 
-//       if( insample<0 )	h_Data_jet_csv[iPt][iEta]->Fill(jetCSV); 
+//       if( insample<0 ) h_Data_jet_csv[iPt][iEta]->Fill(jetCSV); 
 //       else{
-// 	if( jetB ){
-// 	  h_MC_b_jet_csv[iPt][iEta]->Fill(jetCSV, wgt);
-// 	}
-// 	else  {
-// 	  h_MC_nonb_jet_csv[iPt][iEta]->Fill(jetCSV, wgt);
-// 	}
+//  if( jetB ){
+//    h_MC_b_jet_csv[iPt][iEta]->Fill(jetCSV, wgt);
+//  }
+//  else  {
+//    h_MC_nonb_jet_csv[iPt][iEta]->Fill(jetCSV, wgt);
+//  }
 //       }
 // 
 //     }
@@ -1275,12 +1275,12 @@ TH1D* h_csv_wgt_lf[9][4][3];
 //       
 //       ////
 //       if(isHF){
-// 	if (jetPt >=19.99 && jetPt<30) iPt = 0;
-// 	else if (jetPt >=30 && jetPt<50) iPt = 1;
-// 	else if (jetPt >=50 && jetPt<70) iPt = 2;
-// 	else if (jetPt >=70 && jetPt<100) iPt = 3;
-// 	else if (jetPt >=100 && jetPt<160) iPt = 4;
-// 	else if (jetPt >=160 && jetPt<10000) iPt = 5;
+//  if (jetPt >=19.99 && jetPt<30) iPt = 0;
+//  else if (jetPt >=30 && jetPt<50) iPt = 1;
+//  else if (jetPt >=50 && jetPt<70) iPt = 2;
+//  else if (jetPt >=70 && jetPt<100) iPt = 3;
+//  else if (jetPt >=100 && jetPt<160) iPt = 4;
+//  else if (jetPt >=160 && jetPt<10000) iPt = 5;
 //       }
 // 
 //       if (jetAbsEta >=0 &&  jetAbsEta<0.8 ) iEta = 0;
@@ -1295,14 +1295,14 @@ TH1D* h_csv_wgt_lf[9][4][3];
 //       ///fake data
 //       // h_Data_jet_csv[iPt][iEta]->Fill(first_jet_csv, wgtfakeData); 
 // 
-//       if( insample<0 )	h_Data_jet_csv[iPt][iEta]->Fill(first_jet_csv); 
+//       if( insample<0 ) h_Data_jet_csv[iPt][iEta]->Fill(first_jet_csv); 
 //       else{
-// 	if( firstjetb ){
-// 	  h_MC_b_jet_csv[iPt][iEta]->Fill(first_jet_csv, wgt);
-// 	}
-// 	else  {
-// 	  h_MC_nonb_jet_csv[iPt][iEta]->Fill(first_jet_csv, wgt);
-// 	}
+//  if( firstjetb ){
+//    h_MC_b_jet_csv[iPt][iEta]->Fill(first_jet_csv, wgt);
+//  }
+//  else  {
+//    h_MC_nonb_jet_csv[iPt][iEta]->Fill(first_jet_csv, wgt);
+//  }
 //       }
 //     }
 // 
@@ -1321,12 +1321,12 @@ TH1D* h_csv_wgt_lf[9][4][3];
 //       
 //       ////
 //       if(isHF){
-// 	if (jetPt >=19.99 && jetPt<30) iPt = 0;
-// 	else if (jetPt >=30 && jetPt<50) iPt = 1;
-// 	else if (jetPt >=50 && jetPt<70) iPt = 2;
-// 	else if (jetPt >=70 && jetPt<100) iPt = 3;
-// 	else if (jetPt >=100 && jetPt<160) iPt = 4;
-// 	else if (jetPt >=160 && jetPt<10000) iPt = 5;
+//  if (jetPt >=19.99 && jetPt<30) iPt = 0;
+//  else if (jetPt >=30 && jetPt<50) iPt = 1;
+//  else if (jetPt >=50 && jetPt<70) iPt = 2;
+//  else if (jetPt >=70 && jetPt<100) iPt = 3;
+//  else if (jetPt >=100 && jetPt<160) iPt = 4;
+//  else if (jetPt >=160 && jetPt<10000) iPt = 5;
 //       }
 // 
 //       if (jetAbsEta >=0 &&  jetAbsEta<0.8 ) iEta = 0;
@@ -1341,14 +1341,14 @@ TH1D* h_csv_wgt_lf[9][4][3];
 //       ///fake data
 //       // h_Data_jet_csv[iPt][iEta]->Fill(second_jet_csv, wgtfakeData);       
 // 
-//       if( insample<0 )	h_Data_jet_csv[iPt][iEta]->Fill(second_jet_csv); 
+//       if( insample<0 ) h_Data_jet_csv[iPt][iEta]->Fill(second_jet_csv); 
 //       else{
-// 	if( secondjetb ){
-// 	  h_MC_b_jet_csv[iPt][iEta]->Fill(second_jet_csv, wgt); 
-// 	}
-// 	else {
-// 	  h_MC_nonb_jet_csv[iPt][iEta]->Fill(second_jet_csv, wgt); 
-// 	}
+//  if( secondjetb ){
+//    h_MC_b_jet_csv[iPt][iEta]->Fill(second_jet_csv, wgt); 
+//  }
+//  else {
+//    h_MC_nonb_jet_csv[iPt][iEta]->Fill(second_jet_csv, wgt); 
+//  }
 //       }
 //     }
 //     }
@@ -1380,379 +1380,366 @@ TH1D* h_csv_wgt_lf[9][4][3];
 /// algos / supporting functions:
 
 void fillCSVhistos(TFile* fileHF, TFile* fileLF){
-  //// more pt bins ???
-  int minPt = 0;//0; tpj // 1 for JetPtCut30, default 0
-  int nPt = 5;//5-1; /// change
-  int nPtLF = 4;//4-1;
-  int nEta = 3;
-  for( int iSys=0; iSys<9; iSys++ ){
-    for( int iPt=minPt; iPt<nPt; iPt++ ) h_csv_wgt_hf[iSys][iPt] = NULL;
-    for( int iPt=minPt; iPt<nPtLF; iPt++ ){
-      for( int iEta=0; iEta<nEta; iEta++ )h_csv_wgt_lf[iSys][iPt][iEta] = NULL;
+    //// more pt bins ???
+    int minPt = 0;//0; tpj // 1 for JetPtCut30, default 0
+    int nPt = 5;//5-1; /// change
+    int nPtLF = 4;//4-1;
+    int nEta = 3;
+    for( int iSys=0; iSys<9; iSys++ ){
+        for( int iPt=minPt; iPt<nPt; iPt++ ) h_csv_wgt_hf[iSys][iPt] = NULL;
+        for( int iPt=minPt; iPt<nPtLF; iPt++ ){
+          for( int iEta=0; iEta<nEta; iEta++ )h_csv_wgt_lf[iSys][iPt][iEta] = NULL;
+        }
     }
-  }
-  for( int iSys=0; iSys<5; iSys++ ){
-    for( int iPt=minPt; iPt<nPt; iPt++ ) c_csv_wgt_hf[iSys][iPt] = NULL;
-  }
-
-  // CSV reweighting /// only care about the nominal ones !!!
-  for( int iSys=0; iSys<9; iSys++ ){
-    TString syst_csv_suffix_hf = "final";
-    TString syst_csv_suffix_c = "final";
-    TString syst_csv_suffix_lf = "final";
-    
-    switch( iSys ){
-    case 0:
-      // this is the nominal case
-      break;
-    case 1:
-      // JESUp
-      syst_csv_suffix_hf = "final_JESUp"; syst_csv_suffix_lf = "final_JESUp";
-      syst_csv_suffix_c  = "final_cErr1Up";
-      break;
-    case 2:
-      // JESDown
-      syst_csv_suffix_hf = "final_JESDown"; syst_csv_suffix_lf = "final_JESDown";
-      syst_csv_suffix_c  = "final_cErr1Down";
-      break;
-    case 3:
-      // purity up
-      syst_csv_suffix_hf = "final_LFUp"; syst_csv_suffix_lf = "final_HFUp";
-      syst_csv_suffix_c  = "final_cErr2Up";
-      break;
-    case 4:
-      // purity down
-      syst_csv_suffix_hf = "final_LFDown"; syst_csv_suffix_lf = "final_HFDown";
-      syst_csv_suffix_c  = "final_cErr2Down";
-      break;
-    case 5:
-      // stats1 up
-      syst_csv_suffix_hf = "final_Stats1Up"; syst_csv_suffix_lf = "final_Stats1Up";
-      break;
-    case 6:
-      // stats1 down
-      syst_csv_suffix_hf = "final_Stats1Down"; syst_csv_suffix_lf = "final_Stats1Down";
-      break;
-    case 7:
-      // stats2 up
-      syst_csv_suffix_hf = "final_Stats2Up"; syst_csv_suffix_lf = "final_Stats2Up";
-      break;
-    case 8:
-      // stats2 down
-      syst_csv_suffix_hf = "final_Stats2Down"; syst_csv_suffix_lf = "final_Stats2Down";
-      break;
+    for( int iSys=0; iSys<5; iSys++ ){
+        for( int iPt=minPt; iPt<nPt; iPt++ ) c_csv_wgt_hf[iSys][iPt] = NULL;
     }
 
-    for( int iPt=minPt; iPt<nPt; iPt++ ) h_csv_wgt_hf[iSys][iPt] = (TH1D*)fileHF->Get( Form("csv_ratio_Pt%i_Eta0_%s",iPt,syst_csv_suffix_hf.Data()) );
+    // CSV reweighting /// only care about the nominal ones !!!
+    for( int iSys=0; iSys<9; iSys++ ){
+        TString syst_csv_suffix_hf = "final";
+        TString syst_csv_suffix_c = "final";
+        TString syst_csv_suffix_lf = "final";
+        
+        switch( iSys ){
+        case 0:
+            // this is the nominal case
+            break;
+        case 1:
+            // JESUp
+            syst_csv_suffix_hf = "final_JESUp"; syst_csv_suffix_lf = "final_JESUp";
+            syst_csv_suffix_c  = "final_cErr1Up";
+            break;
+        case 2:
+            // JESDown
+            syst_csv_suffix_hf = "final_JESDown"; syst_csv_suffix_lf = "final_JESDown";
+            syst_csv_suffix_c  = "final_cErr1Down";
+            break;
+        case 3:
+            // purity up
+            syst_csv_suffix_hf = "final_LFUp"; syst_csv_suffix_lf = "final_HFUp";
+            syst_csv_suffix_c  = "final_cErr2Up";
+            break;
+        case 4:
+            // purity down
+            syst_csv_suffix_hf = "final_LFDown"; syst_csv_suffix_lf = "final_HFDown";
+            syst_csv_suffix_c  = "final_cErr2Down";
+            break;
+        case 5:
+            // stats1 up
+            syst_csv_suffix_hf = "final_Stats1Up"; syst_csv_suffix_lf = "final_Stats1Up";
+            break;
+        case 6:
+            // stats1 down
+            syst_csv_suffix_hf = "final_Stats1Down"; syst_csv_suffix_lf = "final_Stats1Down";
+            break;
+        case 7:
+            // stats2 up
+            syst_csv_suffix_hf = "final_Stats2Up"; syst_csv_suffix_lf = "final_Stats2Up";
+            break;
+        case 8:
+            // stats2 down
+            syst_csv_suffix_hf = "final_Stats2Down"; syst_csv_suffix_lf = "final_Stats2Down";
+            break;
+        }
 
-    if( iSys<5 ){
-      for( int iPt=minPt; iPt<nPt; iPt++ ) c_csv_wgt_hf[iSys][iPt] = (TH1D*)fileHF->Get( Form("c_csv_ratio_Pt%i_Eta0_%s",iPt,syst_csv_suffix_c.Data()) );
-    }
-    
-    for( int iPt=minPt; iPt<nPtLF; iPt++ ){
-      for( int iEta=0; iEta<nEta; iEta++ )h_csv_wgt_lf[iSys][iPt][iEta] = (TH1D*)fileLF->Get( Form("csv_ratio_Pt%i_Eta%i_%s",iPt,iEta,syst_csv_suffix_lf.Data()) );
-    }
-  }
+        for( int iPt=minPt; iPt<nPt; iPt++ ) h_csv_wgt_hf[iSys][iPt] = (TH1D*)fileHF->Get( Form("csv_ratio_Pt%i_Eta0_%s",iPt,syst_csv_suffix_hf.Data()) );
 
-  return;
+        if( iSys<5 ){
+            for( int iPt=minPt; iPt<nPt; iPt++ ) c_csv_wgt_hf[iSys][iPt] = (TH1D*)fileHF->Get( Form("c_csv_ratio_Pt%i_Eta0_%s",iPt,syst_csv_suffix_c.Data()) );
+        }
+        
+        for( int iPt=minPt; iPt<nPtLF; iPt++ ){
+            for( int iEta=0; iEta<nEta; iEta++ )h_csv_wgt_lf[iSys][iPt][iEta] = (TH1D*)fileLF->Get( Form("csv_ratio_Pt%i_Eta%i_%s",iPt,iEta,syst_csv_suffix_lf.Data()) );
+        }
+    }
+
+    return;
 }
 
 double get_csv_wgt( bool TaggerisCSV, vecTLorentzVector jets, vdouble jetCSV, vint jetFlavor, int iSys, double &csvWgtHF, double &csvWgtLF, double &csvWgtCF ){
-
-  int iSysHF = 0;
-  switch(iSys){
-  case 11: iSysHF=1; break;
-  case 12: iSysHF=2; break;
-  case 17: iSysHF=3; break;
-  case 18: iSysHF=4; break;
-  case 21: iSysHF=5; break;
-  case 22: iSysHF=6; break;
-  case 25: iSysHF=7; break;
-  case 26: iSysHF=8; break;
-  default : iSysHF = 0; break;
-  }
-
-  int iSysC = 0;
-  switch(iSys){
-  case 29: iSysC=1; break;
-  case 30: iSysC=2; break;
-  case 31: iSysC=3; break;
-  case 32: iSysC=4; break;
-  default : iSysC = 0; break;
-  }
-
-  int iSysLF = 0;
-  switch(iSys){
-  case 11: iSysLF=1; break;
-  case 12: iSysLF=2; break;
-  case 19: iSysLF=3; break;
-  case 20: iSysLF=4; break;
-  case 23: iSysLF=5; break;
-  case 24: iSysLF=6; break;
-  case 27: iSysLF=7; break;
-  case 28: iSysLF=8; break;
-  default : iSysLF = 0; break;
-  }
-
-  double csvWgthf = 1.;
-  double csvWgtC  = 1.;
-  double csvWgtlf = 1.;
-    
-  //cout << "hey1" << endl;
-    
-  for( int iJet=0; iJet<int(jets.size()); iJet++ ){
-    TLorentzVector myJet = jets[iJet];
-    // myJet.SetPxPyPzE( jets[iJet][0], jets[iJet][1], jets[iJet][2], jets[iJet][3] );
-	  
-    double csv = jetCSV[iJet];
-    double jetPt = myJet.Pt();
-    double jetAbsEta = fabs(myJet.Eta());
-    int flavor = jetFlavor[iJet];
-
-    int iPt = -1; int iEta = -1;
-    if (jetPt >=19.99 && jetPt<30) iPt = 0;
-    else if (jetPt >=30 && jetPt<40) iPt = 1;
-    else if (jetPt >=40 && jetPt<60) iPt = 2;
-    else if (jetPt >=60 && jetPt<100) iPt = 3;
-    else if (jetPt >=100 && jetPt<160) iPt = 4;
-    else if (jetPt >=160 && jetPt<10000) iPt = 4;  //5; low stats. combine with Pt bin 4
-
-      ////
-      if(abs(flavor) == 5 || abs(flavor) == 4){
-	if (jetPt >=19.99 && jetPt<30) iPt = 0;
-	else if (jetPt >=30 && jetPt<50) iPt = 1;
-	else if (jetPt >=50 && jetPt<70) iPt = 2;
-	else if (jetPt >=70 && jetPt<100) iPt = 3;
-	else if (jetPt >=100 && jetPt<160) iPt = 4;
-	else if (jetPt >=160 && jetPt<10000) iPt = 4; //4
-      }
-
-    if (jetAbsEta >=0 &&  jetAbsEta<0.8 ) iEta = 0;
-    else if ( jetAbsEta>=0.8 && jetAbsEta<1.6 )  iEta = 1;
-    else if ( jetAbsEta>=1.6 && jetAbsEta<2.51 ) iEta = 2;
-
-    if (iPt < 0 || iEta < 0) {
-      std::cout << "Error, couldn't find Pt, Eta bins for this b-flavor jet, jetPt = " << jetPt << ", jetAbsEta = " << jetAbsEta << std::endl;
-      continue;
+    int iSysHF = 0;
+    switch(iSys){
+        case 11: iSysHF=1; break;
+        case 12: iSysHF=2; break;
+        case 17: iSysHF=3; break;
+        case 18: iSysHF=4; break;
+        case 21: iSysHF=5; break;
+        case 22: iSysHF=6; break;
+        case 25: iSysHF=7; break;
+        case 26: iSysHF=8; break;
+        default : iSysHF = 0; break;
     }
-    //tpj
-    // if(iPt==0) continue;
-    // else iPt = iPt-1;
 
-    //cout << "hey2" << endl;
+    int iSysC = 0;
+    switch(iSys){
+        case 29: iSysC=1; break;
+        case 30: iSysC=2; break;
+        case 31: iSysC=3; break;
+        case 32: iSysC=4; break;
+        default : iSysC = 0; break;
+    }
 
-    if (abs(flavor) == 5 ){
-      //cout << "hey2.1" << endl;
-      int useCSVBin = (!TaggerisCSV || csv>=0.) ? h_csv_wgt_hf[iSysHF][iPt]->FindBin(csv) : 1;
-      double iCSVWgtHF = h_csv_wgt_hf[iSysHF][iPt]->GetBinContent(useCSVBin);
-      if( iCSVWgtHF!=0 ) csvWgthf *= iCSVWgtHF;
+    int iSysLF = 0;
+    switch(iSys){
+        case 11: iSysLF=1; break;
+        case 12: iSysLF=2; break;
+        case 19: iSysLF=3; break;
+        case 20: iSysLF=4; break;
+        case 23: iSysLF=5; break;
+        case 24: iSysLF=6; break;
+        case 27: iSysLF=7; break;
+        case 28: iSysLF=8; break;
+        default : iSysLF = 0; break;
+    }
 
-      // if( iSysHF==0 ) printf(" iJet,\t flavor=%d,\t pt=%.1f,\t eta=%.2f,\t csv=%.3f,\t wgt=%.2f \n",
-      // 			     flavor, jetPt, iJet->eta, csv, iCSVWgtHF );
+    double csvWgthf = 1.;
+    double csvWgtC  = 1.;
+    double csvWgtlf = 1.;
       
-    }
-
-    else if( abs(flavor) == 4 ){
-      //cout << "hey2.2" << endl;
-      int useCSVBin = (!TaggerisCSV || csv>=0.) ? c_csv_wgt_hf[iSysC][iPt]->FindBin(csv) : 1;
-      double iCSVWgtC = c_csv_wgt_hf[iSysC][iPt]->GetBinContent(useCSVBin);
-      if( iCSVWgtC!=0 ) csvWgtC *= iCSVWgtC;
-      // if( iSysC==0 ) printf(" iJet,\t flavor=%d,\t pt=%.1f,\t eta=%.2f,\t csv=%.3f,\t wgt=%.2f \n",
-      //      flavor, jetPt, iJet->eta, csv, iCSVWgtC );
+    //cout << "hey1" << endl;
       
+    for( int iJet=0; iJet<int(jets.size()); iJet++ ){
+        TLorentzVector myJet = jets[iJet];
+        // myJet.SetPxPyPzE( jets[iJet][0], jets[iJet][1], jets[iJet][2], jets[iJet][3] );
+        
+        double csv = jetCSV[iJet];
+        double jetPt = myJet.Pt();
+        double jetAbsEta = fabs(myJet.Eta());
+        int flavor = jetFlavor[iJet];
+
+        int iPt = -1; int iEta = -1;
+        if (jetPt >=19.99 && jetPt<30) iPt = 0;
+        else if (jetPt >=30 && jetPt<40) iPt = 1;
+        else if (jetPt >=40 && jetPt<60) iPt = 2;
+        else if (jetPt >=60 && jetPt<100) iPt = 3;
+        else if (jetPt >=100 && jetPt<160) iPt = 4;
+        else if (jetPt >=160 && jetPt<10000) iPt = 4;  //5; low stats. combine with Pt bin 4
+
+        ////
+        if(abs(flavor) == 5 || abs(flavor) == 4) {
+            if (jetPt >=19.99 && jetPt<30) iPt = 0;
+            else if (jetPt >=30 && jetPt<50) iPt = 1;
+            else if (jetPt >=50 && jetPt<70) iPt = 2;
+            else if (jetPt >=70 && jetPt<100) iPt = 3;
+            else if (jetPt >=100 && jetPt<160) iPt = 4;
+            else if (jetPt >=160 && jetPt<10000) iPt = 4; //4
+        }
+
+        if (jetAbsEta >=0 &&  jetAbsEta<0.8 ) iEta = 0;
+        else if ( jetAbsEta>=0.8 && jetAbsEta<1.6 )  iEta = 1;
+        else if ( jetAbsEta>=1.6 && jetAbsEta<2.51 ) iEta = 2;
+
+        if (iPt < 0 || iEta < 0) {
+            std::cout << "Error, couldn't find Pt, Eta bins for this b-flavor jet, jetPt = " << jetPt << ", jetAbsEta = " << jetAbsEta << std::endl;
+            continue;
+        }
+        //tpj
+        // if(iPt==0) continue;
+        // else iPt = iPt-1;
+
+        //cout << "hey2" << endl;
+
+        if (abs(flavor) == 5 ) {
+            //cout << "hey2.1" << endl;
+            int useCSVBin = (!TaggerisCSV || csv>=0.) ? h_csv_wgt_hf[iSysHF][iPt]->FindBin(csv) : 1;
+            double iCSVWgtHF = h_csv_wgt_hf[iSysHF][iPt]->GetBinContent(useCSVBin);
+            if( iCSVWgtHF!=0 ) csvWgthf *= iCSVWgtHF;
+
+            // if( iSysHF==0 ) printf(" iJet,\t flavor=%d,\t pt=%.1f,\t eta=%.2f,\t csv=%.3f,\t wgt=%.2f \n",
+            //           flavor, jetPt, iJet->eta, csv, iCSVWgtHF );
+        } else if( abs(flavor) == 4 ) {
+            //cout << "hey2.2" << endl;
+            int useCSVBin = (!TaggerisCSV || csv>=0.) ? c_csv_wgt_hf[iSysC][iPt]->FindBin(csv) : 1;
+            double iCSVWgtC = c_csv_wgt_hf[iSysC][iPt]->GetBinContent(useCSVBin);
+            if( iCSVWgtC!=0 ) csvWgtC *= iCSVWgtC;
+            // if( iSysC==0 ) printf(" iJet,\t flavor=%d,\t pt=%.1f,\t eta=%.2f,\t csv=%.3f,\t wgt=%.2f \n",
+            //      flavor, jetPt, iJet->eta, csv, iCSVWgtC );
+        } else {//tpj
+            //cout << "hey2.3" << endl;
+            if (iPt >=3) iPt=3;       /// [30-40], [40-60] and [60-10000] only 3 Pt bins for lf
+            //cout << "hey2.3.1" << endl;
+            //cout << iSysLF << " " << iPt << " " << iEta << " " << csv << endl;
+            int useCSVBin = (!TaggerisCSV || csv>=0.) ? h_csv_wgt_lf[iSysLF][iPt][iEta]->FindBin(csv) : 1;
+            //cout << "hey2.3.2" << endl;
+            double iCSVWgtLF = h_csv_wgt_lf[iSysLF][iPt][iEta]->GetBinContent(useCSVBin);
+            //cout << "hey2.3.3" << endl;
+            if( iCSVWgtLF!=0 ) csvWgtlf *= iCSVWgtLF;
+            // if( iSysLF==0 ) printf(" iJet,\t flavor=%d,\t pt=%.1f,\t eta=%.2f,\t csv=%.3f,\t wgt=%.2f \n",
+            //           flavor, jetPt, iJet->eta, csv, iCSVWgtLF );
+        }
+        //cout << "hey3" << endl;
     }
-    
-    else {//tpj
-      //cout << "hey2.3" << endl;
-      if (iPt >=3) iPt=3;       /// [30-40], [40-60] and [60-10000] only 3 Pt bins for lf
-      //cout << "hey2.3.1" << endl;
-      //cout << iSysLF << " " << iPt << " " << iEta << " " << csv << endl;
-      int useCSVBin = (!TaggerisCSV || csv>=0.) ? h_csv_wgt_lf[iSysLF][iPt][iEta]->FindBin(csv) : 1;
-      //cout << "hey2.3.2" << endl;
-      double iCSVWgtLF = h_csv_wgt_lf[iSysLF][iPt][iEta]->GetBinContent(useCSVBin);
-      //cout << "hey2.3.3" << endl;
-      if( iCSVWgtLF!=0 ) csvWgtlf *= iCSVWgtLF;
 
-      // if( iSysLF==0 ) printf(" iJet,\t flavor=%d,\t pt=%.1f,\t eta=%.2f,\t csv=%.3f,\t wgt=%.2f \n",
-      // 			     flavor, jetPt, iJet->eta, csv, iCSVWgtLF );
-      
-    }
-    
-    //cout << "hey3" << endl;
-  }
+    double csvWgtTotal = csvWgthf * csvWgtC * csvWgtlf;
 
-  double csvWgtTotal = csvWgthf * csvWgtC * csvWgtlf;
+    csvWgtHF = csvWgthf;
+    csvWgtLF = csvWgtlf;
+    csvWgtCF = csvWgtC;
 
-  csvWgtHF = csvWgthf;
-  csvWgtLF = csvWgtlf;
-  csvWgtCF = csvWgtC;
-
-  return csvWgtTotal;
+    return csvWgtTotal;
 }
 
 //-------- 76X pileUp reweighting
 double reweightPU( int nPU, int iSys ){
+    double PUscale[50];
+    if( nPU>49 ) nPU = 49;
+    if( iSys==0 ){
+        PUscale[0] = 0.544141;
+        PUscale[1] = 0.683152;
+        PUscale[2] = 1.0588;
+        PUscale[3] = 1.36648;
+        PUscale[4] = 1.62214;
+        PUscale[5] = 1.93965;
+        PUscale[6] = 1.45916;
+        PUscale[7] = 1.29301;
+        PUscale[8] = 1.39344;
+        PUscale[9] = 1.37393;
+        PUscale[10] = 1.26638;
+        PUscale[11] = 1.1637;
+        PUscale[12] = 1.05777;
+        PUscale[13] = 0.901478;
+        PUscale[14] = 0.695434;
+        PUscale[15] = 0.48665;
+        PUscale[16] = 0.323436;
+        PUscale[17] = 0.233179;
+        PUscale[18] = 0.204042;
+        PUscale[19] = 0.179695;
+        PUscale[20] = 0.117906;
+        PUscale[21] = 0.0535705;
+        PUscale[22] = 0.0179761;
+        PUscale[23] = 0.00486845;
+        PUscale[24] = 0.00120473;
+        PUscale[25] = 0.000306356;
+        PUscale[26] = 8.44097e-05;
+        PUscale[27] = 2.35712e-05;
+        PUscale[28] = 6.33309e-06;
+        PUscale[29] = 1.62779e-06;
+        PUscale[30] = 3.92723e-07;
+        PUscale[31] = 8.94453e-08;
+        PUscale[32] = 1.90178e-08;
+        PUscale[33] = 3.84203e-09;
+        PUscale[34] = 7.38767e-10;
+        PUscale[35] = 1.28456e-10;
+        PUscale[36] = 2.08504e-11;
+        PUscale[37] = 3.31182e-12;
+        PUscale[38] = 4.63316e-13;
+        PUscale[39] = 4.72854e-14;
+        PUscale[40] = 0;
+        PUscale[41] = 0;
+        PUscale[42] = 0;
+        PUscale[43] = 0;
+        PUscale[44] = 0;
+        PUscale[45] = 0;
+        PUscale[46] = 0;
+        PUscale[47] = 0;
+        PUscale[48] = 0;
+        PUscale[49] = 0;
+    }
+    else if( iSys==1 ){
+        PUscale[0] = 0.458261;
+        PUscale[1] = 0.626711;
+        PUscale[2] = 0.971785;
+        PUscale[3] = 1.21776;
+        PUscale[4] = 1.34764;
+        PUscale[5] = 1.4248;
+        PUscale[6] = 0.922526;
+        PUscale[7] = 0.744979;
+        PUscale[8] = 0.913723;
+        PUscale[9] = 1.06132;
+        PUscale[10] = 1.11114;
+        PUscale[11] = 1.12292;
+        PUscale[12] = 1.13425;
+        PUscale[13] = 1.10829;
+        PUscale[14] = 1.00558;
+        PUscale[15] = 0.83577;
+        PUscale[16] = 0.639871;
+        PUscale[17] = 0.469319;
+        PUscale[18] = 0.361301;
+        PUscale[19] = 0.306711;
+        PUscale[20] = 0.237734;
+        PUscale[21] = 0.142901;
+        PUscale[22] = 0.0656738;
+        PUscale[23] = 0.0238299;
+        PUscale[24] = 0.00722283;
+        PUscale[25] = 0.00197294;
+        PUscale[26] = 0.000550982;
+        PUscale[27] = 0.000165108;
+        PUscale[28] = 5.14307e-05;
+        PUscale[29] = 1.60005e-05;
+        PUscale[30] = 4.76288e-06;
+        PUscale[31] = 1.35321e-06;
+        PUscale[32] = 3.62213e-07;
+        PUscale[33] = 9.29401e-08;
+        PUscale[34] = 2.28987e-08;
+        PUscale[35] = 5.14682e-09;
+        PUscale[36] = 1.08953e-09;
+        PUscale[37] = 2.27672e-10;
+        PUscale[38] = 4.24244e-11;
+        PUscale[39] = 6.6564e-12;
+        PUscale[40] = 1.21726e-12;
+        PUscale[41] = 1.25024e-13;
+        PUscale[42] = 0;
+        PUscale[43] = 0;
+        PUscale[44] = 0;
+        PUscale[45] = 0;
+        PUscale[46] = 0;
+        PUscale[47] = 0;
+        PUscale[48] = 0;
+        PUscale[49] = 0;
+    }
+    else if( iSys==-1 ){
+        PUscale[0] = 0.637352;
+        PUscale[1] = 0.745524;
+        PUscale[2] = 1.16977;
+        PUscale[3] = 1.55999;
+        PUscale[4] = 2.01896;
+        PUscale[5] = 2.79883;
+        PUscale[6] = 2.50005;
+        PUscale[7] = 2.22714;
+        PUscale[8] = 2.00474;
+        PUscale[9] = 1.67907;
+        PUscale[10] = 1.37446;
+        PUscale[11] = 1.13578;
+        PUscale[12] = 0.899819;
+        PUscale[13] = 0.646461;
+        PUscale[14] = 0.412783;
+        PUscale[15] = 0.243661;
+        PUscale[16] = 0.153684;
+        PUscale[17] = 0.125858;
+        PUscale[18] = 0.116543;
+        PUscale[19] = 0.0860169;
+        PUscale[20] = 0.0414331;
+        PUscale[21] = 0.0133115;
+        PUscale[22] = 0.00326222;
+        PUscale[23] = 0.000723524;
+        PUscale[24] = 0.000169442;
+        PUscale[25] = 4.20509e-05;
+        PUscale[26] = 1.04015e-05;
+        PUscale[27] = 2.41401e-06;
+        PUscale[28] = 5.19674e-07;
+        PUscale[29] = 1.0525e-07;
+        PUscale[30] = 1.97832e-08;
+        PUscale[31] = 3.47419e-09;
+        PUscale[32] = 5.63765e-10;
+        PUscale[33] = 8.60403e-11;
+        PUscale[34] = 1.23701e-11;
+        PUscale[35] = 1.59276e-12;
+        PUscale[36] = 1.89108e-13;
+        PUscale[37] = 1.98468e-14;
+        PUscale[38] = 0;
+        PUscale[39] = 0;
+        PUscale[40] = 0;
+        PUscale[41] = 0;
+        PUscale[42] = 0;
+        PUscale[43] = 0;
+        PUscale[44] = 0;
+        PUscale[45] = 0;
+        PUscale[46] = 0;
+        PUscale[47] = 0;
+        PUscale[48] = 0;
+        PUscale[49] = 0;
+    }
 
-  double PUscale[50];
-
-  if( nPU>49 ) nPU = 49;
-
-  if( iSys==0 ){
-    PUscale[0] = 0.544141;
-    PUscale[1] = 0.683152;
-    PUscale[2] = 1.0588;
-    PUscale[3] = 1.36648;
-    PUscale[4] = 1.62214;
-    PUscale[5] = 1.93965;
-    PUscale[6] = 1.45916;
-    PUscale[7] = 1.29301;
-    PUscale[8] = 1.39344;
-    PUscale[9] = 1.37393;
-    PUscale[10] = 1.26638;
-    PUscale[11] = 1.1637;
-    PUscale[12] = 1.05777;
-    PUscale[13] = 0.901478;
-    PUscale[14] = 0.695434;
-    PUscale[15] = 0.48665;
-    PUscale[16] = 0.323436;
-    PUscale[17] = 0.233179;
-    PUscale[18] = 0.204042;
-    PUscale[19] = 0.179695;
-    PUscale[20] = 0.117906;
-    PUscale[21] = 0.0535705;
-    PUscale[22] = 0.0179761;
-    PUscale[23] = 0.00486845;
-    PUscale[24] = 0.00120473;
-    PUscale[25] = 0.000306356;
-    PUscale[26] = 8.44097e-05;
-    PUscale[27] = 2.35712e-05;
-    PUscale[28] = 6.33309e-06;
-    PUscale[29] = 1.62779e-06;
-    PUscale[30] = 3.92723e-07;
-    PUscale[31] = 8.94453e-08;
-    PUscale[32] = 1.90178e-08;
-    PUscale[33] = 3.84203e-09;
-    PUscale[34] = 7.38767e-10;
-    PUscale[35] = 1.28456e-10;
-    PUscale[36] = 2.08504e-11;
-    PUscale[37] = 3.31182e-12;
-    PUscale[38] = 4.63316e-13;
-    PUscale[39] = 4.72854e-14;
-    PUscale[40] = 0;
-    PUscale[41] = 0;
-    PUscale[42] = 0;
-    PUscale[43] = 0;
-    PUscale[44] = 0;
-    PUscale[45] = 0;
-    PUscale[46] = 0;
-    PUscale[47] = 0;
-    PUscale[48] = 0;
-    PUscale[49] = 0;
-  }
-  else if( iSys==1 ){
-    PUscale[0] = 0.458261;
-    PUscale[1] = 0.626711;
-    PUscale[2] = 0.971785;
-    PUscale[3] = 1.21776;
-    PUscale[4] = 1.34764;
-    PUscale[5] = 1.4248;
-    PUscale[6] = 0.922526;
-    PUscale[7] = 0.744979;
-    PUscale[8] = 0.913723;
-    PUscale[9] = 1.06132;
-    PUscale[10] = 1.11114;
-    PUscale[11] = 1.12292;
-    PUscale[12] = 1.13425;
-    PUscale[13] = 1.10829;
-    PUscale[14] = 1.00558;
-    PUscale[15] = 0.83577;
-    PUscale[16] = 0.639871;
-    PUscale[17] = 0.469319;
-    PUscale[18] = 0.361301;
-    PUscale[19] = 0.306711;
-    PUscale[20] = 0.237734;
-    PUscale[21] = 0.142901;
-    PUscale[22] = 0.0656738;
-    PUscale[23] = 0.0238299;
-    PUscale[24] = 0.00722283;
-    PUscale[25] = 0.00197294;
-    PUscale[26] = 0.000550982;
-    PUscale[27] = 0.000165108;
-    PUscale[28] = 5.14307e-05;
-    PUscale[29] = 1.60005e-05;
-    PUscale[30] = 4.76288e-06;
-    PUscale[31] = 1.35321e-06;
-    PUscale[32] = 3.62213e-07;
-    PUscale[33] = 9.29401e-08;
-    PUscale[34] = 2.28987e-08;
-    PUscale[35] = 5.14682e-09;
-    PUscale[36] = 1.08953e-09;
-    PUscale[37] = 2.27672e-10;
-    PUscale[38] = 4.24244e-11;
-    PUscale[39] = 6.6564e-12;
-    PUscale[40] = 1.21726e-12;
-    PUscale[41] = 1.25024e-13;
-    PUscale[42] = 0;
-    PUscale[43] = 0;
-    PUscale[44] = 0;
-    PUscale[45] = 0;
-    PUscale[46] = 0;
-    PUscale[47] = 0;
-    PUscale[48] = 0;
-    PUscale[49] = 0;
-  }
-  else if( iSys==-1 ){
-    PUscale[0] = 0.637352;
-    PUscale[1] = 0.745524;
-    PUscale[2] = 1.16977;
-    PUscale[3] = 1.55999;
-    PUscale[4] = 2.01896;
-    PUscale[5] = 2.79883;
-    PUscale[6] = 2.50005;
-    PUscale[7] = 2.22714;
-    PUscale[8] = 2.00474;
-    PUscale[9] = 1.67907;
-    PUscale[10] = 1.37446;
-    PUscale[11] = 1.13578;
-    PUscale[12] = 0.899819;
-    PUscale[13] = 0.646461;
-    PUscale[14] = 0.412783;
-    PUscale[15] = 0.243661;
-    PUscale[16] = 0.153684;
-    PUscale[17] = 0.125858;
-    PUscale[18] = 0.116543;
-    PUscale[19] = 0.0860169;
-    PUscale[20] = 0.0414331;
-    PUscale[21] = 0.0133115;
-    PUscale[22] = 0.00326222;
-    PUscale[23] = 0.000723524;
-    PUscale[24] = 0.000169442;
-    PUscale[25] = 4.20509e-05;
-    PUscale[26] = 1.04015e-05;
-    PUscale[27] = 2.41401e-06;
-    PUscale[28] = 5.19674e-07;
-    PUscale[29] = 1.0525e-07;
-    PUscale[30] = 1.97832e-08;
-    PUscale[31] = 3.47419e-09;
-    PUscale[32] = 5.63765e-10;
-    PUscale[33] = 8.60403e-11;
-    PUscale[34] = 1.23701e-11;
-    PUscale[35] = 1.59276e-12;
-    PUscale[36] = 1.89108e-13;
-    PUscale[37] = 1.98468e-14;
-    PUscale[38] = 0;
-    PUscale[39] = 0;
-    PUscale[40] = 0;
-    PUscale[41] = 0;
-    PUscale[42] = 0;
-    PUscale[43] = 0;
-    PUscale[44] = 0;
-    PUscale[45] = 0;
-    PUscale[46] = 0;
-    PUscale[47] = 0;
-    PUscale[48] = 0;
-    PUscale[49] = 0;
-  }
-
-  return PUscale[nPU];
+    return PUscale[nPU];
 }
