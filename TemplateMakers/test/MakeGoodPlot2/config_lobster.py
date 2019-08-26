@@ -23,7 +23,7 @@ out_ver = "v1"
 #out_tag = "special/geoff_inputfiles_central_bkgd_{tstamp}".format(tstamp=tstamp2)
 out_tag = "special/tllq4f_SM_t-channel_{tstamp}_0partons".format(tstamp=tstamp2)
 
-workdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=out_tag,ver=out_ver,path="/tmpscratch/users/$USER")
+workdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=out_tag,ver=out_ver,path="/tmpscratch/users/$USER/analysisWorkflow")
 plotdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=out_tag,ver=out_ver,path="~/www/lobster")
 output_path  = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=out_tag,ver=out_ver,path="/store/user/$USER")
 
@@ -199,7 +199,7 @@ for samp in mysamples:
 
 # This doesn't do what you would think:
 #sandbox = cmssw.Sandbox(include=['EFTMultilepton/TemplateMakers/test/MakeGoodPlot2'])
-sandbox = cmssw.Sandbox(include=['EFTMultilepton/TemplateMakers/src','ttH-13TeVMultiLeptons/TemplateMakers/data'])
+sandbox = cmssw.Sandbox(include=['EFTMultilepton/TemplateMakers/src','EFTMultilepton/TemplateMakers/data'])
 # Most stuff has to be added "by hand":
 extra_inputs=[]
 extra_inputs.append('../variables.h')
