@@ -198,8 +198,9 @@ void HistMaker::standard_hists()
                             {
                                 double njets4hist = min(jetsize,th1eft[lbcatt+"."]->GetXaxis()->GetXmax()-0.1);
                                 int thebin = th1eft[lbcatt+"."]->FindBin(njets4hist);
+                                int nbins  = th1eft[lbcatt+"."]->GetNbinsX();
                                 weight = *wgt_intree; // the data-driven background weights don't get applied to MC
-                                weight *= totalSF(sys,category,thebin);
+                                weight *= totalSF(sys,category,thebin,nbins);
                             }
                         }                        
                     
@@ -209,7 +210,7 @@ void HistMaker::standard_hists()
                             if (sample<90) // (Dec. 2018) in practice it's safe to do <100, but <90 is more clear
                             {
                                 weight = *wgt_intree; // the data-driven background weights don't get applied to MC
-                                weight *= totalSF(sys,category);
+                                weight *= totalSF(sys,category);    // bin=-1, nbins=0
                             }
                         }
                         if (sample>=84 && sample<=88) weight = getEventFit(abs(weight)).evalPoint(&smpt); // only for non-main-result hists!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -331,8 +332,9 @@ void HistMaker::standard_hists()
                                 if (sample<90)
                                 {
                                     int thebin = th1eft[lbcat+"."]->FindBin(njets4hist);
+                                    int nbins  = th1eft[lbcat+"."]->GetNbinsX();
                                     weight = *wgt_intree;
-                                    weight *= totalSF(sys,category,thebin); // the weight is a fn of njet bin and sample (sample handled within totalSF)
+                                    weight *= totalSF(sys,category,thebin,nbins); // the weight is a fn of njet bin and sample (sample handled within totalSF)
                                 }
                                 //th1d[lbcat+"."]->Fill(jetsize,weight); // regular TH1D
                                 th1eft[lbcat+"."]->Fill(njets4hist,weight,getEventFit(abs(weight))); // using the TH1EFT class. Passing abs(weight) in order not to double-count negative weights (neg part taken care of by EFT weights).
@@ -367,8 +369,9 @@ void HistMaker::standard_hists()
                             {
                                 double njets4hist = min(jetsize,th1eft[lbcat+".JESUP"]->GetXaxis()->GetXmax()-0.1);
                                 int thebin = th1eft[lbcat+".JESUP"]->FindBin(njets4hist);
+                                int nbins  = th1eft[lbcat+".JESUP"]->GetNbinsX();
                                 weight = *wgt_intree; // the data-driven background weights don't get applied to MC
-                                weight *= totalSF(sys,category,thebin);
+                                weight *= totalSF(sys,category,thebin,nbins);
                             }
                         }
                         else
@@ -445,8 +448,9 @@ void HistMaker::standard_hists()
                                 if (sample<90)
                                 {
                                     int thebin = th1eft[lbcat+".JESUP"]->FindBin(njets4hist);
+                                    int nbins  = th1eft[lbcat+".JESUP"]->GetNbinsX();
                                     weight = *wgt_intree;
-                                    weight *= totalSF(sys,category,thebin);
+                                    weight *= totalSF(sys,category,thebin,nbins);
                                 }                                
                                 
                                 //th1d[lbcat+".JESUP"]->Fill(jetsize,weight); // regular TH1D
@@ -484,8 +488,9 @@ void HistMaker::standard_hists()
                             {
                                 double njets4hist = min(jetsize,th1eft[lbcat+".JESDOWN"]->GetXaxis()->GetXmax()-0.1);
                                 int thebin = th1eft[lbcat+".JESDOWN"]->FindBin(njets4hist);
+                                int nbins  = th1eft[lbcat+".JESDOWN"]->GetNbinsX();
                                 weight = *wgt_intree; // the data-driven background weights don't get applied to MC
-                                weight *= totalSF(sys,category,thebin);
+                                weight *= totalSF(sys,category,thebin,nbins);
                             }
                         }
                         else
@@ -554,8 +559,9 @@ void HistMaker::standard_hists()
                                 if (sample<90)
                                 {
                                     int thebin = th1eft[lbcat+".JESDOWN"]->FindBin(njets4hist);
+                                    int nbins  = th1eft[lbcat+".JESDOWN"]->GetNbinsX();
                                     weight = *wgt_intree;
-                                    weight *= totalSF(sys,category,thebin); // the PS weight is a fn of njet bin
+                                    weight *= totalSF(sys,category,thebin,nbins); // the PS weight is a fn of njet bin
                                 }
                                 
                                 //th1d[lbcat+".JESDOWN"]->Fill(jetsize,weight); // regular TH1D
@@ -667,8 +673,9 @@ void HistMaker::standard_hists()
                             {
                                 double njets4hist = min(jetsize,th1eft[lbcat+"."+string(systr)]->GetXaxis()->GetXmax()-0.1);
                                 int thebin = th1eft[lbcat+"."+string(systr)]->FindBin(njets4hist);
+                                int nbins  = th1eft[lbcat+"."+string(systr)]->GetNbinsX();
                                 weight = *wgt_intree; // the data-driven background weights don't get applied to MC
-                                weight *= totalSF(sys,category,thebin);
+                                weight *= totalSF(sys,category,thebin,nbins);
                             }
                         }                        
                         else
@@ -736,8 +743,9 @@ void HistMaker::standard_hists()
                                 if (sample<90)
                                 {
                                     int thebin = th1eft[lbcat+"."+string(systr)]->FindBin(njets4hist);
+                                    int nbins  = th1eft[lbcat+"."+string(systr)]->GetNbinsX();
                                     weight = *wgt_intree;
-                                    weight *= totalSF(sys,category,thebin); // the PS weight is a fn of njet bin
+                                    weight *= totalSF(sys,category,thebin,nbins); // the PS weight is a fn of njet bin
                                 }
                                 th1eft[lbcat+"."+string(systr)]->Fill(njets4hist,weight,getEventFit(abs(weight))); // using the TH1EFT class
                             }

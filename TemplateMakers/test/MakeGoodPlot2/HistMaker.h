@@ -165,10 +165,10 @@ class HistMaker
         void setupSFs();
         double muonSF(double mu_pt, double mu_eta, int lepmult, int sys);
         double electronSF(double ele_pt, double ele_eta, int lepmult, int sys);
-        double totalSF(int iSys, vector<string> category, int bin=-1);
+        double totalSF(int iSys, vector<string> category, int bin=-1, int nbins=0);
         double getFakeWeight(int iSys, vector<string> category);
         std::pair<double,double> getQFweights(string category);
-        double partonShowerSF(int bin, vector<string> category, int sys=0);
+        double partonShowerSF(int bin, vector<string> category, int sys=0, int nbins=0);
         double adhocNjetSF(int bin, vector<string> category, int sys=0);
         
         WCFit getEventFit(double weight=1.);
