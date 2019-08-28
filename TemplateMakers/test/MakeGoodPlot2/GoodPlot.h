@@ -1240,7 +1240,8 @@ void GoodPlot::printStackContentsLatex()
     cout << "\\hline \\\\" << endl;
     for (int j=1; j<=backsum->GetNbinsX(); j++)
     {
-        if (thestack->GetXaxis()->GetBinLabel(j)!="") cout << " & " << thestack->GetXaxis()->GetBinLabel(j);
+        // if (thestack->GetXaxis()->GetBinLabel(j)!="") cout << " & " << thestack->GetXaxis()->GetBinLabel(j);
+        if (std::strcmp(thestack->GetXaxis()->GetBinLabel(j),"") != 0) cout << " & " << thestack->GetXaxis()->GetBinLabel(j);
         else cout << " & " << j;
     }
     cout << " \\\\" << endl;     
@@ -1333,7 +1334,8 @@ void GoodPlot::printCombosLatex(MakeGoodPlot &thisMGP)
     //for (int j=1; j<=backsum->GetNbinsX(); j++)
     for (int j=startbin; j<=endbin; j++)
     {
-        if (thestack->GetXaxis()->GetBinLabel(j)!="") cout << " & " << thestack->GetXaxis()->GetBinLabel(j);
+        // if (thestack->GetXaxis()->GetBinLabel(j)!="") cout << " & " << thestack->GetXaxis()->GetBinLabel(j);
+        if (std::strcmp(thestack->GetXaxis()->GetBinLabel(j),"") != 0) cout << " & " << thestack->GetXaxis()->GetBinLabel(j);
         else cout << " & " << j;
     }
     cout << " \\\\" << endl;     
