@@ -179,7 +179,6 @@ void MakeGoodPlot::standard_plots()
                     combohist2->Add((TH1EFT*)hist[i].FindObject("3l_mix_m"+quant.first+systint2str(thisSyst)));
             
                     hist[i].Add(combohist2);
-
                 }
                 else
                 {

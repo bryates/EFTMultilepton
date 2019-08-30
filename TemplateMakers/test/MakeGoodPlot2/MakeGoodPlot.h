@@ -100,24 +100,24 @@ MakeGoodPlot::MakeGoodPlot(std::vector<int> thesamps, TString histdir)
     for (int i=0; i<numsamples; i++)
     {
         // load the saved hists from file(s):
-        //TString thishistfile = "temp_"+int2ss(samples[i])+".root";
+        // TString thishistfile = "temp_"+int2ss(samples[i])+".root";
         TString thishistfile = histdir+"temp_"+sample_int2TString(samples[i])+".root";
         
-//         if (histdir!="")
-//         {
-//             // in case the histograms are somewhere besides the current dir:
-//             thishistfile = histdir;
-//             // get subdir for this sample:
-//             TString sampTStemp = sample_int2TString(samples[i]);
-//             // the rest of this is due to the way lobster merges output files:
-//             thishistfile = thishistfile + "/" + sampTStemp + "/*.root";
-//             TString lsstring = "ls -d "+thishistfile+" > temp.txt";
-//             system(lsstring);
-//             ifstream passed_root_file;
-//             passed_root_file.open("temp.txt");
-//             passed_root_file >> thishistfile;
-//             passed_root_file.close();
-//         }
+        // if (histdir!="")
+        // {
+        //     // in case the histograms are somewhere besides the current dir:
+        //     thishistfile = histdir;
+        //     // get subdir for this sample:
+        //     TString sampTStemp = sample_int2TString(samples[i]);
+        //     // the rest of this is due to the way lobster merges output files:
+        //     thishistfile = thishistfile + "/" + sampTStemp + "/*.root";
+        //     TString lsstring = "ls -d "+thishistfile+" > temp.txt";
+        //     system(lsstring);
+        //     ifstream passed_root_file;
+        //     passed_root_file.open("temp.txt");
+        //     passed_root_file >> thishistfile;
+        //     passed_root_file.close();
+        // }
         
         files.push_back( new TFile(thishistfile) ); 
         TIter next(files[i]->GetListOfKeys());
@@ -126,9 +126,9 @@ MakeGoodPlot::MakeGoodPlot(std::vector<int> thesamps, TString histdir)
         
         while ((key=(TKey*)next()))
         {
-            //printf("key: %s points to an object of class: %s",
-            //key->GetName(),
-            //key->GetClassName());
+            // printf("key: %s points to an object of class: %s",
+            // key->GetName(),
+            // key->GetClassName());
             if (strncmp(key->GetName(),"blah",4)!=0)
             {
                 dummyArray.Add(files[i]->Get(key->GetName()));
@@ -140,8 +140,8 @@ MakeGoodPlot::MakeGoodPlot(std::vector<int> thesamps, TString histdir)
     } 
        
     // Example usage of hist TObjArray vector:
-    //auto thing = hist[0].FindObject("lepMVA sig1 endcap"); // will be a pointer
-    //thing->Draw();
+    // auto thing = hist[0].FindObject("lepMVA sig1 endcap"); // will be a pointer
+    // thing->Draw();
     
     setup();    
 }

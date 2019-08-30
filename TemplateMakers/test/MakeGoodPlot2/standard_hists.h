@@ -112,16 +112,16 @@ void HistMaker::standard_hists()
                     weight *= getFakeWeight(sys,category);
                     if (debug) cout << "after getFakeWeight" << endl;
                     // if (category[sys]=="3l_mix_sfz")
-//                     {
-//                         cout << "found a 3l_mix_sfz event -- " << weight << endl;
-//                     }
+                    // {
+                    //     cout << "found a 3l_mix_sfz event -- " << weight << endl;
+                    // }
                 }
                 // if (category[sys]=="3l_mix_sfz")
-//                 {
-//                     cout << "found a 3l_mix_sfz event -- " << weight << endl;
-//                     cout << "fakeable leps size: " << fakeable_leptons.size() << endl;
-//                     cout << "tight leps size: " << tight_leptons.size() << endl;
-//                 }
+                // {
+                //     cout << "found a 3l_mix_sfz event -- " << weight << endl;
+                //     cout << "fakeable leps size: " << fakeable_leptons.size() << endl;
+                //     cout << "tight leps size: " << tight_leptons.size() << endl;
+                // }
                 
                 string systr = string(systint2str(sys));
                 
@@ -132,10 +132,8 @@ void HistMaker::standard_hists()
                 if (category[catSys]!="null")
                 {
                     WCPoint smpt = WCPoint();
-                    
                     if (sys==0)
-                    {            
-            
+                    {
                         //std::vector<ttH::Jet> cutjets = simpleCut<std::vector<ttH::Jet> >(*loose_jets_intree,"pt",25.0); // need to be careful with this (problem if type not explicitly specified)
                         //std::vector<ttH::Jet> cleanedjets = cleanObjs(*preselected_jets_intree,*preselected_leptons_intree,0.4);
                         //auto cleanedjets = simpleCut(*preselected_jets_intree,"pt",30.0);
@@ -175,19 +173,18 @@ void HistMaker::standard_hists()
                     
                         // 2016 SFs for reference:
                         // this SF section eventually should be bigger / have more stuff:
-            //         if (sample<100) 
-            //         {
-            //             for (const auto & lep : *tight_leptons_intree) 
-            //             {
-            //                 // For 2016 data/MC, this is the combined reco+POGID+lepMVA SF:
-            //                 if (category.substr(0,2)=="2l") weight *= leptonSF_ttH(lep.pdgID, lep.obj.Pt(), lep.obj.Eta(), 2);
-            //                 else if (category.substr(0,2)=="3l" || category.substr(0,2)=="41" || category.substr(0,2)=="ge") weight *= leptonSF_ttH(lep.pdgID, lep.obj.Pt(), lep.obj.Eta(), 3);
-            //             }
-            //             
-            //             int ntpvs = *numTruePVs_intree;
-            //             if ( ntpvs<0 ) ntpvs = 99;
-            //             weight *= puw2016_nTrueInt_36fb(ntpvs);
-            //         }
+                        // if (sample<100) 
+                        // {
+                        //     for (const auto & lep : *tight_leptons_intree) 
+                        //     {
+                        //         // For 2016 data/MC, this is the combined reco+POGID+lepMVA SF:
+                        //         if (category.substr(0,2)=="2l") weight *= leptonSF_ttH(lep.pdgID, lep.obj.Pt(), lep.obj.Eta(), 2);
+                        //         else if (category.substr(0,2)=="3l" || category.substr(0,2)=="41" || category.substr(0,2)=="ge") weight *= leptonSF_ttH(lep.pdgID, lep.obj.Pt(), lep.obj.Eta(), 3);
+                        //     }
+                        //     int ntpvs = *numTruePVs_intree;
+                        //     if ( ntpvs<0 ) ntpvs = 99;
+                        //     weight *= puw2016_nTrueInt_36fb(ntpvs);
+                        // }
                         
                         if (isSR)
                         {
@@ -202,8 +199,7 @@ void HistMaker::standard_hists()
                                 weight = *wgt_intree; // the data-driven background weights don't get applied to MC
                                 weight *= totalSF(sys,category,thebin,nbins);
                             }
-                        }                        
-                    
+                        }
                         else
                         {
                             // 2017 SFs
@@ -231,9 +227,9 @@ void HistMaker::standard_hists()
 
                         auto untaggedjetsmedium = keepUnTagged(cleanedjets,"DM"); // these only get used in the line below
                         if (fillCRhists) th1d[category[sys]+"__hadtopmass."]->Fill(fillHistOverflowAware(th1d[category[sys]+"__hadtopmass."],had_top_mass(taggedjetsmedium,untaggedjetsmedium)),weight);
-                    
+
                         double total_ht = 0.;
-     
+
                         //for (const auto & jet : *preselected_jets_intree)
                         for (const auto & jet : cleanedjets)
                         {
@@ -249,7 +245,7 @@ void HistMaker::standard_hists()
                             th1d[category[sys]+"__qgid"]->Fill(jet.qgid,weight);
                             total_ht += jet.obj.Pt();
                         }
-    
+
                         for (const auto & lep : leptons)
                         {
                             th1d[category[sys]+"__leppt"]->Fill(lep.obj.Pt(),weight);
@@ -293,14 +289,14 @@ void HistMaker::standard_hists()
                                 }
                             }
                         }
-        
+
                         //auto allobjsTLV = getsumTLV(*tight_leptons_intree,*preselected_jets_intree);
                         auto allobjsTLV = getsumTLV(leptons,cleanedjets);
                         if (fillCRhists) th1d[category[sys]+"__MHT."]->Fill(fillHistOverflowAware(th1d[category[sys]+"__MHT."],allobjsTLV.Pt()),weight);
                         if (fillCRhists) th1d[category[sys]+"__met."]->Fill(fillHistOverflowAware(th1d[category[sys]+"__met."],(*met_intree)[0].obj.Pt()),weight);
                         th1d[category[sys]+"__metphi"]->Fill((*met_intree)[0].obj.Phi(),weight);
-        
-     
+
+
                         int thisbin = th1d["category_yields"]->GetXaxis()->FindBin(category[sys].c_str());
                         th1d["category_yields"]->Fill(thisbin,weight);
 
@@ -308,10 +304,10 @@ void HistMaker::standard_hists()
 
                         string jtcat = getjettagcategory(category[sys],jetsize,taggedjetsloosesize);
                         string lbcat = gettagcategory(category[sys],taggedjetsmediumsize,taggedjetsloosesize);
-                    
+
                         if (debug) cout << jtcat << endl;
                         if (debug) cout << lbcat << endl;
-                    
+
                         if (jtcat!="null" && category[sys].substr(0,2)!="1l")
                         {
                             if (debug) cout << "blah" << endl;
@@ -340,12 +336,10 @@ void HistMaker::standard_hists()
                                 th1eft[lbcat+"."]->Fill(njets4hist,weight,getEventFit(abs(weight))); // using the TH1EFT class. Passing abs(weight) in order not to double-count negative weights (neg part taken care of by EFT weights).
                                 //fillQFHists(sys,category); // for this, really only care about data
                                 //fillFakeHists(sys,category); // for this, really only care about data
-                            
                             }
                             if (debug) cout << "blah2" << endl;
                         }
                     }
-            
                     else if (sys==1)
                     {
                         //auto cleanedjets = simpleCut(preselected_jets_JECup,"pt",30.0);
@@ -457,15 +451,11 @@ void HistMaker::standard_hists()
                                 if (debug) cout <<"here2"<<endl;
                                 th1eft[lbcat+".JESUP"]->Fill(njets4hist,weight,getEventFit(abs(weight))); // using the TH1EFT class
                                 if (debug) cout<<"here3"<<endl;
-
                             }
                         }
-                
                     }
-            
                     else if (sys==2)
                     {
-                    
                         if (debug) cout << "inside " << systr << endl;
                         //auto cleanedjets = simpleCut(preselected_jets_JECdown,"pt",30.0);
                         auto cleanedjets = preselected_jets_JECdown;
@@ -543,7 +533,6 @@ void HistMaker::standard_hists()
                                     {
                                         auto obj12 = leptons[i].obj + leptons[j].obj;
                                         if (fillCRhists) th1d[category[sys]+"__llmass.JESDOWN"]->Fill(fillHistOverflowAware(th1d[category[sys]+"__llmass.JESDOWN"],obj12.M()),weight);
-
                                     }
                                 }
                             }                            
@@ -634,7 +623,6 @@ void HistMaker::standard_hists()
                                     {
                                         auto obj12 = leptons[i].obj + leptons[j].obj;
                                         if (fillCRhists) th1d[category[0]+"__llmass."+systr]->Fill(fillHistOverflowAware(th1d[category[0]+"__llmass."+systr],obj12.M()),weight);
-
                                     }
                                 }
                             }                            
@@ -728,7 +716,6 @@ void HistMaker::standard_hists()
                                     {
                                         auto obj12 = leptons[i].obj + leptons[j].obj;
                                         if (fillCRhists) th1d[category[catSys]+"__llmass."+systr]->Fill(fillHistOverflowAware(th1d[category[catSys]+"__llmass."+systr],obj12.M()),weight);
-
                                     }
                                 }
                             }                            
@@ -751,8 +738,6 @@ void HistMaker::standard_hists()
                             }
                         }                    
                     }
-                    
-                
                 } // non-null cat
             } // end loop over systs
         } // end loop over filling of charge flip hists
