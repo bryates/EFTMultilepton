@@ -473,19 +473,19 @@ MultileptonAna::GetSelectedMuons(const std::vector<pat::Muon>& inputMuons, const
       bool passPt = (mu.pt() >= iMinPt);
       switch(iMuonID)
       {
-	case muonID::muonRaw: 
+        case muonID::muonRaw: 
             passSelection = true;
             break;
         case muonID::muonLoose: 
             passSelection = mu.isLooseMuon() && passPt;
             break;
-	case muonID::muonPreselection: 
+        case muonID::muonPreselection: 
             passSelection = (mu.userFloat("idPreselection") > 0.5 && passPt);
             break;
-	case muonID::muonFakeable: 
+        case muonID::muonFakeable:
             passSelection = (mu.userFloat("idFakeable") > 0.5 && passPt);
             break;
-	case muonID::muonTight: 
+        case muonID::muonTight: 
             passSelection = (mu.userFloat("idTight") > 0.5 && passPt);
             break;    
         case muonID::muonTightMvaBased:

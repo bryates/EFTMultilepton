@@ -36,18 +36,18 @@ void makegoodplot(int mode=2)
     samples.push_back(23);
     samples.push_back(24);    
     samples.push_back(25);
-// //     
-// // //     // V+Jets
-// // // //  samples.push_back(16);
-// // // //  samples.push_back(6);
-// // // //  samples.push_back(7);
-// // // //     
-// // // //  // ttbar
-// // // //  samples.push_back(5);   // ttJets inclusive
-// // //     //samples.push_back(13); // ttJets dilep
-// // //     //samples.push_back(14); // ttJets single lep from t
-// // //     //samples.push_back(15); // ttJets single lep from tbar
-// // //     
+    // //     
+    // // //     // V+Jets
+    // // // //  samples.push_back(16);
+    // // // //  samples.push_back(6);
+    // // // //  samples.push_back(7);
+    // // // //     
+    // // // //  // ttbar
+    // // // //  samples.push_back(5);   // ttJets inclusive
+    // // //     //samples.push_back(13); // ttJets dilep
+    // // //     //samples.push_back(14); // ttJets single lep from t
+    // // //     //samples.push_back(15); // ttJets single lep from tbar
+    // // //     
      // convs
      samples.push_back(30);
 

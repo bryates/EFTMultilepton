@@ -170,7 +170,7 @@ void MakeGoodPlot::standard_plots()
                     // if you want mu only:
                     //auto combohist1 = (TH1EFT*)hist[i].FindObject("2lss_p_mumu"+quant.first+systint2str(thisSyst))->Clone("2lss"+quant.first+systint2str(thisSyst));
                     //combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_m_mumu"+quant.first+systint2str(thisSyst)));
-            
+
                     hist[i].Add(combohist1);
             
                     auto combohist2 = (TH1EFT*)hist[i].FindObject("3l_ppp"+quant.first+systint2str(thisSyst))->Clone("3l_mix"+quant.first+systint2str(thisSyst));
@@ -179,7 +179,6 @@ void MakeGoodPlot::standard_plots()
                     combohist2->Add((TH1EFT*)hist[i].FindObject("3l_mix_m"+quant.first+systint2str(thisSyst)));
             
                     hist[i].Add(combohist2);
-
                 }
                 else
                 {
@@ -230,7 +229,7 @@ void MakeGoodPlot::standard_plots()
     //for (int i=(numsamples-1); i>=0; i--)
     {           
         cout << " " << endl;
-        cout << "Doing " << sample_names[samples[i]] << endl;
+        cout << "Doing " << sample_names[samples[i]] << " (" << samples[i] << ")" << endl;
         double wc = 0.;
         if (samples[i]>99)
         {
@@ -336,13 +335,13 @@ void MakeGoodPlot::standard_plots()
                     cout << sample_names[samples[i]];
                     for (uint j=0; j<canvect.size(); j++)
                     {
-                        auto hist = (TH1*)canvect[j].first->thestack->GetHists()->At(i);
+                        auto stack_hist = (TH1*)canvect[j].first->thestack->GetHists()->At(i);
                         double integral = 0.;
                         double error = 0.;
-                        for (int bin=1; bin<=hist->GetNbinsX(); bin++)
+                        for (int bin=1; bin <= stack_hist->GetNbinsX(); bin++)
                         {
-                            integral += hist->GetBinContent(bin);
-                            error += hist->GetBinError(bin)*hist->GetBinError(bin);
+                            integral += stack_hist->GetBinContent(bin);
+                            error += stack_hist->GetBinError(bin)*stack_hist->GetBinError(bin);
                         }
                         error = sqrt(error);
                         
