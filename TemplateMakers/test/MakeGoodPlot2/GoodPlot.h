@@ -809,11 +809,19 @@ void GoodPlot::addStack(MakeGoodPlot &thisMGP, TString thehist, int i, TString l
     //auto myhist = (TH1*)thisMGP.hist[i].FindObject(thehist);
     auto myhist = (TH1EFT*)thisMGP.hist[i].FindObject(thehist);
     
-    if (debug) cout << myhist->GetName() << endl;
-    
+    if (debug) cout << "[START] addStack -- i = " << i << endl;
+    if (debug) cout << "myhist->GetName(): " << myhist->GetName() << endl;
+    if (debug) cout << "myhist->Integral() 1: " << myhist->Integral() << endl;
+    if (debug) {
+        for (int j=0; j < myhist->GetNbinsX(); j++) {
+            cout << j << ": " << myhist->GetBinContent(j) << " +/- " << myhist->GetBinError(j) << endl;
+        }
+    }
     //myhist->SetBinContent(myhist->GetNbinsX(),myhist->GetBinContent(myhist->GetNbinsX())+myhist->GetBinContent(myhist->GetNbinsX()+1)); // temp - comment me! does not work with EFT fits!
     
     int thisSamp = thisMGP.samples[i];
+    if (debug) cout << "lumi: " << thisMGP.lumi << " xsec: " << thisMGP.xsec[thisSamp] << " numgen: " << thisMGP.numgen[thisSamp] << endl;
+    if (debug) cout << "Scale: " << thisMGP.lumi*thisMGP.xsec[thisSamp]/thisMGP.numgen[thisSamp] << endl;
     if (thisSamp<40 || thisSamp>=90 || !doTH1EFTScale)
     {
         if (rebin>0) myhist->Rebin(rebin);
@@ -833,14 +841,21 @@ void GoodPlot::addStack(MakeGoodPlot &thisMGP, TString thehist, int i, TString l
         if (doTH1EFTScale)
         {
             myhist->ScaleFits(thisMGP.lumi*thisMGP.xsec[thisSamp]/thisMGP.numgen[thisSamp]);
-    //         WCPoint pt;
-    //         pt.setStrength("ctZ",10.); // If doing non-SM
-    //         myhist->Scale(pt);
+            // WCPoint pt;
+            // pt.setStrength("ctZ",10.); // If doing non-SM
+            // myhist->Scale(pt);
             myhist->Scale(WCPoint()); // SM
         }
         else myhist->Scale(thisMGP.lumi*thisMGP.xsec[thisSamp]/thisMGP.numgen[thisSamp]);
     }
-      
+
+    if (debug) cout << "myhist->Integral() 2: " << myhist->Integral() << endl;
+    if (debug) {
+        for (int j=0; j < myhist->GetNbinsX(); j++) {
+            cout << j << ": " << myhist->GetBinContent(j) << " +/- " << myhist->GetBinError(j) << endl;
+        }
+    }
+
     myhist->SetLineColor(thisMGP.color[thisSamp]);
     bool isSig = (thisSamp==1 || thisSamp==8 || thisSamp==9 || thisSamp==26 || thisSamp==27 || thisSamp==28 || thisSamp==29 || thisSamp==31 || thisSamp==84 || thisSamp==85 || thisSamp==86 || thisSamp==87 || thisSamp==88) ? true : false;
     if (!isSig) myhist->SetFillColor(thisMGP.color[thisSamp]);
@@ -858,7 +873,6 @@ void GoodPlot::addStack(MakeGoodPlot &thisMGP, TString thehist, int i, TString l
     
     if (!usecombosinplot || combo<0)
     {
-    
         if (!isSig) thebackstack->Add(myhist);
         thestack->Add(myhist);
     }
@@ -889,7 +903,7 @@ void GoodPlot::addStack(MakeGoodPlot &thisMGP, TString thehist, int i, TString l
     
     for (int thisSyst=1; thisSyst<numsysts; thisSyst++) // numsysts
     {
-        if (debug) cout << "thisSyst " << thisSyst << endl;
+        if (debug) cout << "thisSyst " << thisSyst << " -- " << systint2str(thisSyst) << endl;
         
         bool shapeonly = false;
         
@@ -906,7 +920,7 @@ void GoodPlot::addStack(MakeGoodPlot &thisMGP, TString thehist, int i, TString l
         
         auto dumhist = (TH1EFT*)thisMGP.hist[i].FindObject(thehist+thisSystTStr[thisSyst]); // should exist, have bins set, etc. Can be empty.
         //dumhist->SetBinContent(dumhist->GetNbinsX(),dumhist->GetBinContent(dumhist->GetNbinsX())+dumhist->GetBinContent(dumhist->GetNbinsX()+1)); // temp - comment me! does not work with EFT fits!
-        if (debug) cout << "got dumhist" << endl;
+        if (debug) cout << "got dumhist: " << thehist+thisSystTStr[thisSyst] << endl;
 
         if (thisSamp<40 || thisSamp>=90 || !doTH1EFTScale)
         {
@@ -926,9 +940,9 @@ void GoodPlot::addStack(MakeGoodPlot &thisMGP, TString thehist, int i, TString l
             if (doTH1EFTScale)
             {
                 dumhist->ScaleFits(thisMGP.lumi*thisMGP.xsec[thisSamp]/thisMGP.numgen[thisSamp]);
-    //          WCPoint pt;
-    //          pt.setStrength("ctZ",10.); // If doing non-SM
-    //          myhist->Scale(pt);
+                // WCPoint pt;
+                // pt.setStrength("ctZ",10.); // If doing non-SM
+                // myhist->Scale(pt);
                 dumhist->Scale(WCPoint()); // SM
             }
             else dumhist->Scale(thisMGP.lumi*thisMGP.xsec[thisSamp]/thisMGP.numgen[thisSamp]);
@@ -953,6 +967,7 @@ void GoodPlot::addStack(MakeGoodPlot &thisMGP, TString thehist, int i, TString l
         if (i==0)
         {
             if (debug) cout << "before clone" << endl;
+            if (debug) cout << "Clone name: " << "syststack"+int2ss(thisSyst) << endl;
             syststack[thisSyst] = (TH1D*)dumhist->Clone("syststack"+int2ss(thisSyst));
             if (debug) cout << "after clone" << endl;
         }
@@ -987,6 +1002,7 @@ void GoodPlot::addStack(MakeGoodPlot &thisMGP, TString thehist, int i, TString l
     
     //if (logplot && i==(numsamps-1)) this->SetLogy(true); 
     if (logplot) gPad->SetLogy(true);
+    if (debug) cout << "[END] addStack" << endl;
 }
 
 void GoodPlot::addStackWithSumMC(MakeGoodPlot &thisMGP, TString thehist, int i, TString legtext, int rebin, bool drawnow)
@@ -998,6 +1014,8 @@ void GoodPlot::addStackWithSumMC(MakeGoodPlot &thisMGP, TString thehist, int i, 
     {
         thehist=this->GetName();
     }
+
+    if (debug) cout << "[START] addStackWithSumMC -- i = " << i << endl;
     
     int thisSamp = thisMGP.samples[i];
     //if (thisSamp==84 || thisSamp==85) thehist = thehist+"ADHOCNJDOWN"; // gets the unscaled versions
@@ -1024,10 +1042,11 @@ void GoodPlot::addStackWithSumMC(MakeGoodPlot &thisMGP, TString thehist, int i, 
     int numsamps = thisMGP.numsamples;
     
     if (debug) cout << "addStackWithSumMC 1" << endl;
+    if (debug) cout << "myhist->GetName(): " << myhist->GetName() << endl;
     
     for (int j=0; j<myhist->GetNbinsX(); j++) // <- The numbering system for TGraph points starts at 0.
     {
-        if (debug) cout << "j: " << j << endl;
+        if (debug) cout << "myhist Bin j: " << j << endl;
         
         if (!exists)
         {
@@ -1099,15 +1118,19 @@ void GoodPlot::addStackWithSumMC(MakeGoodPlot &thisMGP, TString thehist, int i, 
     
     if (debug) cout << "  " << endl;
     if (debug) cout << "  " << endl;
+
     double dummyxpoint;
     double dummyypoint;
     int dummyint = sumMCband->GetPoint(sumhist->GetMaximumBin()-1,dummyxpoint,dummyypoint);
-    if (debug) cout << dummyxpoint << "  " << dummyypoint << endl;
+    if (debug) cout << "xpt -- ypt: " << dummyxpoint << " -- " << dummyypoint << endl;
     double maxamount = dummyypoint + sumMCband->GetErrorYhigh(sumhist->GetMaximumBin()-1);
-    if (debug) cout << maxamount << endl;
+    if (debug) cout << "chk1: " << maxamount << endl;
     maxamount = std::max(maxamount,thestack->GetMaximum());    
-    if (debug) cout << maxamount << thestack->GetMaximum() << endl;
+    if (debug) cout << "chk2: " << maxamount << thestack->GetMaximum() << endl;
     
+    if (debug) cout << "  " << endl;
+    if (debug) cout << "  " << endl;
+
     maxsofar = 1.4*maxamount; // 1.4
     if (logplot) maxsofar = 1000*maxamount;
     thestack->SetMaximum(maxsofar); // sumhist
@@ -1132,10 +1155,10 @@ void GoodPlot::addStackWithSumMC(MakeGoodPlot &thisMGP, TString thehist, int i, 
             if (debug) cout << " at the end, before loop over systs (j=" << j << ")" << endl;
             
             // if want to leave out the by-hand stuff:
-//             sumMCbandNoStat->SetPointEYhigh(j,0);
-//             sumMCbandNoStat->SetPointEYlow(j,0);
-//             sumMCband->SetPointEYhigh(j,0);
-//             sumMCband->SetPointEYlow(j,0);
+            // sumMCbandNoStat->SetPointEYhigh(j,0);
+            // sumMCbandNoStat->SetPointEYlow(j,0);
+            // sumMCband->SetPointEYhigh(j,0);
+            // sumMCband->SetPointEYlow(j,0);
             
             for (int thisSyst=1; thisSyst<numsysts; thisSyst++)
             {
@@ -1182,13 +1205,7 @@ void GoodPlot::addStackWithSumMC(MakeGoodPlot &thisMGP, TString thehist, int i, 
             //sumMCband->SetPointEYlow(j,maxdown);
             //sumMCband->SetPointEYhigh(j,1.3*sumMCband->GetErrorYhigh(j));
             //sumMCband->SetPointEYlow(j,1.3*sumMCband->GetErrorYlow(j));
-
-            
-
-        
         }
-    
-    
     
         //sumMCband->SetMarkerStyle(21);
         sumMCband->SetLineColor(kWhite);
@@ -1211,7 +1228,7 @@ void GoodPlot::addStackWithSumMC(MakeGoodPlot &thisMGP, TString thehist, int i, 
         if (!drawnow) thisMGP.CMSInfoLatex->Draw();
         if (!thisMGP.hasdata && !drawnow) thisMGP.canvas.Add(this);
     }    
-       
+    if (debug) cout << "[END] addStackWithSumMC" << endl;
 }
 void GoodPlot::printStackContentsLatex()
 {

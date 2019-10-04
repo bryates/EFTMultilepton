@@ -37,7 +37,7 @@ arg_parser.add_argument('--no-timestamp',
 arg_parser.add_argument('--prefix',
     metavar='NAME',
     default='temp',
-    help='Prefix each merged sample output root file with %(metavar)s'
+    help='Prefix each merged sample output root file with %(metavar)s. Note: The default is "temp" and any other choice will require downstream changes in the MakeGoodPlot.h code'
 )
 arg_parser.add_argument('--sub-dir',
     action='store_true',

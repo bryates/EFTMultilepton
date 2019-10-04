@@ -16,34 +16,34 @@ void MakeGoodPlot::setup()
     }  
     
     // 1D samps
-//     wilsoncoeffs.push_back("cpQ3");
-//     wilsoncoeffs.push_back("cpQM");
-//     wilsoncoeffs.push_back("cptb");
-//     wilsoncoeffs.push_back("cpt");
-//     wilsoncoeffs.push_back("cQe1");
-//     wilsoncoeffs.push_back("ctG");
-//     wilsoncoeffs.push_back("ctl1");
-//     wilsoncoeffs.push_back("ctp");
-//     wilsoncoeffs.push_back("ctW");
-//     wilsoncoeffs.push_back("ctZ");
+    // wilsoncoeffs.push_back("cpQ3");
+    // wilsoncoeffs.push_back("cpQM");
+    // wilsoncoeffs.push_back("cptb");
+    // wilsoncoeffs.push_back("cpt");
+    // wilsoncoeffs.push_back("cQe1");
+    // wilsoncoeffs.push_back("ctG");
+    // wilsoncoeffs.push_back("ctl1");
+    // wilsoncoeffs.push_back("ctp");
+    // wilsoncoeffs.push_back("ctW");
+    // wilsoncoeffs.push_back("ctZ");
 
     // nD samps. 16 dim fit (17 choose 2 cross terms + 17 non-cross = 153 points)
-//     wilsoncoeffs.push_back("cptb"); 
-//     wilsoncoeffs.push_back("cpt"); 
-//     wilsoncoeffs.push_back("ctlT1"); 
-//     wilsoncoeffs.push_back("cpQ3"); 
-//     wilsoncoeffs.push_back("cpQM"); 
-//     wilsoncoeffs.push_back("ctG"); 
-//     wilsoncoeffs.push_back("cbW"); 
-//     wilsoncoeffs.push_back("cQl31"); 
-//     wilsoncoeffs.push_back("ctl1"); 
-//     wilsoncoeffs.push_back("ctp"); 
-//     wilsoncoeffs.push_back("ctlS1"); 
-     wilsoncoeffs.push_back("ctZ"); 
-//     wilsoncoeffs.push_back("cQe1"); 
-//     wilsoncoeffs.push_back("cQlM1"); 
-//     wilsoncoeffs.push_back("cte1"); 
-//    wilsoncoeffs.push_back("ctW");
+    // wilsoncoeffs.push_back("cptb"); 
+    // wilsoncoeffs.push_back("cpt"); 
+    // wilsoncoeffs.push_back("ctlT1"); 
+    // wilsoncoeffs.push_back("cpQ3"); 
+    // wilsoncoeffs.push_back("cpQM"); 
+    // wilsoncoeffs.push_back("ctG"); 
+    // wilsoncoeffs.push_back("cbW"); 
+    // wilsoncoeffs.push_back("cQl31"); 
+    // wilsoncoeffs.push_back("ctl1"); 
+    // wilsoncoeffs.push_back("ctp"); 
+    // wilsoncoeffs.push_back("ctlS1"); 
+    wilsoncoeffs.push_back("ctZ"); 
+    // wilsoncoeffs.push_back("cQe1"); 
+    // wilsoncoeffs.push_back("cQlM1"); 
+    // wilsoncoeffs.push_back("cte1"); 
+    // wilsoncoeffs.push_back("ctW");
     
     
     
@@ -332,7 +332,7 @@ void MakeGoodPlot::setup()
     
     for (int i=0; i<numsamples; i++)
     {    
-        cout << samples[i] << endl;
+        cout << samples[i] << " -- " << sample_names[samples[i]] << endl;
         //cout << "uncomment NumInitialWeightedMCevents thing in setup.h" << endl;
         numgen[samples[i]] = ((TH1D*)hist[i].FindObject("NumInitialWeightedMCevents"))->Integral();
         //if (samples[i]==0) hasdata = true;   
@@ -359,17 +359,14 @@ void MakeGoodPlot::setup()
     CMSInfoLatex->SetTextSize(0.035);
     
     
-//     for (int i=0; i<numsamples; i++)
-//     {        
-//         for (int j=0; j<numtotalhists; j++)
-//         {        
-//             (TH1*)hist[i][j]->SetLineWidth(2);
-//             (TH1*)hist[i][j]->SetTitle("");
-//             
-//             
-//         }    
-//     
-//     }
+    // for (int i=0; i<numsamples; i++)
+    // {        
+    //     for (int j=0; j<numtotalhists; j++)
+    //     {        
+    //         (TH1*)hist[i][j]->SetLineWidth(2);
+    //         (TH1*)hist[i][j]->SetTitle("");
+    //     }    
+    // }
     //gPad->SetLogy(true);
     
     gStyle->SetLegendFillColor(kWhite);

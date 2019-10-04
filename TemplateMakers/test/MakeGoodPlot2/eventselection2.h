@@ -78,12 +78,12 @@ string HistMaker::eventselection(std::vector<ttH::Jet> thejets, bool useFakeable
     
     bool testcutpass = true;
     
-//     for (const auto & leptest : *preselected_leptons_intree)
-//     {
-//         //if (!leptest.idMediumPOG) testcutpass = false;
-//         //if (leptest.csv>0.8484) testcutpass = false;
-//         if (leptest.lepMVA<0.9) testcutpass = false;
-//     }
+    // for (const auto & leptest : *preselected_leptons_intree)
+    // {
+    //     //if (!leptest.idMediumPOG) testcutpass = false;
+    //     //if (leptest.csv>0.8484) testcutpass = false;
+    //     if (leptest.lepMVA<0.9) testcutpass = false;
+    // }
     
     if (numleps>1 && testcutpass)
     {    
@@ -242,11 +242,11 @@ string HistMaker::eventselection(std::vector<ttH::Jet> thejets, bool useFakeable
               
             // "poor man's" single lep (if you skimmed on >=2 preselected leptons)
             // bool isfake=false;
-//             for (const auto & lep : *preselected_leptons_intree) 
-//             {
-//                 if (lep.lepMVA<0.5) isfake=true;
-//             }
-//             if (!isfake) return "null";
+            // for (const auto & lep : *preselected_leptons_intree) 
+            // {
+            //     if (lep.lepMVA<0.5) isfake=true;
+            // }
+            // if (!isfake) return "null";
             
             
             if (nummuons==1)

@@ -3,6 +3,11 @@
 void makeanatestfile() {
     std::vector<int> samples;
 
+    /* Note: all of the samples below need to be located in the same directory! This has the
+        potential to make it very difficult to determine what samples were used to produce the
+        output file, unless it is excessively named
+    */
+
     // Diboson
     samples.push_back(10);
     samples.push_back(11);
@@ -42,13 +47,15 @@ void makeanatestfile() {
     samples.push_back(103); // double ele data
     samples.push_back(104); // mu+EG data
 
-    std::cout << "Starting drawAllToFile" << std::endl;
 
+    std::cout << "Instantiating MakeGoodPlot" << std::endl;
     MakeGoodPlot *newplots = new MakeGoodPlot(samples,"/tmpscratch/users/awightma/combinedHists/test/testing_2019_08_07/");
     //MakeGoodPlot *newplots = new MakeGoodPlot(samples,"/tmpscratch/users/awightma/combinedHists/anatest23_2019_08_09_tllq4f-tchannel-plusJets/");
     //MakeGoodPlot *newplots = new MakeGoodPlot(samples,"/tmpscratch/users/awightma/combinedHists/anatest23_2019_08_09_tllq4f-tchannel-NoJets-NoEFT/");
+    
+    std::cout << "Starting drawAllToFile" << std::endl;
     //newplots->drawAllToFile("anatest23","root");
-    newplots->drawAllToFile("anatest23_new-ttll","root");
+    newplots->drawAllToFile("dump_name","root");
 
     //delete newplots;
     std::cout << "Finished!" << std::endl;
