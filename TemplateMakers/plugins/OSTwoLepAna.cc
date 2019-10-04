@@ -172,7 +172,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
     edm::Handle<pat::JetCollection> pfjets = get_collection(event, jets_token_);
   
     edm::ESHandle<JetCorrectorParametersCollection> JetCorParColl;
-    evsetup.get<JetCorrectionsRecord>().get("AK5PF", JetCorParColl);
+    evsetup.get<JetCorrectionsRecord>().get("AK4PFchs", JetCorParColl);
     const JetCorrectorParameters& JetCorPar = (*JetCorParColl)["Uncertainty"];
     junc_.reset(new JetCorrectionUncertainty(JetCorPar));
 
