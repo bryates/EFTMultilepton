@@ -1,8 +1,9 @@
 import datetime
-from glob import glob
+import os
+import sys
+
 from lobster import cmssw
 from lobster.core import AdvancedOptions, Category, Config, Dataset, StorageConfiguration, Workflow
-import os
 
 cmsswbase = os.environ['CMSSW_BASE']
 
@@ -10,11 +11,12 @@ tstamp1 = datetime.datetime.now().strftime('%Y%m%d_%H%M')
 tstamp2 = datetime.datetime.now().strftime('%Y_%m_%d')
 lobster_step = "checkAnaTrees"
 
-master_label = 'EFT_T3_{step}_{tstamp}'.format(step=lobster_step,tstamp=tstamp1)
-# master_label = 'EFT_CRC_{step}_{tstamp}'.format(step=lobster_step,tstamp=tstamp1)
+# master_label = 'EFT_T3_{step}_{tstamp}'.format(step=lobster_step,tstamp=tstamp1)
+master_label = 'EFT_CRC_{step}_{tstamp}'.format(step=lobster_step,tstamp=tstamp1)
 
 ver = "v1"
-tag = "test/lobster_test_{tstamp}".format(tstamp=tstamp1)
+# tag = "test/lobster_test_{tstamp}".format(tstamp=tstamp1)
+tag = "all_samples_{tstamp}".format(tstamp=tstamp1)
 
 workdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=tag,ver=ver,path="/tmpscratch/users/$USER/analysisWorkflow")
 plotdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=tag,ver=ver,path="~/www/lobster")
@@ -61,41 +63,71 @@ processing = Category(
 #   events were produced with the exact same setup!
 ####################################################################################################
 sub_path = 'awightma/analysisTrees'
-eft_fpt = 6
-central_fpt = 10
-eft_mergesize = '128M'  # EFT samples are ~15M per root file
-central_mergesize = '256K'  # central samples are ~33K per root file
-tllq4f_JetMax2 = ('tllq4f_JetMax2',eft_fpt,eft_mergesize,[
+central_fpt = 20    # 10    # IMPORTANT: Use the smaller number when running with T3 resources!!
+eft_mergesize = '1024M' #'256M'  # EFT samples are ~15M per root file
+central_mergesize = '2048K' #'512K'  # central samples are ~33K per root file
+tllq4f_JetMax2 = ('tllq4f_JetMax2',5,eft_mergesize,[
     os.path.join(sub_path,'special/tllq4f_EFT_t-channelJets_2019_09_27_JetMax1-JetMax2_b1-b4/v1/tllq_multidim_JetMax2_b1'),
     os.path.join(sub_path,'special/tllq4f_EFT_t-channelJets_2019_09_27_JetMax1-JetMax2_b1-b4/v1/tllq_multidim_JetMax2_b2'),
     os.path.join(sub_path,'special/tllq4f_EFT_t-channelJets_2019_09_27_JetMax1-JetMax2_b1-b4/v1/tllq_multidim_JetMax2_b3'),
     os.path.join(sub_path,'special/tllq4f_EFT_t-channelJets_2019_09_27_JetMax1-JetMax2_b1-b4/v1/tllq_multidim_JetMax2_b4'),
     os.path.join(sub_path,'special/tllq4f_EFT_t-channelJets_2019_09_27_JetMax2_FPR5B3/v1/tllq_multidim_JetMax2'),
 ])
-
-tllq4f_JetMax1 = ('tllq4f_JetMax1',eft_fpt,eft_mergesize,[
+tllq4f_JetMax1 = ('tllq4f_JetMax1',5,eft_mergesize,[
     os.path.join(sub_path,'special/tllq4f_EFT_t-channelJets_2019_09_27_JetMax1-JetMax2_b1-b4/v1/tllq_multidim_JetMax1_b1'),
     os.path.join(sub_path,'special/tllq4f_EFT_t-channelJets_2019_09_27_JetMax1-JetMax2_b1-b4/v1/tllq_multidim_JetMax1_b2'),
     os.path.join(sub_path,'special/tllq4f_EFT_t-channelJets_2019_09_27_JetMax1-JetMax2_b1-b4/v1/tllq_multidim_JetMax1_b3'),
     os.path.join(sub_path,'special/tllq4f_EFT_t-channelJets_2019_09_27_JetMax1-JetMax2_b1-b4/v1/tllq_multidim_JetMax1_b4'),
 ])
-
-tllq4f_0p_NoMerge = ('tllq4f_0p_NoDim6_NoMerge',eft_fpt,central_mergesize,[
+tllq4f_0p_NoMerge = ('tllq4f_0p_NoDim6_NoMerge',5,central_mergesize,[
     os.path.join(sub_path,'special/tllq4f_EFT_t-channelNoJets_2019_10_01_HadFilterCheck/v1/tllq_multidim_NoMerge'),
 ])
-
-tllq4f_0p_JetMax1 = ('tllq4f_0p_NoDim6_JetMax1',eft_fpt,central_mergesize,[
+tllq4f_0p_JetMax1 = ('tllq4f_0p_NoDim6_JetMax1',5,central_mergesize,[
     os.path.join(sub_path,'special/tllq4f_EFT_t-channelNoJets_2019_10_01_HadFilterCheck/v1/tllq_multidim_JetMax1'),
 ])
-
-tllq4f_0p_JetMax2 = ('tllq4f_0p_NoDim6_JetMax2',eft_fpt,central_mergesize,[
+tllq4f_0p_JetMax2 = ('tllq4f_0p_NoDim6_JetMax2',5,central_mergesize,[
     os.path.join(sub_path,'special/tllq4f_EFT_t-channelNoJets_2019_10_01_HadFilterCheck/v1/tllq_multidim_JetMax2'),
+])
+
+
+tllq4f_tch_NoHiggs_0j_NoMerge = ('tllq4f_tch_NoHiggs_0j_NoMerge',3,eft_mergesize,[
+    os.path.join(sub_path,'special/tllq4f_EFT_t-ch_NoHiggs_0j_2019_10_07_NoMrg-JM1-JM2/v1/tllq_multidim_tch_NoHiggs_0j_NoMerge')
+])
+tllq4f_tch_NoHiggs_0j_JetMax1 = ('tllq4f_tch_NoHiggs_0j_JetMax1',3,eft_mergesize,[
+    os.path.join(sub_path,'special/tllq4f_EFT_t-ch_NoHiggs_0j_2019_10_07_NoMrg-JM1-JM2/v1/tllq_multidim_tch_NoHiggs_0j_JetMax1')
+])
+tllq4f_tch_NoHiggs_0j_JetMax2 = ('tllq4f_tch_NoHiggs_0j_JetMax2',3,eft_mergesize,[
+    os.path.join(sub_path,'special/tllq4f_EFT_t-ch_NoHiggs_0j_2019_10_07_NoMrg-JM1-JM2/v1/tllq_multidim_tch_NoHiggs_0j_JetMax2')
+])
+
+tllq4f_tch_NoHiggsMLM_0j_NoMerge = ('tllq4f_tch_NoHiggsMLM_0j_NoMerge',3,eft_mergesize,[
+    os.path.join(sub_path,'special/tllq4f_EFT_t-ch_NoHiggs_0j_2019_10_07_NoMrg-JM1-JM2/v1/tllq_multidim_tch_NoHiggsMLM_0j_NoMerge')
+])
+tllq4f_tch_NoHiggsMLM_0j_JetMax1 = ('tllq4f_tch_NoHiggsMLM_0j_JetMax1',3,eft_mergesize,[
+    os.path.join(sub_path,'special/tllq4f_EFT_t-ch_NoHiggs_0j_2019_10_07_NoMrg-JM1-JM2/v1/tllq_multidim_tch_NoHiggsMLM_0j_JetMax1')
+])
+tllq4f_tch_NoHiggsMLM_0j_JetMax2 = ('tllq4f_tch_NoHiggsMLM_0j_JetMax2',3,eft_mergesize,[
+    os.path.join(sub_path,'special/tllq4f_EFT_t-ch_NoHiggs_0j_2019_10_07_NoMrg-JM1-JM2/v1/tllq_multidim_tch_NoHiggsMLM_0j_JetMax2')
+])
+
+tllq4f_tch_NoHiggs_0j_xqcut0_NoMerge = ('tllq4f_tch_NoHiggs_0j_xqcut0_NoMerge',3,eft_mergesize,[
+    os.path.join(sub_path,'special/tllq4f_EFT_t-ch_NoHiggs_0j_2019_10_08_xqcut0_NoMrg-JM1-JM2/v1/tllq_multidim_tch_NoHiggs_0j_xqcut0_NoMerge')
+])
+tllq4f_tch_NoHiggs_0j_xqcut0_JetMax1 = ('tllq4f_tch_NoHiggs_0j_xqcut0_JetMax1',3,eft_mergesize,[
+    os.path.join(sub_path,'special/tllq4f_EFT_t-ch_NoHiggs_0j_2019_10_08_xqcut0_NoMrg-JM1-JM2/v1/tllq_multidim_tch_NoHiggs_0j_xqcut0_JetMax1')
+])
+tllq4f_tch_NoHiggs_0j_xqcut0_JetMax2 = ('tllq4f_tch_NoHiggs_0j_xqcut0_JetMax2',3,eft_mergesize,[
+    os.path.join(sub_path,'special/tllq4f_EFT_t-ch_NoHiggs_0j_2019_10_08_xqcut0_NoMrg-JM1-JM2/v1/tllq_multidim_tch_NoHiggs_0j_xqcut0_JetMax2')
+])
+
+#NOTE: This should have said 'JetMax1', but was mis-named when I ran over this sample
+tllq4f_MatchedNoHiggs0p_JetMax2 = ('tllq4f_MatchedNoHiggs0p_JetMax2',3,eft_mergesize,[
+    os.path.join(sub_path,'private_sgnl_2019_08_05/v1/tllq_multidim_b1')
 ])
 
 central_tZq_v1 = ('central_tZq_v14-v1',central_fpt,central_mergesize,[
     os.path.join(sub_path,'special/central_tZq_2019_09_20_v1/v1/tZq'),  # Uses v14-v1 sample
 ])
-
 central_tZq_v2 = ('central_tZq_v14-v2',central_fpt,central_mergesize,[
     os.path.join(sub_path,'central_sgnl_2019_07_31/v1/tZq'),            # Uses v14-v2 sample
 ])
@@ -106,26 +138,26 @@ central_tZq_NoSkipHiggs_v1 = ('central_tZq_NoSkipHiggs_v14-v1',central_fpt,centr
 central_tZq_NoSkipHiggs_v2 = ('central_tZq_NoSkipHiggs_v14-v2',central_fpt,central_mergesize,[
     os.path.join(sub_path,'special/central_tZq_2019_09_23_v14-v2_NoSkipHiggs/v1/tZq')
 ])
-tllq4f_JetMax1_NoSkipHiggs = ('tllq4f_JetMax1_NoSkipHiggs',eft_fpt,eft_mergesize,[
+tllq4f_JetMax1_NoSkipHiggs = ('tllq4f_JetMax1_NoSkipHiggs',5,eft_mergesize,[
     os.path.join(sub_path,'special/tllq4f_EFT_t-channel_2019_10_03_NoSkipHiggs/v1/tllq_multidim_JetMax1_b1'),
     os.path.join(sub_path,'special/tllq4f_EFT_t-channel_2019_10_03_NoSkipHiggs/v1/tllq_multidim_JetMax1_b2'),
     os.path.join(sub_path,'special/tllq4f_EFT_t-channel_2019_10_03_NoSkipHiggs/v1/tllq_multidim_JetMax1_b3'),
     os.path.join(sub_path,'special/tllq4f_EFT_t-channel_2019_10_03_NoSkipHiggs/v1/tllq_multidim_JetMax1_b4'),
 ])
-tllq4f_JetMax2_NoSkipHiggs = ('tllq4f_JetMax2_NoSkipHiggs',eft_fpt,eft_mergesize,[
+tllq4f_JetMax2_NoSkipHiggs = ('tllq4f_JetMax2_NoSkipHiggs',5,eft_mergesize,[
     os.path.join(sub_path,'special/tllq4f_EFT_t-channel_2019_10_03_NoSkipHiggs/v1/tllq_multidim_JetMax2_b1'),
     os.path.join(sub_path,'special/tllq4f_EFT_t-channel_2019_10_03_NoSkipHiggs/v1/tllq_multidim_JetMax2_b2'),
     os.path.join(sub_path,'special/tllq4f_EFT_t-channel_2019_10_03_NoSkipHiggs/v1/tllq_multidim_JetMax2_b3'),
     os.path.join(sub_path,'special/tllq4f_EFT_t-channel_2019_10_03_NoSkipHiggs/v1/tllq_multidim_JetMax2_b4'),
     os.path.join(sub_path,'special/tllq4f_EFT_t-channel_2019_10_03_NoSkipHiggs/v1/tllq_multidim_JetMax2_b5'),
 ])
-tllq4f_0p_NoMerge_NoSkipHiggs = ('tllq4f_0p_NoDim6_NoMerge_NoSkipHiggs',eft_fpt,central_mergesize,[
+tllq4f_0p_NoMerge_NoSkipHiggs = ('tllq4f_0p_NoDim6_NoMerge_NoSkipHiggs',5,central_mergesize,[
     os.path.join(sub_path,'special/tllq4f_EFT_t-channel_2019_10_03_NoSkipHiggs/v1/tllq_multidim_0p_NoMerge'),
 ])
-tllq4f_0p_JetMax1_NoSkipHiggs = ('tllq4f_0p_NoDim6_JetMax1_NoSkipHiggs',eft_fpt,central_mergesize,[
+tllq4f_0p_JetMax1_NoSkipHiggs = ('tllq4f_0p_NoDim6_JetMax1_NoSkipHiggs',5,central_mergesize,[
     os.path.join(sub_path,'special/tllq4f_EFT_t-channel_2019_10_03_NoSkipHiggs/v1/tllq_multidim_0p_JetMax1'),
 ])
-tllq4f_0p_JetMax2_NoSkipHiggs = ('tllq4f_0p_NoDim6_JetMax2_NoSkipHiggs',eft_fpt,central_mergesize,[
+tllq4f_0p_JetMax2_NoSkipHiggs = ('tllq4f_0p_NoDim6_JetMax2_NoSkipHiggs',5,central_mergesize,[
     os.path.join(sub_path,'special/tllq4f_EFT_t-channel_2019_10_03_NoSkipHiggs/v1/tllq_multidim_0p_JetMax2'),
 ])
 ####################################################################################################
@@ -134,13 +166,23 @@ central_ttH = ('central_ttH',central_fpt,central_mergesize,[
 ])
 ####################################################################################################
 samples = [
-    tllq4f_JetMax1,
-    tllq4f_JetMax2,
     central_tZq_v1,
     central_tZq_v2,
+    tllq4f_JetMax1,
+    tllq4f_JetMax2,
     tllq4f_0p_NoMerge,
     tllq4f_0p_JetMax1,
     tllq4f_0p_JetMax2,
+    tllq4f_MatchedNoHiggs0p_JetMax2,
+    tllq4f_tch_NoHiggs_0j_NoMerge,
+    tllq4f_tch_NoHiggs_0j_JetMax1,
+    tllq4f_tch_NoHiggs_0j_JetMax2,
+    tllq4f_tch_NoHiggsMLM_0j_NoMerge,
+    tllq4f_tch_NoHiggsMLM_0j_JetMax1,
+    tllq4f_tch_NoHiggsMLM_0j_JetMax2,
+    tllq4f_tch_NoHiggs_0j_xqcut0_NoMerge,
+    tllq4f_tch_NoHiggs_0j_xqcut0_JetMax1,
+    tllq4f_tch_NoHiggs_0j_xqcut0_JetMax2,
     tllq4f_JetMax1_NoSkipHiggs,
     tllq4f_JetMax2_NoSkipHiggs,
     tllq4f_0p_NoMerge_NoSkipHiggs,

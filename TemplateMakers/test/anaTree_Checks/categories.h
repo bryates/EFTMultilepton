@@ -345,8 +345,8 @@ void print_table(TH1EFT* hist,TString row_name,double norm,bool incl_header) {
 
     std::stringstream header;
     std::stringstream row;
-    header << std::setw(15) << "";
-    row << std::setw(15) << row_name;
+    header << std::setw(20) << "";
+    row << std::setw(20) << row_name;
     if (norm > 0) {
         header << " & " << std::setw(5) << "norm";
         row << " & " << std::setw(5) << std::right << TString::Format("%.2f",norm);

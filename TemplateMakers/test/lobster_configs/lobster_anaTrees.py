@@ -17,7 +17,7 @@ master_label = 'EFT_CRC_anaTrees_{tstamp}'.format(tstamp=tstamp1)
 
 ver = "v1"
 #tag = "test/lobster_test_{tstamp}".format(tstamp=tstamp1)
-tag = "special/tllq4f_EFT_t-channel_{tstamp}_NoSkipHiggs".format(tstamp=tstamp2)
+tag = "special/tllq4f_EFT_MatchedNoHiggs_{tstamp}_NoMrg-JM1-JM2".format(tstamp=tstamp2)
 #tag = "central_sgnl_{tstamp}".format(tstamp=tstamp2)
 #tag = "central_bkgd_{tstamp}".format(tstamp=tstamp2)
 #tag = "private_sgnl_{tstamp}".format(tstamp=tstamp2)
@@ -255,41 +255,51 @@ if ((not isdata) and doeftsamps):
     # mysamples.append(['tHq_multidim_batch6','Batch6/postLHE_step/v1/mAOD_step_tHq_16DttllScanpoints_run1/'])
 
     ### Private EFT samples
-    #hadoop_loc = "/store/user/awightma/FullProduction/Round5/"
-    # ttH
-    #mysamples.append(['ttH_multidim_b1','Batch1/postLHE_step/v1/mAOD_step_ttHJet_HanModel16DttllScanpoints_run1/'])
-    # ttlnu
-    #mysamples.append(['ttlnu_multidim_b1','Batch1/postLHE_step/v1/mAOD_step_ttlnuJet_HanModel16DttllScanpoints_run1/'])
-    # ttll
-    #mysamples.append(['ttll_multidim_b1','Batch1/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanModel16DttllScanpoints_run1/'])
-    #mysamples.append(['ttll_multidim_b2','Batch2/postLHE_step/v2/mAOD_step_ttllNuNuJetNoHiggs_HanModel16DttllScanpoints_run1/'])
-    # tHq
-    #mysamples.append(['tHq_multidim_b1','Batch1/postLHE_step/v1/mAOD_step_tHq4fMatched_HanModel16DttllScanpoints_run1/'])
-    # tllq
-    #mysamples.append(['tllq_multidim_b1','Batch1/postLHE_step/v1/mAOD_step_tllq4fMatchedNoHiggs_HanModel16DttllScanpoints_run1/'])
-
     hadoop_loc = '/store/user/awightma/'
-    #mysamples.append(['tllq_multidim_b1','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10_run1/'])
-    #mysamples.append(['tllq_multidim_b2','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1_b2/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10_run1/'])
+    ## ttH
+    # mysamples.append(['ttH_multidim_b1','FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttHJet_HanModel16DttllScanpoints_run1/'])
+    ## ttlnu
+    # mysamples.append(['ttlnu_multidim_b1','FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttlnuJet_HanModel16DttllScanpoints_run1/'])
+    ## ttll
+    # mysamples.append(['ttll_multidim_b1','FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanModel16DttllScanpoints_run1/'])
+    # mysamples.append(['ttll_multidim_b2','FullProduction/Round5/Batch2/postLHE_step/v2/mAOD_step_ttllNuNuJetNoHiggs_HanModel16DttllScanpoints_run1/'])
+    ## tHq
+    # mysamples.append(['tHq_multidim_b1','FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_tHq4fMatched_HanModel16DttllScanpoints_run1/'])
+    ## tllq
+    # mysamples.append(['tllq_multidim_b1','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])
+    # mysamples.append(['tllq_multidim_b2','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0_extra/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])
 
     # mysamples.append(['tllq_multidim_0partons','postLHE_step/2019_04_19/tllq4f-NoDim6Diagrams/v2/mAOD_step_tllq4f_NoDim6NoSchanW_run0/'])
-    #singleSamp = ['tllq_multidim_b1','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10_run1/']
-    #singleSamp = ['tllq_multidim_b2','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1_b2/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10_run1/']
 
-    mysamples.append(['tllq_multidim_JetMax1_b1','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1-JetMax2_b1-b4/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10JetMax1b1_run1'])
-    mysamples.append(['tllq_multidim_JetMax1_b2','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1-JetMax2_b1-b4/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10JetMax1b2_run1'])
-    mysamples.append(['tllq_multidim_JetMax1_b3','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1-JetMax2_b1-b4/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10JetMax1b3_run1'])
-    mysamples.append(['tllq_multidim_JetMax1_b4','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1-JetMax2_b1-b4/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10JetMax1b4_run1'])
+    # mysamples.append(['tllq_multidim_JetMax1_b1','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1-JetMax2_b1-b4/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10JetMax1b1_run1'])
+    # mysamples.append(['tllq_multidim_JetMax1_b2','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1-JetMax2_b1-b4/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10JetMax1b2_run1'])
+    # mysamples.append(['tllq_multidim_JetMax1_b3','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1-JetMax2_b1-b4/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10JetMax1b3_run1'])
+    # mysamples.append(['tllq_multidim_JetMax1_b4','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1-JetMax2_b1-b4/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10JetMax1b4_run1'])
 
-    mysamples.append(['tllq_multidim_JetMax2_b1','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1-JetMax2_b1-b4/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10JetMax2b1_run1'])
-    mysamples.append(['tllq_multidim_JetMax2_b2','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1-JetMax2_b1-b4/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10JetMax2b2_run1'])
-    mysamples.append(['tllq_multidim_JetMax2_b3','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1-JetMax2_b1-b4/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10JetMax2b3_run1'])
-    mysamples.append(['tllq_multidim_JetMax2_b4','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1-JetMax2_b1-b4/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10JetMax2b4_run1'])
-    mysamples.append(['tllq_multidim_JetMax2_b5','FullProduction/Round5/Batch3/postLHE_step/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10JetMax2_run1'])
+    # mysamples.append(['tllq_multidim_JetMax2_b1','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1-JetMax2_b1-b4/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10JetMax2b1_run1'])
+    # mysamples.append(['tllq_multidim_JetMax2_b2','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1-JetMax2_b1-b4/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10JetMax2b2_run1'])
+    # mysamples.append(['tllq_multidim_JetMax2_b3','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1-JetMax2_b1-b4/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10JetMax2b3_run1'])
+    # mysamples.append(['tllq_multidim_JetMax2_b4','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1-JetMax2_b1-b4/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10JetMax2b4_run1'])
+    # mysamples.append(['tllq_multidim_JetMax2_b5','FullProduction/Round5/Batch3/postLHE_step/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10JetMax2_run1'])
 
-    mysamples.append(['tllq_multidim_0p_NoMerge','postLHE_step/2019_04_19/tllq4f_forHadFilterCheck_pythia-JetMax1-JetMax2-NoMerge/v2/mAOD_step_tllq4f_NoDim6NoSchanWNoMerge_run0'])
-    mysamples.append(['tllq_multidim_0p_JetMax1','postLHE_step/2019_04_19/tllq4f_forHadFilterCheck_pythia-JetMax1-JetMax2-NoMerge/v2/mAOD_step_tllq4f_NoDim6NoSchanWJetMax1_run0'])
-    mysamples.append(['tllq_multidim_0p_JetMax2','postLHE_step/2019_04_19/tllq4f_forHadFilterCheck_pythia-JetMax1-JetMax2-NoMerge/v2/mAOD_step_tllq4f_NoDim6NoSchanWJetMax2_run0'])
+    # mysamples.append(['tllq_multidim_0p_NoMerge','postLHE_step/2019_04_19/tllq4f_forHadFilterCheck_pythia-JetMax1-JetMax2-NoMerge/v2/mAOD_step_tllq4f_NoDim6NoSchanWNoMerge_run0'])
+    # mysamples.append(['tllq_multidim_0p_JetMax1','postLHE_step/2019_04_19/tllq4f_forHadFilterCheck_pythia-JetMax1-JetMax2-NoMerge/v2/mAOD_step_tllq4f_NoDim6NoSchanWJetMax1_run0'])
+    # mysamples.append(['tllq_multidim_0p_JetMax2','postLHE_step/2019_04_19/tllq4f_forHadFilterCheck_pythia-JetMax1-JetMax2-NoMerge/v2/mAOD_step_tllq4f_NoDim6NoSchanWJetMax2_run0'])
+
+    # mysamples.append(['tllq_multidim_MatchedNoHiggs_NoMerge','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsNoMerge_run1'])
+    # mysamples.append(['tllq_multidim_MatchedNoHiggs_JetMax1','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsJetMax1_run1'])
+    # mysamples.append(['tllq_multidim_MatchedNoHiggs_JetMax2','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsJetMax2_run1'])
+
+    # mysamples.append(['tllq_multidim_MatchedNoHiggsMLM_NoMerge','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsMLMNoMerge_run1'])
+    # mysamples.append(['tllq_multidim_MatchedNoHiggsMLM_JetMax1','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsMLMJetMax1_run1'])
+    # mysamples.append(['tllq_multidim_MatchedNoHiggsMLM_JetMax2','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsMLMJetMax2_run1'])
+
+    mysamples.append(['tllq_multidim_tch_NoHiggs_0j_xqcut0_NoMerge','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])
+    mysamples.append(['tllq_multidim_tch_NoHiggs_0j_xqcut0_JetMax1','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0JetMax1_run1'])
+    mysamples.append(['tllq_multidim_tch_NoHiggs_0j_xqcut0_JetMax2','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0JetMax2_run1'])
+
+    # singleSamp = ['tllq_multidim_b1','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10_run1/']
+    # singleSamp = ['tllq_multidim_b2','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1_b2/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10_run1/']
 
 ## Add the data...
 if (isdata):

@@ -129,14 +129,19 @@ def check_anaTrees():
         cmd.extend(["check_anaTrees.C({args})".format(args=cmd_args)])
         subprocess.check_call(cmd)
 
+#TODO: Switch the inputs to the 'all_samples' run
 # Wrapper to run the 'read_anaTreeChecks.C' macro
 def read_anaTreeChecks():
     print "Running read_anaTreeChecks()..."
-    dir_name = 'NoSkipHiggs'
-    sub_dir = 'test_20191003_1556'
+    dir_name = 'main_comparisons'
+    sub_dir = 'tllq4f_checks'
     inputs = [
+        ##############################
+        # Previous version of samples with old naming
+        ##############################
+
         # ("m_centralv1","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/central_tZq_v14v1"),
-        ("m_centralv2","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/central_tZq_v14v2"),
+        # ("m_centralv2","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/central_tZq_v14v2"),
         # ("m_JetMax1","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax1"),
         # ("m_JetMax2","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax2"),
         # ("m_0pNoMerge","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_NoMerge"),
@@ -145,14 +150,79 @@ def read_anaTreeChecks():
 
         # ("m_centralv1_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/central_tZq_NoSkipHiggs_v14v1"),
         # ("m_centralv2_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/central_tZq_NoSkipHiggs_v14v2"),
-        ("m_JetMax1_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax1_NoSkipHiggs"),
-        ("m_JetMax2_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax2_NoSkipHiggs"),
-        ("m_0pNoMerge_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_NoMerge_NoSkipHiggs"),
+        # ("m_JetMax1_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax1_NoSkipHiggs"),
+        # ("m_JetMax2_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax2_NoSkipHiggs"),
+        # ("m_0pNoMerge_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_NoMerge_NoSkipHiggs"),
         # ("m_0pJetMax1_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_JetMax1_NoSkipHiggs"),
         # ("m_0pJetMax2_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_JetMax2_NoSkipHiggs"),
+
+        #NOTE: The directory says 'JetMax2' but the pythia setting was really 'JetMax1'
+        # ('m_Match_JetMax1',"awightma/checkAnaTrees/tllq4f_MatchedNoHiggs0p_JetMax2_20191007_1044/v1/tllq4f_MatchedNoHiggs0p_JetMax2"),
+
+        # ('m_NoMLM_NoMerge',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggs_0j_NoMerge"),
+        # ('m_NoMLM_JetMax1',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggs_0j_JetMax1"),
+        # ('m_NoMLM_JetMax2',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggs_0j_JetMax2"),
+        # ('m_MLM_NoMerge',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggsMLM_0j_NoMerge"),
+        # ('m_MLM_JetMax1',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggsMLM_0j_JetMax1"),
+        # ('m_MLM_JetMax2',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggsMLM_0j_JetMax2"),
+
+        ##############################
+        # The most up-to-date samples with new naming
+        ##############################
+
+        # ("sp_JetMax2_1254","awightma/checkAnaTrees/test/lobster_test_20190927_1254/v1/tllq4f_JetMax2_FP"),
+        # ("sp_JetMax2_1308","awightma/checkAnaTrees/test/lobster_test_20191001_1308/v1/tllq4f_JetMax2"),
+        # ("sp_JetMax2_2005","awightma/checkAnaTrees/test/lobster_test_20191002_2005/v1/tllq4f_JetMax2"),
+        # ("sp_JetMax2_1556","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax2"),
+
+        # ("centralv1",       "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/central_tZq_v14v1"),
+        # ("centralv2",       "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/central_tZq_v14v2"),
+        # ("tchYesH_01p_JM1", "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax1"),
+        # ("tchYesH_01p_JM2", "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax2"),
+        # ("tchYesH_0p_NoMrg","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_NoMerge"),
+        # ("tchYesH_0p_JM1",  "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_JetMax1"),
+        # ("tchYesH_0p_JM2",  "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_JetMax2"),
+
+        # ("centralv1_NSH",       "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/central_tZq_NoSkipHiggs_v14v1"),
+        # ("centralv2_NSH",       "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/central_tZq_NoSkipHiggs_v14v2"),
+        # ("tchYesH_01p_JM1_NSH", "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax1_NoSkipHiggs"),
+        # ("tchYesH_01p_JM2_NSH", "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax2_NoSkipHiggs"),
+        # ("tchYesH_0p_NoMrg_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_NoMerge_NoSkipHiggs"),
+        # ("tchYesH_0p_JM1_NSH",  "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_JetMax1_NoSkipHiggs"),
+        # ("tchYesH_0p_JM2_NSH",  "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_JetMax2_NoSkipHiggs"),
+
+        #NOTE: The directory says 'JetMax2' but the pythia setting was really 'JetMax1'
+        # ('MatchedNoH_JM1',"awightma/checkAnaTrees/tllq4f_MatchedNoHiggs0p_JetMax2_20191007_1044/v1/tllq4f_MatchedNoHiggs0p_JetMax2"),
+
+        # ('tchNoH_0p_NoMrg',    "awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggs_0j_NoMerge"),
+        # ('tchNoH_0p_JM1',      "awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggs_0j_JetMax1"),
+        # ('tchNoH_0p_JM2',      "awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggs_0j_JetMax2"),
+        # ('tchNoH_0p_MLM_NoMrg',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggsMLM_0j_NoMerge"),
+        # ('tchNoH_0p_MLM_JM1',  "awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggsMLM_0j_JetMax1"),
+        # ('tchNoH_0p_MLM_JM2',  "awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggsMLM_0j_JetMax2"),
+        # ('tchNoH_0p_xq0_NoMrg',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_xqcut0_20191008_0959/v1/tllq4f_tch_NoHiggs_0j_xqcut0_NoMerge"),
+        # ('tchNoH_0p_xq0_JM1',  "awightma/checkAnaTrees/tllq4f_tch_NoHiggs_xqcut0_20191008_0959/v1/tllq4f_tch_NoHiggs_0j_xqcut0_JetMax1"),
+        # ('tchNoH_0p_xq0_JM2',  "awightma/checkAnaTrees/tllq4f_tch_NoHiggs_xqcut0_20191008_0959/v1/tllq4f_tch_NoHiggs_0j_xqcut0_JetMax2"),
+
+        ##############################
+        # Custom ordering of the samples
+        ##############################
+
+        ("centralv2","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/central_tZq_v14v2"),
+        ("tchYesH_01p_JM2","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax2"),
+        ("tchYesH_01p_JM2_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax2_NoSkipHiggs"),
+        ("tchYesH_0p_NoMrg","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_NoMerge"),
+        ("tchYesH_0p_NoMrg_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_NoMerge_NoSkipHiggs"),
+        ('MatchedNoH_JM1',"awightma/checkAnaTrees/tllq4f_MatchedNoHiggs0p_JetMax2_20191007_1044/v1/tllq4f_MatchedNoHiggs0p_JetMax2"),
+        ('tchNoH_0p_NoMrg',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggs_0j_NoMerge"),
+        # ('tchNoH_0p_MLM_NoMrg',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggsMLM_0j_NoMerge"),
+        ('tchNoH_0p_xq0_NoMrg',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_xqcut0_20191008_0959/v1/tllq4f_tch_NoHiggs_0j_xqcut0_NoMerge"),
     ]
+
+    remake_merged_files = False
     merge_lst = []
-    for name,sub_path in inputs:
+    for idx,tup in enumerate(inputs):
+        name,sub_path = tup
         dir_path = pjoin(HPATH,sub_path)
         to_merge = getFiles(dir_path,ext='root')
         if len(to_merge) == 0:
@@ -166,16 +236,22 @@ def read_anaTreeChecks():
         s1 = ' '.join(hadd_cmd[:hadd_ops_split])
         s2 = '\n\t'.join(hadd_cmd[hadd_ops_split:])
         # print "Merge command: {0}\n\t{1}".format(s1,s2)
-        # run_process(hadd_cmd)
+        if remake_merged_files:
+            run_process(hadd_cmd)
         if os.path.exists(merged_fname):
             merge_lst.append(merged_fname)
         else:
             print "Skipping missing input file: {fname}".format(fname=merged_fname)
+    if len(merge_lst) == 0:
+        print "No samples to run over!"
+        return
     infs = "{{{infs}}}".format(infs=",".join('"{fn}"'.format(fn=fn) for fn in merge_lst))
 
     cmd = ["root","-b","-l","-q"]
     cmd.extend(["read_anaTreeChecks.C({infs})".format(infs=infs)])
     subprocess.check_call(cmd)
+
+    return
 
     output_dir = pjoin(USER_DIR,'www/eft_stuff/misc/anacheck_plots',sub_dir,dir_name)
     print "Output Dir: {dir}".format(dir=output_dir)

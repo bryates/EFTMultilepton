@@ -18,6 +18,9 @@ void getHistogram(TFile* f, TString name, double norm, std::vector<TH1EFT*> & hi
     htitle = htitle(0,str_idx);
 
     TH1EFT* h = (TH1EFT*)f->Get(name);
+    if (!h) {
+        return;
+    }
     h->Scale(norm);
     h->ScaleFits(norm);
     h->SetTitle(htitle);
