@@ -114,7 +114,7 @@ void Stopwatch::clearAll()
 void Stopwatch::readLap(std::string timer_name)
 {
     if (tracked_timers.find(timer_name) != tracked_timers.end()) {
-        std::cout << std::fixed << std::setprecision(2)
+        std::cout << std::fixed << std::setprecision(3)
             << "Wall clock lap (" << timer_name << "): "
             << std::chrono::duration<double,std::milli>(std::chrono::high_resolution_clock::now() - tracked_timers[timer_name].t_start).count()
             << " ms\n";
@@ -147,7 +147,7 @@ void Stopwatch::readAvgTimer(std::string timer_name,double norm)
         format_str = padRight(format_str,' ',20);
 
         std::ostringstream strs;
-        strs << std::fixed << std::setprecision(2) << tracked_timers[timer_name].total/(norm*tracked_timers[timer_name].counter);
+        strs << std::fixed << std::setprecision(3) << tracked_timers[timer_name].total/(norm*tracked_timers[timer_name].counter);
         std::string t_elapsed = strs.str();
         t_elapsed = padRight(t_elapsed,' ',9);
 
