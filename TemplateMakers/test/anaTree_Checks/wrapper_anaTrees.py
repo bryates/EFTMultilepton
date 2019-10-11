@@ -204,6 +204,7 @@ def read_anaTreeChecks():
         # ('tchNoH_0p_xq0_JM1',  "awightma/checkAnaTrees/tllq4f_tch_NoHiggs_xqcut0_20191008_0959/v1/tllq4f_tch_NoHiggs_0j_xqcut0_JetMax1"),
         # ('tchNoH_0p_xq0_JM2',  "awightma/checkAnaTrees/tllq4f_tch_NoHiggs_xqcut0_20191008_0959/v1/tllq4f_tch_NoHiggs_0j_xqcut0_JetMax2"),
 
+        # ('tchNoH_0p_xq0_Stats',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_0j_xqcut0_2019-10-09_1808/v1/tllq4f_tch_NoHiggs_0j_xqcut0_NoMerge"),
         ##############################
         # Custom ordering of the samples
         ##############################
@@ -217,9 +218,10 @@ def read_anaTreeChecks():
         ('tchNoH_0p_NoMrg',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggs_0j_NoMerge"),
         # ('tchNoH_0p_MLM_NoMrg',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggsMLM_0j_NoMerge"),
         ('tchNoH_0p_xq0_NoMrg',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_xqcut0_20191008_0959/v1/tllq4f_tch_NoHiggs_0j_xqcut0_NoMerge"),
+        ('tchNoH_0p_xq0_Stats',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_0j_xqcut0_2019-10-09_1808/v1/tllq4f_tch_NoHiggs_0j_xqcut0_NoMerge"),
     ]
 
-    remake_merged_files = False
+    remake_merged_files = False # Force the recreation of the merged root files
     merge_lst = []
     for idx,tup in enumerate(inputs):
         name,sub_path = tup
@@ -236,7 +238,7 @@ def read_anaTreeChecks():
         s1 = ' '.join(hadd_cmd[:hadd_ops_split])
         s2 = '\n\t'.join(hadd_cmd[hadd_ops_split:])
         # print "Merge command: {0}\n\t{1}".format(s1,s2)
-        if remake_merged_files:
+        if remake_merged_files or not os.path.exists(merged_fname):
             run_process(hadd_cmd)
         if os.path.exists(merged_fname):
             merge_lst.append(merged_fname)

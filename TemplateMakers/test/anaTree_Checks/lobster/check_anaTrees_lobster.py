@@ -1,14 +1,15 @@
-import datetime
 import os
 import sys
 
+from datetime import datetime as dt
 from lobster import cmssw
 from lobster.core import AdvancedOptions, Category, Config, Dataset, StorageConfiguration, Workflow
 
 cmsswbase = os.environ['CMSSW_BASE']
 
-tstamp1 = datetime.datetime.now().strftime('%Y%m%d_%H%M')
-tstamp2 = datetime.datetime.now().strftime('%Y_%m_%d')
+tstamp1 = dt.now().strftime('%Y%m%d_%H%M')
+tstamp2 = dt.now().strftime('%Y_%m_%d')
+tstamp3 = dt.now().strftime('%Y-%m-%d_%H%M')
 lobster_step = "checkAnaTrees"
 
 # master_label = 'EFT_T3_{step}_{tstamp}'.format(step=lobster_step,tstamp=tstamp1)
@@ -16,7 +17,7 @@ master_label = 'EFT_CRC_{step}_{tstamp}'.format(step=lobster_step,tstamp=tstamp1
 
 ver = "v1"
 # tag = "test/lobster_test_{tstamp}".format(tstamp=tstamp1)
-tag = "all_samples_{tstamp}".format(tstamp=tstamp1)
+tag = "tllq4f_tch_NoHiggs_0j_xqcut0_{tstamp}".format(tstamp=tstamp3)
 
 workdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=tag,ver=ver,path="/tmpscratch/users/$USER/analysisWorkflow")
 plotdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=tag,ver=ver,path="~/www/lobster")
@@ -111,7 +112,9 @@ tllq4f_tch_NoHiggsMLM_0j_JetMax2 = ('tllq4f_tch_NoHiggsMLM_0j_JetMax2',3,eft_mer
 ])
 
 tllq4f_tch_NoHiggs_0j_xqcut0_NoMerge = ('tllq4f_tch_NoHiggs_0j_xqcut0_NoMerge',3,eft_mergesize,[
-    os.path.join(sub_path,'special/tllq4f_EFT_t-ch_NoHiggs_0j_2019_10_08_xqcut0_NoMrg-JM1-JM2/v1/tllq_multidim_tch_NoHiggs_0j_xqcut0_NoMerge')
+    #os.path.join(sub_path,'special/tllq4f_EFT_t-ch_NoHiggs_0j_2019_10_08_xqcut0_NoMrg-JM1-JM2/v1/tllq_multidim_tch_NoHiggs_0j_xqcut0_NoMerge')
+    os.path.join(sub_path,'private_sgnl_2019_10_09/v1/tllq_multidim_b1'),
+    os.path.join(sub_path,'private_sgnl_2019_10_09/v1/tllq_multidim_b2'),
 ])
 tllq4f_tch_NoHiggs_0j_xqcut0_JetMax1 = ('tllq4f_tch_NoHiggs_0j_xqcut0_JetMax1',3,eft_mergesize,[
     os.path.join(sub_path,'special/tllq4f_EFT_t-ch_NoHiggs_0j_2019_10_08_xqcut0_NoMrg-JM1-JM2/v1/tllq_multidim_tch_NoHiggs_0j_xqcut0_JetMax1')
@@ -166,30 +169,30 @@ central_ttH = ('central_ttH',central_fpt,central_mergesize,[
 ])
 ####################################################################################################
 samples = [
-    central_tZq_v1,
-    central_tZq_v2,
-    tllq4f_JetMax1,
-    tllq4f_JetMax2,
-    tllq4f_0p_NoMerge,
-    tllq4f_0p_JetMax1,
-    tllq4f_0p_JetMax2,
-    tllq4f_MatchedNoHiggs0p_JetMax2,
-    tllq4f_tch_NoHiggs_0j_NoMerge,
-    tllq4f_tch_NoHiggs_0j_JetMax1,
-    tllq4f_tch_NoHiggs_0j_JetMax2,
-    tllq4f_tch_NoHiggsMLM_0j_NoMerge,
-    tllq4f_tch_NoHiggsMLM_0j_JetMax1,
-    tllq4f_tch_NoHiggsMLM_0j_JetMax2,
+    # central_tZq_v1,
+    # central_tZq_v2,
+    # tllq4f_JetMax1,
+    # tllq4f_JetMax2,
+    # tllq4f_0p_NoMerge,
+    # tllq4f_0p_JetMax1,
+    # tllq4f_0p_JetMax2,
+    # tllq4f_MatchedNoHiggs0p_JetMax2,
+    # tllq4f_tch_NoHiggs_0j_NoMerge,
+    # tllq4f_tch_NoHiggs_0j_JetMax1,
+    # tllq4f_tch_NoHiggs_0j_JetMax2,
+    # tllq4f_tch_NoHiggsMLM_0j_NoMerge,
+    # tllq4f_tch_NoHiggsMLM_0j_JetMax1,
+    # tllq4f_tch_NoHiggsMLM_0j_JetMax2,
     tllq4f_tch_NoHiggs_0j_xqcut0_NoMerge,
-    tllq4f_tch_NoHiggs_0j_xqcut0_JetMax1,
-    tllq4f_tch_NoHiggs_0j_xqcut0_JetMax2,
-    tllq4f_JetMax1_NoSkipHiggs,
-    tllq4f_JetMax2_NoSkipHiggs,
-    tllq4f_0p_NoMerge_NoSkipHiggs,
-    tllq4f_0p_JetMax1_NoSkipHiggs,
-    tllq4f_0p_JetMax2_NoSkipHiggs,
-    central_tZq_NoSkipHiggs_v1,
-    central_tZq_NoSkipHiggs_v2,
+    # tllq4f_tch_NoHiggs_0j_xqcut0_JetMax1,
+    # tllq4f_tch_NoHiggs_0j_xqcut0_JetMax2,
+    # tllq4f_JetMax1_NoSkipHiggs,
+    # tllq4f_JetMax2_NoSkipHiggs,
+    # tllq4f_0p_NoMerge_NoSkipHiggs,
+    # tllq4f_0p_JetMax1_NoSkipHiggs,
+    # tllq4f_0p_JetMax2_NoSkipHiggs,
+    # central_tZq_NoSkipHiggs_v1,
+    # central_tZq_NoSkipHiggs_v2,
 ]
 
 # Note: The 'interface' directory is automatically included
