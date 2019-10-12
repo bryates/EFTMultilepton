@@ -210,7 +210,7 @@ def anatest25_samples():
     ttW_central = Sample('ttW')    
     ttH_central = Sample('ttH')
     tZq_central = Sample('tZq')
-    tHq_central = sample('tHq')
+    tHq_central = Sample('tHq')
 
     ttGJets_central = Sample('ttGJets')
     ZZZ_central = Sample('ZZZ')
