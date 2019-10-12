@@ -236,7 +236,7 @@ def anatest25_samples():
     ttZ_central.addDirectory(HADOOP_DIR,path,'ttZ')
     tZq_central.addDirectory(HADOOP_DIR,path,'tZq')
 
-    samples.extend([ttH_central,tHq_central,ttW_central,ttZ_central])
+    samples.extend([ttH_central,tHq_central,ttW_central,ttZ_central,tZq_central])
 
     path = 'awightma/analysisTrees/central_bkgd_2019_10_12/v1'
     ttGJets_central.addDirectory(HADOOP_DIR,path,'ttGJets')
