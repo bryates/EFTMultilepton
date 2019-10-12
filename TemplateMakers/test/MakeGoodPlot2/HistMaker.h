@@ -12,12 +12,12 @@ class HistMaker
         ~HistMaker();
         
         // member variables
-        const unsigned int th1arrsize = 16100;
+        const unsigned int th1arrsize = 16500;
         const unsigned int th2arrsize = 500;
         const unsigned int th1eftarrsize = 2100;
         int sample = -1;
          
-        TH1EFT *th1ds[16100];   // size must equal th1arrsize
+        TH1EFT *th1ds[16500];   // size must equal th1arrsize
         TH2D *th2ds[500];       // size must equal th2arrsize
         TH1EFT *th1efts[2100];  // size must equal th1eftarrsize
 

@@ -1069,12 +1069,12 @@ void HistMaker::bookHistos()
     th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mmm_4j_2b"); k++;
     
     // th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_1j_1b"); k++;
-//     th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_2j_1b"); k++;
-//     th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_2j_2b"); k++;
-//     th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_3j_1b"); k++;
-//     th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_3j_2b"); k++;
-//     th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_4j_1b"); k++;
-//     th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_4j_2b"); k++;
+    // th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_2j_1b"); k++;
+    // th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_2j_2b"); k++;
+    // th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_3j_1b"); k++;
+    // th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_3j_2b"); k++;
+    // th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_4j_1b"); k++;
+    // th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_4j_2b"); k++;
     
     th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_p_1j_1b"); k++;
     th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_p_2j_1b"); k++;
@@ -1245,13 +1245,13 @@ void HistMaker::bookHistos()
     th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mmm_4j_1b"); k++;
     th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mmm_4j_2b"); k++;
     
-//     th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_1j_1b"); k++;
-//     th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_2j_1b"); k++;
-//     th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_2j_2b"); k++;
-//     th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_3j_1b"); k++;
-//     th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_3j_2b"); k++;
-//     th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_4j_1b"); k++;
-//     th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_4j_2b"); k++;
+    // th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_1j_1b"); k++;
+    // th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_2j_1b"); k++;
+    // th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_2j_2b"); k++;
+    // th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_3j_1b"); k++;
+    // th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_3j_2b"); k++;
+    // th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_4j_1b"); k++;
+    // th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_4j_2b"); k++;
 
     th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_p_1j_1b"); k++;
     th1ds[i]->GetXaxis()->SetBinLabel(k,"3l_mix_p_2j_1b"); k++;
@@ -1472,28 +1472,28 @@ void HistMaker::bookHistos()
     th1ds[i]->SetNameTitle("all__leppt",";lep p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
 
     
-//     th1ds[i]->SetNameTitle("2los_ee__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
-//     th1ds[i]->SetNameTitle("2los_emu__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
-//     th1ds[i]->SetNameTitle("2los_mumu__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
-//     th1ds[i]->SetNameTitle("2los_sfz_ee__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
-//     th1ds[i]->SetNameTitle("2los_sfz_mumu__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
-//     th1ds[i]->SetNameTitle("2lss_p_ee__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
-//     th1ds[i]->SetNameTitle("2lss_p_emu__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
-//     th1ds[i]->SetNameTitle("2lss_p_mumu__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
-//     th1ds[i]->SetNameTitle("2lss_m_ee__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
-//     th1ds[i]->SetNameTitle("2lss_m_emu__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
-//     th1ds[i]->SetNameTitle("2lss_m_mumu__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
-//     th1ds[i]->SetNameTitle("3l_ppp__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
-//     th1ds[i]->SetNameTitle("3l_mmm__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
-//     //th1ds[i]->SetNameTitle("3l_mix__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
-//     th1ds[i]->SetNameTitle("3l_mix_p__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
-//     th1ds[i]->SetNameTitle("3l_mix_m__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
-//     th1ds[i]->SetNameTitle("3l_mix_sfz__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
-//     th1ds[i]->SetNameTitle("4l__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;    
-//     th1ds[i]->SetNameTitle("ge5l__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;    
-//     th1ds[i]->SetNameTitle("1l_mu__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
-//     th1ds[i]->SetNameTitle("1l_e__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
-//     th1ds[i]->SetNameTitle("all__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
+    // th1ds[i]->SetNameTitle("2los_ee__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
+    // th1ds[i]->SetNameTitle("2los_emu__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
+    // th1ds[i]->SetNameTitle("2los_mumu__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
+    // th1ds[i]->SetNameTitle("2los_sfz_ee__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
+    // th1ds[i]->SetNameTitle("2los_sfz_mumu__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
+    // th1ds[i]->SetNameTitle("2lss_p_ee__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
+    // th1ds[i]->SetNameTitle("2lss_p_emu__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
+    // th1ds[i]->SetNameTitle("2lss_p_mumu__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
+    // th1ds[i]->SetNameTitle("2lss_m_ee__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
+    // th1ds[i]->SetNameTitle("2lss_m_emu__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
+    // th1ds[i]->SetNameTitle("2lss_m_mumu__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
+    // th1ds[i]->SetNameTitle("3l_ppp__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
+    // th1ds[i]->SetNameTitle("3l_mmm__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
+    // //th1ds[i]->SetNameTitle("3l_mix__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
+    // th1ds[i]->SetNameTitle("3l_mix_p__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
+    // th1ds[i]->SetNameTitle("3l_mix_m__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
+    // th1ds[i]->SetNameTitle("3l_mix_sfz__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
+    // th1ds[i]->SetNameTitle("4l__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;    
+    // th1ds[i]->SetNameTitle("ge5l__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;    
+    // th1ds[i]->SetNameTitle("1l_mu__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
+    // th1ds[i]->SetNameTitle("1l_e__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
+    // th1ds[i]->SetNameTitle("all__met",";MET p_{T}");  th1ds[i]->SetBins(50,0,200);    i++;
     
     th1ds[i]->SetNameTitle("2los_ee__metphi",";MET #phi");  th1ds[i]->SetBins(50,-3.3,3.3);    i++;
     th1ds[i]->SetNameTitle("2los_emu__metphi",";MET #phi");  th1ds[i]->SetBins(50,-3.3,3.3);    i++;
@@ -1570,51 +1570,51 @@ void HistMaker::bookHistos()
     
 
     
-//     th1ds[i]->SetNameTitle("2los_ee__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
-//     th1ds[i]->SetNameTitle("2los_emu__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
-//     th1ds[i]->SetNameTitle("2los_mumu__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
-//     th1ds[i]->SetNameTitle("2los_sfz_ee__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
-//     th1ds[i]->SetNameTitle("2los_sfz_mumu__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
-//     th1ds[i]->SetNameTitle("2lss_p_ee__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
-//     th1ds[i]->SetNameTitle("2lss_p_emu__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
-//     th1ds[i]->SetNameTitle("2lss_p_mumu__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
-//     th1ds[i]->SetNameTitle("2lss_m_ee__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
-//     th1ds[i]->SetNameTitle("2lss_m_emu__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
-//     th1ds[i]->SetNameTitle("2lss_m_mumu__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
-//     th1ds[i]->SetNameTitle("3l_ppp__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
-//     th1ds[i]->SetNameTitle("3l_mmm__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
-//     //th1ds[i]->SetNameTitle("3l_mix__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
-//     th1ds[i]->SetNameTitle("3l_mix_p__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
-//     th1ds[i]->SetNameTitle("3l_mix_m__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
-//     th1ds[i]->SetNameTitle("3l_mix_sfz__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
-//     th1ds[i]->SetNameTitle("4l__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;    
-//     th1ds[i]->SetNameTitle("ge5l__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;    
-//     th1ds[i]->SetNameTitle("1l_mu__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
-//     th1ds[i]->SetNameTitle("1l_e__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;    
-//     th1ds[i]->SetNameTitle("all__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
+    // th1ds[i]->SetNameTitle("2los_ee__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
+    // th1ds[i]->SetNameTitle("2los_emu__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
+    // th1ds[i]->SetNameTitle("2los_mumu__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
+    // th1ds[i]->SetNameTitle("2los_sfz_ee__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
+    // th1ds[i]->SetNameTitle("2los_sfz_mumu__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
+    // th1ds[i]->SetNameTitle("2lss_p_ee__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
+    // th1ds[i]->SetNameTitle("2lss_p_emu__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
+    // th1ds[i]->SetNameTitle("2lss_p_mumu__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
+    // th1ds[i]->SetNameTitle("2lss_m_ee__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
+    // th1ds[i]->SetNameTitle("2lss_m_emu__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
+    // th1ds[i]->SetNameTitle("2lss_m_mumu__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
+    // th1ds[i]->SetNameTitle("3l_ppp__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
+    // th1ds[i]->SetNameTitle("3l_mmm__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
+    // //th1ds[i]->SetNameTitle("3l_mix__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
+    // th1ds[i]->SetNameTitle("3l_mix_p__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
+    // th1ds[i]->SetNameTitle("3l_mix_m__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
+    // th1ds[i]->SetNameTitle("3l_mix_sfz__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
+    // th1ds[i]->SetNameTitle("4l__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;    
+    // th1ds[i]->SetNameTitle("ge5l__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;    
+    // th1ds[i]->SetNameTitle("1l_mu__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
+    // th1ds[i]->SetNameTitle("1l_e__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;    
+    // th1ds[i]->SetNameTitle("all__MHT",";MHT p_{T}");  th1ds[i]->SetBins(100,0,150);    i++;
     
-//     th1ds[i]->SetNameTitle("2los_ee__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
-//     th1ds[i]->SetNameTitle("2los_emu__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
-//     th1ds[i]->SetNameTitle("2los_mumu__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
-//     th1ds[i]->SetNameTitle("2los_sfz_ee__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
-//     th1ds[i]->SetNameTitle("2los_sfz_mumu__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
-//     th1ds[i]->SetNameTitle("2lss_p_ee__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
-//     th1ds[i]->SetNameTitle("2lss_p_emu__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
-//     th1ds[i]->SetNameTitle("2lss_p_mumu__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
-//     th1ds[i]->SetNameTitle("2lss_m_ee__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
-//     th1ds[i]->SetNameTitle("2lss_m_emu__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
-//     th1ds[i]->SetNameTitle("2lss_m_mumu__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
-//     th1ds[i]->SetNameTitle("3l_ppp__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
-//     th1ds[i]->SetNameTitle("3l_mmm__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
-//     //th1ds[i]->SetNameTitle("3l_mix__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
-//     th1ds[i]->SetNameTitle("3l_mix_p__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
-//     th1ds[i]->SetNameTitle("3l_mix_m__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
-//     th1ds[i]->SetNameTitle("3l_mix_sfz__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
-//     th1ds[i]->SetNameTitle("4l__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;    
-//     th1ds[i]->SetNameTitle("ge5l__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;    
-//     th1ds[i]->SetNameTitle("1l_mu__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
-//     th1ds[i]->SetNameTitle("1l_e__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;    
-//     th1ds[i]->SetNameTitle("all__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;    
+    // th1ds[i]->SetNameTitle("2los_ee__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
+    // th1ds[i]->SetNameTitle("2los_emu__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
+    // th1ds[i]->SetNameTitle("2los_mumu__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
+    // th1ds[i]->SetNameTitle("2los_sfz_ee__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
+    // th1ds[i]->SetNameTitle("2los_sfz_mumu__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
+    // th1ds[i]->SetNameTitle("2lss_p_ee__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
+    // th1ds[i]->SetNameTitle("2lss_p_emu__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
+    // th1ds[i]->SetNameTitle("2lss_p_mumu__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
+    // th1ds[i]->SetNameTitle("2lss_m_ee__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
+    // th1ds[i]->SetNameTitle("2lss_m_emu__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
+    // th1ds[i]->SetNameTitle("2lss_m_mumu__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
+    // th1ds[i]->SetNameTitle("3l_ppp__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
+    // th1ds[i]->SetNameTitle("3l_mmm__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
+    // //th1ds[i]->SetNameTitle("3l_mix__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
+    // th1ds[i]->SetNameTitle("3l_mix_p__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
+    // th1ds[i]->SetNameTitle("3l_mix_m__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
+    // th1ds[i]->SetNameTitle("3l_mix_sfz__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
+    // th1ds[i]->SetNameTitle("4l__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;    
+    // th1ds[i]->SetNameTitle("ge5l__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;    
+    // th1ds[i]->SetNameTitle("1l_mu__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;
+    // th1ds[i]->SetNameTitle("1l_e__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;    
+    // th1ds[i]->SetNameTitle("all__HT",";H_{T}");  th1ds[i]->SetBins(200,0,1000);    i++;    
     
     
     
@@ -1642,7 +1642,7 @@ void HistMaker::bookHistos()
     th1ds[i]->SetNameTitle("all__lepMVA",";lepMVA");  th1ds[i]->SetBins(200,-1,1);    i++;
 
 
-//matchedJetdR; //?
+    //matchedJetdR; //?
 
     th1ds[i]->SetNameTitle("2los_ee__dxy",";lepton dxy");  th1ds[i]->SetBins(200,-0.05,0.05);    i++;
     th1ds[i]->SetNameTitle("2los_emu__dxy",";lepton dxy");  th1ds[i]->SetBins(200,-0.05,0.05);    i++;
@@ -2153,33 +2153,33 @@ void HistMaker::bookHistos()
 
 
 
-//todo
-// miniAbsIsoCharged; 0-25
-// miniAbsIsoNeutral; 0-25
-// miniAbsIsoNeutralcorr;   0-25?
+    //todo
+    // miniAbsIsoCharged; 0-25
+    // miniAbsIsoNeutral; 0-25
+    // miniAbsIsoNeutralcorr;   0-25?
 
-//     th1ds[i]->SetNameTitle("2los_ee__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
-//     th1ds[i]->SetNameTitle("2los_emu__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
-//     th1ds[i]->SetNameTitle("2los_mumu__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
-//     th1ds[i]->SetNameTitle("2los_sfz_ee__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
-//     th1ds[i]->SetNameTitle("2los_sfz_mumu__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
-//     th1ds[i]->SetNameTitle("2lss_p_ee__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
-//     th1ds[i]->SetNameTitle("2lss_p_emu__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
-//     th1ds[i]->SetNameTitle("2lss_p_mumu__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
-//     th1ds[i]->SetNameTitle("2lss_m_ee__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
-//     th1ds[i]->SetNameTitle("2lss_m_emu__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
-//     th1ds[i]->SetNameTitle("2lss_m_mumu__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
-//     th1ds[i]->SetNameTitle("3l_ppp__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
-//     th1ds[i]->SetNameTitle("3l_mmm__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
-//     //th1ds[i]->SetNameTitle("3l_mix__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
-//     th1ds[i]->SetNameTitle("3l_mix_p__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
-//     th1ds[i]->SetNameTitle("3l_mix_m__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
-//     th1ds[i]->SetNameTitle("3l_mix_sfz__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
-//     th1ds[i]->SetNameTitle("4l__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;    
-//     th1ds[i]->SetNameTitle("ge5l__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;        
-//     th1ds[i]->SetNameTitle("1l_mu__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
-//     th1ds[i]->SetNameTitle("1l_e__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;     
-//     th1ds[i]->SetNameTitle("all__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
+    // th1ds[i]->SetNameTitle("2los_ee__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
+    // th1ds[i]->SetNameTitle("2los_emu__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
+    // th1ds[i]->SetNameTitle("2los_mumu__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
+    // th1ds[i]->SetNameTitle("2los_sfz_ee__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
+    // th1ds[i]->SetNameTitle("2los_sfz_mumu__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
+    // th1ds[i]->SetNameTitle("2lss_p_ee__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
+    // th1ds[i]->SetNameTitle("2lss_p_emu__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
+    // th1ds[i]->SetNameTitle("2lss_p_mumu__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
+    // th1ds[i]->SetNameTitle("2lss_m_ee__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
+    // th1ds[i]->SetNameTitle("2lss_m_emu__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
+    // th1ds[i]->SetNameTitle("2lss_m_mumu__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
+    // th1ds[i]->SetNameTitle("3l_ppp__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
+    // th1ds[i]->SetNameTitle("3l_mmm__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
+    // //th1ds[i]->SetNameTitle("3l_mix__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
+    // th1ds[i]->SetNameTitle("3l_mix_p__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
+    // th1ds[i]->SetNameTitle("3l_mix_m__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
+    // th1ds[i]->SetNameTitle("3l_mix_sfz__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
+    // th1ds[i]->SetNameTitle("4l__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;    
+    // th1ds[i]->SetNameTitle("ge5l__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;        
+    // th1ds[i]->SetNameTitle("1l_mu__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
+    // th1ds[i]->SetNameTitle("1l_e__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;     
+    // th1ds[i]->SetNameTitle("all__PUMVA",";jet PU MVA");  th1ds[i]->SetBins(200,0,1);    i++;
     
     
     th1ds[i]->SetNameTitle("2los_ee__qgid",";jet qgID");  th1ds[i]->SetBins(200,0,1);    i++;
@@ -2391,27 +2391,27 @@ void HistMaker::bookHistos()
     
     
     // category-specific bins:
-//     Double_t bins_mumu[4];
-//     int numbins_mumu = 3; // bins size-1
-//     bins_mumu[0] = 0;
-//     bins_mumu[1] = 20;
-//     bins_mumu[2] = 35;
-//     bins_mumu[3] = 100;
-//       
-//     Double_t bins_emu[5];
-//     int numbins_emu = 4; // bins size-1
-//     bins_emu[0] = 0;
-//     bins_emu[1] = 25;
-//     bins_emu[2] = 35;
-//     bins_emu[3] = 50;    
-//     bins_emu[4] = 100;
-//     
-//     Double_t bins_ee[4];
-//     int numbins_ee = 3; // bins size-1
-//     bins_ee[0] = 0;
-//     bins_ee[1] = 25;
-//     bins_ee[2] = 30;   
-//     bins_ee[3] = 100;    
+    // Double_t bins_mumu[4];
+    // int numbins_mumu = 3; // bins size-1
+    // bins_mumu[0] = 0;
+    // bins_mumu[1] = 20;
+    // bins_mumu[2] = 35;
+    // bins_mumu[3] = 100;
+      
+    // Double_t bins_emu[5];
+    // int numbins_emu = 4; // bins size-1
+    // bins_emu[0] = 0;
+    // bins_emu[1] = 25;
+    // bins_emu[2] = 35;
+    // bins_emu[3] = 50;    
+    // bins_emu[4] = 100;
+    
+    // Double_t bins_ee[4];
+    // int numbins_ee = 3; // bins size-1
+    // bins_ee[0] = 0;
+    // bins_ee[1] = 25;
+    // bins_ee[2] = 30;   
+    // bins_ee[3] = 100;    
     
     // ..or to just use the same everywhere:
     Double_t bins_mumu[14];
@@ -2457,21 +2457,21 @@ void HistMaker::bookHistos()
     th1ds[i]->SetName("SS3lPt_lep2_numer");     th1ds[i]->TH1::SetBins(numbins,bins);    i++;
     th1ds[i]->SetName("SS3lPt_lep2_effic");     th1ds[i]->TH1::SetBins(numbins,bins);    i++;
 
-//     th1ds[i]->SetName("SSee2DEta_denom");     // maybe add these later
-//     th1ds[i]->SetName("SSee2DEta_numer");     
-//     th1ds[i]->SetName("SSee2DEta_effic");     
-//     th1ds[i]->SetName("SSeu2DEta_denom");     
-//     th1ds[i]->SetName("SSeu2DEta_numer");     
-//     th1ds[i]->SetName("SSeu2DEta_effic");     
-//     th1ds[i]->SetName("SSue2DEta_denom");     
-//     th1ds[i]->SetName("SSue2DEta_numer");     
-//     th1ds[i]->SetName("SSue2DEta_effic");     
-//     th1ds[i]->SetName("SSuu2DEta_denom");     
-//     th1ds[i]->SetName("SSuu2DEta_numer");     
-//     th1ds[i]->SetName("SSuu2DEta_effic");     
-//     th1ds[i]->SetName("SS3l2DEta_denom");     
-//     th1ds[i]->SetName("SS3l2DEta_numer");     
-//     th1ds[i]->SetName("SS3l2DEta_effic");     
+    // th1ds[i]->SetName("SSee2DEta_denom");     // maybe add these later
+    // th1ds[i]->SetName("SSee2DEta_numer");     
+    // th1ds[i]->SetName("SSee2DEta_effic");     
+    // th1ds[i]->SetName("SSeu2DEta_denom");     
+    // th1ds[i]->SetName("SSeu2DEta_numer");     
+    // th1ds[i]->SetName("SSeu2DEta_effic");     
+    // th1ds[i]->SetName("SSue2DEta_denom");     
+    // th1ds[i]->SetName("SSue2DEta_numer");     
+    // th1ds[i]->SetName("SSue2DEta_effic");     
+    // th1ds[i]->SetName("SSuu2DEta_denom");     
+    // th1ds[i]->SetName("SSuu2DEta_numer");     
+    // th1ds[i]->SetName("SSuu2DEta_effic");     
+    // th1ds[i]->SetName("SS3l2DEta_denom");     
+    // th1ds[i]->SetName("SS3l2DEta_numer");     
+    // th1ds[i]->SetName("SS3l2DEta_effic");     
 
     th1ds[i]->SetName("SSeeEta_lep1_denom");     th1ds[i]->SetBins(12,-3.0,3.0);    i++;
     th1ds[i]->SetName("SSeeEta_lep1_numer");     th1ds[i]->SetBins(12,-3.0,3.0);    i++;
@@ -2522,19 +2522,14 @@ void HistMaker::bookHistos()
 
     if (debug) cout << "bookhistos oo" << endl;
 
-
-
-//    th1ds[12]->SetNameTitle("","");                 = new TH1F("sigmaIeatIeta var1 sig","",100,0,1);  //0.04
-//    th1ds[13]->SetNameTitle("","");                 = new TH1F("sigmaIeatIeta var2 sig","",100,0,1);  //0.04
-//    th1ds[14]->SetNameTitle("","");                 = new TH1F("sigmaIeatIeta var3 sig","",100,0,1);  //0.04
-//    th1ds[15]->SetNameTitle("","");                 = new TH1F("sigmaIeatIeta var1 bkd","",100,0,1);  //0.04                            
-//    th1ds[16]->SetNameTitle("","");                 = new TH1F("sigmaIeatIeta var2 bkd","",100,0,1);  //0.04
-//    th1ds[17]->SetNameTitle("","");                 = new TH1F("sigmaIeatIeta var3 bkd","",100,0,1);  //0.04
+    // th1ds[12]->SetNameTitle("","");                 = new TH1F("sigmaIeatIeta var1 sig","",100,0,1);  //0.04
+    // th1ds[13]->SetNameTitle("","");                 = new TH1F("sigmaIeatIeta var2 sig","",100,0,1);  //0.04
+    // th1ds[14]->SetNameTitle("","");                 = new TH1F("sigmaIeatIeta var3 sig","",100,0,1);  //0.04
+    // th1ds[15]->SetNameTitle("","");                 = new TH1F("sigmaIeatIeta var1 bkd","",100,0,1);  //0.04                            
+    // th1ds[16]->SetNameTitle("","");                 = new TH1F("sigmaIeatIeta var2 bkd","",100,0,1);  //0.04
+    // th1ds[17]->SetNameTitle("","");                 = new TH1F("sigmaIeatIeta var3 bkd","",100,0,1);  //0.04
     
-    
-    
-    
-//    th1ds[12]->SetNameTitle("test","test");                         th1ds[12]->SetBins(100,0,400);    
+    // th1ds[12]->SetNameTitle("test","test");                         th1ds[12]->SetBins(100,0,400);    
    
     
 
