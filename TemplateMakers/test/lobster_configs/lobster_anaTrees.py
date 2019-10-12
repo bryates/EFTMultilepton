@@ -443,6 +443,10 @@ for label,samp in mysamples:
         cms_cmd.extend(['skipHiggs=True'])
     else:
         cms_cmd.extend(['skipHiggs=False'])
+
+    if doeftsamps:
+        cms_cmd.extend(['isPrivateSample=True'])
+
     print "adding workflow: {0}".format(label)
     print "\tCmd: {0}".format(' '.join(cms_cmd))
     wf = Workflow(

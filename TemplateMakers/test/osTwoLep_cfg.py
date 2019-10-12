@@ -28,6 +28,9 @@ options.register("hip",False,
 options.register("globalTag", "94X_mc2017_realistic_v13",
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.string, "Global tag to use") #80X_dataRun2_2016SeptRepro_v7 # 80X_mcRun2_asymptotic_2016_TrancheIV_v8 # 94X_mc2017_realistic_v13
+options.register("isPrivateSample", False,
+                 VarParsing.VarParsing.multiplicity.singleton,
+                 VarParsing.VarParsing.varType.bool, "The sample is privately produced")
 options.parseArguments()
 
 from Configuration.StandardSequences.Eras import eras
@@ -56,217 +59,227 @@ process.maxEvents = cms.untracked.PSet(
 process.MessageLogger.cerr.FwkReport.reportEvery = 100
 
 process.source = cms.Source("PoolSource",
-#    	fileNames = cms.untracked.vstring( "/store/mc/RunIISpring16MiniAODv2/ttHToNonbb_M125_13TeV_powheg_pythia8/MINIAODSIM/PUSpring16RAWAODSIM_80X_mcRun2_asymptotic_2016_miniAODv2_v0-v1/60000/0415D796-9226-E611-9274-AC853D9DAC41.root" ),
-#    	fileNames = cms.untracked.vstring("root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/ttHToNonbb_M125_TuneCUETP8M2_ttHtranche3_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/3C70EB0A-6BBE-E611-B094-0025905A606A.root"),
-#    	fileNames = cms.untracked.vstring( "/store/data/Run2016D/SingleElectron/MINIAOD/23Sep2016-v1/70000/081A803C-8B8A-E611-86A7-008CFA110C90.root" ),
-#      fileNames = cms.untracked.vstring("/store/data/Run2017F/DoubleMuon/MINIAOD/06Nov2017-v1/30000/18844453-05C4-E711-8C82-FA163E631C08.root" ),
-        #fileNames = cms.untracked.vstring( "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAOD/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/MINIAODSIM/94X_mc2017_realistic_v10-v1/00000/0A9B6F9D-EB18-E811-A53B-3417EBE64426.root" ),
-#        fileNames = cms.untracked.vstring( "file:///tmpscratch/users/gsmith15/temp/0A9B6F9D-EB18-E811-A53B-3417EBE64426.root" ),
-#        fileNames = cms.untracked.vstring( "/store/data/Run2016D/SingleElectron/MINIAOD/07Aug17-v1/50000/006DC839-EB89-E711-9209-002590D9D956.root" ),
+   	# fileNames = cms.untracked.vstring( "/store/mc/RunIISpring16MiniAODv2/ttHToNonbb_M125_13TeV_powheg_pythia8/MINIAODSIM/PUSpring16RAWAODSIM_80X_mcRun2_asymptotic_2016_miniAODv2_v0-v1/60000/0415D796-9226-E611-9274-AC853D9DAC41.root" ),
+   	# fileNames = cms.untracked.vstring("root://cms-xrd-global.cern.ch//store/mc/RunIISummer16MiniAODv2/ttHToNonbb_M125_TuneCUETP8M2_ttHtranche3_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/120000/3C70EB0A-6BBE-E611-B094-0025905A606A.root"),
+   	# fileNames = cms.untracked.vstring( "/store/data/Run2016D/SingleElectron/MINIAOD/23Sep2016-v1/70000/081A803C-8B8A-E611-86A7-008CFA110C90.root" ),
+    # fileNames = cms.untracked.vstring("/store/data/Run2017F/DoubleMuon/MINIAOD/06Nov2017-v1/30000/18844453-05C4-E711-8C82-FA163E631C08.root" ),
+    # fileNames = cms.untracked.vstring( "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAOD/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/MINIAODSIM/94X_mc2017_realistic_v10-v1/00000/0A9B6F9D-EB18-E811-A53B-3417EBE64426.root" ),
+    # fileNames = cms.untracked.vstring( "file:///tmpscratch/users/gsmith15/temp/0A9B6F9D-EB18-E811-A53B-3417EBE64426.root" ),
+    # fileNames = cms.untracked.vstring( "/store/data/Run2016D/SingleElectron/MINIAOD/07Aug17-v1/50000/006DC839-EB89-E711-9209-002590D9D956.root" ),
 
-#        fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/postLHE_step/ctG_scan/v2/mAOD_step_run7/HIG-RunIIFall17MiniAOD-00821ND_2420.root",
-#                                            "file:///hadoop/store/user/awightma/postLHE_step/ctG_scan/v2/mAOD_step_run7/HIG-RunIIFall17MiniAOD-00821ND_2518.root" )
-#        fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch1/postLHE_step/v1/mAOD_step_ttll_16DOldLimitsAxisScan_run1/HIG-RunIIFall17MiniAOD-00821ND_65758.root" )
-#        fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch3/postLHE_step/v1/mAOD_step_ttll_16DOldLimitsAxisScan_run1/HIG-RunIIFall17MiniAOD-00821ND_164230.root" )
-#        fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/postLHE_step/2018_04_17/500k_events/v2/mAOD_step_ttH_ctG_run1/HIG-RunIIFall17MiniAOD-00821ND_2818.root" )
-#        fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round1/Batch2/postLHE_step/v1/mAOD_step_ttH_ctW_run2/HIG-RunIIFall17MiniAOD-00821ND_19344.root" )
-#        fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch6/postLHE_step/v1/mAOD_step_tHq_16DttllScanpoints_run1/HIG-RunIIFall17MiniAOD-00821ND_41409.root" )
-        #fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_119590.root" )
-        #fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_119750.root" )
+    # fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/postLHE_step/ctG_scan/v2/mAOD_step_run7/HIG-RunIIFall17MiniAOD-00821ND_2420.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/ctG_scan/v2/mAOD_step_run7/HIG-RunIIFall17MiniAOD-00821ND_2518.root" )
+    # fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch1/postLHE_step/v1/mAOD_step_ttll_16DOldLimitsAxisScan_run1/HIG-RunIIFall17MiniAOD-00821ND_65758.root" )
+    # fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch3/postLHE_step/v1/mAOD_step_ttll_16DOldLimitsAxisScan_run1/HIG-RunIIFall17MiniAOD-00821ND_164230.root" )
+    # fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/postLHE_step/2018_04_17/500k_events/v2/mAOD_step_ttH_ctG_run1/HIG-RunIIFall17MiniAOD-00821ND_2818.root" )
+    # fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round1/Batch2/postLHE_step/v1/mAOD_step_ttH_ctW_run2/HIG-RunIIFall17MiniAOD-00821ND_19344.root" )
+    # fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch6/postLHE_step/v1/mAOD_step_tHq_16DttllScanpoints_run1/HIG-RunIIFall17MiniAOD-00821ND_41409.root" )
+    # fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_119590.root" )
+    # fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_119750.root" )
         
-        #fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch8/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_57547.root" )
-        #fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123855.root" )
+    # fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch8/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_57547.root" )
+    # fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123855.root" )
 
-#         fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123812.root", 
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123878.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123909.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123968.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_124005.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_121992.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122029.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122109.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122160.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122085.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122197.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122250.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_121991.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122289.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122290.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122251.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122339.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122108.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122196.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122086.root" )
+    # fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123812.root", 
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123878.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123909.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123968.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_124005.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_121992.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122029.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122109.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122160.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122085.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122197.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122250.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_121991.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122289.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122290.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122251.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122339.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122108.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122196.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttlnu_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_122086.root" )
 
+    # fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123989.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_124014.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_124007.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_124002.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123995.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_115580.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_115579.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_115727.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_115726.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_115824.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_115823.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_115923.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_116083.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_116009.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_115922.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_116237.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_116166.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_116324.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_116325.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_116411.root" )
 
-#         fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123989.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_124014.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_124007.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_124002.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123995.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_115580.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_115579.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_115727.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_115726.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_115824.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_115823.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_115923.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_116083.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_116009.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_115922.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_116237.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_116166.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_116324.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_116325.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_tllq_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_116411.root" )
-
-
-
-        
-#         fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_119598.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114270.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114115.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114272.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114114.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_113651.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114268.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114269.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114273.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_111591.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114497.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114501.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114503.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114504.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114499.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114120.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114636.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114632.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114635.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114634.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123855.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123825.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123877.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123927.root",
-#                                             "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123957.root" )
-                                            
-                                            
-#         fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_6474.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_6519.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_7348.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_7394.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_7605.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8164.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8207.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8368.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8441.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8542.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8549.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8555.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8565.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8582.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8586.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8654.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8699.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8830.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8903.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8913.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8920.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8926.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8942.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8951.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8952.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8991.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9035.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9064.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9071.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9101.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9104.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9107.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9108.root" )
+    # fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_119598.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114270.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114115.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114272.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114114.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_113651.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114268.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114269.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114273.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_111591.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114497.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114501.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114503.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114504.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114499.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114120.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114636.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114632.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114635.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch7/postLHE_step/v2/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_114634.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123855.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123825.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123877.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123927.root",
+                                        # "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch9/postLHE_step/v1/mAOD_step_ttll_16DcentralCuts_run0/HIG-RunIIFall17MiniAOD-00821ND_123957.root" )
+                                                                         
+    # fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_6474.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_6519.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_7348.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_7394.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_7605.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8164.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8207.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8368.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8441.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8542.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8549.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8555.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8565.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8582.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8586.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8654.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8699.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8830.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8903.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8913.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8920.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8926.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8942.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8951.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8952.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8991.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9035.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9064.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9071.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9101.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9104.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9107.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_ttllNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9108.root" )
                                          
-#         fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_970.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1073.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1101.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1172.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1211.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1233.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1243.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1258.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1264.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1293.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1272.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1325.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1314.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1366.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1399.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1408.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1386.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1421.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1465.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1476.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1487.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1491.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1499.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1517.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1540.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1554.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1570.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1585.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1590.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1615.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1631.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1652.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1662.root",
-#                                             "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1665.root" )                                          
+    # fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_970.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1073.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1101.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1172.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1211.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1233.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1243.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1258.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1264.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1293.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1272.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1325.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1314.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1366.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1399.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1408.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1386.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1421.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1465.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1476.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1487.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1491.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1499.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1517.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1540.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1554.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1570.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1585.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1590.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1615.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1631.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1652.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1662.root",
+                                        # "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttllWithNuNu/v1/mAOD_step_ttllnunuNoHiggs_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_1665.root" )                                          
 
-        fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_5773.root",
-                                            "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_5927.root",
-                                            "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_6614.root",
-                                            "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_7109.root",
-                                            "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_7519.root",
-                                            "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_7578.root",
-                                            "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_7701.root",
-                                            "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_7842.root",
-                                            "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_7984.root",
-                                            "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8176.root",
-                                            "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8402.root",
-                                            "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8427.root",
-                                            "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8489.root",
-                                            "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8587.root",
-                                            "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8756.root",
-                                            "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8832.root",
-                                            "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8876.root",
-                                            "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9026.root",
-                                            "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9066.root",
-                                            "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9072.root",
-                                            "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9070.root" )
+    fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_5773.root",
+                                        "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_5927.root",
+                                        "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_6614.root",
+                                        "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_7109.root",
+                                        "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_7519.root",
+                                        "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_7578.root",
+                                        "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_7701.root",
+                                        "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_7842.root",
+                                        "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_7984.root",
+                                        "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8176.root",
+                                        "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8402.root",
+                                        "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8427.root",
+                                        "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8489.root",
+                                        "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8587.root",
+                                        "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8756.root",
+                                        "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8832.root",
+                                        "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_8876.root",
+                                        "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9026.root",
+                                        "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9066.root",
+                                        "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9072.root",
+                                        "file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/ttll-tllq-ProcessCardStudies/v1/mAOD_step_tllq4fMatched_NoDim6_run0/HIG-RunIIFall17MiniAOD-00821ND_9070.root" )
 
-      
+    # fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch1/postLHE_step/v1/mAOD_step_ttH_16DOldLimitsAxisScan_run1/HIG-RunIIFall17MiniAOD-00821ND_65186.root" )
+        
+    # fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAODv2/TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/90000/FE36D3CC-2642-E811-8648-002590E3A224.root" )
+    # fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAODv2/ttHToNonbb_M125_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/90000/FE266741-1443-E811-BD00-002590FD5122.root" )
+        
+    # fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAODv2/THQ_4f_Hincl_13TeV_madgraph_pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/80000/F2B4D9F8-4C63-E811-9B00-AC1F6B1AF144.root" )
+        
+    # data
+    # fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/data/Run2017B/DoubleEG/MINIAOD/31Mar2018-v1/80000/FAC7DC8A-3737-E811-8BA7-6CC2173DC380.root" )
+        
+    #tests for pdf stuff
+    # fileNames = cms.untracked.vstring(  "root://cmsxrootd.fnal.gov///store/mc/RunIIFall17MiniAODv2/ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/10000/122EDCEB-C042-E811-A0FA-0025905C5486.root" )
+    # fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAODv2/ZZTo4L_13TeV_powheg_pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/10000/002F2B9D-4542-E811-A9E2-008CFAE4543C.root " )
+    # fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAOD/WWTo2L2Nu_NNPDF31_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/94X_mc2017_realistic_v10-v1/60000/CEBBCC9C-16F3-E711-ACFA-0CC47A78A4B0.root" )
+    # fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAOD/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/MINIAODSIM/94X_mc2017_realistic_v10-v2/80000/E0E411CA-0100-E811-BF2E-FA163EA0BBDD.root" )
+    # fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAODv2/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/90000/E08F1EFA-B743-E811-A315-00259021A262.root" )
+        
+    # fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAODv2/TTWJetsToLNu_TuneCP5_PSweights_13TeV-amcatnloFXFX-madspin-pythia8/MINIAODSIM/PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/70000/0804CFCD-68AE-E811-AA4C-FA163E7335A9.root" )
+    # fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAODv2/TTZToLLNuNu_M-10_TuneCP5_PSweights_13TeV-amcatnlo-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/20000/B8F18A44-CA4F-E811-9EE6-0242AC130002.root",
+                                        # "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAODv2/TTZToLLNuNu_M-10_TuneCP5_PSweights_13TeV-amcatnlo-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/30000/FE701C9C-3176-E811-AA89-1C6A7A26C53B.root" )
+    # fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAODv2/tZq_ll_4f_ckm_NLO_TuneCP5_PSweights_13TeV-amcatnlo-pythia8/MINIAODSIM/PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/60000/EA57025E-4DB7-E811-B6B0-A4BF01125A30.root" )
 
-#        fileNames = cms.untracked.vstring(  "file:///hadoop/store/user/awightma/FullProduction/Round4/Batch1/postLHE_step/v1/mAOD_step_ttH_16DOldLimitsAxisScan_run1/HIG-RunIIFall17MiniAOD-00821ND_65186.root" )
-        
-#        fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAODv2/TTJets_TuneCP5_13TeV-amcatnloFXFX-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/90000/FE36D3CC-2642-E811-8648-002590E3A224.root" )
-#        fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAODv2/ttHToNonbb_M125_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/90000/FE266741-1443-E811-BD00-002590FD5122.root" )
-        
-#        fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAODv2/THQ_4f_Hincl_13TeV_madgraph_pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/80000/F2B4D9F8-4C63-E811-9B00-AC1F6B1AF144.root" )
-        
-        # data
-        #fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/data/Run2017B/DoubleEG/MINIAOD/31Mar2018-v1/80000/FAC7DC8A-3737-E811-8BA7-6CC2173DC380.root" )
-        
-        #tests for pdf stuff
-        #fileNames = cms.untracked.vstring(  "root://cmsxrootd.fnal.gov///store/mc/RunIIFall17MiniAODv2/ST_tW_top_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/10000/122EDCEB-C042-E811-A0FA-0025905C5486.root" )
-        #fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAODv2/ZZTo4L_13TeV_powheg_pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/10000/002F2B9D-4542-E811-A9E2-008CFAE4543C.root " )
-        #fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAOD/WWTo2L2Nu_NNPDF31_TuneCP5_13TeV-powheg-pythia8/MINIAODSIM/94X_mc2017_realistic_v10-v1/60000/CEBBCC9C-16F3-E711-ACFA-0CC47A78A4B0.root" )
-        #fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAOD/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/MINIAODSIM/94X_mc2017_realistic_v10-v2/80000/E0E411CA-0100-E811-BF2E-FA163EA0BBDD.root" )
-        #fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAODv2/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/90000/E08F1EFA-B743-E811-A315-00259021A262.root" )
-        
-        #fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAODv2/TTWJetsToLNu_TuneCP5_PSweights_13TeV-amcatnloFXFX-madspin-pythia8/MINIAODSIM/PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/70000/0804CFCD-68AE-E811-AA4C-FA163E7335A9.root" )
-#         fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAODv2/TTZToLLNuNu_M-10_TuneCP5_PSweights_13TeV-amcatnlo-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/20000/B8F18A44-CA4F-E811-9EE6-0242AC130002.root",
-#                                             "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAODv2/TTZToLLNuNu_M-10_TuneCP5_PSweights_13TeV-amcatnlo-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/30000/FE701C9C-3176-E811-AA89-1C6A7A26C53B.root" )
-        #fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAODv2/tZq_ll_4f_ckm_NLO_TuneCP5_PSweights_13TeV-amcatnlo-pythia8/MINIAODSIM/PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/60000/EA57025E-4DB7-E811-B6B0-A4BF01125A30.root" )
+    #sync 
+    # fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAOD/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/MINIAODSIM/94X_mc2017_realistic_v10-v1/20000/0CF65340-0200-E811-ABB7-0025905C53F0.root" )
 
-        #sync 
-        #fileNames = cms.untracked.vstring(  "root://cms-xrd-global.cern.ch///store/mc/RunIIFall17MiniAOD/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/MINIAODSIM/94X_mc2017_realistic_v10-v1/20000/0CF65340-0200-E811-ABB7-0025905C53F0.root" )
+    #private tllq4f
+    # fileNames = cms.untracked.vstring("file:///hadoop/store/user/awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1/HIG-RunIIFall17MiniAOD-00821ND_8857.root")
+    #private ttH
+    # fileNames = cms.untracked.vstring("root://deepthought.crc.nd.edu//store/user/awightma/FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttHJet_HanModel16DttllScanpoints_run1//HIG-RunIIFall17MiniAOD-00821ND_97570.root")
+    #private ttlnu
+    # fileNames = cms.untracked.vstring("root://deepthought.crc.nd.edu//store/user/awightma/FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttlnuJet_HanModel16DttllScanpoints_run1//HIG-RunIIFall17MiniAOD-00821ND_268914.root")
+    #private ttll
+    # fileNames = cms.untracked.vstring("root://deepthought.crc.nd.edu//store/user/awightma/FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanModel16DttllScanpoints_run1//HIG-RunIIFall17MiniAOD-00821ND_439663.root")
+    #central tZq v14-v2
+    # fileNames = cms.untracked.vstring("root://ndcms.crc.nd.edu//store/mc/RunIIFall17MiniAODv2/tZq_ll_4f_ckm_NLO_TuneCP5_PSweights_13TeV-amcatnlo-pythia8/MINIAODSIM/PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/120000/8861FF51-44B9-E811-BA6A-001E67792800.r
+    #central ttH
+    # fileNames = cms.untracked.vstring("root://ndcms.crc.nd.edu//store/mc/RunIIFall17MiniAODv2/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/70000/686CEEF1-8742-E811-803E-001E67E6F8CD.root")
+    #central ttW
+    # fileNames = cms.untracked.vstring("root://ndcms.crc.nd.edu//store/mc/RunIIFall17MiniAODv2/TTWJetsToLNu_TuneCP5_PSweights_13TeV-amcatnloFXFX-madspin-pythia8/MINIAODSIM/PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/70000/F0C3E805-66AD-E811-90C5-24BE05C4
+    #central ttZ
+    # fileNames = cms.untracked.vstring("root://ndcms.crc.nd.edu//store/mc/RunIIFall17MiniAODv2/TTZToLLNuNu_M-10_TuneCP5_PSweights_13TeV-amcatnlo-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/20000/6CF7AC38-104E-E811-B491-1866DA85D857.root")
 )
 
 ## Golden json file:
@@ -359,6 +372,7 @@ process.OSTwoLepAna.debug = cms.bool( options.debug )
 process.OSTwoLepAna.jetCleanFakeable = cms.bool( options.jetCleanFakeable )
 process.OSTwoLepAna.skim = cms.bool( options.skim )
 process.OSTwoLepAna.skipHiggs = cms.bool( options.skipHiggs )
+process.OSTwoLepAna.isPrivateSample = cms.bool ( options.isPrivateSample )
 
 
 ######################################

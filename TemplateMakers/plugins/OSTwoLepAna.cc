@@ -11,6 +11,7 @@ OSTwoLepAna::OSTwoLepAna(const edm::ParameterSet& constructparams) ://Anything t
     jetCleanFakeable = constructparams.getParameter<bool> ("jetCleanFakeable");
     skim = constructparams.getParameter<bool> ("skim");
     skip_higgs = constructparams.getParameter<bool> ("skipHiggs");
+    is_private_sample = constructparams.getParameter<bool>("isPrivateSample");
     entire_pset = constructparams;
     parse_params();
   
@@ -66,6 +67,8 @@ void OSTwoLepAna::beginJob()
     numSummedWeights_muRDown = newfs->make<TH1D>("numSummedWeights_muRDown","numSummedWeights for muRDown",1,1,2);
     numSummedWeights_muFUp = newfs->make<TH1D>("numSummedWeights_muFUp","numSummedWeights for muFUp",1,1,2);
     numSummedWeights_muFDown = newfs->make<TH1D>("numSummedWeights_muFDown","numSummedWeights for muFDown",1,1,2);
+    numSummedWeights_muRmuFUp = newfs->make<TH1D>("numSummedWeights_muRmuFUp","numSummedWeights for muRmuFUp",1,1,2);
+    numSummedWeights_muRmuFDown = newfs->make<TH1D>("numSummedWeights_muRmuFDown","numSummedWeights for mmuFuRDown",1,1,2);
 
     // add the tree:
     summaryTree = newfs->make<TTree>("summaryTree", "Summary Event Values");  
@@ -85,7 +88,8 @@ void OSTwoLepAna::beginJob()
     muFWeightSumUp=0.;
     muFWeightSumDown=0.;
 
-
+    muRmuFWeightSumUp=0.;
+    muRmuFWeightSumDown=0.;
 }
 
 void OSTwoLepAna::endJob() {
@@ -109,6 +113,9 @@ void OSTwoLepAna::endJob() {
     cout << "muFWeightSumUp: " << muFWeightSumUp << endl;
     cout << "muFWeightSumDown: " << muFWeightSumDown << endl;
 
+    cout << "muRmuFWeightSumUp: " << muRmuFWeightSumUp << endl;
+    cout << "muRmuFWeightSumDown: " << muRmuFWeightSumDown << endl;
+
     numSummedWeights_pdfUp->Fill(1, nnpdfWeightSumUp);
     numSummedWeights_pdfDown->Fill(1, nnpdfWeightSumDown);
 
@@ -117,6 +124,9 @@ void OSTwoLepAna::endJob() {
 
     numSummedWeights_muFUp->Fill(1, muFWeightSumUp);
     numSummedWeights_muFDown->Fill(1, muFWeightSumDown);
+
+    numSummedWeights_muRmuFUp->Fill(1, muRmuFWeightSumUp);
+    numSummedWeights_muRmuFDown->Fill(1, muRmuFWeightSumDown);
 
 } // job completion (cutflow table, etc.)
 
@@ -150,6 +160,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
     }
 
     // bandaid for tllq, ttll. Should comment out otherwise!!!
+    // Note: This doesn't always find events that had an intermediate higgs!!!
     if (skip_higgs) {
         for (const auto & gp : *prunedParticles) if (abs(gp.pdgId())==25) return;                           // <<<------------------------------------------------ !!!!!!!!!!!!!!!!!
     }
@@ -206,7 +217,15 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
             preshowerFSRweightDown_intree = genwgtinfo[5]/originalXWGTUP_intree;
         }
         
-        
+        double muR_up = 1.;
+        double muF_down = 1.;
+
+        double muF_up = 1.;
+        double muF_down = 1.;
+
+        double muRmuF_up = 1.;
+        double muRmuF_down = 1.;
+
         // Add EFT weights
         for (auto wgt_info: LHEInfo->weights())
         {
@@ -219,20 +238,58 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
             // std::cout << "==>" << wgt_info.id << std::endl;
             
             // "regular" (actually just EFT? Or madgraph?):
-            //if ( LHEwgtstr.find("1006")!=std::string::npos ) muRWeightUp_intree = wgt_info.wgt / originalXWGTUP_intree; // regular
+            /* anatest24 and older method
+            // if ( LHEwgtstr.find("1006")!=std::string::npos ) muRWeightUp_intree = wgt_info.wgt / originalXWGTUP_intree; // regular
             if ( LHEwgtstr.find("1007")!=std::string::npos ) muRWeightUp_intree = wgt_info.wgt / originalXWGTUP_intree; // just our tHq. .. And now, tllq?
-            //if ( LHEwgtstr.find("1011")!=std::string::npos ) muRWeightDown_intree = wgt_info.wgt / originalXWGTUP_intree; // regular
+            // if ( LHEwgtstr.find("1011")!=std::string::npos ) muRWeightDown_intree = wgt_info.wgt / originalXWGTUP_intree; // regular
             if ( LHEwgtstr.find("1012")!=std::string::npos ) muRWeightDown_intree = wgt_info.wgt / originalXWGTUP_intree; // just our tHq (and now, tllq?)
             if ( LHEwgtstr.find("1016")!=std::string::npos ) muFWeightUp_intree = wgt_info.wgt / originalXWGTUP_intree;
             if ( LHEwgtstr.find("1031")!=std::string::npos ) muFWeightDown_intree = wgt_info.wgt / originalXWGTUP_intree;
-            
-            
+            */
             // at least some powheg, amcatnlo central samples (translation: most samples):
-//             if ( LHEwgtstr.find("1004")!=std::string::npos ) muRWeightUp_intree = wgt_info.wgt / originalXWGTUP_intree;
-//             if ( LHEwgtstr.find("1007")!=std::string::npos ) muRWeightDown_intree = wgt_info.wgt / originalXWGTUP_intree;
-//         
-//             if ( LHEwgtstr.find("1002")!=std::string::npos ) muFWeightUp_intree = wgt_info.wgt / originalXWGTUP_intree;
-//             if ( LHEwgtstr.find("1003")!=std::string::npos ) muFWeightDown_intree = wgt_info.wgt / originalXWGTUP_intree;            
+            // if ( LHEwgtstr.find("1004")!=std::string::npos ) muRWeightUp_intree = wgt_info.wgt / originalXWGTUP_intree;
+            // if ( LHEwgtstr.find("1007")!=std::string::npos ) muRWeightDown_intree = wgt_info.wgt / originalXWGTUP_intree;
+            // if ( LHEwgtstr.find("1002")!=std::string::npos ) muFWeightUp_intree = wgt_info.wgt / originalXWGTUP_intree;
+            // if ( LHEwgtstr.find("1003")!=std::string::npos ) muFWeightDown_intree = wgt_info.wgt / originalXWGTUP_intree;            
+
+            // post anatest24 method
+            /*  The up/down variations on the scales are stored as LHE weights (+1 = 'Up', -1 = 'Down')
+                For the private EFT samples the scale weights are:
+                    (muR,muF) = id
+                    ( +1,  0) = 1006
+                    ( -1,  0) = 1011
+                    (  0, +1) = 1016
+                    ( +1, +1) = 1021
+                    ( -1, +1) = 1026 (unphysical)
+                    (  0, -1) = 1031
+                    ( +1, -1) = 1036 (unphysical)
+                    ( -1, -1) = 1041
+                For the central samples the scale weights are:
+                    (muR,muF) = id
+                    ( +1,  0) = 1002
+                    ( -1,  0) = 1003
+                    (  0, +1) = 1004
+                    ( +1, +1) = 1005
+                    ( -1, +1) = 1006 (unphysical)
+                    (  0, -1) = 1007
+                    ( +1, -1) = 1008 (unphysical)
+                    ( -1, -1) = 1009
+            */
+            if (is_private_sample) {
+                if ( LHEwgtstr.find("1006")!=std::string::npos ) muRWeightUp_intree      = wgt_info.wgt / originalXWGTUP_intree;
+                if ( LHEwgtstr.find("1011")!=std::string::npos ) muRWeightDown_intree    = wgt_info.wgt / originalXWGTUP_intree;
+                if ( LHEwgtstr.find("1016")!=std::string::npos ) muFWeightUp_intree      = wgt_info.wgt / originalXWGTUP_intree;
+                if ( LHEwgtstr.find("1031")!=std::string::npos ) muFWeightDown_intree    = wgt_info.wgt / originalXWGTUP_intree;
+                if ( LHEwgtstr.find("1021")!=std::string::npos ) muRmuFWeightUp_intree   = wgt_info.wgt / originalXWGTUP_intree;
+                if ( LHEwgtstr.find("1041")!=std::string::npos ) muRmuFWeightDown_intree = wgt_info.wgt / originalXWGTUP_intree;
+            } else {
+                if ( LHEwgtstr.find("1002")!=std::string::npos ) muRWeightUp_intree      = wgt_info.wgt / originalXWGTUP_intree;
+                if ( LHEwgtstr.find("1003")!=std::string::npos ) muRWeightDown_intree    = wgt_info.wgt / originalXWGTUP_intree;
+                if ( LHEwgtstr.find("1004")!=std::string::npos ) muFWeightUp_intree      = wgt_info.wgt / originalXWGTUP_intree;
+                if ( LHEwgtstr.find("1007")!=std::string::npos ) muFWeightDown_intree    = wgt_info.wgt / originalXWGTUP_intree;
+                if ( LHEwgtstr.find("1005")!=std::string::npos ) muRmuFWeightUp_intree   = wgt_info.wgt / originalXWGTUP_intree;
+                if ( LHEwgtstr.find("1009")!=std::string::npos ) muRmuFWeightDown_intree = wgt_info.wgt / originalXWGTUP_intree;
+            }
         }
 
         muRWeightSumUp += muRWeightUp_intree*mcwgt_intree;
@@ -240,6 +297,9 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
 
         muFWeightSumUp += muFWeightUp_intree*mcwgt_intree;
         muFWeightSumDown += muFWeightDown_intree*mcwgt_intree;
+
+        muRmuFWeightSumUp += muRmuFWeightUp_intree*mcwgt_intree;
+        muRmuFWeightSumDown += muRmuFWeightDown_intree*mcwgt_intree;
 
         //-------------
         // pdf weights and Q^2 weights
@@ -304,7 +364,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
             nnpdfWeights.insert(nnpdfWeights.begin(), 1.);                                                                      // <<----------
             // calculate combined weights
             // std::cout << "nnpdfWeights size is: " << (int)nnpdfWeights.size() << std::endl;
-            const LHAPDF::PDFUncertainty pdfUnc = nnpdfSet.uncertainty(nnpdfWeights, 68.268949);
+            const LHAPDF::PDFUncertainty pdfUnc = nnpdfSet.uncertainty(nnpdfWeights, 68.268949);    // Where did 68.268949 come from?
             weightUp = pdfUnc.central + pdfUnc.errplus;
             weightDown = pdfUnc.central - pdfUnc.errminus;
         }
@@ -315,7 +375,6 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
         // add to sums
         nnpdfWeightSumUp += weightUp*mcwgt_intree;
         nnpdfWeightSumDown += weightDown*mcwgt_intree;
-        
         
         edm::Handle< double > theprefweight;
         event.getByToken(prefweight_token, theprefweight ) ;
@@ -329,10 +388,6 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
         prefiringweight_intree =(*theprefweight);
         prefiringweightup_intree =(*theprefweightup);
         prefiringweightdown_intree =(*theprefweightdown);
-
-
-
-
     }
 
     ///////////////////////////
@@ -347,10 +402,10 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
     
     
     
-//     EFTrwgt183_ctW_0.0_ctp_0.0_cpQM_0.0_  cpt_0.0   _cQei_0.0_ctZ_0.0_cQlMi_0.0_cQl3i_0.0_ctG_0.0_ctlTi_0.0_cbW_0.0_cpQ3_0.0_ctei_0.0   _ctli_0.0   _ctlSi_0.0_cptb_0.0
-//     EFTrwgt183_ctW_0.0_ctp_0.0_cpQM_0.0_  ctli_0.0   _cQei_0.0_ctZ_0.0_cQlMi_0.0_cQl3i_0.0_ctG_0.0_ctlTi_0.0_cbW_0.0_cpQ3_0.0_ctei_0.0  _cpt_0.0   _ctlSi_0.0_cptb_0.0
-// 
-//     std::string smpoint = "EFTrwgt183_ctW_0.0_ctp_0.0_cpQM_0.0_ctli_0.0_cQei_0.0_ctZ_0.0_cQlMi_0.0_cQl3i_0.0_ctG_0.0_ctlTi_0.0_cbW_0.0_cpQ3_0.0_ctei_0.0_cpt_0.0_ctlSi_0.0_cptb_0.0";    
+    // EFTrwgt183_ctW_0.0_ctp_0.0_cpQM_0.0_  cpt_0.0   _cQei_0.0_ctZ_0.0_cQlMi_0.0_cQl3i_0.0_ctG_0.0_ctlTi_0.0_cbW_0.0_cpQ3_0.0_ctei_0.0   _ctli_0.0   _ctlSi_0.0_cptb_0.0
+    // EFTrwgt183_ctW_0.0_ctp_0.0_cpQM_0.0_  ctli_0.0   _cQei_0.0_ctZ_0.0_cQlMi_0.0_cQl3i_0.0_ctG_0.0_ctlTi_0.0_cbW_0.0_cpQ3_0.0_ctei_0.0  _cpt_0.0   _ctlSi_0.0_cptb_0.0
+
+    // std::string smpoint = "EFTrwgt183_ctW_0.0_ctp_0.0_cpQM_0.0_ctli_0.0_cQei_0.0_ctZ_0.0_cQlMi_0.0_cQl3i_0.0_ctG_0.0_ctlTi_0.0_cbW_0.0_cpQ3_0.0_ctei_0.0_cpt_0.0_ctlSi_0.0_cptb_0.0";    
     
     
     string smpoint = "";
@@ -916,10 +971,23 @@ void OSTwoLepAna::beginRun(edm::Run const& run, edm::EventSetup const& evsetup)
     
         // group "c"
         // ****newer EFT samps****
+        // weightTag = "initrwgt";
+        // startStr  = "&lt;weight id="; // "&lt;weight id="
+        // setStr    = " MUR=\"1.0\" MUF=\"1.0\" PDF=\"";//"> PDF=  "; //"> PDF set = "; // this has changed, modify it??? // " MUR=\"1.0\" MUF=\"1.0\" PDF=\""
+        // endStr    = " &gt; PDF=306000"; //"NNPDF31_nlo_hessian_pdfas </weight>"; // "</weight>"; // " &gt; PDF=305800"
+
+        //TODO: Currently we use the '306000' PDF set for all samples, but need to check if we should use the '320900' PDF set for the tZq/tllq 4f samples
         weightTag = "initrwgt";
-        startStr  = "&lt;weight id="; // "&lt;weight id="
-        setStr    = " MUR=\"1.0\" MUF=\"1.0\" PDF=\"";//"> PDF=  "; //"> PDF set = "; // this has changed, modify it??? // " MUR=\"1.0\" MUF=\"1.0\" PDF=\""
-        endStr    = " &gt; PDF=306000"; //"NNPDF31_nlo_hessian_pdfas </weight>"; // "</weight>"; // " &gt; PDF=305800"
+        if (is_private_sample) {
+            // The private samples have a slightly different formatting of the header
+            startStr  = "&lt;weight id=";
+            setStr    = " MUR=\"1.0\" MUF=\"1.0\" PDF=\"";
+            endStr    = " &gt; PDF=306000";
+        } else {
+            startStr  = "<weight id=";
+            setStr    = "> PDF=  ";
+            endStr    = " NNPDF31_nnlo_hessian_pdfas </weight>";
+        }
 
         if (debug) cout << "before loop over pdf stuff in beginRun" << endl;
         

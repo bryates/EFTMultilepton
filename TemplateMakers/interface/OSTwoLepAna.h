@@ -44,6 +44,8 @@ class OSTwoLepAna: public MultileptonAna, public edm::EDAnalyzer
         TH1D *numSummedWeights_muRDown;
         TH1D *numSummedWeights_muFUp;
         TH1D *numSummedWeights_muFDown;
+        TH1D *numSummedWeights_muRmuFUp;
+        TH1D *numSummedWeights_muRmuFDown;
 
         //
         // sums for renormalization
@@ -55,6 +57,9 @@ class OSTwoLepAna: public MultileptonAna, public edm::EDAnalyzer
 
         double muFWeightSumUp;
         double muFWeightSumDown;
+
+        double muRmuFWeightSumUp;
+        double muRmuFWeightSumDown;
                 
         // declare the tree
         TTree * summaryTree;
@@ -135,6 +140,9 @@ class OSTwoLepAna: public MultileptonAna, public edm::EDAnalyzer
 
         double muFWeightUp_intree;
         double muFWeightDown_intree;
+
+        double muRmuFWeightUp_intree;
+        double muRmuFWeightDown_intree;
         
         edm::EDGetTokenT< double > prefweight_token;
         edm::EDGetTokenT< double > prefweightup_token;
@@ -227,6 +235,9 @@ void OSTwoLepAna::tree_add_branches()
     summaryTree->Branch("muFWeightUp",&muFWeightUp_intree);
     summaryTree->Branch("muFWeightDown",&muFWeightDown_intree);
 
+    summaryTree->Branch("muRmuFWeightUp",&muRmuFWeightUp_intree);
+    summaryTree->Branch("muRmuFWeightDown",&muRmuFWeightDown_intree);
+
     summaryTree->Branch("prefiringweight",&prefiringweight_intree);
     summaryTree->Branch("prefiringweightup",&prefiringweightup_intree);
     summaryTree->Branch("prefiringweightdown",&prefiringweightdown_intree);
@@ -304,6 +315,9 @@ void OSTwoLepAna::initialize_variables()
     muFWeightUp_intree = 1.;
     muFWeightDown_intree = 1.;
     
+    muRmuFWeightUp_intree = 1.;
+    muRmuFWeightDown_intree = 1.;
+
     prefiringweight_intree = 1.;
     prefiringweightup_intree = 1.;
     prefiringweightdown_intree = 1.;
