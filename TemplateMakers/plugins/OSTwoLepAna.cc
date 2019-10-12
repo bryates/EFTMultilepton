@@ -216,15 +216,6 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
             preshowerISRweightDown_intree = genwgtinfo[4]/originalXWGTUP_intree;
             preshowerFSRweightDown_intree = genwgtinfo[5]/originalXWGTUP_intree;
         }
-        
-        double muR_up = 1.;
-        double muF_down = 1.;
-
-        double muF_up = 1.;
-        double muF_down = 1.;
-
-        double muRmuF_up = 1.;
-        double muRmuF_down = 1.;
 
         // Add EFT weights
         for (auto wgt_info: LHEInfo->weights())
@@ -256,6 +247,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
             /*  The up/down variations on the scales are stored as LHE weights (+1 = 'Up', -1 = 'Down')
                 For the private EFT samples the scale weights are:
                     (muR,muF) = id
+                    (  0,  0) = 1001 (nominal)
                     ( +1,  0) = 1006
                     ( -1,  0) = 1011
                     (  0, +1) = 1016
@@ -266,6 +258,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
                     ( -1, -1) = 1041
                 For the central samples the scale weights are:
                     (muR,muF) = id
+                    (  0,  0) = 1001 (nominal)
                     ( +1,  0) = 1002
                     ( -1,  0) = 1003
                     (  0, +1) = 1004
@@ -976,7 +969,8 @@ void OSTwoLepAna::beginRun(edm::Run const& run, edm::EventSetup const& evsetup)
         // setStr    = " MUR=\"1.0\" MUF=\"1.0\" PDF=\"";//"> PDF=  "; //"> PDF set = "; // this has changed, modify it??? // " MUR=\"1.0\" MUF=\"1.0\" PDF=\""
         // endStr    = " &gt; PDF=306000"; //"NNPDF31_nlo_hessian_pdfas </weight>"; // "</weight>"; // " &gt; PDF=305800"
 
-        //TODO: Currently we use the '306000' PDF set for all samples, but need to check if we should use the '320900' PDF set for the tZq/tllq 4f samples
+        //TODO1: Currently we use the '306000' PDF set for all samples, but need to check if we should use the '320900' PDF set for the tZq/tllq 4f samples
+        //TODO2: This is currently a pretty fragile method of getting these weights, should get a more a robust solution!
         weightTag = "initrwgt";
         if (is_private_sample) {
             // The private samples have a slightly different formatting of the header
@@ -986,7 +980,7 @@ void OSTwoLepAna::beginRun(edm::Run const& run, edm::EventSetup const& evsetup)
         } else {
             startStr  = "<weight id=";
             setStr    = "> PDF=  ";
-            endStr    = " NNPDF31_nnlo_hessian_pdfas </weight>";
+            endStr    = "NNPDF31_nnlo_hessian_pdfas </weight>";
         }
 
         if (debug) cout << "before loop over pdf stuff in beginRun" << endl;
@@ -1002,7 +996,7 @@ void OSTwoLepAna::beginRun(edm::Run const& run, edm::EventSetup const& evsetup)
             std::vector<std::string> lines = it->lines();
             for (size_t i = 0; i < lines.size(); i++)
             {
-                //std::cout << lines[i] << std::endl;
+                //std::cout << lines[i];
                 size_t startPos = lines[i].find(startStr);
                 size_t setPos = lines[i].find(setStr);
                 size_t endPos = lines[i].find(endStr);
