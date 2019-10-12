@@ -1,4 +1,4 @@
-const int numberOfSysts = 47; // change this when changing below ////// 45 // 35 // 23???   note: min # is 1
+const int numberOfSysts = 49; // change this when changing below ////// 45 // 35 // 23???   note: min # is 1
 
 TString systint2str(int syst)
 {
@@ -51,7 +51,10 @@ TString systint2str(int syst)
     if (syst==44) return "PUDOWN";        
     if (syst==45) return "ADHOCNJUP";
     if (syst==46) return "ADHOCNJDOWN";
-    
+
+    if (syst==47) return "MURMUFUP";
+    if (syst==48) return "MURMUFDOWN";
+
     cout << "Unspecified systematic!" << endl;
     return "";
 }
@@ -256,27 +259,27 @@ string gettagcategory(string lepcat, int tagsM, int tagsL=-1)
     else // doing some crazy $#*! with the loose btags
     {
         // uncomment if "group 1"
-//         if (tagsM>=2) tagstr = "_2b";
-//         else if (tagsM==1 && tagsL>=1 && lepcat.substr(0,2)=="3l") tagstr = "_1b";
-//         else return "null";
-//         return lepcat+tagstr;
-//         
-//         uncomment if "group 2"
-//         if (tagsM==1 && tagsL>=1) tagstr = "_2b";
-//         else if (tagsM==1 && tagsL==0 && lepcat.substr(0,2)=="3l") tagstr = "_1b";
-//         else return "null";
-//         return lepcat+tagstr;
-//         
-//         // uncomment if "group 3"
-//         if (tagsM==0 && tagsL>=2) tagstr = "_2b";
-//         else if (tagsM==0 && tagsL==1 && lepcat.substr(0,2)=="3l") tagstr = "_1b";
-//         else return "null";
-//         return lepcat+tagstr;
-//         
-//         // uncomment if "group 4"
-//         if (tagsM==1 && tagsL==0 && lepcat.substr(0,4)=="2lss") tagstr = "_2b"; // only 2lss
-//         else return "null";
-//         return lepcat+tagstr;
+        // if (tagsM>=2) tagstr = "_2b";
+        // else if (tagsM==1 && tagsL>=1 && lepcat.substr(0,2)=="3l") tagstr = "_1b";
+        // else return "null";
+        // return lepcat+tagstr;
+        
+        // uncomment if "group 2"
+        // if (tagsM==1 && tagsL>=1) tagstr = "_2b";
+        // else if (tagsM==1 && tagsL==0 && lepcat.substr(0,2)=="3l") tagstr = "_1b";
+        // else return "null";
+        // return lepcat+tagstr;
+        
+        // // uncomment if "group 3"
+        // if (tagsM==0 && tagsL>=2) tagstr = "_2b";
+        // else if (tagsM==0 && tagsL==1 && lepcat.substr(0,2)=="3l") tagstr = "_1b";
+        // else return "null";
+        // return lepcat+tagstr;
+        
+        // // uncomment if "group 4"
+        // if (tagsM==1 && tagsL==0 && lepcat.substr(0,4)=="2lss") tagstr = "_2b"; // only 2lss
+        // else return "null";
+        // return lepcat+tagstr;
         
         // what we're going with:
         if (lepcat.substr(0,4)=="2lss" && (tagsM>=2 || (tagsM>=1 && tagsL>=2))) tagstr = "_2b";

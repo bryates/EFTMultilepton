@@ -87,6 +87,8 @@ void MakeGoodPlot::standard_plots()
         // quants.push_back({"__muRWeightDown",-1});
         // quants.push_back({"__muFWeightUp",-1});
         // quants.push_back({"__muFWeightDown",-1});
+        // quants.push_back({"__muRmuFWeightUp",-1});
+        // quants.push_back({"__muRmuFWeightDown",-1});
     }
     else
     {

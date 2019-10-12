@@ -42,6 +42,9 @@ class HistMaker
         TTreeReaderValue<double> muRWeightDown_intree;
         TTreeReaderValue<double> muFWeightUp_intree;
         TTreeReaderValue<double> muFWeightDown_intree;
+
+        TTreeReaderValue<double> muRmuFWeightUp_intree;
+        TTreeReaderValue<double> muRmuFWeightDown_intree;
         
         TTreeReaderValue<double> prefiringweight_intree;
         TTreeReaderValue<double> prefiringweightup_intree;
@@ -223,10 +226,10 @@ HistMaker::HistMaker()
     passedSample.close();
     
     // doing it this way instead when using condor/batch (not lobster):
-//     auto samp_env_var = getenv("SAMPLE");
-//     string samp_env_var_string = samp_env_var;
-//     stringstream samp_env_var_ss(samp_env_var_string);
-//     samp_env_var_ss >> sample;
+    // auto samp_env_var = getenv("SAMPLE");
+    // string samp_env_var_string = samp_env_var;
+    // stringstream samp_env_var_ss(samp_env_var_string);
+    // samp_env_var_ss >> sample;
     
     setupSFs();
 }

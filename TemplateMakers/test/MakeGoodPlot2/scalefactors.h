@@ -756,26 +756,24 @@ double HistMaker::totalSF(int iSys, vector<string> category, int bin, int nbins)
     if (debug) cout << "Total SF: " << weight << endl;
     if (debug) cout << "next event..." << endl;
     
-    
-    
-//// btag syst mapping:
-// CMS_ttHl_btag_cErr1 - up : 29
-// CMS_ttHl_btag_cErr2 - up : 31
-// CMS_ttHl_btag_HF - up : 17
-// CMS_ttHl_btag_LF - up : 19
-// CMS_ttHl16_btag_HFStats1 - up : 21
-// CMS_ttHl16_btag_HFStats2 - up : 25
-// CMS_ttHl16_btag_LFStats1 - up : 23
-// CMS_ttHl16_btag_LFStats2 - up : 27
-//     
-// CMS_ttHl_btag_cErr1 - down : 30
-// CMS_ttHl_btag_cErr2 - down : 32
-// CMS_ttHl_btag_HF - down : 18
-// CMS_ttHl_btag_LF - down : 20
-// CMS_ttHl16_btag_HFStats1 - down : 22
-// CMS_ttHl16_btag_HFStats2 - down : 26
-// CMS_ttHl16_btag_LFStats1 - down : 24
-// CMS_ttHl16_btag_LFStats2 - down : 28
+    //// btag syst mapping:
+    // CMS_ttHl_btag_cErr1 - up : 29
+    // CMS_ttHl_btag_cErr2 - up : 31
+    // CMS_ttHl_btag_HF - up : 17
+    // CMS_ttHl_btag_LF - up : 19
+    // CMS_ttHl16_btag_HFStats1 - up : 21
+    // CMS_ttHl16_btag_HFStats2 - up : 25
+    // CMS_ttHl16_btag_LFStats1 - up : 23
+    // CMS_ttHl16_btag_LFStats2 - up : 27
+    //     
+    // CMS_ttHl_btag_cErr1 - down : 30
+    // CMS_ttHl_btag_cErr2 - down : 32
+    // CMS_ttHl_btag_HF - down : 18
+    // CMS_ttHl_btag_LF - down : 20
+    // CMS_ttHl16_btag_HFStats1 - down : 22
+    // CMS_ttHl16_btag_HFStats2 - down : 26
+    // CMS_ttHl16_btag_LFStats1 - down : 24
+    // CMS_ttHl16_btag_LFStats2 - down : 28
 
                         
     if (iSys==23) weight *= (*nnpdfWeightUp_intree);
@@ -784,6 +782,9 @@ double HistMaker::totalSF(int iSys, vector<string> category, int bin, int nbins)
     if (iSys==26) weight *= (*muRWeightDown_intree);   
     if (iSys==27) weight *= (*muFWeightUp_intree);     
     if (iSys==28) weight *= (*muFWeightDown_intree);
+
+    if (iSys==47) weight *= (*muRmuFWeightUp_intree);
+    if (iSys==48) weight *= (*muRmuFWeightDown_intree);
     
     // commented out since using function above now
     //if (iSys==37) weight *= (*preshowerISRweightUp_intree);

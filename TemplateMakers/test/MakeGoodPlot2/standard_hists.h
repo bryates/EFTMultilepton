@@ -15,6 +15,7 @@ void HistMaker::standard_hists()
     
     double weight = *wgt_intree;
     
+    // [0] = nominal, [1] = JECup, [2] = JECdown
     vector<string> stdcategory = eventselections();
     vector<string> category;
     int doNtimes = 1;    
@@ -30,6 +31,7 @@ void HistMaker::standard_hists()
     if (!dochgfs && !dofakes)
     {
         category = stdcategory;
+        // Check utils.h for syst mapping
         systs = {0, 1, 2, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46};
     }
     else if (dochgfs)
@@ -133,7 +135,7 @@ void HistMaker::standard_hists()
                 {
                     WCPoint smpt = WCPoint();
                     if (sys==0)
-                    {
+                    {//Nominal
                         //std::vector<ttH::Jet> cutjets = simpleCut<std::vector<ttH::Jet> >(*loose_jets_intree,"pt",25.0); // need to be careful with this (problem if type not explicitly specified)
                         //std::vector<ttH::Jet> cleanedjets = cleanObjs(*preselected_jets_intree,*preselected_leptons_intree,0.4);
                         //auto cleanedjets = simpleCut(*preselected_jets_intree,"pt",30.0);
@@ -224,6 +226,8 @@ void HistMaker::standard_hists()
                         //th1d[category[sys]+"__muRWeightDown"]->Fill((*muRWeightDown_intree),weight);
                         //th1d[category[sys]+"__muFWeightUp"]->Fill((*muFWeightUp_intree),weight);
                         //th1d[category[sys]+"__muFWeightDown"]->Fill((*muFWeightDown_intree),weight);
+                        //th1d[category[sys]+"__muRmuFWeightUp"]->Fill((*muRmuFWeightUp_intree),weight);
+                        //th1d[category[sys]+"__muRmuFWeightDown"]->Fill((*muRmuFWeightDown_intree),weight);
 
                         auto untaggedjetsmedium = keepUnTagged(cleanedjets,"DM"); // these only get used in the line below
                         if (fillCRhists) th1d[category[sys]+"__hadtopmass."]->Fill(fillHistOverflowAware(th1d[category[sys]+"__hadtopmass."],had_top_mass(taggedjetsmedium,untaggedjetsmedium)),weight);
@@ -341,7 +345,7 @@ void HistMaker::standard_hists()
                         }
                     }
                     else if (sys==1)
-                    {
+                    {//JESUP stuff
                         //auto cleanedjets = simpleCut(preselected_jets_JECup,"pt",30.0);
                         auto cleanedjets = preselected_jets_JECup;
                         auto taggedjetsmedium = keepTagged(cleanedjets,"DM");
@@ -455,7 +459,7 @@ void HistMaker::standard_hists()
                         }
                     }
                     else if (sys==2)
-                    {
+                    {//JESDOWN stuff
                         if (debug) cout << "inside " << systr << endl;
                         //auto cleanedjets = simpleCut(preselected_jets_JECdown,"pt",30.0);
                         auto cleanedjets = preselected_jets_JECdown;
@@ -559,7 +563,7 @@ void HistMaker::standard_hists()
                         }                    
                     }
                     else if (sys>=3 && sys<=6)
-                    {
+                    {//FR stuff
                         if (debug) cout << "inside " << systr << endl;
                         
                         auto cleanedjets = preselected_jets;

@@ -21,6 +21,9 @@ void HistMaker::setBranchAddresses( TTreeReader & newreader )
         muRWeightDown_intree = TTreeReaderValue<double>(newreader, "muRWeightDown");
         muFWeightUp_intree = TTreeReaderValue<double>(newreader, "muFWeightUp");
         muFWeightDown_intree = TTreeReaderValue<double>(newreader, "muFWeightDown");
+
+        muRmuFWeightUp_intree = TTreeReaderValue<double>(newreader, "muRmuFWeightUp");
+        muRmuFWeightDown_intree = TTreeReaderValue<double>(newreader, "muRmuFWeightDown");
         
         prefiringweight_intree = TTreeReaderValue<double>(newreader, "prefiringweight");        
         prefiringweightup_intree = TTreeReaderValue<double>(newreader, "prefiringweightup");        
@@ -31,14 +34,14 @@ void HistMaker::setBranchAddresses( TTreeReader & newreader )
         preshowerFSRweightDown_intree = TTreeReaderValue<double>(newreader, "preshowerFSRweightDown");
         
         
-//        cout << "switch back (insdie setbranchaddresses!)" << endl;
-//         prefiringweight_intree = TTreeReaderValue<double>(newreader, "originalXWGTUP");        
-//         prefiringweightup_intree = TTreeReaderValue<double>(newreader, "originalXWGTUP");        
-//         prefiringweightdown_intree = TTreeReaderValue<double>(newreader, "originalXWGTUP");        
-//         preshowerISRweightUp_intree = TTreeReaderValue<double>(newreader, "originalXWGTUP");        
-//         preshowerFSRweightUp_intree = TTreeReaderValue<double>(newreader, "originalXWGTUP");        
-//         preshowerISRweightDown_intree = TTreeReaderValue<double>(newreader, "originalXWGTUP");
-//         preshowerFSRweightDown_intree = TTreeReaderValue<double>(newreader, "originalXWGTUP");  
+        // cout << "switch back (insdie setbranchaddresses!)" << endl;
+        // prefiringweight_intree = TTreeReaderValue<double>(newreader, "originalXWGTUP");        
+        // prefiringweightup_intree = TTreeReaderValue<double>(newreader, "originalXWGTUP");        
+        // prefiringweightdown_intree = TTreeReaderValue<double>(newreader, "originalXWGTUP");        
+        // preshowerISRweightUp_intree = TTreeReaderValue<double>(newreader, "originalXWGTUP");        
+        // preshowerFSRweightUp_intree = TTreeReaderValue<double>(newreader, "originalXWGTUP");        
+        // preshowerISRweightDown_intree = TTreeReaderValue<double>(newreader, "originalXWGTUP");
+        // preshowerFSRweightDown_intree = TTreeReaderValue<double>(newreader, "originalXWGTUP");  
     }
     else
     {
@@ -49,6 +52,9 @@ void HistMaker::setBranchAddresses( TTreeReader & newreader )
         muRWeightDown_intree = TTreeReaderValue<double>(newreader, "originalXWGTUP");
         muFWeightUp_intree = TTreeReaderValue<double>(newreader, "originalXWGTUP");
         muFWeightDown_intree = TTreeReaderValue<double>(newreader, "originalXWGTUP");
+
+        muRmuFWeightUp_intree = TTreeReaderValue<double>(newreader, "originalXWGTUP");
+        muRmuFWeightDown_intree = TTreeReaderValue<double>(newreader, "originalXWGTUP");
     }    
 
     
