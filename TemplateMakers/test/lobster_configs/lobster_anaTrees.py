@@ -5,7 +5,7 @@ from lobster.core import AdvancedOptions, Category, Config, Dataset, StorageConf
 import os
 
 isdata = False # remember to change osTwoLep_cfg.py
-doeftsamps = True
+doeftsamps = False
 singleSamp = None # default, to be overridden below if desired
 
 tstamp1 = datetime.datetime.now().strftime('%Y%m%d_%H%M')
@@ -17,9 +17,9 @@ master_label = 'EFT_CRC_anaTrees_{tstamp}'.format(tstamp=tstamp1)
 
 ver = "v1"
 #tag = "test/lobster_test_{tstamp}".format(tstamp=tstamp1)
-tag = "special/tllq4f_EFT_MatchedNoHiggs_{tstamp}_NoMrg-JM1-JM2".format(tstamp=tstamp2)
+# tag = "special/tllq4f_EFT_MatchedNoHiggs_{tstamp}_NoMrg-JM1-JM2".format(tstamp=tstamp2)
 #tag = "central_sgnl_{tstamp}".format(tstamp=tstamp2)
-#tag = "central_bkgd_{tstamp}".format(tstamp=tstamp2)
+tag = "central_bkgd_{tstamp}".format(tstamp=tstamp2)
 #tag = "private_sgnl_{tstamp}".format(tstamp=tstamp2)
 #tag = "data2017_{tstamp}".format(tstamp=tstamp2)
 
@@ -160,28 +160,28 @@ if ((not isdata) and (not doeftsamps)): # eventually rm the "not doeftsamps" her
     
     # cherry-pick 2017, no ddbrs:
     # "b"
-    #mysamples.append(['WW','/WWTo2L2Nu_NNPDF31_TuneCP5_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
-    #mysamples.append(['ZZ','/ZZTo4L_13TeV_powheg_pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])    
+    mysamples.append(['WW','/WWTo2L2Nu_NNPDF31_TuneCP5_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
+    mysamples.append(['ZZ','/ZZTo4L_13TeV_powheg_pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])    
     
     # "a"
-    #mysamples.append(['WWW','/WWW_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
-    #mysamples.append(['WWZ','/WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
-    #mysamples.append(['WZZ','/WZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
-    #mysamples.append(['ZZZ','/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
-    #mysamples.append(['WZ','/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
-    #mysamples.append(['ttGJets','/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
-    #mysamples.append(['ttGJets_ext','/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v2/MINIAODSIM'])
+    mysamples.append(['WWW','/WWW_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
+    mysamples.append(['WWZ','/WWZ_4F_TuneCP5_13TeV-amcatnlo-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
+    mysamples.append(['WZZ','/WZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
+    mysamples.append(['ZZZ','/ZZZ_TuneCP5_13TeV-amcatnlo-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
+    mysamples.append(['WZ','/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
+    mysamples.append(['ttGJets','/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
+    mysamples.append(['ttGJets_ext','/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v2/MINIAODSIM'])
     
     #mysamples.append(['ttWW','/TTWW_TuneCP5_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/MINIAODSIM'])
     #mysamples.append(['ttWZ','/TTWZ_TuneCP5_13TeV-madgraph-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
 
-    mysamples.append(['ttH','/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])                 #a
-    mysamples.append(['tHq','/THQ_4f_Hincl_13TeV_madgraph_pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])                                           #whatever (doesn't have any pdf stuff)
+    # mysamples.append(['ttH','/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])                 #a
+    # mysamples.append(['tHq','/THQ_4f_Hincl_13TeV_madgraph_pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])                                           #whatever (doesn't have any pdf stuff)
 
     ## for preshower thing:
-    mysamples.append(['ttW','/TTWJetsToLNu_TuneCP5_PSweights_13TeV-amcatnloFXFX-madspin-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM'])     #a
-    mysamples.append(['ttZ','/TTZToLLNuNu_M-10_TuneCP5_PSweights_13TeV-amcatnlo-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])                     #a
-    mysamples.append(['tZq','/tZq_ll_4f_ckm_NLO_TuneCP5_PSweights_13TeV-amcatnlo-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/MINIAODSIM'])            #a
+    # mysamples.append(['ttW','/TTWJetsToLNu_TuneCP5_PSweights_13TeV-amcatnloFXFX-madspin-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM'])     #a
+    # mysamples.append(['ttZ','/TTZToLLNuNu_M-10_TuneCP5_PSweights_13TeV-amcatnlo-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])                     #a
+    # mysamples.append(['tZq','/tZq_ll_4f_ckm_NLO_TuneCP5_PSweights_13TeV-amcatnlo-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/MINIAODSIM'])            #a
 
 if ((not isdata) and doeftsamps):
 
@@ -257,18 +257,19 @@ if ((not isdata) and doeftsamps):
     ### Private EFT samples
     hadoop_loc = '/store/user/awightma/'
     ## ttH
-    # mysamples.append(['ttH_multidim_b1','FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttHJet_HanModel16DttllScanpoints_run1/'])
+    mysamples.append(['ttH_multidim_b1','FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttHJet_HanModel16DttllScanpoints_run1/'])
     ## ttlnu
-    # mysamples.append(['ttlnu_multidim_b1','FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttlnuJet_HanModel16DttllScanpoints_run1/'])
+    mysamples.append(['ttlnu_multidim_b1','FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttlnuJet_HanModel16DttllScanpoints_run1/'])
     ## ttll
-    # mysamples.append(['ttll_multidim_b1','FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanModel16DttllScanpoints_run1/'])
-    # mysamples.append(['ttll_multidim_b2','FullProduction/Round5/Batch2/postLHE_step/v2/mAOD_step_ttllNuNuJetNoHiggs_HanModel16DttllScanpoints_run1/'])
+    mysamples.append(['ttll_multidim_b1','FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanModel16DttllScanpoints_run1/'])
+    mysamples.append(['ttll_multidim_b2','FullProduction/Round5/Batch2/postLHE_step/v2/mAOD_step_ttllNuNuJetNoHiggs_HanModel16DttllScanpoints_run1/'])
     ## tHq
-    # mysamples.append(['tHq_multidim_b1','FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_tHq4fMatched_HanModel16DttllScanpoints_run1/'])
+    mysamples.append(['tHq_multidim_b1','FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_tHq4fMatched_HanModel16DttllScanpoints_run1/'])
     ## tllq
-    # mysamples.append(['tllq_multidim_b1','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])
-    # mysamples.append(['tllq_multidim_b2','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0_extra/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])
-
+    #mysamples.append(['tllq_multidim_b1','Batch1/postLHE_step/v1/mAOD_step_tllq4fMatchedNoHiggs_HanModel16DttllScanpoints_run1/'])
+    mysamples.append(['tllq_multidim_b1','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])
+    mysamples.append(['tllq_multidim_b2','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0_extra/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])
+    
     # mysamples.append(['tllq_multidim_0partons','postLHE_step/2019_04_19/tllq4f-NoDim6Diagrams/v2/mAOD_step_tllq4f_NoDim6NoSchanW_run0/'])
 
     # mysamples.append(['tllq_multidim_JetMax1_b1','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1-JetMax2_b1-b4/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10JetMax1b1_run1'])
@@ -294,9 +295,9 @@ if ((not isdata) and doeftsamps):
     # mysamples.append(['tllq_multidim_MatchedNoHiggsMLM_JetMax1','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsMLMJetMax1_run1'])
     # mysamples.append(['tllq_multidim_MatchedNoHiggsMLM_JetMax2','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsMLMJetMax2_run1'])
 
-    mysamples.append(['tllq_multidim_tch_NoHiggs_0j_xqcut0_NoMerge','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])
-    mysamples.append(['tllq_multidim_tch_NoHiggs_0j_xqcut0_JetMax1','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0JetMax1_run1'])
-    mysamples.append(['tllq_multidim_tch_NoHiggs_0j_xqcut0_JetMax2','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0JetMax2_run1'])
+    # mysamples.append(['tllq_multidim_tch_NoHiggs_0j_xqcut0_NoMerge','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])
+    # mysamples.append(['tllq_multidim_tch_NoHiggs_0j_xqcut0_JetMax1','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0JetMax1_run1'])
+    # mysamples.append(['tllq_multidim_tch_NoHiggs_0j_xqcut0_JetMax2','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0JetMax2_run1'])
 
     # singleSamp = ['tllq_multidim_b1','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10_run1/']
     # singleSamp = ['tllq_multidim_b2','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1_b2/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10_run1/']
