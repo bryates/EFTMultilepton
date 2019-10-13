@@ -59,6 +59,7 @@ void makeanatestfile() {
     //newplots->drawAllToFile("dump_name","root");
 
     /*
+        --- anatest24 ---
         Uses data files from '.../mergedHists/2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps',
         as well as the central_tHq sample (which shouldn't be used in the combine fit)
         this includes:
@@ -77,8 +78,26 @@ void makeanatestfile() {
             * The tllq sample differs from the previous one in that it has no intermediate Higgses,
             has +0partons, and is t-ch only
             * Includes the JEC AK4PFchs fix (commit/61c772a87d9f0ab1c9d89f9305b4a2da46c3cf9e)
+        
+        --- anatest25 ---
+        Uses data files from '.../mergedHists/2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps',
+        as well as the central_tHq sample (which shouldn't be used in the combine fit)
+        this includes:
+            temp_data, temp_SingleMuon, temp_SingleElectron, temp_QFs, temp_MuonEG, temp_Fakes,
+            temp_DoubleMuon, and temp_DoubleEG
+        The MC samples are from '.../mergedHists/2019_10_12_full_MC'
+        this includes:
+            temp_WWZ, temp_WWW, temp_ZZZ, temp_WZZ, temp_WW, temp_ttGJets, temp_ttH, temp_ttH_multidim
+            temp_ttlnu_multidim, temp_WZ, temp_ZZ, temp_ttW, temp_tHq_multidim, temp_tZq, temp_ttZ,
+            temp_ttll_multidim, and temp_tllq_multidim
+        All non-data related samples were remade to include the muR+muF up/down variations to allow
+        calculation of bin-by-bin envelope
+        Changes:
+            * Fixed muR/muF scalefactor systematics to use correct ME weight id
+            * Add muR+muF up/down variation (commit/6201381699ee864ccd70c1dcd32302e8330a19e7)
+            * Fix to properly identify PDF weight id for non-private samples 
     */
-    newplots->drawAllToFile("anatest24","root");
+    newplots->drawAllToFile("anatest25","root");
 
     //delete newplots;
     std::cout << "Finished!" << std::endl;
