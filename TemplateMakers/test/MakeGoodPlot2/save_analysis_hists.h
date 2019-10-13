@@ -77,6 +77,8 @@ void MakeGoodPlot::save_analysis_hists()
     allSysts.push_back("MURDOWN");
     allSysts.push_back("MUFUP");
     allSysts.push_back("MUFDOWN");
+    allSysts.push_back("MURMUFUP");
+    allSysts.push_back("MURMUFDOWN");
     allSysts.push_back("LEPIDUP");
     allSysts.push_back("LEPIDDOWN");
     allSysts.push_back("PSISRUP");
@@ -133,6 +135,10 @@ void MakeGoodPlot::save_analysis_hists()
             //hist[i].Add(combohist2);            
 
 	        if (!(thisSamp>=84 && thisSamp<=88) && (syst=="ADHOCNJUP" || syst=="ADHOCNJDOWN")) continue;
+            if (thisSamp > 90 && (syst=="MURMUFUP" || syst=="MURMUFDOWN")) {
+                // The data-based samples haven't been re-made and so are missing these histograms
+                continue;
+            }
             auto combohist1 = (TH1EFT*)hist[i].FindObject("3l_mix_p_1b."+syst); //->Clone("3l."+syst);
             combohist1->Add((TH1EFT*)hist[i].FindObject("3l_ppp_1b."+syst));
             
@@ -258,7 +264,7 @@ void MakeGoodPlot::save_analysis_hists()
                 {
                     thishist->ScaleFits(lumi);
                     thishist->Scale(WCPoint());
-                    if (thissyst=="PDFUP" || thissyst=="PDFDOWN" || thissyst=="MURUP" || thissyst=="MURDOWN" || thissyst=="MUFUP" || thissyst=="MUFDOWN")
+                    if (thissyst=="PDFUP" || thissyst=="PDFDOWN" || thissyst=="MURUP" || thissyst=="MURDOWN" || thissyst=="MUFUP" || thissyst=="MUFDOWN" || thissyst=="MURMUFUP" || thissyst=="MURMUFDOWN")
                     {
                         auto nomhist = (TH1EFT*)hist[i].FindObject(thiscat+sample_names_reg[thisSamp]); // should have already been scaled
                         double normamnt = (nomhist->GetEntries()!=0 && thishist->Integral()!=0.) ? nomhist->Integral()/thishist->Integral() : 1.;
@@ -290,7 +296,7 @@ void MakeGoodPlot::save_analysis_hists()
                     //thishist->Scale(pt);
                     
                     // systematics that are shape-only variations:
-                    if (thissyst=="PDFUP" || thissyst=="PDFDOWN" || thissyst=="MURUP" || thissyst=="MURDOWN" || thissyst=="MUFUP" || thissyst=="MUFDOWN")
+                    if (thissyst=="PDFUP" || thissyst=="PDFDOWN" || thissyst=="MURUP" || thissyst=="MURDOWN" || thissyst=="MUFUP" || thissyst=="MUFDOWN" || thissyst=="MURMUFUP" || thissyst=="MURMUFDOWN")
                     {
                         auto nomhist = (TH1EFT*)hist[i].FindObject(thiscat+sample_names_reg[thisSamp]); // should have already been scaled
                         double normamnt = (nomhist->GetEntries()!=0 && thishist->Integral()!=0.) ? nomhist->Integral()/thishist->Integral() : 1.;
