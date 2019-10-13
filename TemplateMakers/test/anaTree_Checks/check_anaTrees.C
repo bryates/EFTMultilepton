@@ -33,6 +33,16 @@ void runit(TChain* ch, TString outf_name, int max_events, int skim) {
 
     std::unordered_map<std::string,double> *eftwgts_intree = 0;
     double originalXWGTUP_intree = -1.;
+    double nnpdfWeightUp_intree = -1.;
+    double nnpdfWeightDown_intree = -1.;
+
+    double muRWeightUp_intree = -1.;
+    double muRWeightDown_intree = -1.;
+    double muFWeightUp_intree = -1.;
+    double muFWeightDown_intree = -1.;
+    double muRmuFWeightUp_intree = -1.;
+    double muRmuFWeightDown_intree = -1.;
+
     int lumiBlock_intree = -1;
 
     ch->SetBranchAddress("tight_leptons",&tight_leptons_intree);
@@ -47,6 +57,19 @@ void runit(TChain* ch, TString outf_name, int max_events, int skim) {
 
     ch->SetBranchAddress("eftwgts",&eftwgts_intree);
     ch->SetBranchAddress("originalXWGTUP",&originalXWGTUP_intree);
+
+    ch->SetBranchAddress("nnpdfWeightUp",&nnpdfWeightUp_intree);
+    ch->SetBranchAddress("nnpdfWeightDown",&nnpdfWeightDown_intree);
+
+    ch->SetBranchAddress("muRWeightUp",&muRWeightUp_intree);
+    ch->SetBranchAddress("muRWeightUp",&muRWeightDown_intree);
+
+    ch->SetBranchAddress("muFWeightUp",&muFWeightUp_intree);
+    ch->SetBranchAddress("muFWeightUp",&muFWeightDown_intree);
+
+    ch->SetBranchAddress("muRmuFWeightUp",&muRmuFWeightUp_intree);
+    ch->SetBranchAddress("muRmuFWeightUp",&muRmuFWeightDown_intree);
+
     ch->SetBranchAddress("lumiBlock",&lumiBlock_intree);
 
     double incl_wgts = 0.0;
@@ -117,6 +140,13 @@ void runit(TChain* ch, TString outf_name, int max_events, int skim) {
     binLogX(h_smwgts_mumu_p);
     binLogX(h_smwgts_mumu_m);
 
+    TH1D* h_muRUp = new TH1D("h_muRUp","h_muRUp",25,-1,10);
+    TH1D* h_muRDown = new TH1D("h_muRDown","h_muRDown",25,-1,10);
+    TH1D* h_muFUp = new TH1D("h_muFUp","h_muFUp",25,-1,10);
+    TH1D* h_muFDown = new TH1D("h_muFDown","h_muFDown",25,-1,10);
+    TH1D* h_muRmuFUp = new TH1D("h_muRmuFUp","h_muRmuFUp",25,-1,10);
+    TH1D* h_muRmuFDown = new TH1D("h_muRmuFDown","h_mmuFuRDown",25,-1,10);
+
     std::vector<TH1EFT*> th1eft_hists {
         h_sumSM_incl,
         h_sumSM_ee_p,
@@ -148,7 +178,10 @@ void runit(TChain* ch, TString outf_name, int max_events, int skim) {
         h_smwgts_incl,
         h_smwgts_ee_p,h_smwgts_ee_m,
         h_smwgts_emu_p,h_smwgts_emu_m,
-        h_smwgts_mumu_p,h_smwgts_mumu_m
+        h_smwgts_mumu_p,h_smwgts_mumu_m,
+        h_muRUp,h_muRDown,
+        h_muFUp,h_muFDown,
+        h_muRmuFUp,h_muRmuFDown
     };
 
     WCFit empty_fit({},"");
@@ -279,6 +312,15 @@ void runit(TChain* ch, TString outf_name, int max_events, int skim) {
         if (ana_cat == Analysis::ThreeLepOneBTagSFOSZ) {
             h_njets_sfz1b->Fill(cleaned_jets.size(),sm_wgt,wc_fit);
         }
+
+        h_muRUp->Fill(muRWeightUp_intree);
+        h_muRDown->Fill(muRWeightDown_intree);
+
+        h_muFUp->Fill(muFWeightUp_intree);
+        h_muFDown->Fill(muFWeightDown_intree);
+
+        h_muRmuFUp->Fill(muRmuFWeightUp_intree);
+        h_muRmuFDown->Fill(muRmuFWeightDown_intree);
 
         h_sumSM_incl->Fill(0,sm_wgt,wc_fit);
         h_smwgts_incl->Fill(fabs(sm_wgt));

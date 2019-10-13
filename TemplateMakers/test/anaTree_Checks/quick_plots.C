@@ -1,3 +1,10 @@
+// Returns the sign of x
+int sgn(double x) {
+    if (x > 0) return 1;
+    if (x < 0) return -1;
+    return 0;
+}
+
 void make_plot(TString category, TH1EFT* nom, TH1EFT* up, TH1EFT* down, bool save_it) {
     std::cout << "Category: " << category << std::endl;
     double bin_sum = 0.0;
@@ -21,15 +28,37 @@ void make_plot(TString category, TH1EFT* nom, TH1EFT* up, TH1EFT* down, bool sav
             sum_err += nom_err*nom_err;
         }
 
-        std::cout << "  Bin " << std::noshowpos << i << std::showpos << ": " << std::setw(12) << std::left << nom_content
-                  << " +/- " << std::setw(13) << std::left << nom_err
-                  << " (Up: " << std::setw(13) << std::left << up_content
-                  << " " << std::setw(12) << std::left << up_ratio
-                  << ", Down: " << std::setw(13) << std::left << down_content
-                  << " " << std::setw(12) << std::left << down_ratio << ")" << std::endl;
+        TString direction;
+        if (sgn(up_ratio) == sgn(down_ratio)) {
+            direction = "SAME";
+        } else {
+            direction = "OPP";
+        }
+
+        if (nom_content == 0) {
+            direction = "";
+        } else if (nom_content < 0) {
+            direction = "NEG BIN";
+        }
+
+        TString nom_str     = TString::Format("%+.2f",nom_content);
+        TString nom_err_str = TString::Format("%+.2f",nom_err);
+        TString up_str      = TString::Format("%+.2f",up_content);
+        TString down_str    = TString::Format("%+.2f",down_content);
+        TString r_up_str    = TString::Format("%+.2f",up_ratio);
+        TString r_down_str  = TString::Format("%+.2f",down_ratio);
+
+        std::cout << "  Bin " << i << ": " << std::setw(7) << std::left << nom_str
+                  << " +/- " << std::setw(7) << std::left << nom_err_str
+                  << " (Up: " << std::setw(7) << std::left << up_str
+                  << " " << std::setw(7) << std::left << r_up_str
+                  << ", Down: " << std::setw(7) << std::left << down_str
+                  << " " << std::setw(7) << std::left << r_down_str << ")"
+                  << " " << direction << std::endl;
     }
-    // std::cout << "Sum: " << std::setw(10) << bin_sum << " +/- " << std::setw(10) << sqrt(sum_err) << std::endl;
-    std::cout << "Sum: " << bin_sum << " +/- " << sqrt(sum_err) << std::endl;
+    TString sum_str     = TString::Format("%+.2f",bin_sum);
+    TString sum_err_str = TString::Format("%+.2f",sqrt(sum_err));
+    std::cout << "Sum: " << sum_str << " +/- " << sum_err_str << std::endl;
 
     nom->SetLineColor(kBlack);
     up->SetLineColor(kRed);
@@ -174,21 +203,9 @@ void merge_plot(TFile* f, TString sample, std::vector<TString> to_merge, TString
 //  'anatest' Format: 2lss_p_emu.tZq && 2lss_p_emu.JESUP.tZq
 // Note2: This root macro sort of doesnt belong with the 'check_anaTree' code, but I moved it here since it was created
 //      around the same time as that code and also didnt really belong in MakeGoodPlot2
-void quick_plots() {
+void runit(TString fpath, TString sample,TString syst) {
     gStyle->SetPadRightMargin(0.2);
     gStyle->SetOptStat(0);
-
-    // TString dirpath = "/tmpscratch/users/awightma/analysisWorkflow/mergedHists/2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps/";
-    // TString fname = "temp_ttZ.root";
-    // TString sample = "";
-
-    TString dirpath = "/afs/crc.nd.edu/user/a/awightma/Public/for_tony/";
-    TString fname = "anatest23_v3.root";
-    // TString sample = "tZq";
-    TString sample = "tllq_16D";
-
-    TString fpath = dirpath + fname;
-    TString syst = "JES";
 
     std::cout << "Reading file: " << fname << std::endl;
     std::cout << "Sample: " << sample << std::endl;
@@ -217,14 +234,14 @@ void quick_plots() {
         "3l_mix_sfz_1b.",
         "3l_mix_m_1b.",
         "3l_mix_p_1b.",
-        "3l_ppp_1b.",
-        "3l_mmm_1b.",
+        // "3l_ppp_1b.",
+        // "3l_mmm_1b.",
 
         "3l_mix_sfz_2b.",
         "3l_mix_m_2b.",
         "3l_mix_p_2b.",
-        "3l_ppp_2b.",
-        "3l_mmm_2b."
+        // "3l_ppp_2b.",
+        // "3l_mmm_2b."
     };
 
     std::vector<TString> all_bins;
@@ -247,4 +264,33 @@ void quick_plots() {
     std::cout << std::endl;
 
     f->Close();
+}
+
+void quick_plots() {
+    TString dirpath = "/afs/crc.nd.edu/user/a/awightma/Public/for_tony/";
+    // TString fname = "anatest23_v3.root";
+    TString fname = "anatest25.root";
+
+    TString fpath = dirpath + fname;
+
+    std::vector<TString> private_signal {"tllq_16D","ttH_16D","ttll_16D","ttlnu_16D","tHq_16D"};
+    std::vector<TString> central_signal {"tZq","ttH","ttZ","ttW"};
+    std::vector<TString> central_bkgd {"ttGJets","WZ","WWW"};
+
+    TString syst = "PDF";
+    //TString syst = "MUR";
+    //TString syst = "MUF";
+    //TString syst = "MURMUF";
+
+    for (TString sample: private_signal) {
+        runit(fpath,sample,syst);
+    }   
+
+    for (TString sample: central_signal) {
+        runit(fpath,sample,syst);
+    }   
+
+    for (TString sample: central_bkgd) {
+        runit(fpath,sample,syst);
+    }   
 }
