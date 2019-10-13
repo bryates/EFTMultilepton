@@ -62,13 +62,13 @@ void runit(TChain* ch, TString outf_name, int max_events, int skim) {
     ch->SetBranchAddress("nnpdfWeightDown",&nnpdfWeightDown_intree);
 
     ch->SetBranchAddress("muRWeightUp",&muRWeightUp_intree);
-    ch->SetBranchAddress("muRWeightUp",&muRWeightDown_intree);
+    ch->SetBranchAddress("muRWeightDown",&muRWeightDown_intree);
 
     ch->SetBranchAddress("muFWeightUp",&muFWeightUp_intree);
-    ch->SetBranchAddress("muFWeightUp",&muFWeightDown_intree);
+    ch->SetBranchAddress("muFWeightDown",&muFWeightDown_intree);
 
     ch->SetBranchAddress("muRmuFWeightUp",&muRmuFWeightUp_intree);
-    ch->SetBranchAddress("muRmuFWeightUp",&muRmuFWeightDown_intree);
+    ch->SetBranchAddress("muRmuFWeightDown",&muRmuFWeightDown_intree);
 
     ch->SetBranchAddress("lumiBlock",&lumiBlock_intree);
 
@@ -194,6 +194,39 @@ void runit(TChain* ch, TString outf_name, int max_events, int skim) {
         sw.startTimer("2 Get Entry");
         ch->GetEntry(i);
         sw.updateTimer("2 Get Entry");
+
+        double muR_up_dir = sgn(1.0 - muRWeightUp_intree);
+        double muF_up_dir = sgn(1.0 - muFWeightUp_intree);
+        double muRmuF_up_dir = sgn(1.0 - muRWeightUp_intree);
+
+        double muR_down_dir = sgn(1.0 - muRWeightDown_intree);
+        double muF_down_dir = sgn(1.0 - muFWeightDown_intree);
+        double muRmuF_down_dir = sgn(1.0 - muRWeightDown_intree);
+
+        bool is_same_dir = true;
+        is_same_dir = is_same_dir && (muR_up_dir == muF_up_dir && muR_up_dir == muRmuF_up_dir);
+        is_same_dir = is_same_dir && (muR_down_dir == muF_down_dir && muR_down_dir == muRmuF_down_dir);
+
+        // std::cout << "Nominal: " << originalXWGTUP_intree << std::endl;
+        // std::cout << "-------------------------------------------" << std::endl;
+        // std::cout << "muR Up: " << muRWeightUp_intree << std::endl;
+        // std::cout << "muF Up: " << muFWeightUp_intree << std::endl;
+        // std::cout << "muR+muF Up: " << muRmuFWeightUp_intree << std::endl;
+        // if (muR_up_dir == muF_up_dir && muR_up_dir == muRmuF_up_dir) {
+        //     std::cout << "Direction: SAME" << std::endl;
+        // } else {
+        //     std::cout << "Direction: DIFF" << std::endl;
+        // }
+        // std::cout << "-------------------------------------------" << std::endl;
+        // std::cout << "muR Down: " << muRWeightDown_intree << std::endl;
+        // std::cout << "muF Down: " << muFWeightDown_intree << std::endl;
+        // std::cout << "muR+muF Down: " << muRmuFWeightDown_intree << std::endl;
+        // if (muR_down_dir == muF_down_dir && muR_down_dir == muRmuF_down_dir) {
+        //     std::cout << "Direction: SAME" << std::endl;
+        // } else {
+        //     std::cout << "Direction: DIFF" << std::endl;
+        // }
+        // std::cout << std::endl;
 
         ls_set.insert(lumiBlock_intree);
         incl_orig_wgt += originalXWGTUP_intree;

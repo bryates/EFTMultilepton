@@ -15,6 +15,29 @@ HPATH = '/hadoop/store/user'
 # Alias function
 pjoin = os.path.join
 
+class Sample(object):
+    def __init__(self,name,dirs=[]):
+        self.__name = name
+        self.__dirs = []
+        for d in dirs: self.addDirectory(d)
+
+    def name(self):
+        return self.__name
+
+    def list(self):
+        return self.__dirs
+
+    def addDirectory(self,*args):
+        if len(args) == 0:
+            return
+        elif len(args) == 1:
+            d = args[0]
+        else:
+            d = os.path.join(*args)
+        if d in self.list():
+            return
+        self.__dirs.append(d)
+
 # Pipes subprocess messages to STDOUT
 def run_process(inputs,verbose=True,indent=0):
     # Note: This will hold the main thread and wait for the subprocess to complete
@@ -43,61 +66,64 @@ def getFiles(tdir,ext=''):
         lst.append(fpath)
     return lst
 
-# Wrapper to run the 'check_anaTrees.C' macro
+# Wrapper to run the 'check_anaTrees.C' macro interactively
 def check_anaTrees():
     print "Running check_anaTrees()..."
     max_files = 3
-    events = -1
-    skim = True
-    testing = False
+    events = 4500
+    skim = False
+    testing = True
 
     # label_suffix = "v14-v1_Full"
     label_suffix = ""
 
     spath = 'awightma/analysisTrees'
-    tllq4f_JetMax2 = ('tllq4f_JetMax2',[
-        # pjoin(hpath,spath,'special/tllq4f_EFT_t-channel_01j_2019_09_04_JetMax2/v1/tllq_multidim'),
-        pjoin(HPATH,spath,'special/tllq4f_EFT_t-channel_01j_2019_09_20_JetMax2/v1/tllq_multidim'),
-    ])
+    tllq4f_JetMax1 = Sample('tllq4f_JetMax1')
+    tllq4f_JetMax2 = Sample('tllq4f_JetMax2')
+    tllq4f_JetMax2_NSH = Sample('tllq4f_JetMax2_NoSkipHiggs')
 
-    tllq4f_JetMax2_NoSkipHiggs = ('tllq4f_JetMax2_NoSkipHiggs',[
-        pjoin(HPATH,spath,'special/tllq4f_EFT_t-channel_01j_2019_09_20_JetMax2_NoSkipHiggs/v1/tllq_multidim'),
-    ])
+    tllq4f_0p_NoMerge = Sample('tllq4f_0p_NoMerge')
+    tllq4f_0p_JetMax1 = Sample('tllq4f_0p_JetMax1')
+    tllq4f_0p_JetMax2 = Sample('tllq4f_0p_JetMax2')
 
-    tllq4f_JetMax1 = ('tllq4f_JetMax1',[
-        pjoin(HPATH,spath,'special/tllq4f_EFT_t-channelJets_2019_08_07/v1/tllq_multidim_b1'),
-        pjoin(HPATH,spath,'special/tllq4f_EFT_t-channelJets_2019_08_07/v1/tllq_multidim_b2')
-    ])
+    central_tZq_NSH = Sample('central_tZq_NoSkipHiggs')
+    central_tZq = Sample('central_tZq')
+    central_ttH = Sample('central_ttH')
 
-    tllq4f_0p_NoMerge = ('tllq4f_0p_JetMax1',[
-        pjoin(HPATH,spath,'special/tllq4f_EFT_t-channelNoJets_2019_10_01_HadFilterCheck/v1/tllq_multidim_NoMerge'),
-    ])
+    tllq4f_JetMax1.addDirectory(HPATH,spath,'special/tllq4f_EFT_t-channelJets_2019_08_07/v1/tllq_multidim_b1')
+    tllq4f_JetMax1.addDirectory(HPATH,spath,'special/tllq4f_EFT_t-channelJets_2019_08_07/v1/tllq_multidim_b2')
 
-    tllq4f_0p_JetMax1 = ('tllq4f_0p_JetMax1',[
-        pjoin(HPATH,spath,'special/tllq4f_EFT_t-channelNoJets_2019_10_01_HadFilterCheck/v1/tllq_multidim_JetMax1'),
-    ])
+    # tllq4f_JetMax2.addDirectory(HPATH,spath,'special/tllq4f_EFT_t-channel_01j_2019_09_04_JetMax2/v1/tllq_multidim')
+    tllq4f_JetMax2.addDirectory(HPATH,spath,'special/tllq4f_EFT_t-channel_01j_2019_09_20_JetMax2/v1/tllq_multidim')
 
-    tllq4f_0p_JetMax2 = ('tllq4f_0p_JetMax1',[
-        pjoin(HPATH,spath,'special/tllq4f_EFT_t-channelNoJets_2019_10_01_HadFilterCheck/v1/tllq_multidim_JetMax2'),
-    ])
+    tllq4f_JetMax2_NSH.addDirectory(HPATH,spath,'special/tllq4f_EFT_t-channel_01j_2019_09_20_JetMax2_NoSkipHiggs/v1/tllq_multidim')
 
-    central_tZq = ('central_tZq',[
-        # pjoin(HPATH,spath,'special/central_tZq_2019_09_20_v1/v1/tZq'),  # Uses v14-v1 sample
-        pjoin(HPATH,spath,'central_sgnl_2019_07_31/v1/tZq'),            # Uses v14-v2 sample
-    ])
+    tllq4f_0p_NoMerge.addDirectory(HPATH,spath,'special/tllq4f_EFT_t-channelNoJets_2019_10_01_HadFilterCheck/v1/tllq_multidim_NoMerge')
+    tllq4f_0p_JetMax1.addDirectory(HPATH,spath,'special/tllq4f_EFT_t-channelNoJets_2019_10_01_HadFilterCheck/v1/tllq_multidim_JetMax1')
+    tllq4f_0p_JetMax2.addDirectory(HPATH,spath,'special/tllq4f_EFT_t-channelNoJets_2019_10_01_HadFilterCheck/v1/tllq_multidim_JetMax2')
 
-    central_tZq_NoSkipHiggs = ('central_tZq_NoSkipHiggs',[
-        pjoin(HPATH,spath,'special/central_tZq_2019_09_23_v14-v1_NoSkipHiggs/v1/tZq')
-        # pjoin(hpath,spath,'special/central_tZq_2019_09_23_v14-v2_NoSkipHiggs/v1/tZq')
-    ])
+    # central_tZq_NSH.addDirectory(HPATH,spath,'special/central_tZq_2019_09_23_v14-v2_NoSkipHiggs/v1/tZq')
+    central_tZq_NSH.addDirectory(HPATH,spath,'special/central_tZq_2019_09_23_v14-v1_NoSkipHiggs/v1/tZq')
 
-    central_ttH = ('central_ttH',[
-        pjoin(HPATH,spath,'central_sgnl_2019_07_31/v1/ttH'),
-    ])
+    # central_tZq.addDirectory(HPATH,spath,'special/central_tZq_2019_09_20_v1/v1/tZq')
+    central_tZq.addDirectory(HPATH,spath,'central_sgnl_2019_07_31/v1/tZq')
+
+    central_ttH.addDirectory(HPATH,spath,'central_sgnl_2019_07_31/v1/ttH')
+
+    ###################
+    # anatest25 samples
+    ###################
+    a25_private_tllq = Sample('private_tllq')
+    a25_private_tllq.addDirectory(HPATH,spath,'private_sgnl_2019_10_11/v1/tllq_multidim_b1')
+    a25_private_tllq.addDirectory(HPATH,spath,'private_sgnl_2019_10_11/v1/tllq_multidim_b2')
+
+    a25_central_tZq = Sample('central_tZq')
+    a25_central_tZq.addDirectory(HPATH,spath,'central_sgnl_2019_10_11/v1/tZq')
 
     # samples = [tllq4f_JetMax2]
-    samples = [central_tZq]
-    for label,sample_dirs in samples:
+    samples = [a25_central_tZq]
+    for samp in samples:
+        label = samp.name()
         label_name = "{label}".format(label=label)
         if len(label_suffix):
             label_name = "{label}_{suffix}".format(label=label,suffix=label_suffix)
@@ -105,8 +131,8 @@ def check_anaTrees():
         print "Processing: {l}".format(l=label_name)
         file_list = []
         print "Building file list:"
-        for idx,fdir in enumerate(sample_dirs):
-            print "\t[{0:0>{w}}/{1}] {dirpath}".format(idx+1,len(sample_dirs),w=1,dirpath=fdir)
+        for idx,fdir in enumerate(samp.list()):
+            print "\t[{0:0>{w}}/{1}] {dirpath}".format(idx+1,len(samp.list()),w=1,dirpath=fdir)
             files = getFiles(fdir,'root')
             file_list.extend(files)
         print "Found {} file(s)".format(len(file_list))
@@ -264,8 +290,8 @@ def read_anaTreeChecks():
     move_files(files=imgs,target=output_dir)
 
 def main():
-    # check_anaTrees()
-    read_anaTreeChecks()
+    check_anaTrees()
+    # read_anaTreeChecks()
 
 
 if __name__ == "__main__":

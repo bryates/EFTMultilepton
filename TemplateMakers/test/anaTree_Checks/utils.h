@@ -1,6 +1,13 @@
 #ifndef ANAUTILS_H_
 #define ANAUTILS_H_
 
+// Returns the sign of x
+int sgn(double x) {
+    if (x > 0) return 1;
+    if (x < 0) return -1;
+    return 0;
+}
+
 // Reformats a TH1D histogram to have equal bin width on log scale
 void binLogX(TH1D* hist) {
     TAxis* axis = hist->GetXaxis();
