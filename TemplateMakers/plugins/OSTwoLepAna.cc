@@ -357,7 +357,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
             nnpdfWeights.insert(nnpdfWeights.begin(), 1.);                                                                      // <<----------
             // calculate combined weights
             // std::cout << "nnpdfWeights size is: " << (int)nnpdfWeights.size() << std::endl;
-            const LHAPDF::PDFUncertainty pdfUnc = nnpdfSet.uncertainty(nnpdfWeights, 68.268949);    // Where did 68.268949 come from?
+            const LHAPDF::PDFUncertainty pdfUnc = nnpdfSet.uncertainty(nnpdfWeights, 68.268949);    // 2nd arg is the CL (in %) to rescale the uncertainties to, 68.268949 is the default
             weightUp = pdfUnc.central + pdfUnc.errplus;
             weightDown = pdfUnc.central - pdfUnc.errminus;
         }
