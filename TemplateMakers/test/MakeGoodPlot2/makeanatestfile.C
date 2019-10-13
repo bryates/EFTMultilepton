@@ -85,7 +85,7 @@ void makeanatestfile() {
         this includes:
             temp_data, temp_SingleMuon, temp_SingleElectron, temp_QFs, temp_MuonEG, temp_Fakes,
             temp_DoubleMuon, and temp_DoubleEG
-        The MC samples are from '.../mergedHists/2019_10_12_full_MC'
+        The MC samples are from '.../mergedHists/2019_10_13_full_MC'
         this includes:
             temp_WWZ, temp_WWW, temp_ZZZ, temp_WZZ, temp_WW, temp_ttGJets, temp_ttH, temp_ttH_multidim
             temp_ttlnu_multidim, temp_WZ, temp_ZZ, temp_ttW, temp_tHq_multidim, temp_tZq, temp_ttZ,
