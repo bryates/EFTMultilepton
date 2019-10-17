@@ -314,8 +314,16 @@ double HistMaker::partonShowerSF(int bin, vector<string> category, int sys, int 
     
     if (!isSR) return 1.;
     if (bin<1) return 1.;
-    if (nbins==0) return 1.;    // Note: nbins >should< be zero only when bin < 1, so this line is uneeded, but kept for consistency
+    if (nbins<=1) return 1.;
+
+    double hi = 1.05;
+    double lo = 0.95;
+    double del = (hi - lo)/(nbins - 1);
+    if (sys==37) return hi - del*(bin-1);
+    if (sys==38) return lo + del*(bin-1);
     
+    return 1.;
+
     // with 3jet bin:
     // if (category[0].substr(0,4)=="2lss")
     // {
@@ -395,32 +403,32 @@ double HistMaker::partonShowerSF(int bin, vector<string> category, int sys, int 
     // } 
 
     // study combining last three bins:
-    if (category[0].substr(0,2)=="3l" || category[0].substr(0,4)=="2lss")
-    {
-        if (bin==1) 
-        {
-            if (sys==37) return 1.05;
-            if (sys==38) return 0.95;
-        }
-        if (bin==2) 
-        {
-            if (sys==37) return 0.95;
-            if (sys==38) return 1.05;
-        }        
-    } 
-    else if (category[0].substr(0,2)=="4l")
-    {   
-        if (bin==2) 
-        {
-            if (sys==37) return 1.05;
-            if (sys==38) return 0.95;
-        }
-        if (bin==3) 
-        {
-            if (sys==37) return 0.95;
-            if (sys==38) return 1.05;
-        }        
-    } 
+    // if (category[0].substr(0,2)=="3l" || category[0].substr(0,4)=="2lss")
+    // {
+    //     if (bin==1) 
+    //     {
+    //         if (sys==37) return 1.05;
+    //         if (sys==38) return 0.95;
+    //     }
+    //     if (bin==2) 
+    //     {
+    //         if (sys==37) return 0.95;
+    //         if (sys==38) return 1.05;
+    //     }        
+    // } 
+    // else if (category[0].substr(0,2)=="4l")
+    // {   
+    //     if (bin==2) 
+    //     {
+    //         if (sys==37) return 1.05;
+    //         if (sys==38) return 0.95;
+    //     }
+    //     if (bin==3) 
+    //     {
+    //         if (sys==37) return 0.95;
+    //         if (sys==38) return 1.05;
+    //     }        
+    // } 
 
     // regular 4l:
     // else if (category[0].substr(0,2)=="4l")
@@ -442,7 +450,7 @@ double HistMaker::partonShowerSF(int bin, vector<string> category, int sys, int 
     //     }
     // }
 
-    return 1.;
+    // return 1.;
 }
 double triggerSF(int pdgid1, int pdgid2, int nlep, double leadingleppt, int sys=0)
 {
