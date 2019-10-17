@@ -22,15 +22,15 @@ WCFit HistMaker::getEventFit(double weight)
     WCFit scaledFit = thisEventFit; // only scale copy of Histmaker member
     
     // old method:
-//     if (sample==84) scaledFit.scale(weight/42223.); // div by # of gridpacks // 23000 // 13400 // 2000
-//     //else if (sample==85) scaledFit.scale(weight/41739.); // "nominal" cuts
-//     else if (sample==85) scaledFit.scale(weight/24000.); // central cuts
-//     //else if (sample==86) scaledFit.scale(weight/23164.); // "nominal" cuts
-//     else if (sample==86) scaledFit.scale(weight/24000.); // central cuts
-//     //else if (sample==87) scaledFit.scale(weight/22914.); // "nominal" cuts
-//     else if (sample==87) scaledFit.scale(weight/24000.); // central cuts
-//     else if (sample==88) scaledFit.scale(weight/9214.);
-//     else scaledFit.scale(weight/2000.); // div by # of gridpacks // 23000 // 13400 // 2000
+    // if (sample==84) scaledFit.scale(weight/42223.); // div by # of gridpacks // 23000 // 13400 // 2000
+    // //else if (sample==85) scaledFit.scale(weight/41739.); // "nominal" cuts
+    // else if (sample==85) scaledFit.scale(weight/24000.); // central cuts
+    // //else if (sample==86) scaledFit.scale(weight/23164.); // "nominal" cuts
+    // else if (sample==86) scaledFit.scale(weight/24000.); // central cuts
+    // //else if (sample==87) scaledFit.scale(weight/22914.); // "nominal" cuts
+    // else if (sample==87) scaledFit.scale(weight/24000.); // central cuts
+    // else if (sample==88) scaledFit.scale(weight/9214.);
+    // else scaledFit.scale(weight/2000.); // div by # of gridpacks // 23000 // 13400 // 2000
     
     // new method:
     scaledFit.scale(weight);

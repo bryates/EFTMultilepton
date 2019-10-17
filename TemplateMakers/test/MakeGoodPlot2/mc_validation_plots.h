@@ -55,10 +55,9 @@ void MakeGoodPlot::mc_validation_plots()
         TString legtxt = "samp";
         //if (samples[i]==0) legtxt = "ttH (Andrew)";
         
-//         makeAndAdd2DPlot1Sample(*this,i,"status_vs_pdgID");
-//         makeAndAdd2DPlot1Sample(*this,i,"mom_vs_pdgID");
-//         makeAndAdd2DPlot1Sample(*this,i,"gmom_vs_pdgID");
-//       
+        // makeAndAdd2DPlot1Sample(*this,i,"status_vs_pdgID");
+        // makeAndAdd2DPlot1Sample(*this,i,"mom_vs_pdgID");
+        // makeAndAdd2DPlot1Sample(*this,i,"gmom_vs_pdgID");
         
         double wc=0.;
         

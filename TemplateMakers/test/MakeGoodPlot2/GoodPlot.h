@@ -133,7 +133,6 @@ void GoodPlot::addTGraphAsErrors(MakeGoodPlot &thisMGP, TString thenumer, TStrin
 
 void GoodPlot::addEfficiencyPlot(MakeGoodPlot &thisMGP, TString thenumer, TString thedenom, int i, bool printsfs)
 {
-    
     if (printsfs)
     {
         if (thisMGP.numsamples==2)
@@ -161,10 +160,7 @@ void GoodPlot::addEfficiencyPlot(MakeGoodPlot &thisMGP, TString thenumer, TStrin
         }
         else cout << "Trying to calculate SFs using >2 hists! Skipping..." << endl;
     }
-    
     addTGraphAsErrors(thisMGP, thenumer, thedenom, i);    
-    
-    
 }
 
 void GoodPlot::addPlotNorm(MakeGoodPlot &thisMGP, TString thehist, int i, TString legtext, int rebin, TString drawopt, TH1D *exthist)
@@ -247,20 +243,20 @@ void GoodPlot::addPlot(MakeGoodPlot &thisMGP, TString thehist, int i, TString le
     }
 
     // i think this was for the mc validation plots:    
-//     for (int j=0; j<myhist->GetNbinsX(); j++) 
-//     {
-//         double erradjust = myhist->GetBinContent(j+1)*0.13; // ttH=0.13, ttV=0.15, tZq=0.05
-//         myhist->SetBinError(j+1,sqrt(myhist->GetBinError(j+1)*myhist->GetBinError(j+1)+erradjust*erradjust));
-//     }
+    // for (int j=0; j<myhist->GetNbinsX(); j++) 
+    // {
+    //     double erradjust = myhist->GetBinContent(j+1)*0.13; // ttH=0.13, ttV=0.15, tZq=0.05
+    //     myhist->SetBinError(j+1,sqrt(myhist->GetBinError(j+1)*myhist->GetBinError(j+1)+erradjust*erradjust));
+    // }
     // just for fr studies plots
 
 
     // commenting this out for now(don't remember what it was for)
-//     cout << "bin entries: ";
-//     for (int j=0; j<myhist->GetNbinsX(); j++) 
-//     {
-//         cout << j+1 << ": " << myhist->Get
-//     }
+    // cout << "bin entries: ";
+    // for (int j=0; j<myhist->GetNbinsX(); j++) 
+    // {
+    //     cout << j+1 << ": " << myhist->Get
+    // }
     
     myhist->Draw(drawopt);
     exists = true;
@@ -485,58 +481,54 @@ void GoodPlot::addSimpleRatio(MakeGoodPlot &thisMGP, TString thehistnumer, TStri
     if (debug) cout << myhistnumer->Integral() << endl;
     if (debug) cout << myhistdenom->Integral() << endl;
     
-//     this->GetListOfPrimitives()->Print();
-//     TIter iter(this->GetListOfPrimitives());
-//     TH1 *dummy;
+    // this->GetListOfPrimitives()->Print();
+    // TIter iter(this->GetListOfPrimitives());
+    // TH1 *dummy;
 
     
     
     
-    //if (!this->cd(1)) // couldn't get this protection to work right for some reason. 
-    //{
-        //this->Divide(1,2,0,0); // first divide this canvas into two sections
-        // now move to top pad:        
-        //this->cd(1);
-        //gPad->SetPad("mainPad","",0.0,0.3,1.0,1.0);
-        //gPad->SetBorderSize(0);
-        //gPad->SetFillColor(0);
-        ////gPad->Modified();
-        //gPad->SetPad(0.0,0.3,1.0,1.0);
-        
-        // works (sort of)
-//         TPad *toppad = new TPad("toppad","",0.0,0.3,1.0,1.0);
-//         toppad->cd();
-//         this->DrawClonePad();
-//         //toppad->SetPad("toppad","",0.0,0.3,1.0,1.0);
-//         this->cd();
-//         //toppad->SetPad(0.0,0.3,1.0,1.0);
-//         toppad->Draw();
-        
-        
-        //TPad *toppad = new TPad("toppad","",0.0,0.3,1.0,1.0);
-        //toppad->cd();
-        //this->DrawClonePad();
-        //toppad->SetPad("toppad","",0.0,0.3,1.0,1.0);
-        //this->cd();
-        //toppad->SetPad(0.0,0.3,1.0,1.0);
-        //toppad->Draw();
-        
-        
-        
-    //}
+    // if (!this->cd(1)) // couldn't get this protection to work right for some reason. 
+    // {
+    //     this->Divide(1,2,0,0); // first divide this canvas into two sections
+    //     //now move to top pad:        
+    //     this->cd(1);
+    //     gPad->SetPad("mainPad","",0.0,0.3,1.0,1.0);
+    //     gPad->SetBorderSize(0);
+    //     gPad->SetFillColor(0);
+    //     //gPad->Modified();
+    //     gPad->SetPad(0.0,0.3,1.0,1.0);
+
+    //     //works (sort of)
+    //     TPad *toppad = new TPad("toppad","",0.0,0.3,1.0,1.0);
+    //     toppad->cd();
+    //     this->DrawClonePad();
+    //     //toppad->SetPad("toppad","",0.0,0.3,1.0,1.0);
+    //     this->cd();
+    //     //toppad->SetPad(0.0,0.3,1.0,1.0);
+    //     toppad->Draw();
+
+    //     TPad *toppad = new TPad("toppad","",0.0,0.3,1.0,1.0);
+    //     toppad->cd();
+    //     this->DrawClonePad();
+    //     toppad->SetPad("toppad","",0.0,0.3,1.0,1.0);
+    //     this->cd();
+    //     toppad->SetPad(0.0,0.3,1.0,1.0);
+    //     toppad->Draw();
+    // }
 
 
     //this->GetListOfPrimitives()->Print();
     //myhistdenom->Draw();
 
-//    bool wasdrawn = false;
-//     while (dummy = (TH1*)iter())
-//     {
-//         if (!wasdrawn) dummy->Draw();
-//         else dummy->Draw("same");
-//         wasdrawn = true;
-//     }
-//    cout << "asdfasdf" << endl;
+    // bool wasdrawn = false;
+    //  while (dummy = (TH1*)iter())
+    //  {
+    //      if (!wasdrawn) dummy->Draw();
+    //      else dummy->Draw("same");
+    //      wasdrawn = true;
+    //  }
+    // cout << "asdfasdf" << endl;
     // move to bottom pad:
     //this->cd(2);
     //TPad *ratiopad = new TPad("ratioPad","",0.0,0.0,1.0,0.3);
@@ -561,36 +553,31 @@ void GoodPlot::addSimpleRatio(MakeGoodPlot &thisMGP, TString thehistnumer, TStri
 
     
     // copy settings from top plot:
-//     myhistnumer->SetLabelSize(myhistdenom->GetLabelSize());
-//     //dataMCratio->SetTitleOffset(sumback->GetTitleOffset("Y"), "Y");
-//     myhistnumer->SetTitleSize(myhistdenom->GetTitleSize("Y")*0.7/0.3, "Y");
-//     //dataMCratio->SetTitleOffset(sumback->GetTitleOffset("X"), "X");
-//     myhistnumer->SetTitleSize(myhistdenom->GetTitleSize("X")*0.7/0.3, "X");
+    // myhistnumer->SetLabelSize(myhistdenom->GetLabelSize());
+    // //dataMCratio->SetTitleOffset(sumback->GetTitleOffset("Y"), "Y");
+    // myhistnumer->SetTitleSize(myhistdenom->GetTitleSize("Y")*0.7/0.3, "Y");
+    // //dataMCratio->SetTitleOffset(sumback->GetTitleOffset("X"), "X");
+    // myhistnumer->SetTitleSize(myhistdenom->GetTitleSize("X")*0.7/0.3, "X");
     
-    
-    
-//    TGraphAsymmErrors *sumMCbandRatio = new TGraphAsymmErrors(*sumMCband);
-//    
-//     for (int j=0; j<dataMCratio->GetNbinsX(); j++)
-//     {
-//         double xpoint, ypoint;
-//         int dummyint = sumMCbandRatio->GetPoint(j,xpoint,ypoint);
-//         double errorup = sumMCbandRatio->GetErrorYhigh(j)/ypoint;
-//         double errordown = sumMCbandRatio->GetErrorYlow(j)/ypoint;             
-//         sumMCbandRatio->SetPoint(j,xpoint,1.);
-//         sumMCbandRatio->SetPointEYhigh(j,errorup);
-//         sumMCbandRatio->SetPointEYlow(j,errordown);
-//     }   
-//     
-//     sumMCbandRatio->Draw("2");
+    // TGraphAsymmErrors *sumMCbandRatio = new TGraphAsymmErrors(*sumMCband);
 
-//     TLine lineAt1;
-//     lineAt1.SetLineColor(2);
-//     lineAt1.SetLineWidth(2);
-//     lineAt1.DrawLine(dataMCratio->GetXaxis()->GetBinLowEdge(1),1,dataMCratio->GetXaxis()->GetBinUpEdge(dataMCratio->GetNbinsX()),1);
-    
-    
-    
+    // for (int j=0; j<dataMCratio->GetNbinsX(); j++)
+    // {
+    //     double xpoint, ypoint;
+    //     int dummyint = sumMCbandRatio->GetPoint(j,xpoint,ypoint);
+    //     double errorup = sumMCbandRatio->GetErrorYhigh(j)/ypoint;
+    //     double errordown = sumMCbandRatio->GetErrorYlow(j)/ypoint;             
+    //     sumMCbandRatio->SetPoint(j,xpoint,1.);
+    //     sumMCbandRatio->SetPointEYhigh(j,errorup);
+    //     sumMCbandRatio->SetPointEYlow(j,errordown);
+    // }
+
+    // sumMCbandRatio->Draw("2");
+
+    // TLine lineAt1;
+    // lineAt1.SetLineColor(2);
+    // lineAt1.SetLineWidth(2);
+    // lineAt1.DrawLine(dataMCratio->GetXaxis()->GetBinLowEdge(1),1,dataMCratio->GetXaxis()->GetBinUpEdge(dataMCratio->GetNbinsX()),1);
     
     //myhistnumer->Draw("same");
     myhistnumer->SetLineWidth(2);
@@ -608,26 +595,23 @@ void GoodPlot::addSimpleRatio(MakeGoodPlot &thisMGP, TString thehistnumer, TStri
         theleg->Draw();
     }     
     
-//     auto oldtopmargin = gPad->GetTopMargin();
-//     //gPad->SetTopMargin(gPad->GetTopMargin()/2.);
-//     gPad->SetTopMargin(0);
-//     //gPad->SetBottomMargin(gPad->GetBottomMargin()+(gPad->GetTopMargin()/2.));
-//     gPad->SetBottomMargin(gPad->GetBottomMargin()+oldtopmargin);
+    //  auto oldtopmargin = gPad->GetTopMargin();
+    //  //gPad->SetTopMargin(gPad->GetTopMargin()/2.);
+    //  gPad->SetTopMargin(0);
+    //  //gPad->SetBottomMargin(gPad->GetBottomMargin()+(gPad->GetTopMargin()/2.));
+    //  gPad->SetBottomMargin(gPad->GetBottomMargin()+oldtopmargin);
 
-//    this->Update();
+    // this->Update();
     
     // works:
-// root [2] asdf.Draw()
-// Info in <TCanvas::MakeDefCanvas>:  created default TCanvas with name c1
-// root [3] auto pad = (TPad*)gPad->Clone()
-// (class TPad*)0x7ff264717330
-// root [4] c1->Divide(1,2,0,0);
-// root [5] c1->cd(1);
-// root [6] pad->SetPad(0.0,0.3,1.0,1.0);
-// root [7] pad->Draw()
-
-
-
+    // root [2] asdf.Draw()
+    // Info in <TCanvas::MakeDefCanvas>:  created default TCanvas with name c1
+    // root [3] auto pad = (TPad*)gPad->Clone()
+    // (class TPad*)0x7ff264717330
+    // root [4] c1->Divide(1,2,0,0);
+    // root [5] c1->cd(1);
+    // root [6] pad->SetPad(0.0,0.3,1.0,1.0);
+    // root [7] pad->Draw()
 }
 
 
@@ -782,8 +766,9 @@ void GoodPlot::addPlotData(MakeGoodPlot &thisMGP, TString thehist, int i, TStrin
         thisMGP.canvas.Add(this);
     }
 }
+
 void GoodPlot::addPlot2D(MakeGoodPlot &thisMGP, int i, TString thehist)
-{        
+{
     this->cd();
     if (thehist=="same")
     {
@@ -1038,7 +1023,6 @@ void GoodPlot::addStackWithSumMC(MakeGoodPlot &thisMGP, TString thehist, int i, 
     if (!exists) sumMCbandNoStat = new TGraphAsymmErrors(sumhist);
     if (!exists) sumMCbandStatOnly = new TGraphAsymmErrors(sumhist);
     
-    
     int numsamps = thisMGP.numsamples;
     
     if (debug) cout << "addStackWithSumMC 1" << endl;
@@ -1085,8 +1069,12 @@ void GoodPlot::addStackWithSumMC(MakeGoodPlot &thisMGP, TString thehist, int i, 
         
         if (thisSamp<90) // && thisSamp!=84) // <90
         {
-            thisbinerrorsysup = thisbincontent*sqrt(thisMGP.q2up[thisSamp]*thisMGP.q2up[thisSamp] + thisMGP.pdfup[thisSamp]*thisMGP.pdfup[thisSamp])/thisMGP.xsec[thisSamp];
-            thisbinerrorsysdown = thisbincontent*sqrt(thisMGP.q2down[thisSamp]*thisMGP.q2down[thisSamp] + thisMGP.pdfdown[thisSamp]*thisMGP.pdfdown[thisSamp])/thisMGP.xsec[thisSamp];
+            double q2up = thisMGP.q2up[thisSamp];
+            double q2down = thisMGP.q2down[thisSamp];
+            double pdfup = thisMGP.pdfup[thisSamp];
+            double pdfdown = thisMGP.pdfup[thisSamp];
+            thisbinerrorsysup = thisbincontent*sqrt(q2up*q2up + pdfup*pdfup)/thisMGP.xsec[thisSamp];
+            thisbinerrorsysdown = thisbincontent*sqrt(q2down*q2down + pdfdown*pdfdown)/thisMGP.xsec[thisSamp];
             thisbinerrorstatup = myhist->GetBinError(j+1);
             thisbinerrorstatdown = myhist->GetBinError(j+1);
         }
@@ -1230,6 +1218,7 @@ void GoodPlot::addStackWithSumMC(MakeGoodPlot &thisMGP, TString thehist, int i, 
     }    
     if (debug) cout << "[END] addStackWithSumMC" << endl;
 }
+
 void GoodPlot::printStackContentsLatex()
 {
     // prints a latex-formatted table summarizing the stack contents
@@ -1318,8 +1307,8 @@ void GoodPlot::printStackContentsLatex()
 
     cout << " " << endl;
     cout << " " << endl;
-    
 }
+
 void GoodPlot::printCombosLatex(MakeGoodPlot &thisMGP)
 {
     // prints a latex-formatted table summarizing the stack contents
@@ -1459,13 +1448,13 @@ void GoodPlot::printCombosLatex(MakeGoodPlot &thisMGP)
     }
     cout << " \\\\" << endl; 
 
-//     cout << "\\hline \\\\" << endl;
-//     cout << "S+B  ";    
-//     for (int j=1; j<=sumhist->GetNbinsX(); j++)
-//     {
-//         cout << std::fixed << std::setprecision(1) << " & " << sumhist->GetBinContent(j);
-//     }
-//     cout << " \\\\" << endl; 
+    // cout << "\\hline \\\\" << endl;
+    // cout << "S+B  ";    
+    // for (int j=1; j<=sumhist->GetNbinsX(); j++)
+    // {
+    //     cout << std::fixed << std::setprecision(1) << " & " << sumhist->GetBinContent(j);
+    // }
+    // cout << " \\\\" << endl; 
 
     cout << "\\hline \\\\" << endl;
     cout << "$S/\\sqrt{B}$  ";    
@@ -1483,7 +1472,6 @@ void GoodPlot::printCombosLatex(MakeGoodPlot &thisMGP)
 
     cout << " " << endl;
     cout << " " << endl;
-    
 }
 // void GoodPlot::printStackContentsForCard(MakeGoodPlot &thisMGP)
 // {

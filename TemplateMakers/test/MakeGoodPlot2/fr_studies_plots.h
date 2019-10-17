@@ -30,14 +30,14 @@ void MakeGoodPlot::fr_studies_plots()
     //cats.push_back("ge5l_1b.");
     
     quants.push_back({"",-1});    
-//     quants.push_back({"FRUP",-1});
-//     quants.push_back({"FRDOWN",-1});
-//     quants.push_back({"FRQCD",-1});
-//     quants.push_back({"FRTTBAR",-1});
-//     quants.push_back({"FRPT1",-1});
-//     quants.push_back({"FRPT2",-1});
-//     quants.push_back({"FRETA1",-1});
-//     quants.push_back({"FRETA2",-1});
+    // quants.push_back({"FRUP",-1});
+    // quants.push_back({"FRDOWN",-1});
+    // quants.push_back({"FRQCD",-1});
+    // quants.push_back({"FRTTBAR",-1});
+    // quants.push_back({"FRPT1",-1});
+    // quants.push_back({"FRPT2",-1});
+    // quants.push_back({"FRETA1",-1});
+    // quants.push_back({"FRETA2",-1});
 
     
     cats.push_back("2lss."); // if you don't want the combo plots just comment this    
@@ -108,25 +108,25 @@ void MakeGoodPlot::fr_studies_plots()
         
         //frplt->addSimpleRatio(*this, cat+"FRTTBAR", cat+"FRQCD", 0, "(FRTTBAR-FRQCD)/FRQCD",-1,"E",2);
         
-//         frpltcls->addSimpleRatio(*this, cat+"FRTTBAR", cat+"FRQCD", 0, "(FRTTBAR-FRQCD)/FRQCD");
-//         
-//         frpltup->addSimpleRatio(*this, cat+"FRUP", cat, 0, "(FRUP-Fakes)/Fakes");
-//         frpltdown->addSimpleRatio(*this, cat+"FRDOWN", cat, 0, "(FRDOWN-Fakes)/Fakes");
-//         
-//         frpltpt1->addSimpleRatio(*this, cat+"FRPT1", cat, 0, "(X-Fakes)/Fakes");
-//         frpltpt2->addSimpleRatio(*this, cat+"FRPT2", cat, 0, "(X-Fakes)/Fakes");
-//         frplteta1->addSimpleRatio(*this, cat+"FRETA1", cat, 0, "(X-Fakes)/Fakes");
-//         frplteta2->addSimpleRatio(*this, cat+"FRETA2", cat, 0, "(X-Fakes)/Fakes");
+        // frpltcls->addSimpleRatio(*this, cat+"FRTTBAR", cat+"FRQCD", 0, "(FRTTBAR-FRQCD)/FRQCD");
+        
+        // frpltup->addSimpleRatio(*this, cat+"FRUP", cat, 0, "(FRUP-Fakes)/Fakes");
+        // frpltdown->addSimpleRatio(*this, cat+"FRDOWN", cat, 0, "(FRDOWN-Fakes)/Fakes");
+        
+        // frpltpt1->addSimpleRatio(*this, cat+"FRPT1", cat, 0, "(X-Fakes)/Fakes");
+        // frpltpt2->addSimpleRatio(*this, cat+"FRPT2", cat, 0, "(X-Fakes)/Fakes");
+        // frplteta1->addSimpleRatio(*this, cat+"FRETA1", cat, 0, "(X-Fakes)/Fakes");
+        // frplteta2->addSimpleRatio(*this, cat+"FRETA2", cat, 0, "(X-Fakes)/Fakes");
 
         
         canvas.Add(frpltcls);
         //canvas.Add(frpltup);
         //canvas.Add(frpltdown);
         
-//         canvas.Add(frpltpt1);
-//         canvas.Add(frpltpt2);
-//         canvas.Add(frplteta1);
-//         canvas.Add(frplteta2);
+        // canvas.Add(frpltpt1);
+        // canvas.Add(frpltpt2);
+        // canvas.Add(frplteta1);
+        // canvas.Add(frplteta2);
         
     }
     
