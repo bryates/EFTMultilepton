@@ -10,7 +10,7 @@
 // #include "EFTMultilepton/TemplateMakers/test/anaTree_Checks/categories.h"
 
 // NOTE: Using skim=1 will mess up the overall normalization, so avoid using it if you want to compare different samples
-void runit(TChain* ch, TString outf_name, int max_events, int skim) {
+void runit(TChain* ch, TString outf_name, int max_events, double sm_xsec, int skim) {
     Stopwatch sw;
     int chain_entries = ch->GetEntries();
     int last_entry  = chain_entries;
@@ -140,12 +140,14 @@ void runit(TChain* ch, TString outf_name, int max_events, int skim) {
     binLogX(h_smwgts_mumu_p);
     binLogX(h_smwgts_mumu_m);
 
-    TH1D* h_muRUp = new TH1D("h_muRUp","h_muRUp",25,-1,10);
-    TH1D* h_muRDown = new TH1D("h_muRDown","h_muRDown",25,-1,10);
-    TH1D* h_muFUp = new TH1D("h_muFUp","h_muFUp",25,-1,10);
-    TH1D* h_muFDown = new TH1D("h_muFDown","h_muFDown",25,-1,10);
-    TH1D* h_muRmuFUp = new TH1D("h_muRmuFUp","h_muRmuFUp",25,-1,10);
-    TH1D* h_muRmuFDown = new TH1D("h_muRmuFDown","h_mmuFuRDown",25,-1,10);
+    TH1D* h_muRUp      = new TH1D("h_muRUp","h_muRUp",100,-1.0,2.5);
+    TH1D* h_muRDown    = new TH1D("h_muRDown","h_muRDown",100,-1.0,2.5);
+    TH1D* h_muFUp      = new TH1D("h_muFUp","h_muFUp",100,-1.0,2.5);
+    TH1D* h_muFDown    = new TH1D("h_muFDown","h_muFDown",100,-1.0,2.5);
+    TH1D* h_muRmuFUp   = new TH1D("h_muRmuFUp","h_muRmuFUp",100,-1.0,2.5);
+    TH1D* h_muRmuFDown = new TH1D("h_muRmuFDown","h_mmuFuRDown",100,-1.0,2.5);
+    TH1D* h_nnpdfUp    = new TH1D("h_nnpdfUp","h_nnpdfUp",100,-1.0,2.5);
+    TH1D* h_nnpdfDown  = new TH1D("h_nnpdfDown","h_nnpdfDown",100,-1.0,2.5);
 
     std::vector<TH1EFT*> th1eft_hists {
         h_sumSM_incl,
@@ -181,7 +183,8 @@ void runit(TChain* ch, TString outf_name, int max_events, int skim) {
         h_smwgts_mumu_p,h_smwgts_mumu_m,
         h_muRUp,h_muRDown,
         h_muFUp,h_muFDown,
-        h_muRmuFUp,h_muRmuFDown
+        h_muRmuFUp,h_muRmuFDown,
+        h_nnpdfUp,h_nnpdfDown
     };
 
     WCFit empty_fit({},"");
@@ -355,6 +358,9 @@ void runit(TChain* ch, TString outf_name, int max_events, int skim) {
         h_muRmuFUp->Fill(muRmuFWeightUp_intree);
         h_muRmuFDown->Fill(muRmuFWeightDown_intree);
 
+        h_nnpdfUp->Fill(nnpdfWeightUp_intree);
+        h_nnpdfDown->Fill(nnpdfWeightDown_intree);
+
         h_sumSM_incl->Fill(0,sm_wgt,wc_fit);
         h_smwgts_incl->Fill(fabs(sm_wgt));
         if (ana_cat == Analysis::DiEleSSPlus) {
@@ -397,7 +403,6 @@ void runit(TChain* ch, TString outf_name, int max_events, int skim) {
     std::cout << "Incl Orig Wgt: " << incl_orig_wgt << std::endl;
 
     double lumi2017 = 41530.;
-    double sm_xsec = 0.0942;   // tZq xsec from rateinfo.h
 
     std::cout << "Lumi2017: " << lumi2017 << std::endl;
     std::cout << "SM xsec: " << sm_xsec << std::endl;
@@ -446,7 +451,7 @@ void runit(TChain* ch, TString outf_name, int max_events, int skim) {
 }
 
 
-void check_anaTrees(TString outf_name,TString inf_name, int events, int skim) {
+void check_anaTrees(TString outf_name,TString inf_name, int events, double sm_xsec, int skim) {
     TChain* ch = new TChain("OSTwoLepAna/summaryTree");
 
     std::cout << "Reading files from: " << inf_name << std::endl;
@@ -457,7 +462,9 @@ void check_anaTrees(TString outf_name,TString inf_name, int events, int skim) {
         ch->Add(fpath);
     }
 
-    runit(ch,outf_name,events,skim);
+    // double sm_xsec = 0.0942;   // tZq xsec from rateinfo.h
+
+    runit(ch,outf_name,events,sm_xsec,skim);
     delete ch;
 
     input_files.close();
