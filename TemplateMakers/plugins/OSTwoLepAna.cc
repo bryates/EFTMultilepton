@@ -301,7 +301,8 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
 
         // create the PDF
         LHAPDF::PDFSet nnpdfSet("NNPDF31_nnlo_hessian_pdfas"); // NNPDF30_nlo_as_0118 = central (powheg-only?) samples    //NNPDF31_nlo_hessian_pdfas  = EFT samples // NNPDF31_nnlo_hessian_pdfas = newer EFT samps, amcatnlo, some central powheg samples
-
+        // LHAPDF::PDFSet nnpdfSet("NNPDF31_nnlo_as_0118_nf_4");    // For 4f PDFs
+        
         // NNPDF30_nlo_as_0118: besides ttH powheg: ?  
         // NNPDF31_nnlo_hessian_pdfas: wz, all tribosons, ttGJets, the central PS sig samps
         // NNPDF31_nnlo_hessian_pdfas but choose "hessian" option below: single (anti-)top, zz, ww,
@@ -312,8 +313,13 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
         // double nnpdfWeightSumDown = 0.;
 
         // pdf ID start and end ???
+        // Note: These are the 5f PDFs
         int pdfID_start = 306001;  //305800; //NNPDF31_nlo_hessian_pdfas       //260001; //NNPDF30_nlo_as_0118      //306001 NNPDF31_nnlo_hessian_pdfas, hessian
         int pdfID_end = 306102;    //305902; //NNPDF31_nlo_hessian_pdfas       //260100; //NNPDF30_nlo_as_0118      //306102 NNPDF31_nnlo_hessian_pdfas, hessian
+
+        // Note: These are the 4f PDFs
+        // int pdfID_start = 320901;
+        // int pdfID_end = 321000;
 
         // obtain weights
         auto& mcWeights = LHEInfo->weights();
@@ -976,11 +982,13 @@ void OSTwoLepAna::beginRun(edm::Run const& run, edm::EventSetup const& evsetup)
             // The private samples have a slightly different formatting of the header
             startStr  = "&lt;weight id=";
             setStr    = " MUR=\"1.0\" MUF=\"1.0\" PDF=\"";
-            endStr    = " &gt; PDF=306000";
+            endStr    = " &gt; PDF=306000"; // For 5f PDFs
+            // endStr    = " &gt; PDF=320900"; // For 4f PDFs
         } else {
             startStr  = "<weight id=";
             setStr    = "> PDF=  ";
-            endStr    = "NNPDF31_nnlo_hessian_pdfas </weight>";
+            endStr    = "NNPDF31_nnlo_hessian_pdfas </weight>";     // For 5f PDFs
+            // endStr    = "NNPDF31_nnlo_as_0118_nf_4 </weight>";    // For 4f PDFs
         }
 
         if (debug) cout << "before loop over pdf stuff in beginRun" << endl;
