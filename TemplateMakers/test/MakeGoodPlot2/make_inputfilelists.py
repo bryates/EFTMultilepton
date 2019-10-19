@@ -204,7 +204,7 @@ def private_samples():
     samples = [tllq_priv,ttlnu_priv,ttll_priv,ttH_priv,tHq_priv]
     return samples
 
-# Signal samples for anatest25
+# MC based samples for anatest25
 def anatest25_samples():
     ttZ_central = Sample('ttZ')
     ttW_central = Sample('ttW')    
@@ -268,6 +268,72 @@ def anatest25_samples():
 
     return samples
 
+# MC based samples for anatest26
+def anatest26_samples():
+    ttZ_central = Sample('ttZ')
+    ttW_central = Sample('ttW')    
+    ttH_central = Sample('ttH')
+    tZq_central = Sample('tZq')
+    tHq_central = Sample('tHq')
+
+    ttGJets_central = Sample('ttGJets')
+    ZZZ_central = Sample('ZZZ')
+    WZZ_central = Sample('WZZ')
+    WWZ_central = Sample('WWZ')
+    WWW_central = Sample('WWW')
+    ZZ_central  = Sample('ZZ')
+    WZ_central  = Sample('WZ')
+    WW_central  = Sample('WW')
+
+    ttH_priv   = Sample('ttH_multidim')
+    tHq_priv   = Sample('tHq_multidim')
+    ttll_priv  = Sample('ttll_multidim')
+    tllq_priv  = Sample('tllq_multidim')
+    ttlnu_priv = Sample('ttlnu_multidim')
+
+    samples = []
+
+    path = 'awightma/analysisTrees/central_sgnl_2019_10_11/v1'
+    ttH_central.addDirectory(HADOOP_DIR,path,'ttH')
+    tHq_central.addDirectory(HADOOP_DIR,path,'tHq')
+    ttW_central.addDirectory(HADOOP_DIR,path,'ttW')
+    ttZ_central.addDirectory(HADOOP_DIR,path,'ttZ')
+
+    path = 'awightma/analysisTrees/central_bkgd_2019_10_12/v1'
+    ttGJets_central.addDirectory(HADOOP_DIR,path,'ttGJets')
+    ttGJets_central.addDirectory(HADOOP_DIR,path,'ttGJets_ext')
+    ZZZ_central.addDirectory(HADOOP_DIR,path,'ZZZ')
+    WZZ_central.addDirectory(HADOOP_DIR,path,'WZZ')
+    WWZ_central.addDirectory(HADOOP_DIR,path,'WWZ')
+    WWW_central.addDirectory(HADOOP_DIR,path,'WWW')
+    ZZ_central.addDirectory(HADOOP_DIR,path,'ZZ')
+    WZ_central.addDirectory(HADOOP_DIR,path,'WZ')
+    WW_central.addDirectory(HADOOP_DIR,path,'WW')
+
+    path = 'awightma/analysisTrees/private_sgnl_2019_10_11/v1'
+    ttH_priv.addDirectory(HADOOP_DIR,path,'ttH_multidim_b1')
+    tHq_priv.addDirectory(HADOOP_DIR,path,'tHq_multidim_b1')
+    ttll_priv.addDirectory(HADOOP_DIR,path,'ttll_multidim_b1')
+    ttll_priv.addDirectory(HADOOP_DIR,path,'ttll_multidim_b2')
+    ttlnu_priv.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_b1')
+    
+    path = 'awightma/analysisTrees/special/tllq4f_2019_10_17_fixPDF/v1'
+    tllq_priv.addDirectory(HADOOP_DIR,path,'tllq_multidim_b1')
+    tllq_priv.addDirectory(HADOOP_DIR,path,'tllq_multidim_b2')
+
+    path = 'awightma/analysisTrees/special/tZq_2019_10_17_fixPDF/v2'
+    tZq_central.addDirectory(HADOOP_DIR,path,'tZq')
+
+    samples.extend([ttH_central,tHq_central,ttW_central,ttZ_central,tZq_central])
+    samples.extend([
+        ttGJets_central,
+        ZZZ_central,WZZ_central,WWZ_central,WWW_central,
+        ZZ_central,WZ_central,WW_central
+    ])
+    samples.extend([ttH_priv,tHq_priv,ttll_priv,tllq_priv,ttlnu_priv])
+
+    return samples
+
 def main():
     out_dir = '.'
     log_file = os.path.join(out_dir,'out.log')
@@ -280,7 +346,8 @@ def main():
 
     # samples = private_samples()
     # samples = legacy_geoff_samples()
-    samples = anatest25_samples()
+    # samples = anatest25_samples()
+    samples = anatest26_samples()
 
     for s in samples:
         outf = 'inputfiles__{name}.txt'.format(name=s.name())

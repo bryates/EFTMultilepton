@@ -15,13 +15,15 @@ tstamp1 = datetime.datetime.now().strftime('%Y%m%d_%H%M')
 tstamp2 = datetime.datetime.now().strftime('%Y_%m_%d')
 lobster_step = "histMaking"
 
-master_label = 'EFT_T3_histMaking_{tstamp}'.format(tstamp=tstamp1)
+# master_label = 'EFT_T3_histMaking_{tstamp}'.format(tstamp=tstamp1)
+master_label = 'EFT_CRC_histMaking_{tstamp}'.format(tstamp=tstamp1)
 
 out_ver = "v1"
 #out_tag = "test/lobster_test_{tstamp}".format(tstamp=tstamp1)
 #out_tag = "private_sgnl_{tstamp}".format(tstamp=tstamp2)
 #out_tag = "special/geoff_inputfiles_central_bkgd_{tstamp}".format(tstamp=tstamp2)
-out_tag = "special/tllq4f_SM_t-channel_{tstamp}_0partons".format(tstamp=tstamp2)
+#out_tag = "special/tllq4f_SM_t-channel_{tstamp}_0partons".format(tstamp=tstamp2)
+out_tag = "full_MC_{tstamp}".format(tstamp=tstamp2)
 
 workdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=out_tag,ver=out_ver,path="/tmpscratch/users/$USER/analysisWorkflow")
 plotdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=out_tag,ver=out_ver,path="~/www/lobster")
@@ -73,24 +75,24 @@ if (not isdata):
     # mysamples.append('SingleTop_tchan_antitop')
     # mysamples.append('SingleTop_tchan_top')
     
-    #mysamples.append('WW')                                
-    #mysamples.append('WZ')  
-    #mysamples.append('ZZ')
-    #mysamples.append('WWW')
-    #mysamples.append('WWZ')
-    #mysamples.append('WZZ')
-    #mysamples.append('ZZZ')
-    #mysamples.append('ttGJets')
+    mysamples.append('WW')                                
+    mysamples.append('WZ')  
+    mysamples.append('ZZ')
+    mysamples.append('WWW')
+    mysamples.append('WWZ')
+    mysamples.append('WZZ')
+    mysamples.append('ZZZ')
+    mysamples.append('ttGJets')
     
     # mysamples.append('ttJets')                              #<-- new in latest round
     ## #mysamples.append('ttJets_Dilept')                      #<-- not in latest round
     ## #mysamples.append('ttJets_SingleLeptFromT')             #<-- not in latest round
     ## #mysamples.append('ttJets_SingleLeptFromTbar')          #<-- not in latest round
 
-    # mysamples.append('ttH')
-    # mysamples.append('ttW')
-    # mysamples.append('ttZ')
-    # mysamples.append('tZq')
+    mysamples.append('ttH')
+    mysamples.append('ttW')
+    mysamples.append('ttZ')
+    mysamples.append('tZq')
     # mysamples.append('tHq')
 
     # ## mysamples.append('ttWW')
@@ -144,11 +146,11 @@ if (not isdata):
     # mysamples.append('ttlnu_ctW')
     # mysamples.append('ttlnu_ctZ')
     
-    #mysamples.append('ttH_multidim')
-    #mysamples.append('ttlnu_multidim')
-    #mysamples.append('ttll_multidim')
+    mysamples.append('ttH_multidim')
+    mysamples.append('ttlnu_multidim')
+    mysamples.append('ttll_multidim')
     mysamples.append('tllq_multidim')
-    #mysamples.append('tHq_multidim')
+    mysamples.append('tHq_multidim')
 
     #mysamples.append('ttH_EFT')
     #mysamples.append('ttlnu_EFT')
