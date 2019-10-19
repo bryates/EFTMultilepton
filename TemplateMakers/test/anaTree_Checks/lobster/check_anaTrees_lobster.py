@@ -18,7 +18,8 @@ master_label = 'EFT_CRC_{step}_{tstamp}'.format(step=lobster_step,tstamp=tstamp1
 ver = "v1"
 # tag = "test/lobster_test_{tstamp}".format(tstamp=tstamp1)
 # tag = "tllq4f_tch_NoHiggs_0j_xqcut0_{tstamp}".format(tstamp=tstamp3)
-tag = "ana24-priv_ana25-priv_ana25-cent_{tstamp}".format(tstamp=tstamp3)
+# tag = "ana24-priv_ana25-priv_ana25-cent_{tstamp}".format(tstamp=tstamp3)
+tag = "ana26_PDF-fix_{tstamp}".format(tstamp=tstamp3)
 
 workdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=tag,ver=ver,path="/tmpscratch/users/$USER/analysisWorkflow")
 plotdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=tag,ver=ver,path="~/www/lobster")
@@ -217,6 +218,16 @@ a25_central_tZq = ('a25_central_tZq',central_fpt,central_mergesize,tZq_xsec,[os.
 a25_central_ttZ = ('a25_central_ttZ',central_fpt,central_mergesize,ttZ_xsec,[os.path.join(sub_path,'central_sgnl_2019_10_11/v1/ttZ')])
 a25_central_ttW = ('a25_central_ttW',central_fpt,central_mergesize,ttW_xsec,[os.path.join(sub_path,'central_sgnl_2019_10_11/v1/ttW')])
 
+####################################################################################################
+# anatest26 samples
+#   Same as a25, except for tllq and tZq which used new PDFUP/PDFDOWN weights
+####################################################################################################
+a26_private_tllq  = ('a26_private_tllq' ,3,eft_mergesize,tZq_xsec,[
+    os.path.join(sub_path,'special/tllq4f_2019_10_17_fixPDF/v1/tllq_multidim_b1'),
+    os.path.join(sub_path,'special/tllq4f_2019_10_17_fixPDF/v1/tllq_multidim_b2'),
+])
+a26_central_ttZ = ('a26_central_ttZ',central_fpt,central_mergesize,ttZ_xsec,[os.path.join(sub_path,'special/tZq_2019_10_17_fixPDF/v2/tZq')])
+
 samples = [
     # central_tZq_v1,
     # central_tZq_v2,
@@ -243,23 +254,26 @@ samples = [
     # central_tZq_NoSkipHiggs_v1,
     # central_tZq_NoSkipHiggs_v2,
 
-    a24_private_ttH,
-    a24_private_tHq,
-    a24_private_tllq,
-    a24_private_ttll,
-    a24_private_ttlnu,
+    # a24_private_ttH,
+    # a24_private_tHq,
+    # a24_private_tllq,
+    # a24_private_ttll,
+    # a24_private_ttlnu,
 
-    a25_private_ttH,
-    a25_private_tHq,
-    a25_private_tllq,
-    a25_private_ttll,
-    a25_private_ttlnu,
+    # a25_private_ttH,
+    # a25_private_tHq,
+    # a25_private_tllq,
+    # a25_private_ttll,
+    # a25_private_ttlnu,
 
-    a25_central_ttH,
-    a25_central_tHq,
-    a25_central_tZq,
-    a25_central_ttZ,
-    a25_central_ttW,
+    # a25_central_ttH,
+    # a25_central_tHq,
+    # a25_central_tZq,
+    # a25_central_ttZ,
+    # a25_central_ttW,
+
+    a26_private_tllq,
+    a26_central_ttZ,
 ]
 
 # Note: The 'interface' directory is automatically included

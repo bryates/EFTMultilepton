@@ -10,6 +10,7 @@ from utils import get_files,move_files,clean_dir
 USER_DIR = os.path.expanduser('~')
 
 TIMESTAMP = datetime.datetime.now().strftime('%Y-%m-%d_%H%M')
+TIMESTAMP2 = datetime.datetime.now().strftime('%Y_%m_%d')
 HPATH = '/hadoop/store/user'
 
 # Alias function
@@ -431,9 +432,95 @@ def read_anaTreeChecks():
         imgs = get_files('.',targets=["^.*\.png$"])
         move_files(files=imgs,target=output_dir)
 
+# Untested!
+def plot_systematic_variations():
+    geoff_dir = "/afs/crc.nd.edu/user/g/gsmith15/Public/for_Tony/"
+    tony_dir  = "/afs/crc.nd.edu/user/a/awightma/Public/for_tony/"
+    hist_dir  = "/afs/crc.nd.edu/user/a/awightma/CMSSW_Releases/CMSSW_8_1_0/src/CombineHarvester/TopEFT/hist_files/"
+
+    fname_a15   = "TOP-19-001_unblinded_v1.root"
+    fname_a16   = "anatest16.root"
+    fname_a17   = "anatest17.root"
+    fname_a18   = "anatest18.root"
+    fname_a19   = "anatest19.root"
+    fname_a20   = "anatest20.root"
+    fname_a21   = "anatest21.root"
+    fname_a22   = "anatest22.root"
+    fname_a23v3 = "anatest23_v3.root"
+    fname_a24   = "anatest24.root"
+    fname_a25   = "anatest25.root"
+    fname_a26   = "anatest26.root"
+
+    fpath_a15 = os.path.join(hist_dir,fname_a15)
+    fpath_a16 = os.path.join(hist_dir,fname_a16)
+    fpath_a17 = os.path.join(hist_dir,fname_a17)
+    fpath_a18 = os.path.join(hist_dir,fname_a18)
+    fpath_a19 = os.path.join(hist_dir,fname_a19)
+    fpath_a20 = os.path.join(hist_dir,fname_a20)
+    fpath_a22 = os.path.join(hist_dir,fname_a22)
+
+    fpath_a21 = os.path.join(geoff_dir,fname_a21)
+
+    fpath_a23 = os.path.join(tony_dir,fname_a23v3)
+    fpath_a24 = os.path.join(tony_dir,fname_a24)
+    fpath_a25 = os.path.join(tony_dir,fname_a25)
+    fpath_a26 = os.path.join(tony_dir,fname_a26)
+
+    fpath = fpath_a26
+
+    # As a reminder these should be unique over all lists, since they should be coming from the same file
+    private_signal = ["tllq_16D","ttH_16D","ttll_16D","ttlnu_16D","tHq_16D"]
+    central_signal = ["tZq","ttH","ttZ","ttW"]
+    central_bkgd = ["ttGJets","WZ","WWW"]
+
+    samples = []
+    samples.extend(private_signal)
+    samples.extend(central_signal)
+    samples.extend(central_bkgd)
+
+    samples = ['tllq_16D']
+
+    syst = "JES"
+
+    move_output = False
+    web_dir = "/afs/crc.nd.edu/user/a/awightma/www"
+    sub_dir = "eft_stuff/misc/anatest_plots/njet_plots/{syst}_variations/{tstamp}_from-anatest25".format(syst=syst,tstamp=TIMESTAMP2)
+    
+    for sample in samples:
+        name = sample
+        
+        cmd = ["root","-b","-l","-q"]
+        cmd_args = "\"{fpath}\",\"{sample}\",\"{syst}\"".format(fpath=fpath,sample=name,syst=syst)
+        cmd.extend(['quick_plots.C({args})'.format(args=cmd_args)])
+        subprocess.check_call(cmd)
+
+        if move_output:
+            output_dir = "{name}".format(name=name)
+            if name in central_bkgd:
+                if name == "WZ":
+                    output_dir = "bkgd_Diboson"
+                elif name == "WWW":
+                    output_dir = "bkgd_Triboson"
+                else:
+                    output_dir = "bkgd_{name}".format(name=name)
+            elif name in central_signal:
+                output_dir = "central_{name}".format(name=name)
+            elif name in private_signal:
+                tmp = name.split('_16D')[0] # Chop off the 16D part of the name
+                output_dir = "private_{name}".format(name=tmp)
+            else:
+                raise RuntimeError("Unknown sample name: {name}".format(name=name))
+            output_path = os.path.join(web_dir,sub_dir,output_dir)
+            print "Output: {path}".format(path=output_path)
+            if not os.path.exists(output_dir):
+                os.mkdir(output_dir)
+            imgs = get_files('.',targets=["^.*\.png$"])
+
+
 def main():
     # check_anaTrees()
-    read_anaTreeChecks()
+    # read_anaTreeChecks()
+    plot_systematic_variations()
 
 
 if __name__ == "__main__":

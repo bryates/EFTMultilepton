@@ -150,5 +150,74 @@ void printProgress(int current_index, int total_entries, int interval=20) {
     }
 }
 
+// Returns a new set that contains all the elements from s1 that are missing from s2
+std::set<TString> set_diff(std::set<TString> s1, std::set<TString> s2) {
+    std::set<TString> new_set;
+    for (TString element: s1) {
+        if (s2.count(element)) {
+            continue;
+        }
+        new_set.insert(element);
+    }
+    return new_set;
+}
+
+std::set<TString> find_all_samples(TFile* f) {
+    std::set<TString> ret;
+    TIter next(f->GetListOfKeys());
+    TKey *key;
+    while ((key=(TKey*)next())) {
+        TString key_name = key->GetName();
+        std::vector<std::string> words;
+        split_string(key_name.Data(),words,".");
+        if (words.size() != 3) {
+            continue;
+        }
+        TString bin = words.at(0);
+        TString syst = words.at(1);
+        TString samp = words.at(2);
+        ret.insert(samp);
+    }
+    return ret;
+}
+
+std::set<TString> find_all_bins(TFile* f) {
+    std::set<TString> ret;
+    TIter next(f->GetListOfKeys());
+    TKey *key;
+    while ((key=(TKey*)next())) {
+        TString key_name = key->GetName();
+        std::vector<std::string> words;
+        split_string(key_name.Data(),words,".");
+        if (words.size() != 3) {
+            continue;
+        }
+        TString bin = words.at(0);
+        TString syst = words.at(1);
+        TString samp = words.at(2);   
+        ret.insert(bin);
+    }
+    return ret;
+}
+
+std::set<TString> find_all_systs(TFile* f) {
+    std::set<TString> ret;
+    TIter next(f->GetListOfKeys());
+    TKey *key;
+    while ((key=(TKey*)next())) {
+        TString key_name = key->GetName();
+        std::vector<std::string> words;
+        split_string(key_name.Data(),words,".");
+        if (words.size() != 3) {
+            continue;
+        }
+        TString bin = words.at(0);
+        TString syst = words.at(1);
+        TString samp = words.at(2);   
+        ret.insert(syst);
+    }
+    return ret;
+}
+
 //ANAUTILS_H
 #endif
