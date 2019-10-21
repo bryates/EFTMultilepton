@@ -12,6 +12,7 @@ OSTwoLepAna::OSTwoLepAna(const edm::ParameterSet& constructparams) ://Anything t
     skim = constructparams.getParameter<bool> ("skim");
     skip_higgs = constructparams.getParameter<bool> ("skipHiggs");
     is_private_sample = constructparams.getParameter<bool>("isPrivateSample");
+    is_4f_scheme = constructparams.getParameter<bool>("is4fScheme")
     entire_pset = constructparams;
     parse_params();
   
@@ -300,9 +301,15 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
         std::vector<double> nnpdfWeights;
 
         // create the PDF
-        LHAPDF::PDFSet nnpdfSet("NNPDF31_nnlo_hessian_pdfas"); // NNPDF30_nlo_as_0118 = central (powheg-only?) samples    //NNPDF31_nlo_hessian_pdfas  = EFT samples // NNPDF31_nnlo_hessian_pdfas = newer EFT samps, amcatnlo, some central powheg samples
+        TString pdf_set_name = "NNPDF31_nnlo_hessian_pdfas";
+        if (is_4f_scheme) {
+            pdf_set_name = ("NNPDF31_nnlo_as_0118_nf_4"
+        }
+        LHAPDF::PDFSet nnpdfSet(pdf_set_name);
+
+        // LHAPDF::PDFSet nnpdfSet("NNPDF31_nnlo_hessian_pdfas"); // NNPDF30_nlo_as_0118 = central (powheg-only?) samples    //NNPDF31_nlo_hessian_pdfas  = EFT samples // NNPDF31_nnlo_hessian_pdfas = newer EFT samps, amcatnlo, some central powheg samples
         // LHAPDF::PDFSet nnpdfSet("NNPDF31_nnlo_as_0118_nf_4");    // For 4f PDFs
-        
+
         // NNPDF30_nlo_as_0118: besides ttH powheg: ?  
         // NNPDF31_nnlo_hessian_pdfas: wz, all tribosons, ttGJets, the central PS sig samps
         // NNPDF31_nnlo_hessian_pdfas but choose "hessian" option below: single (anti-)top, zz, ww,
@@ -313,9 +320,15 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
         // double nnpdfWeightSumDown = 0.;
 
         // pdf ID start and end ???
+        int pdfID_start = 306001;
+        int pdfID_end = 306102;
+        if (is_4f_scheme) {
+            pdfID_start = 320901;
+            pdfID_end = 321000;
+        }
         // Note: These are the 5f PDFs
-        int pdfID_start = 306001;  //305800; //NNPDF31_nlo_hessian_pdfas       //260001; //NNPDF30_nlo_as_0118      //306001 NNPDF31_nnlo_hessian_pdfas, hessian
-        int pdfID_end = 306102;    //305902; //NNPDF31_nlo_hessian_pdfas       //260100; //NNPDF30_nlo_as_0118      //306102 NNPDF31_nnlo_hessian_pdfas, hessian
+        // int pdfID_start = 306001;  //305800; //NNPDF31_nlo_hessian_pdfas       //260001; //NNPDF30_nlo_as_0118      //306001 NNPDF31_nnlo_hessian_pdfas, hessian
+        // int pdfID_end = 306102;    //305902; //NNPDF31_nlo_hessian_pdfas       //260100; //NNPDF30_nlo_as_0118      //306102 NNPDF31_nnlo_hessian_pdfas, hessian
 
         // Note: These are the 4f PDFs
         // int pdfID_start = 320901;
@@ -983,12 +996,16 @@ void OSTwoLepAna::beginRun(edm::Run const& run, edm::EventSetup const& evsetup)
             startStr  = "&lt;weight id=";
             setStr    = " MUR=\"1.0\" MUF=\"1.0\" PDF=\"";
             endStr    = " &gt; PDF=306000"; // For 5f PDFs
-            // endStr    = " &gt; PDF=320900"; // For 4f PDFs
+            if (is_4f_scheme) {
+                endStr    = " &gt; PDF=320900"; // For 4f PDFs
+            }
         } else {
             startStr  = "<weight id=";
             setStr    = "> PDF=  ";
             endStr    = "NNPDF31_nnlo_hessian_pdfas </weight>";     // For 5f PDFs
-            // endStr    = "NNPDF31_nnlo_as_0118_nf_4 </weight>";    // For 4f PDFs
+            if (is_4f_scheme) {
+                endStr    = "NNPDF31_nnlo_as_0118_nf_4 </weight>";    // For 4f PDFs
+            }
         }
 
         if (debug) cout << "before loop over pdf stuff in beginRun" << endl;
@@ -1032,47 +1049,33 @@ void OSTwoLepAna::beginRun(edm::Run const& run, edm::EventSetup const& evsetup)
     
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // PS weights info
-    
-    //     edm::Handle<GenRunInfoProduct> grunInfo;
-    //     run.getByLabel("generator", grunInfo);
-    //     
-    //     for (std::vector<GenRunInfoProduct::Header>::const_iterator it = grunInfo->headers_begin(); it != grunInfo->headers_end(); it++)
-    //     {
-    // //         if (it->tag() != weightTag)
-    // // 	    {
-    // //             continue;
-    // // 	    }
-    // 
-    // 	    std::vector<std::string> lines = it->lines();
-    //         for (size_t i = 0; i < lines.size(); i++)
-    // 	    {
-    // 	        std::cout << lines[i] << std::endl;
-    //             // size_t startPos = lines[i].find(startStr);
-    // //             size_t setPos = lines[i].find(setStr);
-    // //             size_t endPos = lines[i].find(endStr);
-    // //             cout << (startPos == std::string::npos) << endl;
-    // //             cout << (setPos == std::string::npos) << endl;
-    // //             cout << (endPos == std::string::npos) << endl;
-    // //             if (startPos == std::string::npos || setPos == std::string::npos || endPos == std::string::npos)
-    // // 	        {
-    // //                 continue;
-    // // 	        }
-    // // 	        std::string weightId = lines[i].substr(startPos + startStr.size() + 1, setPos - startPos - startStr.size() - 2); // this has changed, modify it???
-    // // 	        std::string setId = lines[i].substr(setPos + setStr.size(), endPos - setPos - setStr.size() - 1); // this has changed, modify it???
-    // // 	        std::cout << weightId << " : " << setId << std::endl;
-    // //             try
-    // // 	        {
-    // //                 pdfIdMap_[stoi(weightId)] = stoi(setId);
-    // // 	        }
-    // //             catch (...)
-    // // 	        {
-    // // 		        std::cerr << "error while parsing the lhe run xml header: ";
-    // // 		        std::cerr << "cannot interpret as ints:" << weightId << " -> " << setId << std::endl;
-    // // 	        }
-    // 	    }
-    //     }
-    
-    
+        // edm::Handle<GenRunInfoProduct> grunInfo;
+        // run.getByLabel("generator", grunInfo);
+        // for (std::vector<GenRunInfoProduct::Header>::const_iterator it = grunInfo->headers_begin(); it != grunInfo->headers_end(); it++)
+        // {
+        //     // if (it->tag() != weightTag) continue;
+        //     std::vector<std::string> lines = it->lines();
+        //     for (size_t i = 0; i < lines.size(); i++)
+        //     {
+        //         std::cout << lines[i] << std::endl;
+        //         // size_t startPos = lines[i].find(startStr);
+        //         // size_t setPos = lines[i].find(setStr);
+        //         // size_t endPos = lines[i].find(endStr);
+        //         // cout << (startPos == std::string::npos) << endl;
+        //         // cout << (setPos == std::string::npos) << endl;
+        //         // cout << (endPos == std::string::npos) << endl;
+        //         // if (startPos == std::string::npos || setPos == std::string::npos || endPos == std::string::npos) continue;
+        //         // std::string weightId = lines[i].substr(startPos + startStr.size() + 1, setPos - startPos - startStr.size() - 2); // this has changed, modify it???
+        //         // std::string setId = lines[i].substr(setPos + setStr.size(), endPos - setPos - setStr.size() - 1); // this has changed, modify it???
+        //         // std::cout << weightId << " : " << setId << std::endl;
+        //         // try {
+        //         //     pdfIdMap_[stoi(weightId)] = stoi(setId);
+        //         // } catch (...) {
+        //         //     std::cerr << "error while parsing the lhe run xml header: ";
+        //         //     std::cerr << "cannot interpret as ints:" << weightId << " -> " << setId << std::endl;
+        //         // }
+        //     }
+        // }
     }
 
 
