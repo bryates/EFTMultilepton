@@ -15,7 +15,7 @@ lobster_step = "analysisTrees"
 #master_label = 'EFT_T3_anaTrees_{tstamp}'.format(tstamp=tstamp1)
 master_label = 'EFT_CRC_anaTrees_{tstamp}'.format(tstamp=tstamp1)
 
-ver = "v1"
+ver = "v2"
 #tag = "test/lobster_test_{tstamp}".format(tstamp=tstamp1)
 # tag = "special/tllq4f_EFT_MatchedNoHiggs_{tstamp}_NoMrg-JM1-JM2".format(tstamp=tstamp2)
 #tag = "central_sgnl_{tstamp}".format(tstamp=tstamp2)
@@ -185,7 +185,7 @@ if ((not isdata) and (not doeftsamps)): # eventually rm the "not doeftsamps" her
     # mysamples.append(['tZq','/tZq_ll_4f_ckm_NLO_TuneCP5_PSweights_13TeV-amcatnlo-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/MINIAODSIM'])            #a
 
     ## Newer samples with 'new_pmx'
-    mysamples.append(['ttH','/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
+    mysamples.append(['ttH','/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
     mysamples.append(['WZ','/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
     mysamples.append(['ZZ','/ZZTo4L_13TeV_powheg_pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
     mysamples.append(['ttGJets','/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
