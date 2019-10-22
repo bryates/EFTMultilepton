@@ -12,7 +12,7 @@ OSTwoLepAna::OSTwoLepAna(const edm::ParameterSet& constructparams) ://Anything t
     skim = constructparams.getParameter<bool> ("skim");
     skip_higgs = constructparams.getParameter<bool> ("skipHiggs");
     is_private_sample = constructparams.getParameter<bool>("isPrivateSample");
-    is_4f_scheme = constructparams.getParameter<bool>("is4fScheme")
+    is_4f_scheme = constructparams.getParameter<bool>("is4fScheme");
     entire_pset = constructparams;
     parse_params();
   
@@ -303,9 +303,9 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
         // create the PDF
         TString pdf_set_name = "NNPDF31_nnlo_hessian_pdfas";
         if (is_4f_scheme) {
-            pdf_set_name = ("NNPDF31_nnlo_as_0118_nf_4"
+            pdf_set_name = "NNPDF31_nnlo_as_0118_nf_4";
         }
-        LHAPDF::PDFSet nnpdfSet(pdf_set_name);
+        LHAPDF::PDFSet nnpdfSet(pdf_set_name.Data());
 
         // LHAPDF::PDFSet nnpdfSet("NNPDF31_nnlo_hessian_pdfas"); // NNPDF30_nlo_as_0118 = central (powheg-only?) samples    //NNPDF31_nlo_hessian_pdfas  = EFT samples // NNPDF31_nnlo_hessian_pdfas = newer EFT samps, amcatnlo, some central powheg samples
         // LHAPDF::PDFSet nnpdfSet("NNPDF31_nnlo_as_0118_nf_4");    // For 4f PDFs

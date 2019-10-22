@@ -19,9 +19,10 @@ ver = "v1"
 #tag = "test/lobster_test_{tstamp}".format(tstamp=tstamp1)
 # tag = "special/tllq4f_EFT_MatchedNoHiggs_{tstamp}_NoMrg-JM1-JM2".format(tstamp=tstamp2)
 #tag = "central_sgnl_{tstamp}".format(tstamp=tstamp2)
-tag = "central_bkgd_{tstamp}".format(tstamp=tstamp2)
+#tag = "central_bkgd_{tstamp}".format(tstamp=tstamp2)
 #tag = "private_sgnl_{tstamp}".format(tstamp=tstamp2)
 #tag = "data2017_{tstamp}".format(tstamp=tstamp2)
+tag = "special/central_ttH-WW-WZ-ttGJets_new_pmx_{tstamp}".format(tstamp=tstamp2)
 
 workdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=tag,ver=ver,path="/tmpscratch/users/$USER/analysisWorkflow")
 plotdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=tag,ver=ver,path="~/www/lobster")
