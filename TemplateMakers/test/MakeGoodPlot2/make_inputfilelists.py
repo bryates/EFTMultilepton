@@ -402,7 +402,7 @@ def anatest27_samples():
     samples.extend([SingleElectron,SingleMuon,DoubleMuon,DoubleEG,MuonEG])
 
     # Updated to 'new_pmx' version (Note: The ttGJets sample failed horrifically)
-    path = 'analysisTrees/special/central_ttH-WW-WZ-ttGJets_new_pmx_2019_10_21/v3'
+    path = 'awightma/analysisTrees/special/central_ttH-WW-WZ-ttGJets_new_pmx_2019_10_21/v3'
     ttH_central.addDirectory(HADOOP_DIR,path,'ttH')
     WZ_central.addDirectory(HADOOP_DIR,path,'WZ')
     ZZ_central.addDirectory(HADOOP_DIR,path,'ZZ')
