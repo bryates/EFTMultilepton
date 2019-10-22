@@ -184,24 +184,25 @@ def legacy_geoff_samples():
 
 # 'Current' samples we want to use over the legacy geoff samples
 def private_samples():
-    tllq_priv = Sample('tllq_multidim')
-    tllq_priv.addDirectory(HADOOP_DIR,'awightma/analysisTrees/private_sgnl_2019_10_09/v1','tllq_multidim_b1')
-    tllq_priv.addDirectory(HADOOP_DIR,'awightma/analysisTrees/private_sgnl_2019_10_09/v1','tllq_multidim_b2')
-    
+    ttH_priv   = Sample('ttH_multidim')
+    tHq_priv   = Sample('tHq_multidim')
+    tllq_priv  = Sample('tllq_multidim')
+    ttll_priv  = Sample('ttll_multidim')
     ttlnu_priv = Sample('ttlnu_multidim')
-    ttlnu_priv.addDirectory(HADOOP_DIR,'awightma/analysisTrees/private_sgnl_2019_10_09/v1','ttlnu_multidim_b1')
     
-    ttll_priv = Sample('ttll_multidim')
-    ttll_priv.addDirectory(HADOOP_DIR,'awightma/analysisTrees/private_sgnl_2019_10_09/v1','ttll_multidim_b1')
-    ttll_priv.addDirectory(HADOOP_DIR,'awightma/analysisTrees/private_sgnl_2019_10_09/v1','ttll_multidim_b2')
-    
-    ttH_priv = Sample('ttH_multidim')
-    ttH_priv.addDirectory(HADOOP_DIR,'awightma/analysisTrees/private_sgnl_2019_10_09/v1','ttH_multidim_b1')
+    samples = []
 
-    tHq_priv = Sample('tHq_multidim')
-    tHq_priv.addDirectory(HADOOP_DIR,'awightma/analysisTrees/private_sgnl_2019_10_09/v1','tHq_multidim_b1')
+    path = 'awightman/analysisTrees/private_sgnl_2019_10_09/v1'
+    ttH_priv.addDirectory(HADOOP_DIR,path,'ttH_multidim_b1')
+    tHq_priv.addDirectory(HADOOP_DIR,path,'tHq_multidim_b1')
+    tllq_priv.addDirectory(HADOOP_DIR,path,'tllq_multidim_b1')
+    tllq_priv.addDirectory(HADOOP_DIR,path,'tllq_multidim_b2')
+    ttll_priv.addDirectory(HADOOP_DIR,path,'ttll_multidim_b1')
+    ttll_priv.addDirectory(HADOOP_DIR,path,'ttll_multidim_b2')
+    ttlnu_priv.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_b1')
 
-    samples = [tllq_priv,ttlnu_priv,ttll_priv,ttH_priv,tHq_priv]
+    samples.extend([tllq_priv,ttlnu_priv,ttll_priv,ttH_priv,tHq_priv])
+
     return samples
 
 # MC based samples for anatest25
@@ -334,6 +335,118 @@ def anatest26_samples():
 
     return samples
 
+# Re-processed data with new GT and updated some central samples to 'new_pmx'
+def anatest27_samples():
+    SingleElectron = Sample('SingleElectron')
+    SingleMuon = Sample('SingleMuon')
+    DoubleMuon = Sample('DoubleMuon')
+    DoubleEG   = Sample('DoubleEG')
+    MuonEG     = Sample('MuonEG')
+
+    ttZ_central = Sample('ttZ')
+    ttW_central = Sample('ttW')    
+    ttH_central = Sample('ttH')
+    tZq_central = Sample('tZq')
+    tHq_central = Sample('tHq')
+
+    ttGJets_central = Sample('ttGJets')
+    ZZZ_central = Sample('ZZZ')
+    WZZ_central = Sample('WZZ')
+    WWZ_central = Sample('WWZ')
+    WWW_central = Sample('WWW')
+    ZZ_central  = Sample('ZZ')
+    WZ_central  = Sample('WZ')
+    WW_central  = Sample('WW')
+
+    ttH_priv   = Sample('ttH_multidim')
+    tHq_priv   = Sample('tHq_multidim')
+    ttll_priv  = Sample('ttll_multidim')
+    tllq_priv  = Sample('tllq_multidim')
+    ttlnu_priv = Sample('ttlnu_multidim')
+
+    samples = []
+
+    # Data samples
+    path = 'awightma/analysisTrees/data2017_2019_10_21/v1'
+    SingleElectron.addDirectory(HADOOP_DIR,path,'SingleElectron_Run2017B')
+    SingleElectron.addDirectory(HADOOP_DIR,path,'SingleElectron_Run2017C')
+    SingleElectron.addDirectory(HADOOP_DIR,path,'SingleElectron_Run2017D')
+    SingleElectron.addDirectory(HADOOP_DIR,path,'SingleElectron_Run2017E')
+    SingleElectron.addDirectory(HADOOP_DIR,path,'SingleElectron_Run2017F')
+
+    SingleMuon.addDirectory(HADOOP_DIR,path,'SingleMuon_Run2017B')
+    SingleMuon.addDirectory(HADOOP_DIR,path,'SingleMuon_Run2017C')
+    SingleMuon.addDirectory(HADOOP_DIR,path,'SingleMuon_Run2017D')
+    SingleMuon.addDirectory(HADOOP_DIR,path,'SingleMuon_Run2017E')
+    SingleMuon.addDirectory(HADOOP_DIR,path,'SingleMuon_Run2017F')
+    # SingleMuon.addDirectory(HADOOP_DIR,path,'SingleMuon_Run2017H')    # Has no data
+
+    DoubleMuon.addDirectory(HADOOP_DIR,path,'DoubleMuon_Run2017B')
+    DoubleMuon.addDirectory(HADOOP_DIR,path,'DoubleMuon_Run2017C')
+    DoubleMuon.addDirectory(HADOOP_DIR,path,'DoubleMuon_Run2017D')
+    DoubleMuon.addDirectory(HADOOP_DIR,path,'DoubleMuon_Run2017E')
+    DoubleMuon.addDirectory(HADOOP_DIR,path,'DoubleMuon_Run2017F')
+
+    DoubleEG.addDirectory(HADOOP_DIR,path,'DoubleEG_Run2017B')
+    DoubleEG.addDirectory(HADOOP_DIR,path,'DoubleEG_Run2017C')
+    DoubleEG.addDirectory(HADOOP_DIR,path,'DoubleEG_Run2017D')
+    DoubleEG.addDirectory(HADOOP_DIR,path,'DoubleEG_Run2017E')
+    DoubleEG.addDirectory(HADOOP_DIR,path,'DoubleEG_Run2017F')
+
+    MuonEG.addDirectory(HADOOP_DIR,path,'MuonEG_Run2017B')
+    MuonEG.addDirectory(HADOOP_DIR,path,'MuonEG_Run2017C')
+    MuonEG.addDirectory(HADOOP_DIR,path,'MuonEG_Run2017D')
+    MuonEG.addDirectory(HADOOP_DIR,path,'MuonEG_Run2017E')
+    MuonEG.addDirectory(HADOOP_DIR,path,'MuonEG_Run2017F')
+
+    samples.extend([SingleElectron,SingleMuon,DoubleMuon,DoubleEG,MuonEG])
+
+    # Updated to 'new_pmx' version (Note: The ttGJets sample failed horrifically)
+    path = 'analysisTrees/special/central_ttH-WW-WZ-ttGJets_new_pmx_2019_10_21/v3'
+    ttH_central.addDirectory(HADOOP_DIR,path,'ttH')
+    WZ_central.addDirectory(HADOOP_DIR,path,'WZ')
+    ZZ_central.addDirectory(HADOOP_DIR,path,'ZZ')
+
+    samples.extend([ttH_central,WZ_central,ZZ_central])
+
+    # Central samples (same as ana26)
+    path = 'awightma/analysisTrees/central_sgnl_2019_10_11/v1'
+    tHq_central.addDirectory(HADOOP_DIR,path,'tHq') # Excluding this from the list for now
+    ttW_central.addDirectory(HADOOP_DIR,path,'ttW')
+    ttZ_central.addDirectory(HADOOP_DIR,path,'ttZ')
+
+    path = 'awightma/analysisTrees/special/tZq_2019_10_17_fixPDF/v2'
+    tZq_central.addDirectory(HADOOP_DIR,path,'tZq')
+
+    samples.extend([ttW_central,ttZ_central,tZq_central])
+
+    path = 'awightma/analysisTrees/central_bkgd_2019_10_12/v1'
+    ttGJets_central.addDirectory(HADOOP_DIR,path,'ttGJets')
+    ttGJets_central.addDirectory(HADOOP_DIR,path,'ttGJets_ext')
+    ZZZ_central.addDirectory(HADOOP_DIR,path,'ZZZ')
+    WZZ_central.addDirectory(HADOOP_DIR,path,'WZZ')
+    WWZ_central.addDirectory(HADOOP_DIR,path,'WWZ')
+    WWW_central.addDirectory(HADOOP_DIR,path,'WWW')
+    WW_central.addDirectory(HADOOP_DIR,path,'WW')
+
+    samples.extend([ttGJets_central,ZZZ_central,WZZ_central,WWZ_central,WWW_central,WW_central])
+
+    # Private signal samples (same as ana26)
+    path = 'awightma/analysisTrees/private_sgnl_2019_10_11/v1'
+    ttH_priv.addDirectory(HADOOP_DIR,path,'ttH_multidim_b1')
+    tHq_priv.addDirectory(HADOOP_DIR,path,'tHq_multidim_b1')
+    ttll_priv.addDirectory(HADOOP_DIR,path,'ttll_multidim_b1')
+    ttll_priv.addDirectory(HADOOP_DIR,path,'ttll_multidim_b2')
+    ttlnu_priv.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_b1')
+    
+    path = 'awightma/analysisTrees/special/tllq4f_2019_10_17_fixPDF/v1'
+    tllq_priv.addDirectory(HADOOP_DIR,path,'tllq_multidim_b1')
+    tllq_priv.addDirectory(HADOOP_DIR,path,'tllq_multidim_b2')
+
+    samples.extend([ttH_priv,tHq_priv,ttll_priv,ttlnu_priv,tllq_priv])
+
+    return samples
+
 def main():
     out_dir = '.'
     log_file = os.path.join(out_dir,'out.log')
@@ -347,7 +460,8 @@ def main():
     # samples = private_samples()
     # samples = legacy_geoff_samples()
     # samples = anatest25_samples()
-    samples = anatest26_samples()
+    # samples = anatest26_samples()
+    samples = anatest27_samples()
 
     for s in samples:
         outf = 'inputfiles__{name}.txt'.format(name=s.name())
