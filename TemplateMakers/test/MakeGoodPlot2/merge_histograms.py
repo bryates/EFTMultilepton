@@ -11,7 +11,7 @@ from EFTMultilepton.TemplateMakers.LvlFormatter import LvlFormatter
 TIMESTAMP1 = datetime.datetime.now().strftime('%Y_%m_%d')
 TIMESTAMP2 = datetime.datetime.now().strftime('%Y%m%d_%H%M')
 
-MAX_MERGE = 50
+MAX_MERGE = 150
 
 USER_NAME = os.environ['USER']
 USER_DIR = os.path.expanduser('~')
@@ -126,9 +126,7 @@ def main():
         raise RuntimeError(err)
 
     if not os.path.exists(out_dir):
-        # pass
         os.makedirs(out_dir)
-        # os.mkdir(out_dir)
 
     log_file = os.path.join(out_dir,'out.log')
     outlog = logging.FileHandler(filename=log_file,mode='w')
@@ -142,17 +140,24 @@ def main():
     if args.input_base_path:
         logging.info("Hadoop path: {path}".format(path=args.input_base_path))
 
+    data_lst = []
+    flips_lst = []
+    fakes_lst = []
+
     for in_dir in in_dirs:
         head,tail = os.path.split(in_dir)
         logging.info("Merging output: {dir}".format(dir=tail))
         sample = tail
-        if args.is_data:
-            if tail[-4:] == '_QFs':
-                sample = 'data_QFs'
-            elif tail[-6:] == '_Fakes':
-                sample = 'data_Fakes'
-            else:
-                sample = 'data'
+        # if args.is_data:
+        #     if tail[-4:] == '_QFs':
+        #         flips_lst.append(sample)
+        #         # sample = 'data_QFs'
+        #     elif tail[-6:] == '_Fakes':
+        #         fakes_lst.append(sample)
+        #         # sample = 'data_Fakes'
+        #     else:
+        #         data_lst.append(sample)
+        #         # sample = 'data'
         sub_dir = out_dir
         if args.sub_dir:
             sub_dir = os.path.join(out_dir,sample)
@@ -166,7 +171,10 @@ def main():
             tar_file = os.path.join(sub_dir,"{prefix}.root".format(prefix=args.prefix))
 
         logging.info("Output file: {file}".format(file=tar_file))
-        if os.path.exists(tar_file) and not args.is_data:
+        # if os.path.exists(tar_file) and not args.is_data:
+        #     logging.warning("Skipping sample that already exists in the output directory: {samp}".format(samp=sample))
+        #     continue
+        if os.path.exists(tar_file):
             logging.warning("Skipping sample that already exists in the output directory: {samp}".format(samp=sample))
             continue
 
@@ -180,11 +188,12 @@ def main():
             logging.error(err)
             raise RuntimeError(err)
 
-        base_cmd = ['hadd','-k']
-        if args.is_data and os.path.exists(tar_file):
-            base_cmd.extend(['-a'])
-        else:
-            base_cmd.extend(['-f'])
+        # base_cmd = ['hadd','-k']
+        # if args.is_data and os.path.exists(tar_file):
+        #     base_cmd.extend(['-a'])
+        # else:
+        #     base_cmd.extend(['-f'])
+        base_cmd = ['hadd','-k','-f']
         if args.ncores:
             base_cmd.extend(['-j',args.cores])
 
@@ -201,6 +210,39 @@ def main():
         logging.info("Merge target: {path}".format(path=tar_file))
         logging.info("Merge command: {cmd}".format(cmd=' '.join(cleaned_cmd)))
         run_process(hadd_cmd)
+        if not os.path.exists(tar_file):
+            err = "The sample {sample} failed to merge!".format(sample=sample)
+            logging.error(err)
+            raise RuntimeError(err)
+        if args.is_data:
+            if sample[-4:] == '_QFs':
+                flips_lst.append(tar_file)
+            elif sample[-6:] == '_Fakes':
+                fakes_lst.append(tar_file)
+            else:
+                data_lst.append(tar_file)
+
+    if args.is_data:
+        logging.info("Consolidate data based samples")
+        base_cmd = ['hadd','-k','-f']
+        if len(data_lst):
+            tar_file = os.path.join(out_dir,"{prefix}_data.root".format(prefix=args.prefix))
+            hadd_cmd = base_cmd + [tar_file]
+            hadd_cmd.extend(data_lst)
+            logging.info("Merge target: {path}".format(path=tar_file))
+            run_process(hadd_cmd)
+        if len(fakes_lst):
+            tar_file = os.path.join(out_dir,"{prefix}_Fakes.root".format(prefix=args.prefix))
+            hadd_cmd = base_cmd + [tar_file]
+            hadd_cmd.extend(fakes_lst)
+            logging.info("Merge target: {path}".format(path=tar_file))
+            run_process(hadd_cmd)
+        if len(flips_lst):
+            tar_file = os.path.join(out_dir,"{prefix}_QFs.root".format(prefix=args.prefix))
+            hadd_cmd = base_cmd + [tar_file]
+            hadd_cmd.extend(flips_lst)
+            logging.info("Merge target: {path}".format(path=tar_file))
+            run_process(hadd_cmd)
     logging.info("Finished!")
 
 
