@@ -6,7 +6,7 @@ The locations of the latest trees are [here](https://twiki.cern.ch/twiki/bin/vie
 
 Setup CMSSW and clone repositories by running:        
 
-	curl https://raw.githubusercontent.com/cms-govner/EFTMultilepton/EFT_code/setup.sh|sh -
+	curl https://raw.githubusercontent.com/cms-govner/EFTMultilepton/master/setup.sh|sh -
 
 NOTE: Due to concurrent `scram` usage, these may fail with errors. In this case, run `scram b -j8` again. 
 
