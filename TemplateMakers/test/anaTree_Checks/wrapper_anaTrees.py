@@ -54,8 +54,8 @@ def run_process(inputs,verbose=True,indent=0):
         if l == '' and p.poll() is not None:
             break
         if l:
-            stdout.append(l.strip())
-            if verbose: print indent_str+l.strip()
+            stdout.append(l.rstrip())
+            if verbose: print indent_str+l.rstrip()
     return stdout
 
 def getFiles(tdir,ext=''):
@@ -208,7 +208,7 @@ def check_anaTrees():
 def read_anaTreeChecks():
     print "Running read_anaTreeChecks()..."
 
-    # OLD METHOD
+    # OLD METHOD (kept for historical referencing)
     inputs = [
         ##############################
         # Previous version of samples with old naming
@@ -362,24 +362,39 @@ def read_anaTreeChecks():
     a25_central_ttZ.addDirectory(spath,'a25_central_ttZ')
     a25_central_ttW.addDirectory(spath,'a25_central_ttW')
 
+    spath = "awightma/checkAnaTrees/ana26_PDF-fix_2019-10-20_1440/v1"
+    ##############################
+    # ana25 samples
+    ##############################
+    a26_private_tllq = Sample('a26priv_tllq',xsec=0.2529)
+    a26_central_tZq  = Sample('a26cent_tZq',xsec=0.2529)
+
+    a26_private_tllq.addDirectory(spath,'a26_private_tllq')
+    a26_central_tZq.addDirectory(spath,'a26_central_tZq')
+
+
     inputs = [
-        a25_central_ttH,
+        # a25_central_ttH,
         # a25_central_tHq,
         # a25_central_tZq,
         # a25_central_ttZ,
         # a25_central_ttW,
 
-        a24_private_ttH,
+        # a24_private_ttH,
         # a24_private_tHq,
         # a24_private_tllq,
         # a24_private_ttll,
         # a24_private_ttlnu,
 
-        a25_private_ttH,
+        # a25_private_ttH,
         # a25_private_tHq,
         # a25_private_tllq,
         # a25_private_ttll,
         # a25_private_ttlnu,
+
+        a26_private_tllq,
+
+        a26_central_tZq,
     ]
 
     # dir_name = 'testing_{tstamp}'.format(tstamp=TIMESTAMP)
@@ -388,7 +403,7 @@ def read_anaTreeChecks():
     sub_dir = 'anatest_checks'
     dir_name = 'ttH_{tstamp}'.format(tstamp=TIMESTAMP)
 
-    move_output = True
+    move_output = False
     remake_merged_files = False # Force the recreation of the merged root files
     merge_lst = []
     for idx,samp in enumerate(inputs):
@@ -484,11 +499,13 @@ def plot_systematic_variations():
 
     move_output = False
     web_dir = "/afs/crc.nd.edu/user/a/awightma/www"
-    sub_dir = "eft_stuff/misc/anatest_plots/njet_plots/{syst}_variations/{tstamp}_from-anatest25".format(syst=syst,tstamp=TIMESTAMP2)
+    # sub_dir = "eft_stuff/misc/anatest_plots/njet_plots/{syst}_variations/{tstamp}_from-anatest25".format(syst=syst,tstamp=TIMESTAMP2)
+    # For testing
+    sub_dir = "eft_stuff/misc/anatest_plots/njet_plots/testing/{tstamp}_{syst}".format(tstamp=TIMESTAMP,syst=syst)
     
     for sample in samples:
         name = sample
-        
+
         cmd = ["root","-b","-l","-q"]
         cmd_args = "\"{fpath}\",\"{sample}\",\"{syst}\"".format(fpath=fpath,sample=name,syst=syst)
         cmd.extend(['quick_plots.C({args})'.format(args=cmd_args)])
@@ -516,11 +533,102 @@ def plot_systematic_variations():
                 os.mkdir(output_dir)
             imgs = get_files('.',targets=["^.*\.png$"])
 
+def compare_anatest_files():
+    geoff_dir = "/afs/crc.nd.edu/user/g/gsmith15/Public/for_Tony/"
+    tony_dir  = "/afs/crc.nd.edu/user/a/awightma/Public/for_tony/"
+    hist_dir  = "/afs/crc.nd.edu/user/a/awightma/CMSSW_Releases/CMSSW_8_1_0/src/CombineHarvester/TopEFT/hist_files/"
+
+    hist_dir = "/tmpscratch/users/awightma/analysisWorkflow/mergedHists/"
+
+    fname_a15   = "TOP-19-001_unblinded_v1.root"
+    fname_a16   = "anatest16.root"
+    fname_a17   = "anatest17.root"
+    fname_a18   = "anatest18.root"
+    fname_a19   = "anatest19.root"
+    fname_a20   = "anatest20.root"
+    fname_a21   = "anatest21.root"
+    fname_a22   = "anatest22.root"
+    fname_a23v3 = "anatest23_v3.root"
+    fname_a24   = "anatest24.root"
+    fname_a25   = "anatest25.root"
+    fname_a26   = "anatest26.root"
+    fname_a27   = "anatest27.root"
+
+    fname_data = "temp_data.root"
+    fname_MuonEG = "temp_MuonEG.root"
+    fname_DoubleMuon = "temp_DoubleMuon.root"
+    fname_SingleMuon = "temp_SingleMuon.root"
+    fname_SingleElectron = "temp_SingleElectron.root"
+    fname_DoubleEG = "temp_DoubleEG.root"
+
+    fpath_a15 = os.path.join(hist_dir,fname_a15)
+    fpath_a16 = os.path.join(hist_dir,fname_a16)
+    fpath_a17 = os.path.join(hist_dir,fname_a17)
+    fpath_a18 = os.path.join(hist_dir,fname_a18)
+    fpath_a19 = os.path.join(hist_dir,fname_a19)
+    fpath_a20 = os.path.join(hist_dir,fname_a20)
+    fpath_a22 = os.path.join(hist_dir,fname_a22)
+
+    fpath_a21 = os.path.join(geoff_dir,fname_a21)
+
+    fpath_a23 = os.path.join(tony_dir,fname_a23v3)
+    fpath_a24 = os.path.join(tony_dir,fname_a24)
+    fpath_a25 = os.path.join(tony_dir,fname_a25)
+    fpath_a26 = os.path.join(tony_dir,fname_a26)
+    fpath_a27 = os.path.join(tony_dir,fname_a27)
+
+    fpath_data_a26 = os.path.join(hist_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_data)
+
+    fpath_MuonEG_a26 = os.path.join(hist_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_MuonEG)
+    fpath_DoubleMuon_a26 = os.path.join(hist_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_DoubleMuon)
+    fpath_SingleMuon_a26 = os.path.join(hist_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_SingleMuon)
+    fpath_SingleElectron_a26 = os.path.join(hist_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_SingleElectron)
+    fpath_DoubleEG_a26 = os.path.join(hist_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_DoubleEG)
+
+
+    fpath_data_a27 = os.path.join(hist_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_data)
+
+    fpath_MuonEG_a27 = os.path.join(hist_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_MuonEG)
+    fpath_DoubleMuon_a27 = os.path.join(hist_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_DoubleMuon)
+    fpath_SingleMuon_a27 = os.path.join(hist_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_SingleMuon)
+    fpath_SingleElectron_a27 = os.path.join(hist_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_SingleElectron)
+    fpath_DoubleEG_a27 = os.path.join(hist_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_DoubleEG)
+
+    fpath = fpath_a26
+
+
+    compare = [
+        # (fpath_a15,fpath_a16),
+        # (fpath_a15,fpath_a22),
+        # (fpath_a16,fpath_a22),
+        # (fpath_a22,fpath_a23),
+        # (fpath_a23,fpath_a24),
+        # (fpath_a26,fpath_a27),
+        # (fpath_data_a26,fpath_data_a27),
+        (fpath_MuonEG_a26,fpath_MuonEG_a27),
+        (fpath_DoubleMuon_a26,fpath_DoubleMuon_a27),
+        (fpath_SingleMuon_a26,fpath_SingleMuon_a27),
+        (fpath_SingleElectron_a26,fpath_SingleElectron_a27),
+        (fpath_DoubleEG_a26,fpath_DoubleEG_a27),
+    ]
+
+    for idx,tup in enumerate(compare):
+        fpath1,fpath2 = tup
+        h,fname1 = os.path.split(fpath1)
+        h,fname2 = os.path.split(fpath2)
+        print "Comparing: {fn1} --> {fn2}".format(fn1=fname1,fn2=fname2)
+        cmd = ["root","-b","-l","-q"]
+        cmd_args = "\"{fp1}\",\"{fp2}\"".format(fp1=fpath1,fp2=fpath2)
+        cmd.extend(['compare_anatest_files.C({args})'.format(args=cmd_args)])
+        subprocess.check_call(cmd)
+        # run_process(cmd,verbose=True,indent=0)
+        print "#"*100
 
 def main():
     # check_anaTrees()
     # read_anaTreeChecks()
-    plot_systematic_variations()
+    # plot_systematic_variations()
+    compare_anatest_files()
 
 
 if __name__ == "__main__":

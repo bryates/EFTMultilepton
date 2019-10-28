@@ -226,7 +226,7 @@ a26_private_tllq  = ('a26_private_tllq' ,3,eft_mergesize,tZq_xsec,[
     os.path.join(sub_path,'special/tllq4f_2019_10_17_fixPDF/v1/tllq_multidim_b1'),
     os.path.join(sub_path,'special/tllq4f_2019_10_17_fixPDF/v1/tllq_multidim_b2'),
 ])
-a26_central_ttZ = ('a26_central_ttZ',central_fpt,central_mergesize,ttZ_xsec,[os.path.join(sub_path,'special/tZq_2019_10_17_fixPDF/v2/tZq')])
+a26_central_tZq = ('a26_central_tZq',central_fpt,central_mergesize,tZq_xsec,[os.path.join(sub_path,'special/tZq_2019_10_17_fixPDF/v2/tZq')])
 
 samples = [
     # central_tZq_v1,
@@ -273,7 +273,7 @@ samples = [
     # a25_central_ttW,
 
     a26_private_tllq,
-    a26_central_ttZ,
+    a26_central_tZq,
 ]
 
 # Note: The 'interface' directory is automatically included

@@ -246,45 +246,6 @@ void print_err_band(TFile* f, TString sample, TString bin, std::vector<TString> 
     std::cout << "Err Down: " << err_band_down << std::endl;
 }
 
-// TODO: Move this to its own root macro
-void compare_anatest_systs(TString fpath1, TString fpath2) {
-    TFile* f1 = TFile::Open(fpath1,"READ");
-    TFile* f2 = TFile::Open(fpath2,"READ");
-
-    if (!f1 || !f2) {
-        std::cout << "compare_anatest_systs(): Missing at least one input file!" << std::endl;
-        return;
-    }
-    std::cout << "File1: " << f1->GetName() << std::endl;
-    std::cout << "File2: " << f2->GetName() << std::endl;
-
-    std::set<TString> systs1 = find_all_systs(f1);
-    std::set<TString> systs2 = find_all_systs(f2);
-
-    // std::cout << "Systs1: " << systs1.size() << std::endl;
-    // std::cout << "Systs2: " << systs2.size() << std::endl;
-
-    std::set<TString> diff1 = set_diff(systs1,systs2);
-    std::set<TString> diff2 = set_diff(systs2,systs1);
-
-    std::cout << "In f1 but not in f2" << std::endl;
-    if (diff1.size()) {
-        for (TString syst: diff1) std::cout << "\t" << syst << std::endl;
-    } else {
-        std::cout << "\t*NONE*" << std::endl;
-    }
-
-    std::cout << "In f2 but not in f1" << std::endl;
-    if (diff2.size()) {
-        for (TString syst: diff2) std::cout << "\t" << syst << std::endl;
-    } else {
-        std::cout << "\t*NONE*" << std::endl;
-    }
-
-    f1->Close();
-    f2->Close();
-}
-
 // Hastily thrown together root macro to extract nominal and up/down systematic variations from the 'mergedHists' step root files
 // Note: The naming of the histograms is slightly different depending on if the file is at the 'mergedHists' stage or if its at the
 //      full 'anatest' stage. Also the 'mergedHist' stage isn't fully normalized to expected data, while the 'anatest' stage is, so
@@ -372,24 +333,4 @@ void runit(TString fpath,TString sample,TString syst) {
 
 void quick_plots(TString fpath, TString sample, TString syst) {
     runit(fpath,sample,syst);
-
-    // compare_anatest_systs(fpath_a15,fpath_a16);
-    // std::cout << endl;
-    // compare_anatest_systs(fpath_a16,fpath_a17);
-    // std::cout << endl;
-    // compare_anatest_systs(fpath_a17,fpath_a18);
-    // std::cout << endl;
-    // compare_anatest_systs(fpath_a18,fpath_a19);
-    // std::cout << endl;
-    // compare_anatest_systs(fpath_a19,fpath_a20);
-    // std::cout << endl;
-    // compare_anatest_systs(fpath_a20,fpath_a21);
-    // std::cout << endl;
-    // compare_anatest_systs(fpath_a21,fpath_a22);
-    // std::cout << endl;
-    // compare_anatest_systs(fpath_a22,fpath_a23);
-    // std::cout << endl;
-    // compare_anatest_systs(fpath_a23,fpath_a24);
-    // std::cout << endl;
-    // compare_anatest_systs(fpath_a24,fpath_a25);
 }

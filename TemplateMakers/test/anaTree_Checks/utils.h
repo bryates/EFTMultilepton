@@ -1,6 +1,8 @@
 #ifndef ANAUTILS_H_
 #define ANAUTILS_H_
 
+#include "EFTMultilepton/TemplateMakers/interface/split_string.h"
+
 // Returns the sign of x
 int sgn(double x) {
     if (x > 0) return 1;
@@ -162,6 +164,17 @@ std::set<TString> set_diff(std::set<TString> s1, std::set<TString> s2) {
     return new_set;
 }
 
+// Returns a new set that exists in both s1 and s2
+std::set<TString> set_intersection(std::set<TString> s1, std::set<TString> s2) {
+    std::set<TString> new_set;
+    for (TString element: s1) {
+        if (s2.count(element)) {
+            new_set.insert(element);
+        }
+    }
+    return new_set;
+}
+
 std::set<TString> find_all_samples(TFile* f) {
     std::set<TString> ret;
     TIter next(f->GetListOfKeys());
@@ -170,13 +183,12 @@ std::set<TString> find_all_samples(TFile* f) {
         TString key_name = key->GetName();
         std::vector<std::string> words;
         split_string(key_name.Data(),words,".");
-        if (words.size() != 3) {
-            continue;
+        if (words.size() == 3) {
+            TString bin = words.at(0);
+            TString syst = words.at(1);
+            TString samp = words.at(2);
+            ret.insert(samp);
         }
-        TString bin = words.at(0);
-        TString syst = words.at(1);
-        TString samp = words.at(2);
-        ret.insert(samp);
     }
     return ret;
 }
@@ -189,13 +201,20 @@ std::set<TString> find_all_bins(TFile* f) {
         TString key_name = key->GetName();
         std::vector<std::string> words;
         split_string(key_name.Data(),words,".");
-        if (words.size() != 3) {
-            continue;
+        if (words.size() == 3) {
+            TString bin = words.at(0);
+            TString syst = words.at(1);
+            TString samp = words.at(2);   
+            ret.insert(bin);
+        } else if (words.size() == 2 && words.at(1).size() == 0) {
+            std::vector<std::string> tmp_words;
+            split_string(words.at(0),tmp_words,"__");
+            // if (tmp_words.size() > 1) {
+            //     continue;
+            // }
+            TString bin = words.at(0);
+            ret.insert(bin);
         }
-        TString bin = words.at(0);
-        TString syst = words.at(1);
-        TString samp = words.at(2);   
-        ret.insert(bin);
     }
     return ret;
 }
@@ -208,13 +227,12 @@ std::set<TString> find_all_systs(TFile* f) {
         TString key_name = key->GetName();
         std::vector<std::string> words;
         split_string(key_name.Data(),words,".");
-        if (words.size() != 3) {
-            continue;
+        if (words.size() == 3) {
+            TString bin = words.at(0);
+            TString syst = words.at(1);
+            TString samp = words.at(2);   
+            ret.insert(syst);
         }
-        TString bin = words.at(0);
-        TString syst = words.at(1);
-        TString samp = words.at(2);   
-        ret.insert(syst);
     }
     return ret;
 }
