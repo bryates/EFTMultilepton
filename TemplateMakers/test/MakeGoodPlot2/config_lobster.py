@@ -19,11 +19,19 @@ lobster_step = "histMaking"
 master_label = 'EFT_CRC_histMaking_{tstamp}'.format(tstamp=tstamp1)
 
 out_ver = "v1"
-#out_tag = "test/lobster_test_{tstamp}".format(tstamp=tstamp1)
-#out_tag = "private_sgnl_{tstamp}".format(tstamp=tstamp2)
-#out_tag = "special/geoff_inputfiles_central_bkgd_{tstamp}".format(tstamp=tstamp2)
-#out_tag = "special/tllq4f_SM_t-channel_{tstamp}_0partons".format(tstamp=tstamp2)
-out_tag = "full_MC_{tstamp}".format(tstamp=tstamp2)
+out_tag = "test/lobster_test_{tstamp}".format(tstamp=tstamp1)
+# out_tag = "private_sgnl_{tstamp}".format(tstamp=tstamp2)
+# out_tag = "special/geoff_inputfiles_central_bkgd_{tstamp}".format(tstamp=tstamp2)
+# out_tag = "special/tllq4f_SM_t-channel_{tstamp}_0partons".format(tstamp=tstamp2)
+# out_tag = "special/central_new_pmx_samples_{tstamp}".format(tstamp=tstamp2)
+
+# out_tag = "special/data-nominal_newGT-94X_dataRun2_v11_{tstamp}".format(tstamp=tstamp2)
+# out_tag = "special/data-ddbrs_newGT-94X_dataRun2_v11_{tstamp}".format(tstamp=tstamp2)
+# out_tag = "special/data-fakes_newGT-94X_dataRun2_v11_{tstamp}".format(tstamp=tstamp2)
+# out_tag = "special/data-QFs_newGT-94X_dataRun2_v11_{tstamp}".format(tstamp=tstamp2)
+
+# out_tag = "full_data_{tstamp}".format(tstamp=tstamp2)
+# out_tag = "full_MC_{tstamp}".format(tstamp=tstamp2)
 
 workdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=out_tag,ver=out_ver,path="/tmpscratch/users/$USER/analysisWorkflow")
 plotdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=out_tag,ver=out_ver,path="~/www/lobster")
@@ -146,6 +154,7 @@ if (not isdata):
     # mysamples.append('ttlnu_ctW')
     # mysamples.append('ttlnu_ctZ')
     
+    # This is the currently used naming for private EFT samples
     mysamples.append('ttH_multidim')
     mysamples.append('ttlnu_multidim')
     mysamples.append('ttll_multidim')
@@ -217,6 +226,23 @@ print " "
 print "included files: {lst}".format(lst=extra_inputs)
 print " "
 
+# File Input Sizes
+#   Data based: ~50-150M
+#   EFT based: ~150-200M
+#   Central bkgds: 100-300M
+#   Central sgnls: 250-300M
+#   Private tllq: ~50M
+# Num File Inputs:
+#   Data based: ~2300-23000 units
+#   EFT based: ~600-1800 units
+#   Central bkgds: ~10-650 units
+#   Central sgnls: ~400-800 units
+# File Output Sizes
+#   Data based: ~11M (pre/post-merged)
+#   EFT based: ~50-100M (pre-merged), ~100-150M (post-merged)
+#   Central bkgds: ~10-15M (pre/post-merged)
+#   Central sgnls: ~15M (pre/post-merged)
+
 processing = Category(
     name='processing',
     cores=1,
@@ -232,12 +258,16 @@ for thing in ddbr_or_nom:
     for label, dirs in data:
         fpt=10
         #if (label=='tZq' or label=='ttW' or label=='ttZ' or label[:3]=='ttH' or label[:5]=='ttlnu' or label[:4]=='tllq' or label[:4]=='ttll'):
-        if (label=='tZq' or label=='ttW' or label=='ttZ' or label=='ttH_multidim' or label=='ttlnu_multidim' or label=='tllq_multidim' or label=='ttll_multidim' or label=='tHq_multidim'):
-            fpt=5
+        if (label=='tZq' or label=='ttW' or label=='ttZ'):
+            fpt=15
         if (label=='ttJets'):
             fpt=5
         if (label=='DoubleEG' or label=='DoubleMuon' or label=='MuonEG' or label=='SingleElectron' or label=='SingleMuon'):
-            fpt=50
+            fpt=50  # maybe use 35?
+        merge_size = '512M'
+        if 'multidim' in label:
+            fpt = 15
+            merge_size = '1G'
         cmd = ['python','wrapper_lobster.py',label,thing,'@inputfiles']
         wf_label = "{label}{ext}".format(label=label,ext=extlabel)
         ttH = Workflow(
@@ -252,7 +282,7 @@ for thing in ddbr_or_nom:
             extra_inputs=extra_inputs,
             publish_label='test',
             merge_command='hadd @outputfiles @inputfiles',
-            merge_size='4G',
+            merge_size=merge_size,
             outputs=['output.root'],
             sandbox=sandbox
         )

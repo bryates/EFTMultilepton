@@ -7,6 +7,7 @@ import os
 isdata = False # remember to change osTwoLep_cfg.py
 doeftsamps = False
 singleSamp = None # default, to be overridden below if desired
+doskim = False
 
 tstamp1 = datetime.datetime.now().strftime('%Y%m%d_%H%M')
 tstamp2 = datetime.datetime.now().strftime('%Y_%m_%d')
@@ -188,7 +189,7 @@ if ((not isdata) and (not doeftsamps)): # eventually rm the "not doeftsamps" her
     mysamples.append(['ttH','/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
     mysamples.append(['WZ','/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
     mysamples.append(['ZZ','/ZZTo4L_13TeV_powheg_pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
-    mysamples.append(['ttGJets','/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
+    # mysamples.append(['ttGJets','/TTGJets_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM'])          # This sample seems to outright fail when trying to access it currently
 
     ## Newer samples with 'v14-v2'
     # mysamples.append(['ttW','/TTWJetsToLNu_TuneCP5_13TeV-amcatnloFXFX-madspin-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM'])
@@ -423,6 +424,8 @@ if (singleSamp is not None):
 
 workflows = []
 mergesize = '64M'
+if isdata:
+    mergesize = '256M'
 for label,samp in mysamples:
     ds = None
     #if (samp[:5]=='Batch'):
@@ -467,6 +470,9 @@ for label,samp in mysamples:
     if 'tllq_multidim' in label or 'tHq_multidim' in label or 'tZq' == label:
         # The sample uses the 4f parton PDF scheme
         cms_cmd.extend(['is4fScheme=True'])
+
+    if doskim:
+        cms_cmd.extend(['skim=True'])
 
     print "adding workflow: {0}".format(label)
     print "\tCmd: {0}".format(' '.join(cms_cmd))
