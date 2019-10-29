@@ -21,8 +21,11 @@ EOF
 
    git cms-init > /dev/null
 
+   git cms-addpkg RecoBTag/TensorFlow
+   git cherry-pick 94ceae257f846998c357fcad408986cc8a039152
+
    git clone git@github.com:cms-govner/MiniAOD.git
-   git clone git@github.com:cms-govner/ttH-LeptonID.git ttH/LeptonID
+   git clone -b lepMVAUpdate git@github.com:cms-govner/ttH-LeptonID.git ttH/LeptonID
    git clone -b cmssw_9_4_10 git@github.com:cms-govner/EFTMultilepton.git
    echo "NOTE: If setup.sh is ever updated to CMSSW_9_4_13 or higher, the following command can be omitted."
    cp -r /afs/crc.nd.edu/user/g/gsmith15/Public/additional_code_for_EFT/L1Prefiring . ## Note: if not running this on earth, change to scp -r
