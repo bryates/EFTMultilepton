@@ -322,7 +322,6 @@ theJECorrections = cms.vstring(['L1FastJet', 'L2Relative', 'L3Absolute'])
 if isData:
     theJECorrections.append('L2L3Residual')
 
-
 # bTagDiscriminators = [
 #     'pfCombinedInclusiveSecondaryVertexV2BJetTags',
 #     'pfDeepCSVJetTags:probb',
@@ -340,13 +339,48 @@ if isData:
 #     jetCorrections = ('AK4PFchs', theJECorrections, 'None'),
 # )
 
+## OLD 9_4_6 METHOD
+# updateJetCollection(
+#     process,
+#     jetSource = cms.InputTag('slimmedJets'),
+#     labelName = 'Updated',
+#     jetCorrections = ('AK4PFchs', theJECorrections, 'None'),
+# )
+
+## NEW 9_4_10 METHOD
+jet_label = 'Updated'
 updateJetCollection(
     process,
     jetSource = cms.InputTag('slimmedJets'),
-    labelName = 'Updated',
+    # pvSource = cms.InputTag('offlineSlimmedPrimaryVertices'),
+    # svSource = cms.InputTag('slimmedSecondaryVertices'),
+    labelName = jet_label,
     jetCorrections = ('AK4PFchs', theJECorrections, 'None'),
+    # Note: I'm not really sure what the point of this list is, since removing doesn't actually seem
+    #   to change whether or not these discs. are in the pat::jet objects. It just changes the name of
+    #   the collection that needs to be passed to all the other modules by creating an extra
+    #   'TransientCorrected' collection that actually contains the JECs (and btag discs.)
+    btagDiscriminators = [
+        'pfCombinedInclusiveSecondaryVertexV2BJetTags',
+        'pfDeepCSVJetTags:probb',
+        'pfDeepCSVJetTags:probc',
+        'pfDeepCSVJetTags:probudsg',
+        'pfDeepCSVJetTags:probbb',
+        'pfDeepFlavourJetTags:probb',
+        'pfDeepFlavourJetTags:probbb',
+        'pfDeepFlavourJetTags:problepb',
+        'pfDeepFlavourJetTags:probc',
+        'pfDeepFlavourJetTags:probuds',
+        'pfDeepFlavourJetTags:probg'
+    ],
+    # postfix='NewDFTraining'
 )
 
+
+# updated_jets_collection = "updatedPatJets{label}".format(label=jet_label)
+# updated_JEC_collection = "patJetCorrFactors{label}".format(label=jet_label)
+updated_jets_collection = "updatedPatJetsTransientCorrected{label}".format(label=jet_label)
+updated_JEC_collection = "patJetCorrFactorsTransientCorrected{label}".format(label=jet_label)
 
 ######################################
 # Analysis
@@ -360,7 +394,7 @@ process.load("EFTMultilepton.TemplateMakers.OSTwoLepAna_cfi")
 
 ### You can re-define the parameters in OSTwoLepAna_cfi.py here (without having to re-compile)
 
-process.prefiringweight.TheJets = cms.InputTag("updatedPatJetsUpdated")
+process.prefiringweight.TheJets = cms.InputTag(updated_jets_collection)
 process.prefiringweight.UseJetEMPt = cms.bool(False)
 
 process.ttHLeptons.LooseCSVWP = cms.double(0.5426) # CSVv2 2016 # LepID plugin currently uses pfCombinedInclusiveSecondaryVertexV2BJetTags
@@ -371,12 +405,12 @@ process.ttHLeptons.MediumCSVWP = cms.double(0.8484) # CSVv2 2016 # LepID plugin 
 #process.ttHLeptons.MediumCSVWP = cms.double(0.4941) # DeepCSV 2017 preliminary # will eventually need this when lepMVA switches to DeepCSV for 2017 data
 process.ttHLeptons.IsHIPSafe = cms.bool(options.hip)
 process.ttHLeptons.rhoParam = "fixedGridRhoFastjetAll" ## <-- to update? (should be CentralNeutral->All?) # fixedGridRhoFastjetCentralNeutral
-process.ttHLeptons.jets = cms.InputTag("updatedPatJetsUpdated") # updatedPatJetsTransientCorrectedTagged # updatedPatJetsUpdated
-process.ttHLeptons.JECTag = "patJetCorrFactorsUpdated" # patJetCorrFactorsTransientCorrectedTagged # patJetCorrFactorsUpdated
+process.ttHLeptons.jets = cms.InputTag(updated_jets_collection) # updatedPatJetsTransientCorrectedTagged # updatedPatJetsUpdated
+process.ttHLeptons.JECTag = updated_JEC_collection # patJetCorrFactorsTransientCorrectedTagged # patJetCorrFactorsUpdated
 process.OSTwoLepAna.electrons = cms.InputTag("ttHLeptons")
 process.OSTwoLepAna.muons = cms.InputTag("ttHLeptons")
 process.OSTwoLepAna.taus = cms.InputTag("ttHLeptons")
-process.OSTwoLepAna.jets.jetCollection = cms.string('updatedPatJetsUpdated') # updatedPatJetsTransientCorrectedTagged # updatedPatJetsUpdated
+process.OSTwoLepAna.jets.jetCollection = cms.string(updated_jets_collection) # updatedPatJetsTransientCorrectedTagged # updatedPatJetsUpdated
 
 if isData:
     process.OSTwoLepAna.setupoptions.isdata = True
@@ -419,18 +453,18 @@ for idmod in my_id_modules:
 
 
 process.load('RecoJets.JetProducers.QGTagger_cfi')
-process.QGTagger.srcJets          = cms.InputTag('updatedPatJetsUpdated') # updatedPatJetsTransientCorrectedTagged # updatedPatJetsUpdated
+process.QGTagger.srcJets          = cms.InputTag(updated_jets_collection) # updatedPatJetsTransientCorrectedTagged # updatedPatJetsUpdated
 process.QGTagger.jetsLabel        = cms.string('QGL_AK4PFchs')
 
 
 #https://twiki.cern.ch/twiki/bin/view/CMS/L1ECALPrefiringWeightRecipe
-# process.prefiringweight = cms.EDProducer("L1ECALPrefiringWeightProducer",
-#                                 ThePhotons = cms.InputTag("slimmedPhotons"),
-#                                 TheJets = cms.InputTag("updatedPatJetsUpdated"),
-#                                 #L1Maps = cms.string(cmsswbase+"/src/L1Prefiring/EventWeightProducer/files/L1PrefiringMaps_new.root"), # update this line with the location of this file
-#                                 DataEra = cms.string("2017BtoF"), #Use 2016BtoH for 2016
-#                                 UseJetEMPt = cms.bool(False), #can be set to true to use jet prefiring maps parametrized vs pt(em) instead of pt
-#                                 PrefiringRateSystematicUncty = cms.double(0.2)) #Minimum relative prefiring uncty per object
+#process.prefiringweight = cms.EDProducer("L1ECALPrefiringWeightProducer",
+#    ThePhotons = cms.InputTag("slimmedPhotons"),
+#    TheJets = cms.InputTag(updated_jets_collection),
+#    #L1Maps = cms.string(cmsswbase+"/src/L1Prefiring/EventWeightProducer/files/L1PrefiringMaps_new.root"), # update this line with the location of this file
+#    DataEra = cms.string("2017BtoF"), #Use 2016BtoH for 2016
+#    UseJetEMPt = cms.bool(False), #can be set to true to use jet prefiring maps parametrized vs pt(em) instead of pt
+#    PrefiringRateSystematicUncty = cms.double(0.2)) #Minimum relative prefiring uncty per object
 
 
 
