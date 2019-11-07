@@ -38,7 +38,7 @@ void makeanatestfile() {
     samples.push_back(9);  // ttZ    
     samples.push_back(1);  // ttH  
     samples.push_back(26); // tZq
-    samples.push_back(31); // tHq
+    // samples.push_back(31); // tHq
 
     // data samples
     samples.push_back(100); // single mu data
@@ -117,7 +117,7 @@ void makeanatestfile() {
             * Fix to properly calculate PS shape SF (commit/8fff3c6d6a6e897f45021d781f2d9ec1a3ca54ab)
             * For tllq4f and tZq, switched to 320900 PDF sets to calculate PDF UP/DOWN unc. (commit/82a3e77308a7aef37d04134c88f1b4277a035fe9)
     */
-    newplots->drawAllToFile("anatest26","root");
+    newplots->drawAllToFile("anatest30","root");
 
     //delete newplots;
     std::cout << "Finished!" << std::endl;

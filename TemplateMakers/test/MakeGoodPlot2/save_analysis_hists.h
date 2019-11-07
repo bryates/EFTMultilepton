@@ -48,7 +48,8 @@ void MakeGoodPlot::save_analysis_hists()
     //cats.push_back("3l_ppp_1b.");    
     
     vector<TString> allSysts;
-    allSysts.push_back("");
+    allSysts.push_back("");     // This being first VERY important to ensure the nominal histograms
+                                // are normalized BEFORE being used to normalize the shape-only systs
     allSysts.push_back("JESUP");
     allSysts.push_back("JESDOWN");
     allSysts.push_back("FRUP");
@@ -153,22 +154,22 @@ void MakeGoodPlot::save_analysis_hists()
         }
     } 
 
-    cout << "\\hline" << endl;
-    cout << " & 2lss ($e^{+}e^{+}$)";
-    cout << " & 2lss ($e^{+}\\mu^{+}$)";
-    cout << " & 2lss ($\\mu^{+}\\mu^{+}$)";
-    cout << " & 2lss ($e^{-}e^{-}$)";
-    cout << " & 2lss ($e^{-}\\mu^{-}$)";
-    cout << " & 2lss ($\\mu^{-}\\mu^{-}$)";
-    cout << " & 3l (1b \"p\")";
-    cout << " & 3l (1b \"m\")";
-    cout << " & 3l ($\\geq$2b \"p\")";
-    cout << " & 3l ($\\geq$2b \"m\")";
-    cout << " & 3l (SFOS Z, 1b)";
-    cout << " & 3l (SFOS Z, $\\geq$2b)";
-    cout << " & $\\geq$4l";
-    cout << " \\\\ " << endl;
-    cout << "\\hline" << endl;
+    // cout << "\\hline" << endl;
+    // cout << " & 2lss ($e^{+}e^{+}$)";
+    // cout << " & 2lss ($e^{+}\\mu^{+}$)";
+    // cout << " & 2lss ($\\mu^{+}\\mu^{+}$)";
+    // cout << " & 2lss ($e^{-}e^{-}$)";
+    // cout << " & 2lss ($e^{-}\\mu^{-}$)";
+    // cout << " & 2lss ($\\mu^{-}\\mu^{-}$)";
+    // cout << " & 3l (1b \"p\")";
+    // cout << " & 3l (1b \"m\")";
+    // cout << " & 3l ($\\geq$2b \"p\")";
+    // cout << " & 3l ($\\geq$2b \"m\")";
+    // cout << " & 3l (SFOS Z, 1b)";
+    // cout << " & 3l (SFOS Z, $\\geq$2b)";
+    // cout << " & $\\geq$4l";
+    // cout << " \\\\ " << endl;
+    // cout << "\\hline" << endl;
 
     //TH1EFT *data;
 
@@ -180,7 +181,6 @@ void MakeGoodPlot::save_analysis_hists()
         //cout << " " << endl;
         //cout << "Doing " << sample_names[thisSamp] << endl;
         //cout << " " << endl; 
-        
         
         string strtochg = TString2string(sample_names_reg[thisSamp]);
         //std::replace( strtochg.begin(), strtochg.begin()+1, '_', '');
@@ -211,6 +211,8 @@ void MakeGoodPlot::save_analysis_hists()
             
             int cnt=0;            
             
+            // bool is_shape_syst = (thissyst=="PDFUP" || thissyst=="PDFDOWN" || thissyst=="MURUP" || thissyst=="MURDOWN" || thissyst=="MUFUP" || thissyst=="MUFDOWN" || thissyst=="MURMUFUP" || thissyst=="MURMUFDOWN");
+            bool is_shape_syst = (thissyst == "PDFUP" || thissyst == "PDFDOWN" || thissyst == "PSISRUP" || thissyst == "PSISRDOWN");
             
             for (const TString thiscat : allAnaHists)
             {   
@@ -232,6 +234,16 @@ void MakeGoodPlot::save_analysis_hists()
                 if (thisSamp<40)
                 {
                     thishist->Scale(lumi*xsec[thisSamp]/numgen[thisSamp]);
+
+                    if (is_shape_syst) {
+                        auto nomhist = (TH1EFT*)hist[i].FindObject(thiscat+sample_names_reg[thisSamp]); // should have already been scaled
+                                                                                                        // refers to the fact that the nominal
+                                                                                                        //   hists are the 'first' systematic in
+                                                                                                        //   the list!
+                        double normamnt = (nomhist->GetEntries() != 0 && thishist->Integral() != 0.) ? nomhist->Integral()/thishist->Integral() : 1.;
+                        thishist->Scale(normamnt);
+                    }
+
                     // Dibosons
                     if (thisSamp==11)
                     {
@@ -264,7 +276,8 @@ void MakeGoodPlot::save_analysis_hists()
                 {
                     thishist->ScaleFits(lumi);
                     thishist->Scale(WCPoint());
-                    if (thissyst=="PDFUP" || thissyst=="PDFDOWN" || thissyst=="MURUP" || thissyst=="MURDOWN" || thissyst=="MUFUP" || thissyst=="MUFDOWN" || thissyst=="MURMUFUP" || thissyst=="MURMUFDOWN")
+                    // if (thissyst=="PDFUP" || thissyst=="PDFDOWN" || thissyst=="MURUP" || thissyst=="MURDOWN" || thissyst=="MUFUP" || thissyst=="MUFDOWN" || thissyst=="MURMUFUP" || thissyst=="MURMUFDOWN")
+                    if (is_shape_syst)
                     {
                         auto nomhist = (TH1EFT*)hist[i].FindObject(thiscat+sample_names_reg[thisSamp]); // should have already been scaled
                         double normamnt = (nomhist->GetEntries()!=0 && thishist->Integral()!=0.) ? nomhist->Integral()/thishist->Integral() : 1.;
@@ -296,7 +309,8 @@ void MakeGoodPlot::save_analysis_hists()
                     //thishist->Scale(pt);
                     
                     // systematics that are shape-only variations:
-                    if (thissyst=="PDFUP" || thissyst=="PDFDOWN" || thissyst=="MURUP" || thissyst=="MURDOWN" || thissyst=="MUFUP" || thissyst=="MUFDOWN" || thissyst=="MURMUFUP" || thissyst=="MURMUFDOWN")
+                    // if (thissyst=="PDFUP" || thissyst=="PDFDOWN" || thissyst=="MURUP" || thissyst=="MURDOWN" || thissyst=="MUFUP" || thissyst=="MUFDOWN" || thissyst=="MURMUFUP" || thissyst=="MURMUFDOWN")
+                    if (is_shape_syst)
                     {
                         auto nomhist = (TH1EFT*)hist[i].FindObject(thiscat+sample_names_reg[thisSamp]); // should have already been scaled
                         double normamnt = (nomhist->GetEntries()!=0 && thishist->Integral()!=0.) ? nomhist->Integral()/thishist->Integral() : 1.;
@@ -317,7 +331,6 @@ void MakeGoodPlot::save_analysis_hists()
                     data->Add((TH1EFT*)hist[i-2].FindObject(thiscat+sample_names_reg[102]));
                     data->Add((TH1EFT*)hist[i-3].FindObject(thiscat+sample_names_reg[101]));
                     data->Add((TH1EFT*)hist[i-4].FindObject(thiscat+sample_names_reg[100]));                    
-                    
                 }
                 
                 TString cltxt = "\\textcolor{black}{";
@@ -333,7 +346,7 @@ void MakeGoodPlot::save_analysis_hists()
                 
                 }
 
-                cout << " & " << cltxt << std::fixed << std::setprecision(2) << thishist->Integral() << "}";
+                // cout << " & " << cltxt << std::fixed << std::setprecision(2) << thishist->Integral() << "}";
                 //cout << " & " << cltxt << std::fixed << std::setprecision(2) << abs((thishist->Integral() - nomylds[cnt])/nomylds[cnt]) << "}";
                 
                 if (!(thisSamp>=10 && thisSamp<=12) && !(thisSamp>=22 && thisSamp<=25) && thisSamp<100) canvas.Add(thishist); //<-- last step 
@@ -357,7 +370,7 @@ void MakeGoodPlot::save_analysis_hists()
                 cnt++;
             }
             
-            cout << " \\\\ " << endl;   
+            // cout << " \\\\ " << endl;   
             
             //for (const TString thiscat : cats)
             //{   
@@ -375,9 +388,225 @@ void MakeGoodPlot::save_analysis_hists()
             //    
             //    canvas.Add(thishist); //<-- last step 
             //}
-
         }
-        
+
+
+
+        // Need to run over muR/muF/muRmuF systematics again to compute the envelope and then normalize the result to get proper shape-only variations
+        // NOTE: At this point all of the histograms should have already been properly (re-)scaled, we just want to compute the envelope and normalize
+        // TODO: Clean this code up to be more compact/concise
+        if (thisSamp > 0 && thisSamp < 90) { // The muR/muF envelope is only for MC based samples
+            // This is so we don't end up including unnecessary samples that were already merged into other samples
+            bool is_merged_sample = false;
+            is_merged_sample = (is_merged_sample || thisSamp == 11 || thisSamp == 12);                      // Merged Dibosons
+            is_merged_sample = (is_merged_sample || thisSamp == 23 || thisSamp == 24 || thisSamp == 25);    // Merged Tribosons
+            if (is_merged_sample) continue;
+            for (const TString thiscat : allAnaHists) {
+                //Note1: thiscat+sample_names_reg[...] should be something like '2lss_p_ee_2b.ttH' or '2lss_p_ee_2b.ttll_16D'
+                //Note2: hist is a vector of TObjArrays, one TObjArray per input histogram
+                //Note3: the systematic histograms have already been renamed above, so the 'FindObject' needs to search for the new name
+                TString nom_name = thiscat + sample_names_reg[thisSamp];
+
+                // std::cout << "thisSamp: " << thisSamp << std::endl;
+                // std::cout << "thiscat: " << thiscat << std::endl;
+                // std::cout << "sample_names: " << sample_names_reg[thisSamp] << std::endl;
+                // std::cout << nom_name << std::endl;
+
+                auto nomhist = (TH1EFT*)hist[i].FindObject(nom_name);
+                
+                TString mur_up_name    = thiscat + "MURUP" + "." + sample_names_reg[thisSamp];
+                TString muf_up_name    = thiscat + "MUFUP" + "." + sample_names_reg[thisSamp];
+                TString murmuf_up_name = thiscat + "MURMUFUP" + "." + sample_names_reg[thisSamp];
+
+                auto murhist_up    = (TH1EFT*)hist[i].FindObject(mur_up_name);
+                auto mufhist_up    = (TH1EFT*)hist[i].FindObject(muf_up_name);
+                auto murmufhist_up = (TH1EFT*)hist[i].FindObject(murmuf_up_name);
+
+                bool is_bad = false;
+                if (!murhist_up) {
+                    std::cout << "[ERROR] Missing histogram " << mur_up_name << std::endl;
+                    is_bad = true;
+                }
+
+                if (!mufhist_up) {
+                    std::cout << "[ERROR] Missing histogram " << muf_up_name << std::endl;
+                    is_bad = true;
+                }
+
+                if (!murmufhist_up) {
+                    std::cout << "[ERROR] Missing histogram " << murmuf_up_name << std::endl;
+                    is_bad = true;
+                }
+
+                TString mur_down_name    = thiscat + "MURDOWN" + "." + sample_names_reg[thisSamp];
+                TString muf_down_name    = thiscat + "MUFDOWN" + "." + sample_names_reg[thisSamp];
+                TString murmuf_down_name = thiscat + "MURMUFDOWN" + "." + sample_names_reg[thisSamp];
+
+                auto murhist_down    = (TH1EFT*)hist[i].FindObject(mur_down_name);
+                auto mufhist_down    = (TH1EFT*)hist[i].FindObject(muf_down_name);
+                auto murmufhist_down = (TH1EFT*)hist[i].FindObject(murmuf_down_name);
+
+                if (!murhist_down) {
+                    std::cout << "[ERROR] Missing histogram " << mur_down_name << std::endl;
+                    is_bad = true;
+                }
+
+                if (!mufhist_down) {
+                    std::cout << "[ERROR] Missing histogram " << muf_down_name << std::endl;
+                    is_bad = true;
+                }
+
+                if (!murmufhist_down) {
+                    std::cout << "[ERROR] Missing histogram " << murmuf_down_name << std::endl;
+                    is_bad = true;
+                }
+
+                if (is_bad) continue;
+
+                WCPoint sm_pt = WCPoint();
+                // The name of the new systematic computed from the envelope of muR/muF/muR+muF
+                TString env_up_name   = thiscat + "Q2RFUP" + "." + sample_names_reg[thisSamp];
+                TString env_down_name = thiscat + "Q2RFDOWN" + "." + sample_names_reg[thisSamp];
+
+                Int_t nbins = nomhist->GetNbinsX();
+                Double_t xlo = nomhist->GetBinLowEdge(1);
+                Double_t xhi = nomhist->GetBinLowEdge(nbins+1);
+                TH1EFT* envhist_up   = new TH1EFT(env_up_name,"",nbins,xlo,xhi);
+                TH1EFT* envhist_down = new TH1EFT(env_down_name,"",nbins,xlo,xhi);
+
+                std::cout << std::fixed << std::setprecision(3);
+                // std::cout << "Sample: " << sample_names_reg[thisSamp] << std::endl;
+                // std::cout << "Category: " << thiscat << std::endl;
+                // Note: This ignores the underflow and overflow bins!
+                for (Int_t j = 1; j <= nbins; j++) {
+                    double nom_content = nomhist->GetBinContent(j);
+
+                    double mur_up_content    = murhist_up->GetBinContent(j);
+                    double muf_up_content    = mufhist_up->GetBinContent(j);
+                    double murmuf_up_content = murmufhist_up->GetBinContent(j);
+
+                    double mur_down_content    = murhist_down->GetBinContent(j);
+                    double muf_down_content    = mufhist_down->GetBinContent(j);
+                    double murmuf_down_content = murmufhist_down->GetBinContent(j);
+
+                    double mur_up_ratio    = mur_up_content / nom_content;
+                    double muf_up_ratio    = muf_up_content / nom_content;
+                    double murmuf_up_ratio = murmuf_up_content / nom_content;
+
+                    double mur_down_ratio    = mur_down_content / nom_content;
+                    double muf_down_ratio    = muf_down_content / nom_content;
+                    double murmuf_down_ratio = murmuf_down_content / nom_content;
+
+                    double extreme_value = 0.0;
+                    double up_env = 0.0;
+                    double down_env = 0.0;
+                    
+                    if (abs(nom_content - mur_up_content) > extreme_value) {
+                        extreme_value = abs(nom_content - mur_up_content);
+                        envhist_up->SetBinContent(j,murhist_up->GetBinContent(j));
+                        envhist_up->SetBinError(j,murhist_up->GetBinError(j));
+                        envhist_up->hist_fits.at(j-1) = murhist_up->GetBinFit(j);    // Note: We use j-1 here b/c of the off-by-one index
+                        up_env = mur_up_content;
+                    }
+
+                    if (abs(nom_content - muf_up_content) > extreme_value) {
+                        extreme_value = abs(nom_content - muf_up_content);
+                        envhist_up->SetBinContent(j,mufhist_up->GetBinContent(j));
+                        envhist_up->SetBinError(j,mufhist_up->GetBinError(j));
+                        envhist_up->hist_fits.at(j-1) = mufhist_up->GetBinFit(j);    // Note: We use j-1 here b/c of the off-by-one index
+                        up_env = muf_up_content;
+                    }
+
+                    if (abs(nom_content - murmuf_up_content) > extreme_value) {
+                        extreme_value = abs(nom_content - murmuf_up_content);
+                        envhist_up->SetBinContent(j,murmufhist_up->GetBinContent(j));
+                        envhist_up->SetBinError(j,murmufhist_up->GetBinError(j));
+                        envhist_up->hist_fits.at(j-1) = murmufhist_up->GetBinFit(j);    // Note: We use j-1 here b/c of the off-by-one index
+                        up_env = murmuf_up_content;
+                    }
+
+                    extreme_value = 0.0;
+
+                    if (abs(nom_content - mur_down_content) > extreme_value) {
+                        extreme_value = abs(nom_content - mur_down_content);
+                        envhist_down->SetBinContent(j,murhist_down->GetBinContent(j));
+                        envhist_down->SetBinError(j,murhist_down->GetBinError(j));
+                        envhist_down->hist_fits.at(j-1) = murhist_down->GetBinFit(j);    // Note: We use j-1 here b/c of the off-by-one index
+                        down_env = mur_down_content;
+                    }
+                    if (abs(nom_content - muf_down_content) > extreme_value) {
+                        extreme_value = abs(nom_content - muf_down_content);
+                        envhist_down->SetBinContent(j,mufhist_down->GetBinContent(j));
+                        envhist_down->SetBinError(j,mufhist_down->GetBinError(j));
+                        envhist_down->hist_fits.at(j-1) = mufhist_down->GetBinFit(j);    // Note: We use j-1 here b/c of the off-by-one index
+                        down_env = muf_down_content;
+                    }
+                    if (abs(nom_content - murmuf_down_content) > extreme_value) {
+                        extreme_value = abs(nom_content - murmuf_down_content);
+                        envhist_down->SetBinContent(j,murmufhist_down->GetBinContent(j));
+                        envhist_down->SetBinError(j,murmufhist_down->GetBinError(j));
+                        envhist_down->hist_fits.at(j-1) = murmufhist_down->GetBinFit(j);    // Note: We use j-1 here b/c of the off-by-one index
+                        down_env = murmuf_down_content;
+                    }
+
+                    if (nom_content == 0.0) {
+                        mur_up_ratio = 0.0;
+                        muf_up_ratio = 0.0;
+                        murmuf_up_ratio = 0.0;
+
+                        mur_down_ratio = 0.0;
+                        muf_down_ratio = 0.0;
+                        murmuf_down_ratio = 0.0;
+                    }
+
+                    // std::cout << "Bin: " << j << std::endl;
+                    // std::cout << "\tNominal:  " << nom_content << std::endl;
+                    // std::cout << "\tmuR Up:   " << mur_up_content      << " (" << TString::Format("%+.2f",mur_up_ratio)      << ")" << std::endl;
+                    // std::cout << "\tmuF Up:   " << muf_up_content      << " (" << TString::Format("%+.2f",muf_up_ratio)      << ")" << std::endl;
+                    // std::cout << "\tmRF Up:   " << murmuf_up_content   << " (" << TString::Format("%+.2f",murmuf_up_ratio)   << ")" << std::endl;
+                    // std::cout << "\tEnv Up:   " << up_env << std::endl;
+                    // std::cout << std::endl;
+                    // std::cout << "\tmuR Fit Up: " << murhist_up->GetBinFit(j).evalPoint(&sm_pt)    << std::endl;
+                    // std::cout << "\tmuF Fit Up: " << mufhist_up->GetBinFit(j).evalPoint(&sm_pt)    << std::endl;
+                    // std::cout << "\tmRF Fit Up: " << murmufhist_up->GetBinFit(j).evalPoint(&sm_pt) << std::endl;
+                    // std::cout << "\tEnv Fit Up: " << envhist_up->GetBinFit(j).evalPoint(&sm_pt)    << std::endl;
+                    // std::cout << std::endl;
+                    // std::cout << "\tmuR Down: " << mur_down_content    << " (" << TString::Format("%+.2f",mur_down_ratio)    << ")" << std::endl;
+                    // std::cout << "\tmuF Down: " << muf_down_content    << " (" << TString::Format("%+.2f",muf_down_ratio)    << ")" << std::endl;
+                    // std::cout << "\tmRF Down: " << murmuf_down_content << " (" << TString::Format("%+.2f",murmuf_down_ratio) << ")" << std::endl;
+                    // std::cout << "\tEnv Down: " << down_env << std::endl;
+                    // std::cout << std::endl;
+                    // std::cout << "\tmuR Fit Down: " << murhist_down->GetBinFit(j).evalPoint(&sm_pt)    << std::endl;
+                    // std::cout << "\tmuF Fit Down: " << mufhist_down->GetBinFit(j).evalPoint(&sm_pt)    << std::endl;
+                    // std::cout << "\tmRF Fit Down: " << murmufhist_down->GetBinFit(j).evalPoint(&sm_pt) << std::endl;
+                    // std::cout << "\tEnv Fit Down: " << envhist_down->GetBinFit(j).evalPoint(&sm_pt)    << std::endl;
+                }
+                // std::cout << "Nominal Integral:  " << nomhist->Integral() << std::endl;
+                // std::cout << "Env Up Integral:   " << envhist_up->Integral() << std::endl;
+                // std::cout << "Env Down Integral: " << envhist_down->Integral() << std::endl;
+
+                // Make them into shape-only systematics
+                double normamnt = 0.0;
+                if (thisSamp < 40) {
+                    normamnt = (nomhist->GetEntries()!=0 && envhist_up->Integral()!=0.) ? nomhist->Integral()/envhist_up->Integral() : 1.;
+                    envhist_up->Scale(normamnt);
+                    normamnt = (nomhist->GetEntries()!=0 && envhist_down->Integral()!=0.) ? nomhist->Integral()/envhist_down->Integral() : 1.;
+                    envhist_down->Scale(normamnt);
+                } else if (thisSamp >= 40 && thisSamp < 90) {            
+                    normamnt = (nomhist->GetEntries()!=0 && envhist_up->Integral()!=0.) ? nomhist->Integral()/envhist_up->Integral() : 1.;
+                    envhist_up->ScaleFits(normamnt);
+                    envhist_up->Scale(WCPoint());
+                    normamnt = (nomhist->GetEntries()!=0 && envhist_down->Integral()!=0.) ? nomhist->Integral()/envhist_down->Integral() : 1.;
+                    envhist_down->ScaleFits(normamnt);
+                    envhist_down->Scale(WCPoint());
+                }
+
+                canvas.Add(envhist_up);
+                canvas.Add(envhist_down);
+            }
+        }
+
+
         cout << "  " << endl;
         cout << "  " << endl;        
         
