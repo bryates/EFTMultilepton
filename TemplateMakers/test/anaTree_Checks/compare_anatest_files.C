@@ -9,15 +9,21 @@ void print_diff(TString header,std::set<TString> s) {
     }
 }
 
-void compare_histogram(TFile* f1, TFile* f2, TString hist_name) {
+void compare_histogram(TFile* f1, TFile* f2, TString hist_name, bool skip_identical=false) {
     TH1EFT* h1 = (TH1EFT*)f1->Get(hist_name);
     TH1EFT* h2 = (TH1EFT*)f2->Get(hist_name);
 
+    bool missing_histograms = false;
     if (!h1) {
         std::cout << "ERROR compare_histogram(): f1 does not have " << hist_name << std::endl;
-        return;
+        missing_histograms = true;
     } else if (!h2) {
         std::cout << "ERROR compare_histogram(): f2 does not have " << hist_name << std::endl;
+        missing_histograms = true;
+    }
+
+    if (missing_histograms) {
+        return;
     }
 
     if (h1->GetNbinsX() != h2->GetNbinsX()) {
@@ -31,7 +37,9 @@ void compare_histogram(TFile* f1, TFile* f2, TString hist_name) {
         return;
     }
 
-    std::cout << "Histogram: " << hist_name << std::endl;
+    std::stringstream ss;
+
+    ss << "Histogram: " << hist_name << std::endl;
 
     TString delim = " ";
 
@@ -51,7 +59,7 @@ void compare_histogram(TFile* f1, TFile* f2, TString hist_name) {
         TString bin2_str = TString::Format("%+.2f",bin2);
         TString diff_str = TString::Format("%+.2f",diff);
 
-        std::cout << "  Bin " << i << ": "
+        ss << "  Bin " << i << ": "
                   << std::setw(7) << std::right << bin1_str << delim
                   << std::setw(7) << std::right << bin2_str << delim
                   << std::setw(7) << std::right << diff_str << std::endl;
@@ -64,10 +72,16 @@ void compare_histogram(TFile* f1, TFile* f2, TString hist_name) {
     TString sum2_str = TString::Format("%+.2f",bin_sum2);
     TString abs_str  = TString::Format("%+.2f",abs_diff);
     TString perc_str = TString::Format("%+.2f",perc_diff);
-    std::cout << "h1 Sum: " << sum1_str << std::endl;
-    std::cout << "h2 Sum: " << sum2_str << " (" << perc_str << "%)" << std::endl;
-    std::cout << "Abs Diff: " << abs_str << std::endl;
-    std::cout << std::endl;
+    ss << "h1 Sum: " << sum1_str << std::endl;
+    ss << "h2 Sum: " << sum2_str << " (" << perc_str << "%)" << std::endl;
+    ss << "Abs Diff: " << abs_str << std::endl;
+    // ss << std::endl;
+
+    std::cout << ss.str();
+
+    // if (abs_diff >= 0.05 && abs(perc_diff) > 0.5) {
+    //     std::cout << ss.str();
+    // }
 
     return;
 }
@@ -111,15 +125,22 @@ void compare_anatest_files(TString fpath1, TString fpath2) {
     print_diff("Systematics in f2 but not in f1",diff2);
 
     std::vector<TString> samples {
-        "",     // For non anatest files
-        // "data",
-        // "charge_flips",
-        // "fakes",
+        // "",     // For non anatest files
+        "data",
+        "charge_flips",
+        "fakes",
         // "tZq",
         // "ttH",
         // "ttW",
         // "ttZ",
         // "WZ",
+        // "WWW",
+        // "ttGJets",
+        // "ttll_16D",
+        // "ttlnu_16D",
+        // "tllq_16D",
+        // "ttH_16D",
+        // "tHq_16D",
     };
 
     // std::set<TString> bins = set_intersection(bins1,bins2);
@@ -135,29 +156,58 @@ void compare_anatest_files(TString fpath1, TString fpath2) {
         "3l_mix_sfz_1b",
         "3l_mix_m_1b",
         "3l_mix_p_1b",
-        "3l_ppp_1b",
-        "3l_mmm_1b",
+        /* "3l_ppp_1b", */
+        /* "3l_mmm_1b", */
 
         "3l_mix_sfz_2b",
         "3l_mix_m_2b",
         "3l_mix_p_2b",
-        "3l_ppp_2b",
-        "3l_mmm_2b",
+        /* "3l_ppp_2b", */
+        /* "3l_mmm_2b", */
 
-        "4l_2b",
+        // "4l_2b",
     };
 
-    std::vector<TString> systs {
-        "",
+    std::vector<TString> skip_systs {
+        // "JES",      // Expected to change a23 -> a24
+        "MUR",      // Expected to change a24 -> a25 and a25 -> a26 (for tllq4f/tZq)
+        "MUF",      // Expected to change a24 -> a25 and a25 -> a26 (for tllq4f/tZq)
+        "MURMUF",   // Expected to change a24 -> a25 and a25 -> a26 (for tllq4f/tZq) 
+        "PSISR",    // Expected to change a25 -> a26
+        "PDF",      // Expected to change a24 -> a25 (for central samples)
+        "FR"        // Only applies to fakes
     };
+
+    std::set<TString> systs_to_skip;
+    for (TString s: skip_systs) {
+        TString up = s + "UP";
+        TString down = s + "DOWN";
+        systs_to_skip.insert(up);
+        systs_to_skip.insert(down);
+    }
+
+    // std::set<TString> systs_var = set_intersection(systs1,systs2);
+    std::set<TString> systs_var {};
+    systs_var = set_diff(systs_var,systs_to_skip);
+
+    systs_var.insert("");   // This is for the nominal histogram
+
+    // std::vector<TString> systs_var {""};
+    // for (TString s: systs) {
+    //     TString up = s + "UP";
+    //     TString down = s + "DOWN";
+    //     systs_var.push_back(up);
+    //     systs_var.push_back(down);
+    // }
 
     TString sep = ".";
     for (TString samp: samples) {
-        for (TString syst: systs) {
+        std::cout << "Sample: " << samp << std::endl;
+        for (TString syst: systs_var) {
             for (TString bin: bins) {
+                TString hist_name = bin + sep;
                 if (samp.Length()) {
                     // This is likely an anatest file
-                    TString hist_name = bin + sep;
                     if (samp != "data" && syst.Length()) {
                         hist_name += syst + sep;
                     }
@@ -165,8 +215,6 @@ void compare_anatest_files(TString fpath1, TString fpath2) {
                     compare_histogram(f1,f2,hist_name);
                 } else {
                     // This is likely a hist file that goes into anatest
-                    TString hist_name = bin + sep;
-                    // std::cout << hist_name << std::endl;
                     compare_histogram(f1,f2,hist_name);
                 }
             }

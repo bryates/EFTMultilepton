@@ -303,8 +303,10 @@ void runit(TString fpath,TString sample,TString syst) {
     std::vector<TString> bins_2lss_p_2b {"2lss_p_ee_2b.","2lss_p_emu_2b.","2lss_p_mumu_2b."};
     std::vector<TString> bins_2lss_m_2b {"2lss_m_ee_2b.","2lss_m_emu_2b.","2lss_m_mumu_2b."};
 
+    bool save_it = false;
+
     for (TString bin: all_bins) {
-       plot_bin(f,sample,bin,syst,true);
+       plot_bin(f,sample,bin,syst,save_it);
     }
     std::cout << std::endl;
 
@@ -313,19 +315,19 @@ void runit(TString fpath,TString sample,TString syst) {
     merge_name = "";
 
     merge_name = "merged_2lss_p_2b.";
-    merge_plot(f,sample,bins_2lss_p_2b,syst,merge_name,true);
+    merge_plot(f,sample,bins_2lss_p_2b,syst,merge_name,save_it);
     std::cout << std::endl;
 
     merge_name = "merged_2lss_m_2b.";
-    merge_plot(f,sample,bins_2lss_m_2b,syst,merge_name,true);
+    merge_plot(f,sample,bins_2lss_m_2b,syst,merge_name,save_it);
     std::cout << std::endl;
 
     merge_name = "merged_2lss.";
-    merge_plot(f,sample,bins_2lss,syst,merge_name,true);
+    merge_plot(f,sample,bins_2lss,syst,merge_name,save_it);
     std::cout << std::endl;
 
     merge_name = "merged_3lep.";
-    merge_plot(f,sample,bins_3lep,syst,merge_name,true);
+    merge_plot(f,sample,bins_3lep,syst,merge_name,save_it);
     std::cout << std::endl;
 
     f->Close();

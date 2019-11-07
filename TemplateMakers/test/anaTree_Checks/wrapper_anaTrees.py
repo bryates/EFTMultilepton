@@ -466,6 +466,9 @@ def plot_systematic_variations():
     fname_a25   = "anatest25.root"
     fname_a26   = "anatest26.root"
 
+    fname_a29   = "anatest29.root"
+    fname_a30   = "anatest30.root"
+
     fpath_a15 = os.path.join(hist_dir,fname_a15)
     fpath_a16 = os.path.join(hist_dir,fname_a16)
     fpath_a17 = os.path.join(hist_dir,fname_a17)
@@ -480,8 +483,15 @@ def plot_systematic_variations():
     fpath_a24 = os.path.join(tony_dir,fname_a24)
     fpath_a25 = os.path.join(tony_dir,fname_a25)
     fpath_a26 = os.path.join(tony_dir,fname_a26)
+    fpath_a29 = os.path.join(tony_dir,fname_a29)
+    fpath_a30 = os.path.join(tony_dir,fname_a30)
 
-    fpath = fpath_a26
+    testing_dir = "/afs/crc.nd.edu/user/a/awightma/CMSSW_Releases/from_govner/CMSSW_9_4_6/src/EFTMultilepton/TemplateMakers/test/MakeGoodPlot2"
+    fpath_testing = os.path.join(testing_dir,"testing.root")
+
+    # fpath = fpath_a22
+    # fpath = fpath_a29
+    fpath = fpath_testing
 
     # As a reminder these should be unique over all lists, since they should be coming from the same file
     private_signal = ["tllq_16D","ttH_16D","ttll_16D","ttlnu_16D","tHq_16D"]
@@ -493,9 +503,11 @@ def plot_systematic_variations():
     samples.extend(central_signal)
     samples.extend(central_bkgd)
 
-    samples = ['tllq_16D']
+    # samples = ['ttlnu_16D']
+    samples = ['ttW','ttlnu_16D']
 
-    syst = "JES"
+    # syst = "Q2RF"
+    syst = "PDF"
 
     move_output = False
     web_dir = "/afs/crc.nd.edu/user/a/awightma/www"
@@ -537,8 +549,9 @@ def compare_anatest_files():
     geoff_dir = "/afs/crc.nd.edu/user/g/gsmith15/Public/for_Tony/"
     tony_dir  = "/afs/crc.nd.edu/user/a/awightma/Public/for_tony/"
     hist_dir  = "/afs/crc.nd.edu/user/a/awightma/CMSSW_Releases/CMSSW_8_1_0/src/CombineHarvester/TopEFT/hist_files/"
+    local_dir = "/afs/crc.nd.edu/user/a/awightma/CMSSW_Releases/from_govner/CMSSW_9_4_6/src/EFTMultilepton/TemplateMakers/test/MakeGoodPlot2/"
 
-    hist_dir = "/tmpscratch/users/awightma/analysisWorkflow/mergedHists/"
+    merged_dir = "/tmpscratch/users/awightma/analysisWorkflow/mergedHists/"
 
     fname_a15   = "TOP-19-001_unblinded_v1.root"
     fname_a16   = "anatest16.root"
@@ -553,13 +566,22 @@ def compare_anatest_files():
     fname_a25   = "anatest25.root"
     fname_a26   = "anatest26.root"
     fname_a27   = "anatest27.root"
+    fname_a28   = "anatest28.root"
+    fname_a29   = "anatest29.root"
+    fname_a30   = "anatest30.root"
 
-    fname_data = "temp_data.root"
-    fname_MuonEG = "temp_MuonEG.root"
-    fname_DoubleMuon = "temp_DoubleMuon.root"
-    fname_SingleMuon = "temp_SingleMuon.root"
+    fname_data           = "temp_data.root"
+    fname_MuonEG         = "temp_MuonEG.root"
+    fname_DoubleMuon     = "temp_DoubleMuon.root"
+    fname_SingleMuon     = "temp_SingleMuon.root"
     fname_SingleElectron = "temp_SingleElectron.root"
-    fname_DoubleEG = "temp_DoubleEG.root"
+    fname_DoubleEG       = "temp_DoubleEG.root"
+
+    fname_tZq_incl_higgs = "tZq_incl_higgs.root"
+    fname_tZq_base = "tZq_base.root"
+    fname_tZq_v14v1_NSH = "tZq_v14v1_NSH.root"  # This file is fucked up for some reason (empty histograms)
+
+    fname_tllq = 'temp_tllq_multidim.root'
 
     fpath_a15 = os.path.join(hist_dir,fname_a15)
     fpath_a16 = os.path.join(hist_dir,fname_a16)
@@ -576,26 +598,34 @@ def compare_anatest_files():
     fpath_a25 = os.path.join(tony_dir,fname_a25)
     fpath_a26 = os.path.join(tony_dir,fname_a26)
     fpath_a27 = os.path.join(tony_dir,fname_a27)
+    fpath_a28 = os.path.join(tony_dir,fname_a28)
+    fpath_a29 = os.path.join(tony_dir,fname_a29)
+    fpath_a30 = os.path.join(tony_dir,fname_a30)
 
-    fpath_data_a26 = os.path.join(hist_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_data)
+    fpath_data_a26 = os.path.join(merged_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_data)
 
-    fpath_MuonEG_a26 = os.path.join(hist_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_MuonEG)
-    fpath_DoubleMuon_a26 = os.path.join(hist_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_DoubleMuon)
-    fpath_SingleMuon_a26 = os.path.join(hist_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_SingleMuon)
-    fpath_SingleElectron_a26 = os.path.join(hist_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_SingleElectron)
-    fpath_DoubleEG_a26 = os.path.join(hist_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_DoubleEG)
+    fpath_MuonEG_a26         = os.path.join(merged_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_MuonEG)
+    fpath_DoubleMuon_a26     = os.path.join(merged_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_DoubleMuon)
+    fpath_SingleMuon_a26     = os.path.join(merged_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_SingleMuon)
+    fpath_SingleElectron_a26 = os.path.join(merged_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_SingleElectron)
+    fpath_DoubleEG_a26       = os.path.join(merged_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_DoubleEG)
 
+    fpath_data_a27 = os.path.join(merged_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_data)
 
-    fpath_data_a27 = os.path.join(hist_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_data)
+    fpath_MuonEG_a27         = os.path.join(merged_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_MuonEG)
+    fpath_DoubleMuon_a27     = os.path.join(merged_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_DoubleMuon)
+    fpath_SingleMuon_a27     = os.path.join(merged_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_SingleMuon)
+    fpath_SingleElectron_a27 = os.path.join(merged_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_SingleElectron)
+    fpath_DoubleEG_a27       = os.path.join(merged_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_DoubleEG)
 
-    fpath_MuonEG_a27 = os.path.join(hist_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_MuonEG)
-    fpath_DoubleMuon_a27 = os.path.join(hist_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_DoubleMuon)
-    fpath_SingleMuon_a27 = os.path.join(hist_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_SingleMuon)
-    fpath_SingleElectron_a27 = os.path.join(hist_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_SingleElectron)
-    fpath_DoubleEG_a27 = os.path.join(hist_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_DoubleEG)
+    fpath_tZq_incl_higgs = os.path.join(local_dir,fname_tZq_incl_higgs)
+    fpath_tZq_base = os.path.join(local_dir,fname_tZq_base)
+    fpath_tZq_v14v1_NSH = os.path.join(local_dir,fname_tZq_v14v1_NSH)
+
+    fpath_tllq_a25 = os.path.join(merged_dir,"2019_10_13_full_MC",fname_tllq)
+    fpath_tllq_a28 = os.path.join(merged_dir,"2019_10_19_full_MC",fname_tllq)
 
     fpath = fpath_a26
-
 
     compare = [
         # (fpath_a15,fpath_a16),
@@ -605,11 +635,29 @@ def compare_anatest_files():
         # (fpath_a23,fpath_a24),
         # (fpath_a26,fpath_a27),
         # (fpath_data_a26,fpath_data_a27),
-        (fpath_MuonEG_a26,fpath_MuonEG_a27),
-        (fpath_DoubleMuon_a26,fpath_DoubleMuon_a27),
-        (fpath_SingleMuon_a26,fpath_SingleMuon_a27),
-        (fpath_SingleElectron_a26,fpath_SingleElectron_a27),
-        (fpath_DoubleEG_a26,fpath_DoubleEG_a27),
+        # (fpath_MuonEG_a26,fpath_MuonEG_a27),
+        # (fpath_DoubleMuon_a26,fpath_DoubleMuon_a27),
+        # (fpath_SingleMuon_a26,fpath_SingleMuon_a27),
+        # (fpath_SingleElectron_a26,fpath_SingleElectron_a27),
+        # (fpath_DoubleEG_a26,fpath_DoubleEG_a27),
+        # (fpath_a22,fpath_a28),
+        # (fpath_a16,fpath_a28),
+        # (fpath_a16,fpath_tZq_incl_higgs),
+        # (fpath_a28,fpath_tZq_incl_higgs),
+        # (fpath_tZq_incl_higgs,fpath_tZq_base)
+        # (fpath_tZq_base,fpath_a28),     # These are identical for tZq
+        # (fpath_a16,fpath_tZq_v14v1_NSH),
+
+        # (fpath_a23,fpath_a24),
+        # (fpath_a24,fpath_a25),
+        # (fpath_a25,fpath_a26),
+        # (fpath_a26,fpath_a28),
+
+        # (fpath_a24,fpath_a28),
+        # (fpath_a25,fpath_a28),
+        # (fpath_a26,fpath_a28),
+        # (fpath_a28,fpath_a29),
+        (fpath_a29,fpath_a30),
     ]
 
     for idx,tup in enumerate(compare):
