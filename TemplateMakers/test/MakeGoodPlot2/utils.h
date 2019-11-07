@@ -426,3 +426,32 @@ std::pair<bool, int > findInVector(const std::vector<T>  & vecOfElements, const 
  
 	return result;
 }
+
+// Computes the envelope from the list of variants bin-by-bin by finding the variant furthest
+//  away from the nominal histogram
+TH1EFT* calculateEnvelope(TString env_name, TH1EFT* h_nom, std::vector<TH1EFT*> variants) {
+    Int_t nbins = h_nom->GetNbinsX();
+    Double_t xlo = h_nom->GetBinLowEdge(1);
+    Double_t xhi = h_nom->GetBinLowEdge(nbins+1);
+
+    TH1EFT* h_env = new TH1EFT(env_name,"",nbins,xlo,xhi);
+
+    // Note: This ignores the underflow and overflow bins!
+    for (Int_t i = 1; i <= nbins; i++) {
+        double nom_content = h_nom->GetBinContent(i);
+        double max_content = 0.0;
+        for (TH1EFT* h_var: variants) {
+            double var_content = h_var->GetBinContent(i);
+            double var_err = h_var->GetBinError(i);
+            double diff = abs(nom_content - var_content);
+            if (diff > max_content) {
+                max_content = diff;
+                h_env->SetBinContent(i,var_content);
+                h_env->SetBinError(i,var_err);
+                h_env->hist_fits.at(i-1) = h_var->GetBinFit(i);     // Note: we use i=1 here b/c of the off-by-one index
+            }
+        }
+    }
+
+    return h_env;
+}

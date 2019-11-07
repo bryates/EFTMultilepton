@@ -463,11 +463,17 @@ void MakeGoodPlot::save_analysis_hists()
 
                 if (is_bad) continue;
 
-                WCPoint sm_pt = WCPoint();
                 // The name of the new systematic computed from the envelope of muR/muF/muR+muF
                 TString env_up_name   = thiscat + "Q2RFUP" + "." + sample_names_reg[thisSamp];
                 TString env_down_name = thiscat + "Q2RFDOWN" + "." + sample_names_reg[thisSamp];
 
+                std::vector<TH1EFT*> up_variants {murhist_up,mufhist_up,murmufhist_up};
+                std::vector<TH1EFT*> down_variants {murhist_down,mufhist_down,murmufhist_down};
+
+                TH1EFT* envhist_up   = calculateEnvelope(env_up_name,nomhist,up_variants);
+                TH1EFT* envhist_down = calculateEnvelope(env_down_name,nomhist,down_variants);
+
+                /*
                 Int_t nbins = nomhist->GetNbinsX();
                 Double_t xlo = nomhist->GetBinLowEdge(1);
                 Double_t xhi = nomhist->GetBinLowEdge(nbins+1);
@@ -489,24 +495,13 @@ void MakeGoodPlot::save_analysis_hists()
                     double muf_down_content    = mufhist_down->GetBinContent(j);
                     double murmuf_down_content = murmufhist_down->GetBinContent(j);
 
-                    double mur_up_ratio    = mur_up_content / nom_content;
-                    double muf_up_ratio    = muf_up_content / nom_content;
-                    double murmuf_up_ratio = murmuf_up_content / nom_content;
-
-                    double mur_down_ratio    = mur_down_content / nom_content;
-                    double muf_down_ratio    = muf_down_content / nom_content;
-                    double murmuf_down_ratio = murmuf_down_content / nom_content;
-
                     double extreme_value = 0.0;
-                    double up_env = 0.0;
-                    double down_env = 0.0;
                     
                     if (abs(nom_content - mur_up_content) > extreme_value) {
                         extreme_value = abs(nom_content - mur_up_content);
                         envhist_up->SetBinContent(j,murhist_up->GetBinContent(j));
                         envhist_up->SetBinError(j,murhist_up->GetBinError(j));
                         envhist_up->hist_fits.at(j-1) = murhist_up->GetBinFit(j);    // Note: We use j-1 here b/c of the off-by-one index
-                        up_env = mur_up_content;
                     }
 
                     if (abs(nom_content - muf_up_content) > extreme_value) {
@@ -514,7 +509,6 @@ void MakeGoodPlot::save_analysis_hists()
                         envhist_up->SetBinContent(j,mufhist_up->GetBinContent(j));
                         envhist_up->SetBinError(j,mufhist_up->GetBinError(j));
                         envhist_up->hist_fits.at(j-1) = mufhist_up->GetBinFit(j);    // Note: We use j-1 here b/c of the off-by-one index
-                        up_env = muf_up_content;
                     }
 
                     if (abs(nom_content - murmuf_up_content) > extreme_value) {
@@ -522,7 +516,6 @@ void MakeGoodPlot::save_analysis_hists()
                         envhist_up->SetBinContent(j,murmufhist_up->GetBinContent(j));
                         envhist_up->SetBinError(j,murmufhist_up->GetBinError(j));
                         envhist_up->hist_fits.at(j-1) = murmufhist_up->GetBinFit(j);    // Note: We use j-1 here b/c of the off-by-one index
-                        up_env = murmuf_up_content;
                     }
 
                     extreme_value = 0.0;
@@ -532,59 +525,31 @@ void MakeGoodPlot::save_analysis_hists()
                         envhist_down->SetBinContent(j,murhist_down->GetBinContent(j));
                         envhist_down->SetBinError(j,murhist_down->GetBinError(j));
                         envhist_down->hist_fits.at(j-1) = murhist_down->GetBinFit(j);    // Note: We use j-1 here b/c of the off-by-one index
-                        down_env = mur_down_content;
                     }
                     if (abs(nom_content - muf_down_content) > extreme_value) {
                         extreme_value = abs(nom_content - muf_down_content);
                         envhist_down->SetBinContent(j,mufhist_down->GetBinContent(j));
                         envhist_down->SetBinError(j,mufhist_down->GetBinError(j));
                         envhist_down->hist_fits.at(j-1) = mufhist_down->GetBinFit(j);    // Note: We use j-1 here b/c of the off-by-one index
-                        down_env = muf_down_content;
                     }
                     if (abs(nom_content - murmuf_down_content) > extreme_value) {
                         extreme_value = abs(nom_content - murmuf_down_content);
                         envhist_down->SetBinContent(j,murmufhist_down->GetBinContent(j));
                         envhist_down->SetBinError(j,murmufhist_down->GetBinError(j));
                         envhist_down->hist_fits.at(j-1) = murmufhist_down->GetBinFit(j);    // Note: We use j-1 here b/c of the off-by-one index
-                        down_env = murmuf_down_content;
                     }
-
-                    if (nom_content == 0.0) {
-                        mur_up_ratio = 0.0;
-                        muf_up_ratio = 0.0;
-                        murmuf_up_ratio = 0.0;
-
-                        mur_down_ratio = 0.0;
-                        muf_down_ratio = 0.0;
-                        murmuf_down_ratio = 0.0;
-                    }
-
-                    // std::cout << "Bin: " << j << std::endl;
-                    // std::cout << "\tNominal:  " << nom_content << std::endl;
-                    // std::cout << "\tmuR Up:   " << mur_up_content      << " (" << TString::Format("%+.2f",mur_up_ratio)      << ")" << std::endl;
-                    // std::cout << "\tmuF Up:   " << muf_up_content      << " (" << TString::Format("%+.2f",muf_up_ratio)      << ")" << std::endl;
-                    // std::cout << "\tmRF Up:   " << murmuf_up_content   << " (" << TString::Format("%+.2f",murmuf_up_ratio)   << ")" << std::endl;
-                    // std::cout << "\tEnv Up:   " << up_env << std::endl;
-                    // std::cout << std::endl;
-                    // std::cout << "\tmuR Fit Up: " << murhist_up->GetBinFit(j).evalPoint(&sm_pt)    << std::endl;
-                    // std::cout << "\tmuF Fit Up: " << mufhist_up->GetBinFit(j).evalPoint(&sm_pt)    << std::endl;
-                    // std::cout << "\tmRF Fit Up: " << murmufhist_up->GetBinFit(j).evalPoint(&sm_pt) << std::endl;
-                    // std::cout << "\tEnv Fit Up: " << envhist_up->GetBinFit(j).evalPoint(&sm_pt)    << std::endl;
-                    // std::cout << std::endl;
-                    // std::cout << "\tmuR Down: " << mur_down_content    << " (" << TString::Format("%+.2f",mur_down_ratio)    << ")" << std::endl;
-                    // std::cout << "\tmuF Down: " << muf_down_content    << " (" << TString::Format("%+.2f",muf_down_ratio)    << ")" << std::endl;
-                    // std::cout << "\tmRF Down: " << murmuf_down_content << " (" << TString::Format("%+.2f",murmuf_down_ratio) << ")" << std::endl;
-                    // std::cout << "\tEnv Down: " << down_env << std::endl;
-                    // std::cout << std::endl;
-                    // std::cout << "\tmuR Fit Down: " << murhist_down->GetBinFit(j).evalPoint(&sm_pt)    << std::endl;
-                    // std::cout << "\tmuF Fit Down: " << mufhist_down->GetBinFit(j).evalPoint(&sm_pt)    << std::endl;
-                    // std::cout << "\tmRF Fit Down: " << murmufhist_down->GetBinFit(j).evalPoint(&sm_pt) << std::endl;
-                    // std::cout << "\tEnv Fit Down: " << envhist_down->GetBinFit(j).evalPoint(&sm_pt)    << std::endl;
                 }
                 // std::cout << "Nominal Integral:  " << nomhist->Integral() << std::endl;
                 // std::cout << "Env Up Integral:   " << envhist_up->Integral() << std::endl;
                 // std::cout << "Env Down Integral: " << envhist_down->Integral() << std::endl;
+                */
 
+
+                // NOTE: This is not the correct thing to do. To do the proper 'shape' normalization
+                //      we need to divide the histogram by Ngen, where Ngen is the sum of all events
+                //      in the sample reweighted to to the corresponding UP/DOWN variant of the systematic
+                //      being considered. Additionally, this normalization should be done BEFORE calculating
+                //      the envelope.
                 // Make them into shape-only systematics
                 double normamnt = 0.0;
                 if (thisSamp < 40) {
