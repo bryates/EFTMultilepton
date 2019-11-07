@@ -447,6 +447,32 @@ def anatest27_samples():
 
     return samples
 
+# 'Round6' private signal samples all produced with HanModelV4 version of dim6top model processed with old GTv6
+def anatest29_samples():
+    ttH_priv   = Sample('ttH_multidim')
+    tHq_priv   = Sample('tHq_multidim')
+    ttll_priv  = Sample('ttll_multidim')
+    tllq_priv  = Sample('tllq_multidim')
+    ttlnu_priv = Sample('ttlnu_multidim')
+
+    samples = []
+
+    path = 'awightma/analysisTrees/private_sgnl_2019_11_05/v1'
+    ttH_priv.addDirectory(HADOOP_DIR,path,'ttH_multidim_b1')
+    ttH_priv.addDirectory(HADOOP_DIR,path,'ttH_multidim_b2')
+    tHq_priv.addDirectory(HADOOP_DIR,path,'tHq_multidim_b1')
+    ttll_priv.addDirectory(HADOOP_DIR,path,'ttll_multidim_b1')
+    ttll_priv.addDirectory(HADOOP_DIR,path,'ttll_multidim_b2')
+    ttlnu_priv.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_b1')
+    ttlnu_priv.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_b2')
+    tllq_priv.addDirectory(HADOOP_DIR,path,'tllq_multidim_b1')
+    tllq_priv.addDirectory(HADOOP_DIR,path,'tllq_multidim_b2')
+    tllq_priv.addDirectory(HADOOP_DIR,path,'tllq_multidim_b3')
+
+    samples.extend([ttH_priv,tHq_priv,ttll_priv,tllq_priv,ttlnu_priv])
+
+    return samples
+
 def main():
     out_dir = '.'
     log_file = os.path.join(out_dir,'out.log')
