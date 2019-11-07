@@ -379,8 +379,8 @@ void MakeGoodPlot::setup()
     //gStyle->SetHistTopMargin();
     gStyle->SetOptStat(0);
     
-    set_plot_style(); // see nicepalette.h
-    get_rate_info();
+    set_plot_style();   // see nicepalette.h
+    get_rate_info();    // see rateinfo.h
     
     //groupsamples = true;
     TH1::SetDefaultSumw2();

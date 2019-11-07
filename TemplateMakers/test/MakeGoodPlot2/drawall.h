@@ -40,8 +40,7 @@ void MakeGoodPlot::drawAllToFile(string plotfile, string plotoption)
     gROOT->SetBatch(kTRUE);
     drawAll();
     
-    if (plotoption=="root")
-    {
+    if (plotoption=="root") {
         string plotfilename = plotfile+".root";
         TFile *theplotfile = new TFile(plotfilename.c_str(),"RECREATE");
         
@@ -54,17 +53,11 @@ void MakeGoodPlot::drawAllToFile(string plotfile, string plotoption)
         }
         
         theplotfile->Close();
-    }
-    
-    else if (plotoption=="png" || plotoption=="pdf" || plotoption==".png" || plotoption==".pdf" )
-    {        
-        
+    } else if (plotoption=="png" || plotoption=="pdf" || plotoption==".png" || plotoption==".pdf" ) {
         ofstream htmlfile;
         string plotsfile = plotfile+"plots.html";
         htmlfile.open(plotsfile);
-        
-        for (int i=0; i<canvas.GetEntries(); i++)
-        {
+        for (int i=0; i<canvas.GetEntries(); i++) {
             auto tmpcan = (TCanvas*)canvas[i];
             TString plotfilename = plotfile+"output_"+tmpcan->GetName()+plotoption;
             tmpcan->SaveAs(plotfilename);
@@ -73,11 +66,10 @@ void MakeGoodPlot::drawAllToFile(string plotfile, string plotoption)
             TString htmlvoodoo = "<div class=\"pic photo-link smoothbox\" id=\""+plotfilename+"\"><a href=\""+plotfilename+"\" rel=\"gallery\"><img src=\""+plotfilename+"\" class=\"pic\"/></a><div class=\"desc\">"+tmpcan->GetName()+"</div></div>";
             htmlfile << htmlvoodoo << "\n";
         }
-        
         htmlfile.close();
-    }    
-    
-    else cout << "Invalid option for saving plots. Choose from png, pdf or root" << endl;
+    } else {
+        cout << "Invalid option for saving plots. Choose from png, pdf or root" << endl;
+    }
 
     std::cout << "Done: drawAllToFile" << std::endl;
 }

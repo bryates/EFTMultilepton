@@ -138,7 +138,7 @@ MakeGoodPlot::MakeGoodPlot(std::vector<int> thesamps, TString histdir)
         numtotalhists = dummyArray.GetEntriesFast();
         hist.push_back(dummyArray);
     } 
-       
+
     // Example usage of hist TObjArray vector:
     // auto thing = hist[0].FindObject("lepMVA sig1 endcap"); // will be a pointer
     // thing->Draw();
