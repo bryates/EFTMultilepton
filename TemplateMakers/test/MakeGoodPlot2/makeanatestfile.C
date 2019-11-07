@@ -58,65 +58,6 @@ void makeanatestfile() {
     //newplots->drawAllToFile("anatest23","root");
     //newplots->drawAllToFile("dump_name","root");
 
-    /*
-        --- anatest24 ---
-        Uses data files from '.../mergedHists/2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps',
-        as well as the central_tHq sample (which shouldn't be used in the combine fit)
-        this includes:
-            temp_data, temp_SingleMuon, temp_SingleElectron, temp_QFs, temp_MuonEG, temp_Fakes,
-            temp_DoubleMuon, and temp_DoubleEG, temp_tHq
-        The MC samples are from '.../mergedHists/2019_10_09_full_MC'
-        this includes:
-            temp_WWZ, temp_WWW, temp_ZZZ, temp_WZZ, temp_WW, temp_ttGJets, temp_ttH, temp_ttH_multidim
-            temp_ttlnu_multidim, temp_WZ, temp_ZZ, temp_ttW, temp_tHq_multidim, temp_tZq, temp_ttZ,
-            temp_ttll_multidim, and temp_tllq_multidim
-        All of the bkgd and central signal samples were simply reprocessed, the private signal samples
-        are all from Round5/Batch{1,2} except for the tllq_multidim sample which came from
-        'tllq4f-tch-NoHiggs_0partons_xqcut0' and 'tllq4f-tch-NoHiggs_0partons_xqcut0_extra'. As a result
-        of this, the private tllq sample only has ~2.5M total events
-        Changes:
-            * The tllq sample differs from the previous one in that it has no intermediate Higgses,
-            has +0partons, and is t-ch only
-            * Includes the JEC AK4PFchs fix (commit/61c772a87d9f0ab1c9d89f9305b4a2da46c3cf9e)
-        
-        --- anatest25 ---
-        Uses data files from '.../mergedHists/2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps',
-        as well as the central_tHq sample (which shouldn't be used in the combine fit)
-        this includes:
-            temp_data, temp_SingleMuon, temp_SingleElectron, temp_QFs, temp_MuonEG, temp_Fakes,
-            temp_DoubleMuon, and temp_DoubleEG
-        The MC samples are from '.../mergedHists/2019_10_13_full_MC'
-        this includes:
-            temp_WWZ, temp_WWW, temp_ZZZ, temp_WZZ, temp_WW, temp_ttGJets, temp_ttH, temp_ttH_multidim
-            temp_ttlnu_multidim, temp_WZ, temp_ZZ, temp_ttW, temp_tHq_multidim, temp_tZq, temp_ttZ,
-            temp_ttll_multidim, and temp_tllq_multidim
-        All non-data related samples were remade to include the muR+muF up/down variations to allow
-        calculation of bin-by-bin envelope
-        Changes:
-            * Fixed muR/muF scalefactor systematics to use correct ME weight id
-            * Add muR+muF up/down variation (commit/6201381699ee864ccd70c1dcd32302e8330a19e7)
-            * Fix to properly identify PDF weight id for non-private samples
-        --- anatest26 ---
-        Uses data files from '.../mergedHists/2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps'
-        this includes:
-            temp_data, temp_SingleMuon, temp_SingleElectron, temp_QFs, temp_MuonEG, temp_Fakes,
-            temp_DoubleMuon, and temp_DoubleEG
-        The MC samples are from '.../mergedHists/2019_10_19_full_MC'
-        this includes:
-            temp_WWZ, temp_WWW, temp_ZZZ, temp_WZZ, temp_WW, temp_ttGJets, temp_ttH, temp_ttH_multidim
-            temp_ttlnu_multidim, temp_WZ, temp_ZZ, temp_ttW, temp_tHq_multidim, temp_tZq, temp_ttZ,
-            temp_ttll_multidim, and temp_tllq_multidim
-        All non-data related samples were remade, but only tllq4f and tZq had changes that affected the
-        actual analysis trees. The rest of the samples were only affected by the PS shape systematic
-        fix.
-        Note: The files from '.../mergedHists/2019_10_18_full_MC' had some sort of problem where some
-            of the samples were missing seemingly random UP/DOWN templates for random categories, after
-            re-running the histogram step, the files appeared to be fine. I suspect this was due to a
-            problem encountered during the merging stage of the original histMaking lobster job!
-        Changes:
-            * Fix to properly calculate PS shape SF (commit/8fff3c6d6a6e897f45021d781f2d9ec1a3ca54ab)
-            * For tllq4f and tZq, switched to 320900 PDF sets to calculate PDF UP/DOWN unc. (commit/82a3e77308a7aef37d04134c88f1b4277a035fe9)
-    */
     newplots->drawAllToFile("anatest30","root");
 
     //delete newplots;

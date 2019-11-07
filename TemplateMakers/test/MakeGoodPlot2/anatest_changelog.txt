@@ -1,0 +1,120 @@
+--- anatest24 ---
+    Uses data files from '.../mergedHists/2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps', as well as the central_tHq sample (which shouldn't be used in the combine fit)
+    this includes:
+        temp_data, temp_SingleMuon, temp_SingleElectron, temp_QFs, temp_MuonEG, temp_Fakes,
+        temp_DoubleMuon, and temp_DoubleEG, temp_tHq
+    The MC samples are from '.../mergedHists/2019_10_09_full_MC'
+    this includes:
+        temp_WWZ, temp_WWW, temp_ZZZ, temp_WZZ, temp_WW, temp_ttGJets, temp_ttH, temp_ttH_multidim
+        temp_ttlnu_multidim, temp_WZ, temp_ZZ, temp_ttW, temp_tHq_multidim, temp_tZq, temp_ttZ,
+        temp_ttll_multidim, and temp_tllq_multidim
+    All of the bkgd and central signal samples were simply reprocessed, the private signal samples are all from Round5/Batch{1,2} except for the tllq_multidim sample which came from 'tllq4f-tch-NoHiggs_0partons_xqcut0' and 'tllq4f-tch-NoHiggs_0partons_xqcut0_extra'. As a result of this, the private tllq sample only has ~2.5M total events
+    Changes:
+        * The tllq sample differs from the previous one in that it has no intermediate Higgses, has +0partons, and is t-ch only
+        * Includes the JEC AK4PFchs fix (commit/61c772a87d9f0ab1c9d89f9305b4a2da46c3cf9e)
+
+--- anatest25 ---
+    Uses data files from '.../mergedHists/2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps', as well as the central_tHq sample (which shouldn't be used in the combine fit)
+    this includes:
+        temp_data, temp_SingleMuon, temp_SingleElectron, temp_QFs, temp_MuonEG, temp_Fakes,
+        temp_DoubleMuon, and temp_DoubleEG
+    The MC samples are from '.../mergedHists/2019_10_13_full_MC'
+    this includes:
+        temp_WWZ, temp_WWW, temp_ZZZ, temp_WZZ, temp_WW, temp_ttGJets, temp_ttH, temp_ttH_multidim
+        temp_ttlnu_multidim, temp_WZ, temp_ZZ, temp_ttW, temp_tHq_multidim, temp_tZq, temp_ttZ,
+        temp_ttll_multidim, and temp_tllq_multidim
+    All non-data related samples were remade to include the muR+muF up/down variations to allow calculation of bin-by-bin envelope
+    Note: All of the central samples seem to show a difference in the JESUP/JESDOWN histograms
+    Changes:
+        * Fixed muR/muF scalefactor systematics to use correct ME weight id
+        * Add muR+muF up/down variation (commit/6201381699ee864ccd70c1dcd32302e8330a19e7)
+        * Fix to properly identify PDF weight id for non-private samples
+
+--- anatest26 ---
+    Uses data files from '.../mergedHists/2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps'
+    this includes:
+        temp_data, temp_SingleMuon, temp_SingleElectron, temp_QFs, temp_MuonEG, temp_Fakes, temp_DoubleMuon, and temp_DoubleEG
+    The MC samples are from '.../mergedHists/2019_10_19_full_MC'
+    this includes:
+        temp_WWZ, temp_WWW, temp_ZZZ, temp_WZZ, temp_WW, temp_ttGJets, temp_ttH, temp_ttH_multidim temp_ttlnu_multidim, temp_WZ, temp_ZZ, temp_ttW, temp_tHq_multidim, temp_tZq, temp_ttZ, temp_ttll_multidim, and temp_tllq_multidim
+    All non-data related samples were remade, but only tllq4f and tZq had changes that affected the actual analysis trees. The rest of the samples were only affected by the PS shape systematic fix.
+    Note: The files from '.../mergedHists/2019_10_18_full_MC' had some sort of problem where some of the samples were missing seemingly random UP/DOWN templates for random categories, after re-running the histogram step, the files appeared to be fine. I suspect this was due to a problem encountered during the merging stage of the histMaking lobster job!
+    Note: tllq_multidim seems to have differences in a number of UP/DOWN histograms O(10%) (beyond just the PDF systematics)
+    Changes:
+        * Fix to properly calculate PS shape SF (commit/8fff3c6d6a6e897f45021d781f2d9ec1a3ca54ab)
+        * For tllq4f and tZq, switched to 320900 PDF sets to calculate PDF UP/DOWN unc. (commit/82a3e77308a7aef37d04134c88f1b4277a035fe9)
+
+--- anatest27 ---
+    Samples from '.../2019_10_19_full_MC'
+        temp_WW.root, temp_WWW.root, temp_WWZ.root, temp_WZZ.root, temp_ZZZ.root, temp_ttGJets.root, temp_ttH_multidim.root, temp_tHq_multidim.root, temp_tllq_multidim.root, temp_ttll_multidim.root, temp_ttlnu_multidim.root, temp_tZq.root, temp_ttW.root, temp_ttZ.root
+    Samples from '.../2019_10_22_central_new_pmx'
+        temp_WZ.root, temp_ZZ.root, temp_ttH.root
+    Samples from '.../2019_10_22_data-nominal_newGT-94X_dataRun2_v11'
+        temp_data.root, temp_SingleMuon.root, temp_SingleElectron.root, temp_MuonEG.root, temp_DoubleMuon.root, temp_DoubleEG.root
+    Samples from '.../2019_10_22_data-ddbrs_newGT-94X_dataRun2_v11'
+        temp_Fakes.root, temp_QFs.root
+    The data was re-processed using the newest GT as recommended here[1]. This is also the first time trying to run real data through the framework. Also switched (plan to) over to using the 'new_pmx' versions of some central samples. This updates the ttH, WZ, ZZ central samples.
+    Note: I wanted to update the ttGJets sample as well, but the dataset seems to just outright fail. So it was not included at the this time
+    Note: The central ttW and tZq samples were already using the 'new_pmx' version and there does not appear to be a 'new_pmx' version for the ttZ sample
+    Changes:
+        * Makes use of the 'automatic' 4f vs 5f PDF detection (commit/c81ac8d5127f672859c2a066ccf74a84b8189e77)
+        * Updated GT used for data to 94X_dataRun2_v11 (commit/c81ac8d5127f672859c2a066ccf74a84b8189e77)
+        * Switched some central samples to use newer 'new_pmx' versions for ttH, WZ, and ZZ (commit/c81ac8d5127f672859c2a066ccf74a84b8189e77)
+    [1] https://twiki.cern.ch/twiki/bin/viewauth/CMS/JECDataMC#2017_Data
+
+--- anatest28 ---
+    Samples from '.../mergedHists/2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps'
+        temp_data.root temp_DoubleEG.root temp_DoubleMuon.root temp_Fakes.root temp_MuonEG.root temp_QFs.root temp_SingleElectron.root temp_SingleMuon.root
+    Samples from '.../mergedHists/2019_10_22_central_new_pmx'
+        temp_ttH.root temp_WZ.root temp_ZZ.root
+    Samples from '.../mergedHists/2019_10_19_full_MC'
+        temp_tHq_multidim.root temp_tllq_multidim.root temp_ttGJets.root temp_ttH_multidim.root temp_ttll_multidim.root temp_ttlnu_multidim.root temp_ttW.root temp_ttZ.root temp_tZq.root temp_WW.root temp_WWW.root temp_WWZ.root temp_WZZ.root temp_ZZZ.root
+    This reverts the globaltag change made in anatest27 for the data, but differs from anatest26 in that the ttH central, WZ, and ZZ samples come from the newer 'new_pmx' versions. All other samples should be identical to those found in anatest26
+    Changes:
+        * Reverted back to data processed with 94X_dataRun2_v6 GT, this should affect only the data, fakes, and charge flips
+        * Replaced central ttH, WZ and ZZ with the newer 'new_pmx' versions (as was done in a27)
+        * All other MC samples should be the same as in a26
+        * Keeps the old lepMVA --> no new weights
+
+--- anatest29 ---
+    Samples from '.../mergedHists/2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps'
+        temp_data.root temp_DoubleEG.root temp_DoubleMuon.root temp_Fakes.root temp_MuonEG.root temp_QFs.root temp_SingleElectron.root temp_SingleMuon.root
+    Samples from '.../mergedHists/2019_10_22_central_new_pmx'
+        temp_ttH.root temp_WZ.root temp_ZZ.root
+    Samples from '.../mergedHists/2019_10_19_full_MC'
+        temp_ttGJets.root temp_ttW.root temp_ttZ.root temp_tZq.root temp_WW.root temp_WWW.root temp_WWZ.root temp_WZZ.root temp_ZZZ.root
+    Samples from '.../2019_11_05_private_sgnl_round6'
+        temp_tHq_multidim.root temp_tllq_multidim.root temp_ttH_multidim.root temp_ttll_multidim.root temp_ttlnu_multidim.root
+    The private signal samples: ttH,ttll,ttlnu, and tHq mAOD files come from 'Round6' --> 'kmohrman/FullProduction/Round6' hadoop area. The private tllq sample comes from the ad-hoc location --> 'awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0{,extra,extra}'. The central bkgd, central sgnl, and data samples are all re-used from ana28.
+    Changes:
+        * All private signal samples are now produced via HanModelV4, which fixes the missing 5 particle vertices and negative QED orders
+        * The private signal samples were all generated with a new EFT starting point (except for tllq)
+        * Data samples and central samples are the same as in v28
+
+--- anatest30 ---
+    Samples from '.../mergedHists/2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps'
+        temp_data.root temp_DoubleEG.root temp_DoubleMuon.root temp_Fakes.root temp_MuonEG.root temp_QFs.root temp_SingleElectron.root temp_SingleMuon.root
+    Samples from '.../mergedHists/2019_10_22_central_new_pmx'
+        temp_ttH.root temp_WZ.root temp_ZZ.root
+    Samples from '.../mergedHists/2019_10_19_full_MC'
+        temp_ttGJets.root temp_ttW.root temp_ttZ.root temp_tZq.root temp_WW.root temp_WWW.root temp_WWZ.root temp_WZZ.root temp_ZZZ.root
+    Samples from '.../2019_11_05_private_sgnl_round6'
+        temp_tHq_multidim.root temp_tllq_multidim.root temp_ttH_multidim.root temp_ttll_multidim.root temp_ttlnu_multidim.root
+    This version uses the exact same histogram files as a29, but handles the muR/muF/muR+muF systematic UP/DOWN templates differently. Now we calculate the envelope of those histograms BEFORE turning them into shape only variations. It was also discovered that the muR/muF/muR+muF/PDF/PSISR systematics were not being normalized to shape-only variations for the non-private samples (also for private sample PSISR templates).
+    Important Note: The muR/muF/muR+muF templates are still included in the anatest file, but are no longer shape-only! Make sure to swap them for the new systematic: Q2RF
+    Changes:
+        * Change the way the muR/muF/muR+muF systematic envelope is computed (commit/e2684ee14b45ad060fd778dcf31ccd0e5e05c397)
+        * muR/muF/muR+muF templates are no longer normalized to be shape-only (commit/e2684ee14b45ad060fd778dcf31ccd0e5e05c397)
+        * New systematic Q2RF: computed from the envelope of muR/muF/muR+muF and then normalized to be shape-only (commit/e2684ee14b45ad060fd778dcf31ccd0e5e05c397)
+        * PSISR is now properly a shape-only variation (commit/e2684ee14b45ad060fd778dcf31ccd0e5e05c397)
+        * Central sample shape-only systematics are now actually shape-only systematics (commit/e2684ee14b45ad060fd778dcf31ccd0e5e05c397)
+
+--- anatestXX (based on a27) ---
+    -- On hold for now --
+    Changes:
+        * Migrated analysis tree framework to CMSSW_9_4_10
+        * Added the cms-pkg RecoBTag/TensorFlow (from recipe: https://twiki.cern.ch/twiki/bin/view/CMS/DeepJet#94X_installation_recipe_X_10)
+        * Updated the setup scripts to include the needed cms-pkg
+        * Updated tree maker to include the DeepFlavour tagger
+        * TODO: Switch to newest version of the lepMVA
+        * TODO: Get and apply the correct FR systematics for the new lepMVA
