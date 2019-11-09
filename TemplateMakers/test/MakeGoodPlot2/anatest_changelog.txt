@@ -109,6 +109,22 @@
         * PSISR is now properly a shape-only variation (commit/e2684ee14b45ad060fd778dcf31ccd0e5e05c397)
         * Central sample shape-only systematics are now actually shape-only systematics (commit/e2684ee14b45ad060fd778dcf31ccd0e5e05c397)
 
+--- anatest31 ---
+    Samples from '.../mergedHists/2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps'
+        temp_data.root temp_DoubleEG.root temp_DoubleMuon.root temp_Fakes.root temp_MuonEG.root temp_QFs.root temp_SingleElectron.root temp_SingleMuon.root
+    Samples from '.../mergedHists/2019_10_22_central_new_pmx'
+        temp_ttH.root temp_WZ.root temp_ZZ.root
+    Samples from '.../mergedHists/2019_10_19_full_MC'
+        temp_ttGJets.root temp_ttW.root temp_ttZ.root temp_tZq.root temp_WW.root temp_WWW.root temp_WWZ.root temp_WZZ.root temp_ZZZ.root
+    Samples from '.../mergedHists/2019_11_09_private_sgnl_redoTrees-a29_NoStreaming_v2'
+        temp_tHq_multidim.root temp_tllq_multidim.root temp_ttH_multidim.root temp_ttll_multidim.root temp_ttlnu_multidim.root
+    Reverting the changes in save_analysis_hists.h to be consistent with what was used to produce v29. The PDF/PSISR/muR/muF/muR+muF templates are normalized as they were in a29 and the normalization of these systematics is no longer applied to the non-private samples (likely a mistake, but done to be consistent with a29). The private signal samples themselves come from the same mAOD files as in a29/a30, but were re-run through the treeMaker and histMaker stages w/ the 'input streaming' lobster option disabled. This fixed the huge number of failed tasks seen during the lobster jobs, which was somehow affecting the yields in the final output.
+    Important Note: The Q2RF template is still present and calculated from the envelope of muR/muF/muR+muF, but this might not be consistent with the way it was being calculted in a29, which was done via the datacard making step at the time a29 was used
+    Changes:
+        * Reverted back to the a29 handling of the PDF/PSISR/muR/muF/muR+muF systematics in the creation of the anatest file (commit/ae346957db77a199087ef5f488bd7b8d4afdea3a)
+        * Rolled back the fix that normalized the shape systematics for the non-private samples the same as the private samples - This is to make the anatest file as close as possible to the v29 file (commit/4c14213968992d80aaa009e97acaad82a135d708)
+
+
 --- anatestXX (based on a27) ---
     -- On hold for now --
     Changes:
