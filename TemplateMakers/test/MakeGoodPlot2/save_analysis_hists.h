@@ -235,14 +235,14 @@ void MakeGoodPlot::save_analysis_hists()
                 {
                     thishist->Scale(lumi*xsec[thisSamp]/numgen[thisSamp]);
 
-                    if (is_shape_syst) {
-                        auto nomhist = (TH1EFT*)hist[i].FindObject(thiscat+sample_names_reg[thisSamp]); // should have already been scaled
-                                                                                                        // refers to the fact that the nominal
-                                                                                                        //   hists are the 'first' systematic in
-                                                                                                        //   the list!
-                        double normamnt = (nomhist->GetEntries() != 0 && thishist->Integral() != 0.) ? nomhist->Integral()/thishist->Integral() : 1.;
-                        thishist->Scale(normamnt);
-                    }
+                    // if (is_shape_syst) {
+                    //     auto nomhist = (TH1EFT*)hist[i].FindObject(thiscat+sample_names_reg[thisSamp]); // should have already been scaled
+                    //                                                                                     // refers to the fact that the nominal
+                    //                                                                                     //   hists are the 'first' systematic in
+                    //                                                                                     //   the list!
+                    //     double normamnt = (nomhist->GetEntries() != 0 && thishist->Integral() != 0.) ? nomhist->Integral()/thishist->Integral() : 1.;
+                    //     thishist->Scale(normamnt);
+                    // }
 
                     // Dibosons
                     if (thisSamp==11)
