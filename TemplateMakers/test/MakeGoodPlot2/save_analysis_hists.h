@@ -211,8 +211,8 @@ void MakeGoodPlot::save_analysis_hists()
             
             int cnt=0;            
             
-            // bool is_shape_syst = (thissyst=="PDFUP" || thissyst=="PDFDOWN" || thissyst=="MURUP" || thissyst=="MURDOWN" || thissyst=="MUFUP" || thissyst=="MUFDOWN" || thissyst=="MURMUFUP" || thissyst=="MURMUFDOWN");
-            bool is_shape_syst = (thissyst == "PDFUP" || thissyst == "PDFDOWN" || thissyst == "PSISRUP" || thissyst == "PSISRDOWN");
+            bool is_shape_syst = (thissyst=="PDFUP" || thissyst=="PDFDOWN" || thissyst=="MURUP" || thissyst=="MURDOWN" || thissyst=="MUFUP" || thissyst=="MUFDOWN" || thissyst=="MURMUFUP" || thissyst=="MURMUFDOWN");
+            // bool is_shape_syst = (thissyst == "PDFUP" || thissyst == "PDFDOWN" || thissyst == "PSISRUP" || thissyst == "PSISRDOWN");
             
             for (const TString thiscat : allAnaHists)
             {   
