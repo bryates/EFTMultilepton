@@ -76,6 +76,28 @@
         * All other MC samples should be the same as in a26
         * Keeps the old lepMVA --> no new weights
 
+--- anatest28_redoFullWF-NoStreaming ---
+    Note: This anatest file was produce chornologically after a31
+    Private mAOD directories:
+        /store/user/awightma/FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttHJet_HanModel16DttllScanpoints_run1
+        /store/user/awightma/FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttlnuJet_HanModel16DttllScanpoints_run1
+        /store/user/awightma/FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanModel16DttllScanpoints_run1
+        /store/user/awightma/FullProduction/Round5/Batch2/postLHE_step/v2/mAOD_step_ttllNuNuJetNoHiggs_HanModel16DttllScanpoints_run1
+        /store/user/awightma/FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_tHq4fMatched_HanModel16DttllScanpoints_run1
+        /store/user/awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1
+        /store/user/awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0_extra/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1
+    Samples from '.../mergedHists/2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps'
+        temp_data.root temp_DoubleEG.root temp_DoubleMuon.root temp_Fakes.root temp_MuonEG.root temp_QFs.root temp_SingleElectron.root temp_SingleMuon.root
+    Samples from '.../mergedHists/2019_10_22_central_new_pmx'
+        temp_ttH.root temp_WZ.root temp_ZZ.root
+    Samples from '.../mergedHists/2019_10_19_full_MC'
+        temp_ttGJets.root temp_ttW.root temp_ttZ.root temp_tZq.root temp_WW.root temp_WWW.root temp_WWZ.root temp_WZZ.root temp_ZZZ.root
+    Samples from '.../mergedHists/2019_11_11_private_sgnl_redoTrees-a28_NoStreaming'
+        temp_tHq_multidim.root temp_tllq_multidim.root temp_ttH_multidim.root temp_ttll_multidim.root temp_ttlnu_multidim.root
+    Reprocessed the full workflow (starting from mAOD) w/o the input streaming errors. This is similar to what was done for a31, with the only difference being the files that were reprocessed correspond to the ones used for a28, which should correspond to the 'Round5' samples. As with a31, all of the non-private samples (both central and real data) are the exact same root files that have been used since a28.
+    Changes:
+        * Same changes as outlined in the a31 changelog, but w.r.t a28 (commit/4710775e50cc99849d52d1de91147dd1641b676e)
+
 --- anatest29 ---
     Samples from '.../mergedHists/2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps'
         temp_data.root temp_DoubleEG.root temp_DoubleMuon.root temp_Fakes.root temp_MuonEG.root temp_QFs.root temp_SingleElectron.root temp_SingleMuon.root
@@ -123,7 +145,6 @@
     Changes:
         * Reverted back to the a29 handling of the PDF/PSISR/muR/muF/muR+muF systematics in the creation of the anatest file (commit/ae346957db77a199087ef5f488bd7b8d4afdea3a)
         * Rolled back the fix that normalized the shape systematics for the non-private samples the same as the private samples - This is to make the anatest file as close as possible to the v29 file (commit/4c14213968992d80aaa009e97acaad82a135d708)
-
 
 --- anatestXX (based on a27) ---
     -- On hold for now --
