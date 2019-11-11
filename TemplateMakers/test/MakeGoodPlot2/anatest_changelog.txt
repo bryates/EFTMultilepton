@@ -63,6 +63,14 @@
     [1] https://twiki.cern.ch/twiki/bin/viewauth/CMS/JECDataMC#2017_Data
 
 --- anatest28 ---
+    Private mAOD directories:
+        /store/user/awightma/FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttHJet_HanModel16DttllScanpoints_run1
+        /store/user/awightma/FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttlnuJet_HanModel16DttllScanpoints_run1
+        /store/user/awightma/FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanModel16DttllScanpoints_run1
+        /store/user/awightma/FullProduction/Round5/Batch2/postLHE_step/v2/mAOD_step_ttllNuNuJetNoHiggs_HanModel16DttllScanpoints_run1
+        /store/user/awightma/FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_tHq4fMatched_HanModel16DttllScanpoints_run1
+        /store/user/awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1
+        /store/user/awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0_extra/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1
     Samples from '.../mergedHists/2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps'
         temp_data.root temp_DoubleEG.root temp_DoubleMuon.root temp_Fakes.root temp_MuonEG.root temp_QFs.root temp_SingleElectron.root temp_SingleMuon.root
     Samples from '.../mergedHists/2019_10_22_central_new_pmx'
@@ -99,6 +107,17 @@
         * Same changes as outlined in the a31 changelog, but w.r.t a28 (commit/4710775e50cc99849d52d1de91147dd1641b676e)
 
 --- anatest29 ---
+    Private mAOD directories:
+        /store/user/kmohrman/FullProduction/Round6/Batch1/postLHE_step/v1/mAOD_step_ttHJet_HanV4ttXJetStartPtChecks_run2
+        /store/user/kmohrman/FullProduction/Round6/Batch2/postLHE_step/v1/mAOD_step_ttHJet_HanV4ttXJetStartPtChecks_run2
+        /store/user/kmohrman/FullProduction/Round6/Batch1/postLHE_step/v1/mAOD_step_ttlnuJet_HanV4ttXJetStartPtChecks_run1
+        /store/user/kmohrman/FullProduction/Round6/Batch2/postLHE_step/v1/mAOD_step_ttlnuJet_HanV4ttXJetStartPtChecks_run1
+        /store/user/kmohrman/FullProduction/Round6/Batch1/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXJetStartPtChecks_run2
+        /store/user/kmohrman/FullProduction/Round6/Batch2/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXJetStartPtChecks_run2
+        /store/user/kmohrman/FullProduction/Round6/Batch3/postLHE_step/v1/mAOD_step_tHq4f_HanV4tHqStartPtChecksMatchOff_run2
+        /store/user/awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1
+        /store/user/awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0_extra/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1
+        /store/user/awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0_extra2/v1/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1
     Samples from '.../mergedHists/2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps'
         temp_data.root temp_DoubleEG.root temp_DoubleMuon.root temp_Fakes.root temp_MuonEG.root temp_QFs.root temp_SingleElectron.root temp_SingleMuon.root
     Samples from '.../mergedHists/2019_10_22_central_new_pmx'
@@ -114,6 +133,17 @@
         * Data samples and central samples are the same as in v28
 
 --- anatest30 ---
+    Private mAOD directories:
+        /store/user/kmohrman/FullProduction/Round6/Batch1/postLHE_step/v1/mAOD_step_ttHJet_HanV4ttXJetStartPtChecks_run2
+        /store/user/kmohrman/FullProduction/Round6/Batch2/postLHE_step/v1/mAOD_step_ttHJet_HanV4ttXJetStartPtChecks_run2
+        /store/user/kmohrman/FullProduction/Round6/Batch1/postLHE_step/v1/mAOD_step_ttlnuJet_HanV4ttXJetStartPtChecks_run1
+        /store/user/kmohrman/FullProduction/Round6/Batch2/postLHE_step/v1/mAOD_step_ttlnuJet_HanV4ttXJetStartPtChecks_run1
+        /store/user/kmohrman/FullProduction/Round6/Batch1/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXJetStartPtChecks_run2
+        /store/user/kmohrman/FullProduction/Round6/Batch2/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXJetStartPtChecks_run2
+        /store/user/kmohrman/FullProduction/Round6/Batch3/postLHE_step/v1/mAOD_step_tHq4f_HanV4tHqStartPtChecksMatchOff_run2
+        /store/user/awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1
+        /store/user/awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0_extra/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1
+        /store/user/awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0_extra2/v1/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1
     Samples from '.../mergedHists/2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps'
         temp_data.root temp_DoubleEG.root temp_DoubleMuon.root temp_Fakes.root temp_MuonEG.root temp_QFs.root temp_SingleElectron.root temp_SingleMuon.root
     Samples from '.../mergedHists/2019_10_22_central_new_pmx'
@@ -132,6 +162,17 @@
         * Central sample shape-only systematics are now actually shape-only systematics (commit/e2684ee14b45ad060fd778dcf31ccd0e5e05c397)
 
 --- anatest31 ---
+    Private mAOD directories:
+        /store/user/kmohrman/FullProduction/Round6/Batch1/postLHE_step/v1/mAOD_step_ttHJet_HanV4ttXJetStartPtChecks_run2
+        /store/user/kmohrman/FullProduction/Round6/Batch2/postLHE_step/v1/mAOD_step_ttHJet_HanV4ttXJetStartPtChecks_run2
+        /store/user/kmohrman/FullProduction/Round6/Batch1/postLHE_step/v1/mAOD_step_ttlnuJet_HanV4ttXJetStartPtChecks_run1
+        /store/user/kmohrman/FullProduction/Round6/Batch2/postLHE_step/v1/mAOD_step_ttlnuJet_HanV4ttXJetStartPtChecks_run1
+        /store/user/kmohrman/FullProduction/Round6/Batch1/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXJetStartPtChecks_run2
+        /store/user/kmohrman/FullProduction/Round6/Batch2/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXJetStartPtChecks_run2
+        /store/user/kmohrman/FullProduction/Round6/Batch3/postLHE_step/v1/mAOD_step_tHq4f_HanV4tHqStartPtChecksMatchOff_run2
+        /store/user/awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1
+        /store/user/awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0_extra/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1
+        /store/user/awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0_extra2/v1/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1
     Samples from '.../mergedHists/2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps'
         temp_data.root temp_DoubleEG.root temp_DoubleMuon.root temp_Fakes.root temp_MuonEG.root temp_QFs.root temp_SingleElectron.root temp_SingleMuon.root
     Samples from '.../mergedHists/2019_10_22_central_new_pmx'
