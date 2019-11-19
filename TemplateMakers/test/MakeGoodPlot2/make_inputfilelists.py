@@ -1,10 +1,11 @@
 import sys
 import os
-import glob
-import subprocess
+# import glob
+# import subprocess
 import argparse
 import logging
 import datetime
+import shutil
 
 from EFTMultilepton.TemplateMakers.LvlFormatter import LvlFormatter
 
@@ -21,14 +22,36 @@ USER_DIR = os.path.expanduser('~')
 HOME_DIR = os.getcwd()
 HADOOP_DIR = "/hadoop/store/user"
 
-frmt = LvlFormatter()
-logging.getLogger().setLevel(logging.DEBUG)
+# TMPSCRATCH_DIR = os.path.expandvars("/tmpscratch/users/$USER")
+TMPSCRATCH_DIR = os.path.join("/tmpscratch/users",USER_NAME)
+if not os.path.exists(TMPSCRATCH_DIR):
+    err = "[ERROR] {user} does not have a /tmpscratch/users/$USER area setup, please set one up before using this script!".format(user=USER_NAME)
+    raise RuntimeError(err)
 
+INPUTFILES_DIR = os.path.join(TMPSCRATCH_DIR,"analysisWorkflow/inputFiles")
+if not os.path.exists(INPUTFILES_DIR):
+    os.makedirs(INPUTFILES_DIR)
+
+
+# frmt = LvlFormatter()
+# logging.getLogger().setLevel(logging.DEBUG)   # Modify the root logger
+
+# # Configure logging to also output to stdout
+# console = logging.StreamHandler()
+# console.setLevel(logging.INFO)
+# console.setFormatter(frmt)
+# logging.getLogger('').addHandler(console)   # Also the root logger
+
+frmt = LvlFormatter()
 # Configure logging to also output to stdout
 console = logging.StreamHandler()
 console.setLevel(logging.INFO)
 console.setFormatter(frmt)
-logging.getLogger('').addHandler(console)
+
+# Get the root logger and configure it
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+logger.addHandler(console)
 
 class Sample(object):
     def __init__(self,name,dirs=[]):
@@ -52,6 +75,10 @@ class Sample(object):
         if d in self.list():
             return
         self.__dirs.append(d)
+
+####################################################################################################
+# Define 'historic' groups of samples used in the analysis
+####################################################################################################
 
 # Still need to double check that these re-create the inputfiles verbatim
 def legacy_geoff_samples():
@@ -473,30 +500,217 @@ def anatest29_samples():
 
     return samples
 
+# Samples produced from the same mAOD as a29, but without the lobster job crashes at treeMaking or histMaking level
+def anatest31_samples():
+    ttH_priv   = Sample('ttH_multidim')
+    tHq_priv   = Sample('tHq_multidim')
+    ttll_priv  = Sample('ttll_multidim')
+    tllq_priv  = Sample('tllq_multidim')
+    ttlnu_priv = Sample('ttlnu_multidim')
+
+    path = 'awightma/analysisTrees/special/private_sgnl_reprocFullWF-a29_NoStreaming_2019_11_08/v1'
+    ttH_priv.addDirectory(HADOOP_DIR,path,'ttH_multidim_b1')
+    ttH_priv.addDirectory(HADOOP_DIR,path,'ttH_multidim_b2')
+    tHq_priv.addDirectory(HADOOP_DIR,path,'tHq_multidim_b1')
+    ttll_priv.addDirectory(HADOOP_DIR,path,'ttll_multidim_b1')
+    ttll_priv.addDirectory(HADOOP_DIR,path,'ttll_multidim_b2')
+    ttlnu_priv.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_b1')
+    ttlnu_priv.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_b2')
+    tllq_priv.addDirectory(HADOOP_DIR,path,'tllq_multidim_b1')
+    tllq_priv.addDirectory(HADOOP_DIR,path,'tllq_multidim_b2')
+    tllq_priv.addDirectory(HADOOP_DIR,path,'tllq_multidim_b3')
+
+    samples.extend([ttH_priv,tHq_priv,ttll_priv,tllq_priv,ttlnu_priv])
+    return samples
+
+####################################################################################################
+# Smaller subsets of all samples
+####################################################################################################
+def a28_NoStreamingV1():
+    sdir2 = "private_sgnl_reprocFullWF-a28_NoStreaming_2019_11_08/v1"
+    
+    sub_dir = 'awightma/analysisTrees/special'
+    ttH   = Sample('ttH_multidim')
+    tHq   = Sample('tHq_multidim')
+    ttll  = Sample('ttll_multidim')
+    tllq  = Sample('tllq_multidim')
+    ttlnu = Sample('ttlnu_multidim')
+
+    ttH.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttH_multidim_b1')
+    tHq.addDirectory(HADOOP_DIR,sub_dir,sdir2,'tHq_multidim_b1')
+    ttll.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttll_multidim_b1')
+    ttll.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttll_multidim_b2')
+    tllq.addDirectory(HADOOP_DIR,sub_dir,sdir2,'tllq_multidim_b1')
+    tllq.addDirectory(HADOOP_DIR,sub_dir,sdir2,'tllq_multidim_b2')
+    ttlnu.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttlnu_multidim_b1')
+    samples = [ttH,ttlnu,ttll,tllq,tHq]
+
+    return samples
+
+def a28_NoStreamingV2():
+    sdir2 = "private_sgnl_reprocFullWF-a28_NoStreaming_2019_11_09/v1"
+    
+    sub_dir = 'awightma/analysisTrees/special'
+    ttH   = Sample('ttH_multidim')
+    tHq   = Sample('tHq_multidim')
+    ttll  = Sample('ttll_multidim')
+    tllq  = Sample('tllq_multidim')
+    ttlnu = Sample('ttlnu_multidim')
+
+    ttH.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttH_multidim_b1')
+    tHq.addDirectory(HADOOP_DIR,sub_dir,sdir2,'tHq_multidim_b1')
+    ttll.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttll_multidim_b1')
+    ttll.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttll_multidim_b2')
+    tllq.addDirectory(HADOOP_DIR,sub_dir,sdir2,'tllq_multidim_b1')
+    tllq.addDirectory(HADOOP_DIR,sub_dir,sdir2,'tllq_multidim_b2')
+    ttlnu.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttlnu_multidim_b1')
+    samples = [ttH,ttlnu,ttll,tllq,tHq]
+
+    return samples
+
+def a29_NoDupesV1():
+    sdir2 = "private_sgnl_reprocFullWF-a29_NoDuplicates_2019_11_11/v2"
+
+    sub_dir = 'awightma/analysisTrees/special'
+    ttH   = Sample('ttH_multidim')
+    tHq   = Sample('tHq_multidim')
+    ttll  = Sample('ttll_multidim')
+    tllq  = Sample('tllq_multidim')
+    ttlnu = Sample('ttlnu_multidim')
+
+    ttH.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttH_multidim_b1')
+    ttH.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttH_multidim_b2')
+    tHq.addDirectory(HADOOP_DIR,sub_dir,sdir2,'tHq_multidim_b1')
+    ttll.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttll_multidim_b1')
+    ttll.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttll_multidim_b2')
+    tllq.addDirectory(HADOOP_DIR,sub_dir,sdir2,'tllq_multidim_b1')
+    tllq.addDirectory(HADOOP_DIR,sub_dir,sdir2,'tllq_multidim_b2')
+    tllq.addDirectory(HADOOP_DIR,sub_dir,sdir2,'tllq_multidim_b3')
+    ttlnu.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttlnu_multidim_b1')
+    ttlnu.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttlnu_multidim_b2')
+    samples = [ttH,ttlnu,ttll,tllq,tHq]
+
+    return samples
+
+def a29_NoDupesV2():
+    sdir2 = "private_sgnl_reprocFullWF-a29_NoDuplicates_2019_11_18/v1"
+
+    sub_dir = 'awightma/analysisTrees/special'
+    ttH   = Sample('ttH_multidim')
+    tHq   = Sample('tHq_multidim')
+    ttll  = Sample('ttll_multidim')
+    tllq  = Sample('tllq_multidim')
+    ttlnu = Sample('ttlnu_multidim')
+
+    ttH.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttH_multidim_b1')
+    ttH.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttH_multidim_b2')
+    tHq.addDirectory(HADOOP_DIR,sub_dir,sdir2,'tHq_multidim_b1')
+    ttll.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttll_multidim_b1')
+    ttll.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttll_multidim_b2')
+    tllq.addDirectory(HADOOP_DIR,sub_dir,sdir2,'tllq_multidim_b1')
+    tllq.addDirectory(HADOOP_DIR,sub_dir,sdir2,'tllq_multidim_b2')
+    tllq.addDirectory(HADOOP_DIR,sub_dir,sdir2,'tllq_multidim_b3')
+    ttlnu.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttlnu_multidim_b1')
+    ttlnu.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttlnu_multidim_b2')
+    samples = [ttH,ttlnu,ttll,tllq,tHq]
+
+    return samples
+
+def HanV4SMCheck():
+    sdir2 = "ttXJet-tXq4f-HanV4SMCheck_b1-b2_2019_11_18/v1"
+
+    sub_dir = 'awightma/analysisTrees/special'
+    ttH   = Sample('ttH_multidim')
+    tHq   = Sample('tHq_multidim')
+    ttll  = Sample('ttll_multidim')
+    tllq  = Sample('tllq_multidim')
+    ttlnu = Sample('ttlnu_multidim')
+
+    ttH.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttH_multidim_b1')
+    ttH.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttH_multidim_b2')
+    tHq.addDirectory(HADOOP_DIR,sub_dir,sdir2,'tHq_multidim_b1')
+    tHq.addDirectory(HADOOP_DIR,sub_dir,sdir2,'tHq_multidim_b2')
+    ttll.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttll_multidim_b1')
+    ttll.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttll_multidim_b2')
+    tllq.addDirectory(HADOOP_DIR,sub_dir,sdir2,'tllq_multidim_b1')
+    tllq.addDirectory(HADOOP_DIR,sub_dir,sdir2,'tllq_multidim_b2')
+    ttlnu.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttlnu_multidim_b1')
+    ttlnu.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttlnu_multidim_b2')
+    samples = [ttH,ttlnu,ttll,tllq,tHq]
+
+    return samples
+
+def HanOrigSMCheck():
+    sdir2 = "ttXJet_HanModelOriginal_SMCheck_2019_11_18/v1"
+    
+    sub_dir = 'awightma/analysisTrees/special'
+    ttH   = Sample('ttH_multidim')
+    tHq   = Sample('tHq_multidim')
+    ttll  = Sample('ttll_multidim')
+    tllq  = Sample('tllq_multidim')
+    ttlnu = Sample('ttlnu_multidim')
+
+    # No tZq or tHq currently
+    ttH.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttH_multidim_b1')
+    ttll.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttll_multidim_b1')
+    ttlnu.addDirectory(HADOOP_DIR,sub_dir,sdir2,'ttlnu_multidim_b1')
+    samples = [ttH,ttlnu,ttll]
+
+    return samples
+
+
+####################################################################################################
+
 def main():
-    out_dir = '.'
+    overwrite = True
+    timestamp_directory = True
+    dir_name = 'testing'
+
+    if timestamp_directory:
+        dir_name = '{tstamp}_{base}'.format(tstamp=TIMESTAMP1,base=dir_name)
+
+    out_dir = os.path.join(INPUTFILES_DIR,dir_name)
+    if os.path.exists(out_dir):
+        if not overwrite:
+            err = "[ERROR] Output directory already exists and overwrite set to false!"
+            raise RuntimeError(err)
+    else:
+        print "Making output directory: {}".format(out_dir)
+        os.makedirs(out_dir)
+    # return
+
     log_file = os.path.join(out_dir,'out.log')
     outlog = logging.FileHandler(filename=log_file,mode='w')
     outlog.setLevel(logging.DEBUG)
     outlog.setFormatter(frmt)
-    logging.getLogger('').addHandler(outlog)
+    # logging.getLogger('').addHandler(outlog)
 
-    logging.info("Start: {tstamp}".format(tstamp=TIMESTAMP3))
+    logger.addHandler(outlog)
+
+    logger.info("Start: {tstamp}".format(tstamp=TIMESTAMP3))
+    logger.info("Output Directory: {path}".format(path=out_dir))
+    logger.info("Logging output to: {path}".format(path=log_file))
 
     # samples = private_samples()
     # samples = legacy_geoff_samples()
     # samples = anatest25_samples()
     # samples = anatest26_samples()
-    samples = anatest27_samples()
+    # samples = anatest27_samples()
+    # samples = anatest29_samples()
+    # samples = anatest31_samples()
 
-    for s in samples:
+    samples = a29_NoDupesV2()
+
+    logger.info("-"*100)
+    for idx,s in enumerate(samples):
         outf = 'inputfiles__{name}.txt'.format(name=s.name())
-        logging.info("Making file: {fn}".format(fn=outf))
+        logger.info("[{}/{}] Making file: {fn}".format(idx+1,len(samples),fn=outf))
         lst = []
         for tdir in s.list():
             if not os.path.exists(tdir):
+                logger.info("Skipping unknown directory {dir}".format(dir=tdir))
                 continue
-            logging.info("Adding files from {dir}".format(dir=tdir))
+            logger.info("Adding files from {dir}".format(dir=tdir))
             for fn in os.listdir(tdir):
                 fpath = os.path.join(tdir,fn)
                 if not os.path.isfile(fpath):
@@ -504,11 +718,16 @@ def main():
                 h,t = fn.rsplit('.',1)
                 if t == 'root':
                     lst.append(fpath)
-        logging.info("Found files: {0:d}".format(len(lst)))
+        logger.info("Found files: {0:d}".format(len(lst)))
         with open(outf,'w') as f:
             for fpath in lst:
                 f.write(fpath+"\n")
-    logging.info("Finished!")
+        logger.info("Copying {} to {}".format(outf,out_dir))
+        shutil.copy(outf,out_dir)
+        logger.info("-"*100)
+    logger.info("Finished!")
 
 if __name__ == "__main__":
     main()
+    logger.info('Logger shutting down!')
+    logging.shutdown()

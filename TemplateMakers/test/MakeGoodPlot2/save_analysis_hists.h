@@ -211,8 +211,12 @@ void MakeGoodPlot::save_analysis_hists()
             
             int cnt=0;            
             
-            bool is_shape_syst = (thissyst=="PDFUP" || thissyst=="PDFDOWN" || thissyst=="MURUP" || thissyst=="MURDOWN" || thissyst=="MUFUP" || thissyst=="MUFDOWN" || thissyst=="MURMUFUP" || thissyst=="MURMUFDOWN");
-            // bool is_shape_syst = (thissyst == "PDFUP" || thissyst == "PDFDOWN" || thissyst == "PSISRUP" || thissyst == "PSISRDOWN");
+            bool is_shape_syst = (thissyst=="PDFUP" || thissyst=="PDFDOWN" ||
+                thissyst=="MURUP" || thissyst=="MURDOWN" ||
+                thissyst=="MUFUP" || thissyst=="MUFDOWN" ||
+                thissyst=="MURMUFUP" || thissyst=="MURMUFDOWN");
+            // bool is_shape_syst = (thissyst == "PDFUP" || thissyst == "PDFDOWN" ||
+            //     thissyst == "PSISRUP" || thissyst == "PSISRDOWN");
             
             for (const TString thiscat : allAnaHists)
             {   
@@ -287,35 +291,43 @@ void MakeGoodPlot::save_analysis_hists()
                 }
                 else if(thisSamp>=84 && thisSamp<90) 
                 {
-                    double addlfactor = 1.;
-                    //if (thisSamp==87 && (thiscat=="3l_mix_p_1b." || thiscat=="3l_mix_m_1b." || thiscat=="3l_mix_p_2b." || thiscat=="3l_mix_m_2b."))
-                    //{
-                    //    addlfactor = extra_tllq_factor_3lnonZ;
-                    //}
-                    //else if (thisSamp==87 && 
-                    //            (thiscat=="2lss_p_ee_2b." || thiscat=="2lss_p_emu_2b." || thiscat=="2lss_p_mumu_2b." ||
-                    //             thiscat=="2lss_m_ee_2b." || thiscat=="2lss_m_emu_2b." || thiscat=="2lss_m_mumu_2b.")
-                    //        )
-                    //{
-                    //    addlfactor = extra_tllq_factor_2lss;
-                    //}
-                    
-                    //thishist->ScaleFits(addlfactor*lumi*xsec[thisSamp]); // see rateinfo.h
-                    thishist->ScaleFits(lumi*xsec[thisSamp]/numgen[thisSamp]); // using updated norm method for EFT samps
-                    thishist->Scale(WCPoint()); // SM
-                    
-                    //WCPoint pt;
-                    //pt.setStrength("ctZ",10.);
-                    //thishist->Scale(pt);
-                    
-                    // systematics that are shape-only variations:
-                    // if (thissyst=="PDFUP" || thissyst=="PDFDOWN" || thissyst=="MURUP" || thissyst=="MURDOWN" || thissyst=="MUFUP" || thissyst=="MUFDOWN" || thissyst=="MURMUFUP" || thissyst=="MURMUFDOWN")
-                    if (is_shape_syst)
-                    {
-                        auto nomhist = (TH1EFT*)hist[i].FindObject(thiscat+sample_names_reg[thisSamp]); // should have already been scaled
-                        double normamnt = (nomhist->GetEntries()!=0 && thishist->Integral()!=0.) ? nomhist->Integral()/thishist->Integral() : 1.;
-                        thishist->ScaleFits(normamnt);
+                    // Note: This assumes that all of the TH1EFT histograms have at least 1 bin
+                    // Note: This should really be unnessecary, but is needed b/c samples w/o EFT reweighting
+                    //          don't have any WCFits included in the TH1EFT histograms 
+                    if (thishist->GetBinFit(1).size() || thishist->GetBinFit(2).size()) {// The histogram uses WCFits to scale the bin contents
+                        // The OR in the above if statement is b/c the 4l_2b 2jet bin never gets filled despite existing
+                        double addlfactor = 1.;
+                        //if (thisSamp==87 && (thiscat=="3l_mix_p_1b." || thiscat=="3l_mix_m_1b." || thiscat=="3l_mix_p_2b." || thiscat=="3l_mix_m_2b."))
+                        //{
+                        //    addlfactor = extra_tllq_factor_3lnonZ;
+                        //}
+                        //else if (thisSamp==87 && 
+                        //            (thiscat=="2lss_p_ee_2b." || thiscat=="2lss_p_emu_2b." || thiscat=="2lss_p_mumu_2b." ||
+                        //             thiscat=="2lss_m_ee_2b." || thiscat=="2lss_m_emu_2b." || thiscat=="2lss_m_mumu_2b.")
+                        //        )
+                        //{
+                        //    addlfactor = extra_tllq_factor_2lss;
+                        //}
+                        
+                        //thishist->ScaleFits(addlfactor*lumi*xsec[thisSamp]); // see rateinfo.h
+                        thishist->ScaleFits(lumi*xsec[thisSamp]/numgen[thisSamp]); // using updated norm method for EFT samps
                         thishist->Scale(WCPoint()); // SM
+                        
+                        //WCPoint pt;
+                        //pt.setStrength("ctZ",10.);
+                        //thishist->Scale(pt);
+                        
+                        // systematics that are shape-only variations:
+                        if (is_shape_syst)
+                        {
+                            auto nomhist = (TH1EFT*)hist[i].FindObject(thiscat+sample_names_reg[thisSamp]); // should have already been scaled
+                            double normamnt = (nomhist->GetEntries()!=0 && thishist->Integral()!=0.) ? nomhist->Integral()/thishist->Integral() : 1.;
+                            thishist->ScaleFits(normamnt);
+                            thishist->Scale(WCPoint()); // SM
+                        }
+                    } else {
+                        // TODO: What about the shape systematics?
+                        thishist->Scale(lumi*xsec[thisSamp]/numgen[thisSamp]);
                     }
                 }
                 //else if (thisSamp>99)
@@ -392,8 +404,10 @@ void MakeGoodPlot::save_analysis_hists()
 
 
 
-        // Need to run over muR/muF/muRmuF systematics again to compute the envelope and then normalize the result to get proper shape-only variations
-        // NOTE: At this point all of the histograms should have already been properly (re-)scaled, we just want to compute the envelope and normalize
+        // Note: Need to run over muR/muF/muRmuF systematics again to compute the envelope and then
+        //          normalize the result to get proper shape-only variations
+        // Note: At this point all of the histograms should have already been properly (re-)scaled,
+        //          we just want to compute the envelope and normalize
         // TODO: Clean this code up to be more compact/concise
         if (thisSamp > 0 && thisSamp < 90) { // The muR/muF envelope is only for MC based samples
             // This is so we don't end up including unnecessary samples that were already merged into other samples
