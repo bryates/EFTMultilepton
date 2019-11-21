@@ -16,7 +16,8 @@ tstamp2 = datetime.datetime.now().strftime('%Y_%m_%d')
 lobster_step = "histMaking"
 
 # master_label = 'EFT_T3_histMaking_{tstamp}'.format(tstamp=tstamp1)
-master_label = 'EFT_CRC_histMaking_{tstamp}'.format(tstamp=tstamp1)
+# master_label = 'EFT_CRC_histMaking_{tstamp}'.format(tstamp=tstamp1)
+master_label = 'EFT_anaWF_histMaking_{tstamp}'.format(tstamp=tstamp1)
 
 out_ver = "v1"
 out_tag = "test/lobster_test_{tstamp}".format(tstamp=tstamp1)
@@ -68,7 +69,8 @@ storage = StorageConfiguration(
         "gsiftp://T3_US_NotreDame"       + output_path,
         "srm://T3_US_NotreDame"          + output_path,
         "file:///hadoop"                 + output_path,
-    ]
+    ],
+    disable_input_streaming=True
 )
 
 
@@ -202,7 +204,7 @@ for samp in mysamples:
         lines = f.read().splitlines()
         lst = set([x.replace("/hadoop","").replace(input_path,"").rsplit("/",1)[0] for x in lines])
         lst = list(lst)
-        data.append((samp,lst))
+        data.append((samp,lst,len(lines)))
         print "{sample}: files={nfiles}".format(sample=samp,nfiles=len(lines))
         for dir_path in lst:
             print "{0:>4}{path}".format('',path=dir_path)
@@ -246,7 +248,7 @@ print " "
 processing = Category(
     name='processing',
     cores=1,
-    memory=2500,
+    memory=3500,
     disk=4500
 )
 
@@ -255,7 +257,7 @@ for thing in ddbr_or_nom:
     extlabel=''
     if thing != 'nom':
         extlabel=thing
-    for label, dirs in data:
+    for label, dirs, nfiles in data:
         fpt=10
         #if (label=='tZq' or label=='ttW' or label=='ttZ' or label[:3]=='ttH' or label[:5]=='ttlnu' or label[:4]=='tllq' or label[:4]=='ttll'):
         if (label=='tZq' or label=='ttW' or label=='ttZ'):
@@ -266,8 +268,11 @@ for thing in ddbr_or_nom:
             fpt=50  # maybe use 35?
         merge_size = '512M'
         if 'multidim' in label:
-            fpt = 15
+            fpt = min(int(nfiles/20),10)
+            fpt = max(fpt,1)
             merge_size = '1G'
+        elif label == 'tZq':
+            merge_size = '128M'
         cmd = ['python','wrapper_lobster.py',label,thing,'@inputfiles']
         wf_label = "{label}{ext}".format(label=label,ext=extlabel)
         ttH = Workflow(
@@ -288,7 +293,10 @@ for thing in ddbr_or_nom:
         )
 
         workflows.append(ttH)
-        print "added workflow ",label+extlabel
+        print "Added workflow: {}".format(label+extlabel)
+        print "\tfiles: {}".format(nfiles)
+        print "\tfpt: {}".format(fpt)
+        print "\tmerge: {}".format(merge_size)
 
 
 config = Config(
