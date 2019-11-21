@@ -11,6 +11,71 @@
 // cats_all.insert(cats_all.end(),cats_3lep.begin(),cats_3lep.end());
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+// I believe this is the correct way to normalize over a sum of histogram bins
+void norm1(TH1EFT* H, TH1EFT* G, double norm) {
+// void norm1(TH1D* H, TH1D* G, double norm) {
+    double g_sum = G->Integral();
+    double g_err = 0.0;
+    for (Int_t i = 1; i <= G->GetNbinsX(); i++) {
+        double bin_err = G->GetBinError(i);
+        g_err += bin_err*bin_err;
+    }
+    g_err = sqrt(g_err);
+
+    double h_sum = H->Integral();
+    double h_err = 0.0;
+    for (Int_t i = 1; i <= H->GetNbinsX(); i++) {
+        double bin_err = H->GetBinError(i);
+        h_err += bin_err*bin_err;
+    }
+    h_err = sqrt(h_err);
+
+    double f_sum = norm*h_sum / g_sum;
+    double f_t1 = h_err*g_sum;
+    double f_t2 = g_err*h_sum;
+    double f_err = norm*sqrt(f_t1*f_t1 + f_t2*f_t2) / (g_sum*g_sum);
+
+    TString sum_str = TString::Format("%+.2f +/- %+.2f",f_sum,f_err);
+    std::cout << "norm1: " << sum_str << std::endl;
+}
+
+// This is incorrect
+void norm2(TH1EFT* H, TH1EFT* G, double norm) {
+// void norm2(TH1D* H, TH1D* G, double norm) {
+    double g_sum = G->Integral();
+    double g_err = 0.0;
+    for (Int_t i = 1; i <= G->GetNbinsX(); i++) {
+        double bin_err = G->GetBinContent(i);
+        g_err += bin_err*bin_err;
+    }
+    g_err = sqrt(g_err);
+
+    double f_sum = 0.0;
+    double f_err = 0.0;
+    for (Int_t i = 1; i <= H->GetNbinsX(); i++) {
+        double bin_cont = H->GetBinContent(i);
+        double bin_err = H->GetBinError(i);
+        // bin_err = bin_err*bin_err;
+
+        double e1 = bin_err*g_sum;
+        double e2 = g_err*bin_cont;
+
+        double h_cont = bin_cont / g_sum;
+        double h_err = sqrt(e1*e1 + e2*e2) / (g_sum*g_sum);
+
+        // H->SetBinContent(i,h_cont);
+        // H->SetBinError(i,h_err);
+
+        f_sum += h_cont;
+        f_err += h_err*h_err;
+    }
+    f_sum = norm*f_sum;
+    f_err = norm*sqrt(f_err);
+
+    TString sum_str = TString::Format("%+.2f +/- %+.2f",f_sum,f_err);
+    std::cout << "norm2: " << sum_str << std::endl;
+}
+
 // Gets a histogram from a file and adds it to the hists vector
 void getEFTHistogram(TFile* f, TString name, double norm, std::vector<TH1EFT*> & hists) {
     TString htitle = f->GetName();
@@ -29,7 +94,7 @@ void getEFTHistogram(TFile* f, TString name, double norm, std::vector<TH1EFT*> &
 }
 
 // Note: Don't normally normalize the TH1D histograms
-void getTH1DHistogram(TFile* f, TString name, double norm, std::vector<TH1D*> & hists) {
+void getTH1DHistogram(TFile* f, TString name, double norm, bool make_shape, std::vector<TH1D*> & hists) {
     TString htitle = f->GetName();
     int str_idx = htitle.Index(".root");
     htitle = htitle(0,str_idx);
@@ -38,8 +103,10 @@ void getTH1DHistogram(TFile* f, TString name, double norm, std::vector<TH1D*> & 
         return;
     }
     // We might not always want to turn these histograms into shape only ones
-    double intg = h->Integral();
-    h->Scale(1./intg);
+    if (make_shape) {    
+        double intg = h->Integral();
+        h->Scale(1./intg);
+    }
     h->SetTitle(htitle);
     hists.push_back(h);
     return;
@@ -228,10 +295,16 @@ void runit(std::vector<TFile*> files, double sm_xsec) {
     std::vector<TH1EFT*> neles_hists;
     std::vector<TH1EFT*> nmuons_hists;
     std::vector<TH1EFT*> ntaus_hists;
-    std::vector<TH1EFT*> lep_pt1_hists;
-    std::vector<TH1EFT*> lep_pt2_hists;
-    std::vector<TH1EFT*> jet_pt1_hists;
-    std::vector<TH1EFT*> jet_pt2_hists;
+    std::vector<TH1EFT*> lep1_pt_hists;
+    std::vector<TH1EFT*> lep1_eta_hists;
+    std::vector<TH1EFT*> lep1_mva_hists;
+    std::vector<TH1EFT*> lep2_pt_hists;
+    std::vector<TH1EFT*> lep2_eta_hists;
+    std::vector<TH1EFT*> lep2_mva_hists;
+    std::vector<TH1EFT*> jet1_pt_hists;
+    std::vector<TH1EFT*> jet1_eta_hists;
+    std::vector<TH1EFT*> jet2_pt_hists;
+    std::vector<TH1EFT*> jet2_eta_hists;
 
     std::vector<TH1D*> muRUp_hists;
     std::vector<TH1D*> muRDown_hists;
@@ -256,6 +329,23 @@ void runit(std::vector<TFile*> files, double sm_xsec) {
             norm *= hadFilter_factor;
         }
 
+        // double h_sum = 0.0;
+        // double h_err = 0.0;
+        // for (Int_t bin_idx = 1; bin_idx <= h_cats->GetNbinsX(); bin_idx++) {
+        //     double bin_val = h_cats->GetBinFit(bin_idx).evalPoint(sm_pt);
+        //     double bin_err = h_cats->GetBinError(bin_idx);
+        //     // double bin_val = h_cats->GetBinContent(bin_idx);
+        //     // double bin_err = h_cats->GetBinError(bin_idx);
+        //     h_sum += bin_val;
+        //     h_err += bin_err*bin_err;
+        // }
+        // h_sum = norm*h_sum;
+        // h_err = norm*sqrt(h_err);
+        // TString sum_str = TString::Format("%+.2f +/- %+.2f",h_sum,h_err);
+        // std::cout << "Baseline: " << sum_str << std::endl;
+        // norm1(h_cats,h_norm,lumi2017*sm_xsec);
+        // norm2(h_cats,h_norm,lumi2017*sm_xsec);
+
         getEFTHistogram(f,"h_all_cats"  ,norm,yield_hists);
         getEFTHistogram(f,"h_njets_sr"  ,norm,njet_sr_hists);
         getEFTHistogram(f,"h_njets_incl",norm,njet_incl_hists);
@@ -267,19 +357,28 @@ void runit(std::vector<TFile*> files, double sm_xsec) {
         getEFTHistogram(f,"h_neles_incl"  ,norm,neles_hists);
         getEFTHistogram(f,"h_nmuons_incl" ,norm,nmuons_hists);
         getEFTHistogram(f,"h_ntaus_incl"  ,norm,ntaus_hists);
-        getEFTHistogram(f,"h_lep_pt1_incl",norm,lep_pt1_hists);
-        getEFTHistogram(f,"h_lep_pt2_incl",norm,lep_pt2_hists);
-        getEFTHistogram(f,"h_jet_pt1_incl",norm,jet_pt1_hists);
-        getEFTHistogram(f,"h_jet_pt2_incl",norm,jet_pt2_hists);
+        
+        getEFTHistogram(f,"h_lep1_pt_incl" ,norm,lep1_pt_hists);
+        getEFTHistogram(f,"h_lep1_eta_incl",norm,lep1_eta_hists);
+        getEFTHistogram(f,"h_lep1_mva_incl",norm,lep1_mva_hists);
+        getEFTHistogram(f,"h_lep2_pt_incl" ,norm,lep2_pt_hists);
+        getEFTHistogram(f,"h_lep2_eta_incl",norm,lep2_eta_hists);
+        getEFTHistogram(f,"h_lep2_mva_incl",norm,lep2_mva_hists);
+        
+        getEFTHistogram(f,"h_jet1_pt_incl" ,norm,jet1_pt_hists);
+        getEFTHistogram(f,"h_jet1_eta_incl",norm,jet1_eta_hists);
+        getEFTHistogram(f,"h_jet2_pt_incl" ,norm,jet2_pt_hists);
+        getEFTHistogram(f,"h_jet2_eta_incl",norm,jet2_eta_hists);
 
-        getTH1DHistogram(f,"h_muRUp"     ,1.0,muRUp_hists);
-        getTH1DHistogram(f,"h_muRDown"   ,1.0,muRDown_hists);
-        getTH1DHistogram(f,"h_muFUp"     ,1.0,muFUp_hists);
-        getTH1DHistogram(f,"h_muFDown"   ,1.0,muFDown_hists);
-        getTH1DHistogram(f,"h_muRmuFUp"  ,1.0,muRmuFUp_hists);
-        getTH1DHistogram(f,"h_muRmuFDown",1.0,muRmuFDown_hists);
-        getTH1DHistogram(f,"h_nnpdfUp"   ,1.0,nnpdfUp_hists);
-        getTH1DHistogram(f,"h_nnpdfDown" ,1.0,nnpdfDown_hists);
+        bool make_shape = true;
+        getTH1DHistogram(f,"h_muRUp"     ,1.0,make_shape,muRUp_hists);
+        getTH1DHistogram(f,"h_muRDown"   ,1.0,make_shape,muRDown_hists);
+        getTH1DHistogram(f,"h_muFUp"     ,1.0,make_shape,muFUp_hists);
+        getTH1DHistogram(f,"h_muFDown"   ,1.0,make_shape,muFDown_hists);
+        getTH1DHistogram(f,"h_muRmuFUp"  ,1.0,make_shape,muRmuFUp_hists);
+        getTH1DHistogram(f,"h_muRmuFDown",1.0,make_shape,muRmuFDown_hists);
+        getTH1DHistogram(f,"h_nnpdfUp"   ,1.0,make_shape,nnpdfUp_hists);
+        getTH1DHistogram(f,"h_nnpdfDown" ,1.0,make_shape,nnpdfDown_hists);
 
         bool incl_header = (i == 0);
         TString row_name = f->GetName();
@@ -288,30 +387,30 @@ void runit(std::vector<TFile*> files, double sm_xsec) {
         print_table(h_cats,row_name,-1,incl_header);
     }
 
-    makePlot(njet_sr_hists,"njets_sr",0);
-    makePlot(njet_incl_hists,"njets_incl",0);
-    makePlot(invmass_hists,"invmass_all",0);
-    makePlot(invmass_eles_hists,"invmass_eles",0);
-    makePlot(invmass_muons_hists,"invmass_muons",0);
-    makePlot(invmass_taus_hists,"invmass_taus",0);
-    makePlot(yield_hists,"yields",0);
-    makePlot(nleps_hists,"nleps",0);
-    makePlot(neles_hists,"neles",0);
-    makePlot(nmuons_hists,"nmuons",0);
-    makePlot(ntaus_hists,"ntaus",0);
-    makePlot(lep_pt1_hists,"lep_pt1",0);
-    makePlot(lep_pt2_hists,"lep_pt2",0);
-    makePlot(jet_pt1_hists,"jet_pt1",0);
-    makePlot(jet_pt2_hists,"jet_pt2",0);
+    // makePlot(njet_sr_hists,"njets_sr",0);
+    // makePlot(njet_incl_hists,"njets_incl",0);
+    // makePlot(invmass_hists,"invmass_all",0);
+    // makePlot(invmass_eles_hists,"invmass_eles",0);
+    // makePlot(invmass_muons_hists,"invmass_muons",0);
+    // makePlot(invmass_taus_hists,"invmass_taus",0);
+    // makePlot(yield_hists,"yields",0);
+    // makePlot(nleps_hists,"nleps",0);
+    // makePlot(neles_hists,"neles",0);
+    // makePlot(nmuons_hists,"nmuons",0);
+    // makePlot(ntaus_hists,"ntaus",0);
+    // makePlot(lep1_pt_hists,"lep1_pt",0);
+    // makePlot(lep2_pt_hists,"lep2_pt",0);
+    // makePlot(jet1_pt_hists,"jet1_pt",0);
+    // makePlot(jet2_pt_hists,"jet2_pt",0);
 
-    makePlot(muRUp_hists     ,"muRUp",-1);
-    makePlot(muRDown_hists   ,"muRDown",-1);
-    makePlot(muFUp_hists     ,"muFUp",-1);
-    makePlot(muFDown_hists   ,"muFDown",-1);
-    makePlot(muRmuFUp_hists  ,"muRmuFUp",-1);
-    makePlot(muRmuFDown_hists,"muRmuFDown",-1);
-    makePlot(nnpdfUp_hists   ,"nnpdfUp",-1);
-    makePlot(nnpdfDown_hists ,"nnpdfDown",-1);
+    // makePlot(muRUp_hists     ,"muRUp",-1);
+    // makePlot(muRDown_hists   ,"muRDown",-1);
+    // makePlot(muFUp_hists     ,"muFUp",-1);
+    // makePlot(muFDown_hists   ,"muFDown",-1);
+    // makePlot(muRmuFUp_hists  ,"muRmuFUp",-1);
+    // makePlot(muRmuFDown_hists,"muRmuFDown",-1);
+    // makePlot(nnpdfUp_hists   ,"nnpdfUp",-1);
+    // makePlot(nnpdfDown_hists ,"nnpdfDown",-1);
 }
 
 // Note: fname should point to a root file that has already been fully merged (i.e. with hadd)

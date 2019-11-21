@@ -100,10 +100,16 @@ void runit(TChain* ch, TString outf_name, int max_events, double sm_xsec, int sk
     TH1EFT* h_nmuons_incl = new TH1EFT("h_nmuons_incl","h_nmuons_incl",6,0,6);
     TH1EFT* h_ntaus_incl = new TH1EFT("h_ntaus_incl","h_ntaus_incl",6,0,6);
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    TH1EFT* h_lep_pt1_incl = new TH1EFT("h_lep_pt1_incl","h_lep_pt1_incl",50,0,250);
-    TH1EFT* h_lep_pt2_incl = new TH1EFT("h_lep_pt2_incl","h_lep_pt2_incl",50,0,250);
-    TH1EFT* h_jet_pt1_incl = new TH1EFT("h_jet_pt1_incl","h_jet_pt1_incl",50,0,250);
-    TH1EFT* h_jet_pt2_incl = new TH1EFT("h_jet_pt2_incl","h_jet_pt2_incl",50,0,250);
+    TH1EFT* h_lep1_pt_incl  = new TH1EFT("h_lep1_pt_incl" ,"h_lep1_pt_incl",50,0,250);
+    TH1EFT* h_lep1_eta_incl = new TH1EFT("h_lep1_eta_incl","h_lep1_eta_incl",50,-5,5);
+    TH1EFT* h_lep1_mva_incl = new TH1EFT("h_lep1_mva_incl","h_lep1_mva_incl",50,-2,1);
+    TH1EFT* h_lep2_pt_incl  = new TH1EFT("h_lep2_pt_incl" ,"h_lep2_pt_incl",50,0,250);
+    TH1EFT* h_lep2_eta_incl = new TH1EFT("h_lep2_eta_incl","h_lep2_eta_incl",50,-5,5);
+    TH1EFT* h_lep2_mva_incl = new TH1EFT("h_lep2_mva_incl","h_lep2_mva_incl",50,-2,1);
+    TH1EFT* h_jet1_pt_incl  = new TH1EFT("h_jet1_pt_incl" ,"h_jet1_pt_incl",50,0,250);
+    TH1EFT* h_jet1_eta_incl = new TH1EFT("h_jet1_eta_incl","h_jet1_eta_incl",50,-5,5);
+    TH1EFT* h_jet2_pt_incl  = new TH1EFT("h_jet2_pt_incl" ,"h_jet2_pt_incl",50,0,250);
+    TH1EFT* h_jet2_eta_incl = new TH1EFT("h_jet2_eta_incl","h_jet2_eta_incl",50,-5,5);
     TH1EFT* h_invmass_dilep_incl = new TH1EFT("h_invmass_dilep_incl","h_invmass_dilep_incl",50,0,200);
     TH1EFT* h_invmass_diele_incl = new TH1EFT("h_invmass_diele_incl","h_invmass_diele_incl",50,0,200);
     TH1EFT* h_invmass_dimuon_incl = new TH1EFT("h_invmass_dimuon_incl","h_invmass_dimuon_incl",50,0,200);
@@ -165,10 +171,16 @@ void runit(TChain* ch, TString outf_name, int max_events, double sm_xsec, int sk
         h_neles_incl,
         h_nmuons_incl,
         h_ntaus_incl,
-        h_lep_pt1_incl,
-        h_lep_pt2_incl,
-        h_jet_pt1_incl,
-        h_jet_pt2_incl,
+        h_lep1_pt_incl,
+        h_lep1_eta_incl,
+        h_lep1_mva_incl,
+        h_lep2_pt_incl,
+        h_lep2_eta_incl,
+        h_lep2_mva_incl,
+        h_jet1_pt_incl,
+        h_jet1_eta_incl,
+        h_jet2_pt_incl,
+        h_jet2_eta_incl,
         h_invmass_dilep_incl,
         h_invmass_diele_incl,
         h_invmass_dimuon_incl,
@@ -287,14 +299,19 @@ void runit(TChain* ch, TString outf_name, int max_events, double sm_xsec, int sk
 
         double mcwgt_sign = (originalXWGTUP_intree > 0) ? 1 : -1;
         h_mcwgts_sign_incl->Fill(mcwgt_sign,1); // Note: This will not have SumW2 auto-enabled, b/c of the unit weight
-        double pt1 = -1;
-        double pt2 = -1;
+        double pt1,pt2 = -1;
+        double eta1,eta2 = -99;
+        double mva1,mva2 = -99;
         for (uint i1 = 0; i1 < sorted_leps.size(); i1++) {
             auto p1 = sorted_leps.at(i1);
             if (i1 == 0) {
                 pt1 = p1.obj.Pt();
+                eta1 = p1.obj.Eta();
+                mva1 = p1.lepMVA;
             } else if (i1 == 1) {
                 pt2 = p1.obj.Pt();
+                eta2 = p1.obj.Eta();
+                mva2 = p1.lepMVA;
             }
             for (uint i2 = i1; i2 < sorted_leps.size(); i2++) {
                 if (i1 == i2) continue;
@@ -308,8 +325,13 @@ void runit(TChain* ch, TString outf_name, int max_events, double sm_xsec, int sk
                 }
             }
         }
-        h_lep_pt1_incl->Fill(pt1,sm_wgt,wc_fit);
-        h_lep_pt2_incl->Fill(pt2,sm_wgt,wc_fit);
+        h_lep1_pt_incl->Fill(pt1,sm_wgt,wc_fit);
+        h_lep1_eta_incl->Fill(eta1,sm_wgt,wc_fit);
+        h_lep1_mva_incl->Fill(mva1,sm_wgt,wc_fit);
+
+        h_lep2_pt_incl->Fill(pt2,sm_wgt,wc_fit);
+        h_lep2_eta_incl->Fill(eta2,sm_wgt,wc_fit);
+        h_lep2_mva_incl->Fill(mva2,sm_wgt,wc_fit);
 
         for (uint i1 = 0; i1 < selected_taus_intree->size(); i1++) {
             auto p1 = selected_taus_intree->at(i1);
@@ -322,20 +344,25 @@ void runit(TChain* ch, TString outf_name, int max_events, double sm_xsec, int sk
             }
         }
 
-        // Reset the pt variables
-        pt1 = -1;
-        pt2 = -1;
+        // Reset the pt/eta variables
+        pt1 = -1; pt2 = -1;
+        eta1 = -99; eta2 = -99;
         // The jets are already sorted by pt
         for (uint i1 = 0; i1 < cleaned_jets.size(); i1++) {
             auto p1 = cleaned_jets.at(i1);
             if (i1 == 0) {
                 pt1 = p1.obj.Pt();
+                eta1 = p1.obj.Eta();
             } else if (i1 == 1) {
                 pt2 = p1.obj.Pt();
+                eta2 = p1.obj.Eta();
             }
         }
-        h_jet_pt1_incl->Fill(pt1,sm_wgt,wc_fit);
-        h_jet_pt2_incl->Fill(pt2,sm_wgt,wc_fit);
+        h_jet1_pt_incl->Fill(pt1,sm_wgt,wc_fit);
+        h_jet1_eta_incl->Fill(eta1,sm_wgt,wc_fit);
+
+        h_jet2_pt_incl->Fill(pt2,sm_wgt,wc_fit);
+        h_jet2_eta_incl->Fill(eta2,sm_wgt,wc_fit);
 
         h_njets_incl->Fill(cleaned_jets.size(),sm_wgt,wc_fit);
         h_nleps_incl->Fill(tight_leptons_intree->size(),sm_wgt,wc_fit);
@@ -408,6 +435,7 @@ void runit(TChain* ch, TString outf_name, int max_events, double sm_xsec, int sk
     std::cout << "SM xsec: " << sm_xsec << std::endl;
 
     // Normalization based on sum of the weights at SM
+    // Note: We don't actually modify/scale the histograms here, this is just for printout purposes
     double event_norm = incl_orig_wgt;
     if (is_eft) {
         event_norm = incl_fit->evalPoint(sm_pt);
