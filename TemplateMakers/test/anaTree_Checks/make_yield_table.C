@@ -95,6 +95,7 @@ void sum_samples(TString new_samp, YieldCategory & cat, std::vector<TString> & s
     for (TString s: samples) {
         if (cat.yields.find(s) == cat.yields.end()) continue;
         YieldInfo info = cat.yields[s];
+        if (info.yield < 0) continue;   // Don't sum negative yield bins
         if (info.error < 0) continue;
         sum.yield += info.yield;
         sum.error += info.error;
@@ -210,9 +211,9 @@ void make_yield_table(TString fpath,TString table_name) {
     // Sub-list of private signals to include in the table
     std::vector<TString> private_sgnl {
         "tllq_16D",
-        "ttH_16D",
-        "ttll_16D",
-        "ttlnu_16D",
+        // "ttH_16D",
+        // "ttll_16D",
+        // "ttlnu_16D",
         // "tHq_16D",
     };
 
@@ -259,7 +260,8 @@ void make_yield_table(TString fpath,TString table_name) {
     //  here, since we plan to use them later on in the full yield table.
     for (TString bin: mrg_2lss_p) {
         YieldCategory cat = get_category(f,bin,all_samples);
-        sum_samples("Sgnl Sum",cat,private_sgnl);
+        sum_samples("Private Sgnl",cat,private_sgnl);
+        sum_samples("Central Sgnl",cat,central_sgnl);
         sum_samples("Bkgd Sum",cat,all_bkgds);
         cats_2lss_p.push_back(cat);
     }
@@ -267,7 +269,8 @@ void make_yield_table(TString fpath,TString table_name) {
 
     for (TString bin: mrg_2lss_m) {
         YieldCategory cat = get_category(f,bin,all_samples);
-        sum_samples("Sgnl Sum",cat,private_sgnl);
+        sum_samples("Private Sgnl",cat,private_sgnl);
+        sum_samples("Central Sgnl",cat,central_sgnl);
         sum_samples("Bkgd Sum",cat,all_bkgds);
         cats_2lss_m.push_back(cat);
     }
@@ -276,17 +279,26 @@ void make_yield_table(TString fpath,TString table_name) {
 
     for (TString bin: bins) {
         YieldCategory cat = get_category(f,bin,all_samples);
-        sum_samples("Sgnl Sum",cat,private_sgnl);
+        sum_samples("Private Sgnl",cat,private_sgnl);
+        sum_samples("Central Sgnl",cat,central_sgnl);
         sum_samples("Bkgd Sum",cat,all_bkgds);
         cats.push_back(cat);
     }
 
     std::cout << get_header(cats,table_name) << std::endl;
     // std::cout << get_header(cats,"") << std::endl;
+    std::cout << get_line_break(cats) << std::endl;
+
     for (TString s: private_sgnl) std::cout << get_row(cats,s) << std::endl;
     std::cout << get_line_break(cats) << std::endl;
+
+    // for (TString s: central_sgnl) std::cout << get_row(cats,s) << std::endl;
+    // std::cout << get_line_break(cats) << std::endl;
+
     // for (TString s: all_bkgds) std::cout << get_row(cats,s) << std::endl;
-    // std::cout << line_break << std::endl;
-    std::cout << get_row(cats,"Bkgd Sum") << std::endl;
-    std::cout << get_row(cats,"Sgnl Sum") << std::endl;
+    // std::cout << get_line_break(cats) << std::endl;
+
+    // std::cout << get_row(cats,"Bkgd Sum") << std::endl;
+    std::cout << get_row(cats,"Private Sgnl") << std::endl;
+    // std::cout << get_row(cats,"Central Sgnl") << std::endl;
 }

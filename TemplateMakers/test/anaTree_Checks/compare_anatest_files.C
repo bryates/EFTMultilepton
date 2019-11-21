@@ -9,83 +9,6 @@ void print_diff(TString header,std::set<TString> s) {
     }
 }
 
-void compare_histogram(TFile* f1, TFile* f2, TString hist_name, bool skip_identical=false) {
-    TH1EFT* h1 = (TH1EFT*)f1->Get(hist_name);
-    TH1EFT* h2 = (TH1EFT*)f2->Get(hist_name);
-
-    bool missing_histograms = false;
-    if (!h1) {
-        std::cout << "ERROR compare_histogram(): f1 does not have " << hist_name << std::endl;
-        missing_histograms = true;
-    } else if (!h2) {
-        std::cout << "ERROR compare_histogram(): f2 does not have " << hist_name << std::endl;
-        missing_histograms = true;
-    }
-
-    if (missing_histograms) {
-        return;
-    }
-
-    if (h1->GetNbinsX() != h2->GetNbinsX()) {
-        std::cout << "ERROR compare_histogram(): nBins mismatch in " << hist_name << std::endl;
-        std::cout << "\tf1 hist has " << h1->GetNbinsX() << " bins" << std::endl;
-        std::cout << "\tf2 hist has " << h2->GetNbinsX() << " bins" << std::endl;
-        return;
-    }
-
-    if (h1->Integral() == 0 && h2->Integral() == 0) {
-        return;
-    }
-
-    std::stringstream ss;
-
-    ss << "Histogram: " << hist_name << std::endl;
-
-    TString delim = " ";
-
-    double bin_sum1 = 0.0;
-    double bin_sum2 = 0.0;
-    double abs_diff = 0.0;
-    for (Int_t i = 1; i <= h1->GetNbinsX(); i++) {
-        double bin1 = h1->GetBinContent(i);
-        double bin2 = h2->GetBinContent(i);
-        double diff = bin2 - bin1;
-
-        bin_sum1 += bin1;
-        bin_sum2 += bin2;
-        abs_diff += abs(diff);
-
-        TString bin1_str = TString::Format("%+.2f",bin1);
-        TString bin2_str = TString::Format("%+.2f",bin2);
-        TString diff_str = TString::Format("%+.2f",diff);
-
-        ss << "  Bin " << i << ": "
-                  << std::setw(7) << std::right << bin1_str << delim
-                  << std::setw(7) << std::right << bin2_str << delim
-                  << std::setw(7) << std::right << diff_str << std::endl;
-    }
-    double perc_diff = 0.0;
-    if (bin_sum1) {
-        perc_diff = 100*(bin_sum2 - bin_sum1) / bin_sum1;
-    }
-    TString sum1_str = TString::Format("%+.2f",bin_sum1);
-    TString sum2_str = TString::Format("%+.2f",bin_sum2);
-    TString abs_str  = TString::Format("%+.2f",abs_diff);
-    TString perc_str = TString::Format("%+.2f",perc_diff);
-    ss << "h1 Sum: " << sum1_str << std::endl;
-    ss << "h2 Sum: " << sum2_str << " (" << perc_str << "%)" << std::endl;
-    ss << "Abs Diff: " << abs_str << std::endl;
-    // ss << std::endl;
-
-    std::cout << ss.str();
-
-    // if (abs_diff >= 0.05 && abs(perc_diff) > 0.5) {
-    //     std::cout << ss.str();
-    // }
-
-    return;
-}
-
 void compare_anatest_files(TString fpath1, TString fpath2) {
     TFile* f1 = TFile::Open(fpath1,"READ");
     TFile* f2 = TFile::Open(fpath2,"READ");
@@ -126,9 +49,9 @@ void compare_anatest_files(TString fpath1, TString fpath2) {
 
     std::vector<TString> samples {
         // "",     // For non anatest files
-        "data",
-        "charge_flips",
-        "fakes",
+        // "data",
+        // "charge_flips",
+        // "fakes",
         // "tZq",
         // "ttH",
         // "ttW",
@@ -138,7 +61,7 @@ void compare_anatest_files(TString fpath1, TString fpath2) {
         // "ttGJets",
         // "ttll_16D",
         // "ttlnu_16D",
-        // "tllq_16D",
+        "tllq_16D",
         // "ttH_16D",
         // "tHq_16D",
     };
@@ -165,16 +88,16 @@ void compare_anatest_files(TString fpath1, TString fpath2) {
         /* "3l_ppp_2b", */
         /* "3l_mmm_2b", */
 
-        // "4l_2b",
+        "4l_2b",
     };
 
     std::vector<TString> skip_systs {
         // "JES",      // Expected to change a23 -> a24
-        "MUR",      // Expected to change a24 -> a25 and a25 -> a26 (for tllq4f/tZq)
-        "MUF",      // Expected to change a24 -> a25 and a25 -> a26 (for tllq4f/tZq)
-        "MURMUF",   // Expected to change a24 -> a25 and a25 -> a26 (for tllq4f/tZq) 
-        "PSISR",    // Expected to change a25 -> a26
-        "PDF",      // Expected to change a24 -> a25 (for central samples)
+        // "MUR",      // Expected to change a24 -> a25 and a25 -> a26 (for tllq4f/tZq)
+        // "MUF",      // Expected to change a24 -> a25 and a25 -> a26 (for tllq4f/tZq)
+        // "MURMUF",   // Expected to change a24 -> a25 and a25 -> a26 (for tllq4f/tZq) 
+        // "PSISR",    // Expected to change a25 -> a26
+        // "PDF",      // Expected to change a24 -> a25 (for central samples)
         "FR"        // Only applies to fakes
     };
 
@@ -200,8 +123,15 @@ void compare_anatest_files(TString fpath1, TString fpath2) {
     //     systs_var.push_back(down);
     // }
 
+    bool skip_identical = true;
+
+    std::cout << "------------------------------------------------------------" << std::endl;
+    
     TString sep = ".";
     for (TString samp: samples) {
+        bool cmp_res;
+        int total_compares = 0;
+        int good_compares = 0;
         std::cout << "Sample: " << samp << std::endl;
         for (TString syst: systs_var) {
             for (TString bin: bins) {
@@ -212,13 +142,19 @@ void compare_anatest_files(TString fpath1, TString fpath2) {
                         hist_name += syst + sep;
                     }
                     hist_name += samp;
-                    compare_histogram(f1,f2,hist_name);
+                    cmp_res = compare_histogram(f1,f2,hist_name,skip_identical);
                 } else {
                     // This is likely a hist file that goes into anatest
-                    compare_histogram(f1,f2,hist_name);
+                    cmp_res = compare_histogram(f1,f2,hist_name,skip_identical);
                 }
+                total_compares += 1;
+                good_compares += cmp_res;
             }
         }
+        std::cout << std::endl;
+        std::cout << "Systs Checked: " << systs_var.size() << std::endl;
+        std::cout << "Good Histograms: " << good_compares << std::endl;
+        std::cout << "Total Histograms: " << total_compares << std::endl;
         std::cout << "------------------------------------------------------------" << std::endl;
     }
 
