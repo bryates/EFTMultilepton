@@ -19,7 +19,9 @@ ver = "v1"
 # tag = "test/lobster_test_{tstamp}".format(tstamp=tstamp1)
 # tag = "tllq4f_tch_NoHiggs_0j_xqcut0_{tstamp}".format(tstamp=tstamp3)
 # tag = "ana24-priv_ana25-priv_ana25-cent_{tstamp}".format(tstamp=tstamp3)
-tag = "ana26_PDF-fix_{tstamp}".format(tstamp=tstamp3)
+# tag = "ana26_PDF-fix_{tstamp}".format(tstamp=tstamp3)
+# tag = "ana25-priv_ana25-cent_ana28-priv_ana29-priv_NoStreaming_{tstamp}".format(tstamp=tstamp2)
+tag = "ana29-priv-NoDuplicates_HanOrig-HanV4-SMCheck_{tstamp}".format(tstamp=tstamp2)
 
 workdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=tag,ver=ver,path="/tmpscratch/users/$USER/analysisWorkflow")
 plotdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=tag,ver=ver,path="~/www/lobster")
@@ -45,7 +47,8 @@ storage = StorageConfiguration(
         "{uri}{path}".format(uri=URI_GSIFTP,path=output_path),
         "{uri}{path}".format(uri=URI_SRM   ,path=output_path),
         "{uri}{path}".format(uri=URI_FILE  ,path=output_path),
-    ]
+    ],
+    disable_input_streaming = True
 )
 
 # NOTE1: The central_tZq files are ~250M each! The private are ~150M --> be careful about files_per_task
@@ -55,6 +58,7 @@ processing = Category(
     cores=1,
     memory=2500,
     disk=2900,
+    tasks_max=3000  # maximum tasks in the queue (running+waiting)
     # mode='fixed'
 )
 
@@ -228,6 +232,106 @@ a26_private_tllq  = ('a26_private_tllq' ,3,eft_mergesize,tZq_xsec,[
 ])
 a26_central_tZq = ('a26_central_tZq',central_fpt,central_mergesize,tZq_xsec,[os.path.join(sub_path,'special/tZq_2019_10_17_fixPDF/v2/tZq')])
 
+####################################################################################################
+# anatest28 samples
+####################################################################################################
+sdir2 = 'special/private_sgnl_reprocFullWF-a28_NoStreaming_2019_11_09/v1'
+a28_private_ttH = ('a28_private_ttH',1,eft_mergesize,ttH_xsec,[os.path.join(sub_path,sdir2,'ttH_multidim_b1')])
+a28_private_tHq = ('a28_private_tHq',1,eft_mergesize,tHq_xsec,[os.path.join(sub_path,sdir2,'tHq_multidim_b1')])
+a28_private_ttW = ('a28_private_ttW',1,eft_mergesize,ttW_xsec,[os.path.join(sub_path,sdir2,'ttlnu_multidim_b1')])
+a28_private_ttZ = ('a28_private_ttZ',1,eft_mergesize,ttZ_xsec,[
+    os.path.join(sub_path,sdir2,'ttll_multidim_b1'),
+    os.path.join(sub_path,sdir2,'ttll_multidim_b2')
+])
+a28_private_tZq = ('a28_private_tZq',1,eft_mergesize,tZq_xsec,[
+    os.path.join(sub_path,sdir2,'tllq_multidim_b1'),
+    os.path.join(sub_path,sdir2,'tllq_multidim_b2')
+])
+
+# The central samples are mostly the same as was used in a25, except for ttH, which uses the 'new_pmx' version
+a28_central_ttH = ([os.path.join(sub_path,'special/central_ttH-WW-WZ-ttGJets_new_pmx_2019_10_21/v3/ttH')])
+a28_central_tHq = ([os.path.join(sub_path,'central_sgnl_2019_10_11/v1/tHq')])
+a28_central_ttW = ([os.path.join(sub_path,'central_sgnl_2019_10_11/v1/ttW')])
+a28_central_ttZ = ([os.path.join(sub_path,'central_sgnl_2019_10_11/v1/ttZ')])
+a28_central_tZq = ([os.path.join(sub_path,'central_sgnl_2019_10_11/v1/tZq')])
+
+####################################################################################################
+# anatest29 samples
+####################################################################################################
+sdir2 = 'special/private_sgnl_reprocFullWF-a29_NoStreaming_2019_11_08/v1'
+a29_private_ttH = ('a29_private_ttH',2,eft_mergesize,ttH_xsec,[
+    os.path.join(sub_path,sdir2,'ttH_multidim_b1'),
+    os.path.join(sub_path,sdir2,'ttH_multidim_b2'),
+])
+a29_private_tHq = ('a29_private_tHq',2,eft_mergesize,tHq_xsec,[os.path.join(sub_path,sdir2,'tHq_multidim_b1')])
+a29_private_ttW = ('a29_private_ttW',2,eft_mergesize,ttW_xsec,[
+    os.path.join(sub_path,sdir2,'ttlnu_multidim_b1'),
+    os.path.join(sub_path,sdir2,'ttlnu_multidim_b2'),
+])
+a29_private_ttZ = ('a29_private_ttZ',2,eft_mergesize,ttZ_xsec,[
+    os.path.join(sub_path,sdir2,'ttll_multidim_b1'),
+    os.path.join(sub_path,sdir2,'ttll_multidim_b2'),
+])
+a29_private_tZq = ('a29_private_tZq',2,eft_mergesize,tZq_xsec,[
+    os.path.join(sub_path,sdir2,'tllq_multidim_b1'),
+    os.path.join(sub_path,sdir2,'tllq_multidim_b2'),
+    os.path.join(sub_path,sdir2,'tllq_multidim_b3'),
+])
+
+####################################################################################################
+# anatest29 samples (no duplicates)
+####################################################################################################
+sdir2 = 'special/private_sgnl_reprocFullWF-a29_NoDuplicates_2019_11_18/v1'
+a29noDupes_private_ttH = ('a29noDupes_private_ttH',2,eft_mergesize,ttH_xsec,[
+    os.path.join(sub_path,sdir2,'ttH_multidim_b1'),
+    os.path.join(sub_path,sdir2,'ttH_multidim_b2'),
+])
+a29noDupes_private_tHq = ('a29noDupes_private_tHq',2,eft_mergesize,tHq_xsec,[os.path.join(sub_path,sdir2,'tHq_multidim_b1')])
+a29noDupes_private_ttW = ('a29noDupes_private_ttW',2,eft_mergesize,ttW_xsec,[
+    os.path.join(sub_path,sdir2,'ttlnu_multidim_b1'),
+    os.path.join(sub_path,sdir2,'ttlnu_multidim_b2'),
+])
+a29noDupes_private_ttZ = ('a29noDupes_private_ttZ',2,eft_mergesize,ttZ_xsec,[
+    os.path.join(sub_path,sdir2,'ttll_multidim_b1'),
+    os.path.join(sub_path,sdir2,'ttll_multidim_b2'),
+])
+a29noDupes_private_tZq = ('a29noDupes_private_tZq',2,eft_mergesize,tZq_xsec,[
+    os.path.join(sub_path,sdir2,'tllq_multidim_b1'),
+    os.path.join(sub_path,sdir2,'tllq_multidim_b2'),
+    os.path.join(sub_path,sdir2,'tllq_multidim_b3'),
+])
+
+####################################################################################################
+# Dedicated SM check samples
+####################################################################################################
+sdir2 = 'special/ttXJet_HanModelOriginal_SMCheck_2019_11_18/v1'
+HanOrig_private_ttH = ('ttH_HanOrigSMCheck',4,central_mergesize,ttH_xsec,[os.path.join(sub_path,sdir2,'ttH_multidim_b1')])
+HanOrig_private_ttZ = ('ttZ_HanOrigSMCheck',4,central_mergesize,ttZ_xsec,[os.path.join(sub_path,sdir2,'ttll_multidim_b1')])
+HanOrig_private_ttW = ('ttW_HanOrigSMCheck',4,central_mergesize,ttW_xsec,[os.path.join(sub_path,sdir2,'ttlnu_multidim_b1')])
+
+sdir2 = 'special/ttXJet-tXq4f-HanV4SMCheck_b1-b2_2019_11_18/v1'
+HanV4_private_ttH = ('ttH_HanV4SMCheck',4,central_mergesize,ttH_xsec,[
+    os.path.join(sub_path,sdir2,'ttH_multidim_b1'),
+    os.path.join(sub_path,sdir2,'ttH_multidim_b2'),
+])
+HanV4_private_ttZ = ('ttZ_HanV4SMCheck',4,central_mergesize,ttZ_xsec,[
+    os.path.join(sub_path,sdir2,'ttll_multidim_b1'),
+    os.path.join(sub_path,sdir2,'ttll_multidim_b2'),
+])
+HanV4_private_ttW = ('ttW_HanV4SMCheck',4,central_mergesize,ttW_xsec,[
+    os.path.join(sub_path,sdir2,'ttlnu_multidim_b1'),
+    os.path.join(sub_path,sdir2,'ttlnu_multidim_b2'),
+])
+HanV4_private_tZq = ('tZq_HanV4SMCheck',4,central_mergesize,tZq_xsec,[
+    os.path.join(sub_path,sdir2,'tllq_multidim_b1'),
+    os.path.join(sub_path,sdir2,'tllq_multidim_b2'),
+])
+HanV4_private_tHq = ('tHq_HanV4SMCheck',4,central_mergesize,tHq_xsec,[
+    os.path.join(sub_path,sdir2,'tHq_multidim_b1'),
+    os.path.join(sub_path,sdir2,'tHq_multidim_b2'),
+])
+####################################################################################################
+
 samples = [
     # central_tZq_v1,
     # central_tZq_v2,
@@ -272,8 +376,36 @@ samples = [
     # a25_central_ttZ,
     # a25_central_ttW,
 
-    a26_private_tllq,
-    a26_central_tZq,
+    # a26_private_tllq,
+    # a26_central_tZq,
+
+    # a28_private_ttH,
+    # a28_private_tHq,
+    # a28_private_ttW,
+    # a28_private_ttZ,
+    # a28_private_tZq,
+
+    # a29_private_ttH,
+    # a29_private_tHq,
+    # a29_private_ttW,
+    # a29_private_ttZ,
+    # a29_private_tZq,
+
+    a29noDupes_private_ttH,
+    a29noDupes_private_tHq,
+    a29noDupes_private_ttW,
+    a29noDupes_private_ttZ,
+    a29noDupes_private_tZq,
+
+    HanOrig_private_ttH,
+    HanOrig_private_ttZ,
+    HanOrig_private_ttW,
+
+    HanV4_private_ttH,
+    HanV4_private_ttZ,
+    HanV4_private_ttW,
+    HanV4_private_tZq,
+    HanV4_private_tHq,
 ]
 
 # Note: The 'interface' directory is automatically included
