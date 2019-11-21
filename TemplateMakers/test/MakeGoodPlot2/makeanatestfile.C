@@ -1,6 +1,7 @@
 #include "includes.h"
 
-void makeanatestfile() {
+// void makeanatestfile() {
+void makeanatestfile(TString out_name) {
     std::vector<int> samples;
 
     /* Note: all of the samples below need to be located in the same directory! This has the
@@ -58,7 +59,8 @@ void makeanatestfile() {
     //newplots->drawAllToFile("anatest23","root");
     //newplots->drawAllToFile("dump_name","root");
 
-    newplots->drawAllToFile("anatest30","root");
+    // newplots->drawAllToFile("anatest30","root");
+    newplots->drawAllToFile(out_name.Data(),"root");
 
     //delete newplots;
     std::cout << "Finished!" << std::endl;
