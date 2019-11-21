@@ -51,8 +51,8 @@ process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_condD
 
 process.GlobalTag.globaltag = options.globalTag
 if isData:
-    # process.GlobalTag = customiseGlobalTag(None, globaltag = '94X_dataRun2_v6') # auto:run2_data # 94X_dataRun2_v6
-    process.GlobalTag = customiseGlobalTag(None, globaltag = '94X_dataRun2_v11') # New GT for JEC
+    process.GlobalTag = customiseGlobalTag(None, globaltag = '94X_dataRun2_v6') # auto:run2_data # 94X_dataRun2_v6
+    # process.GlobalTag = customiseGlobalTag(None, globaltag = '94X_dataRun2_v11') # New GT for JEC
 
 process.prefer("GlobalTag")
 
