@@ -51,7 +51,7 @@ void wrapper_lobster(TString sample, TString input_filenames, bool doQFs=false, 
     
         double numgen = 1.;            
         numgen = getNumInitialMCevents(0,*ch); // use this to get numgen (To do -> should really remove the first arg as it's just a dummy int now)
-        if (debug) cout << "Ran getNumInitialMCevents" << endl;
+        if (debug) cout << "Ran getNumInitialMCevents: " << numgen << endl;
     
         //TString supl="_Nom";
         //if (doQFs) supl="_ChargeFlips";

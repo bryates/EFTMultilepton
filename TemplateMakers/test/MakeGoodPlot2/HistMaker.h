@@ -148,6 +148,7 @@ class HistMaker
         TH2D *elFRsfs_eta2;
         TH2D *muFRsfs_eta2;
 
+        int event_counter;
         
         // technical functions needed to run HistMaker
         void bookHistos();
