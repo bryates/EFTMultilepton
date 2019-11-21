@@ -13,10 +13,11 @@ tstamp1 = datetime.datetime.now().strftime('%Y%m%d_%H%M')
 tstamp2 = datetime.datetime.now().strftime('%Y_%m_%d')
 lobster_step = "analysisTrees"
 
-#master_label = 'EFT_T3_anaTrees_{tstamp}'.format(tstamp=tstamp1)
-master_label = 'EFT_CRC_anaTrees_{tstamp}'.format(tstamp=tstamp1)
+# master_label = 'EFT_T3_anaTrees_{tstamp}'.format(tstamp=tstamp1)
+# master_label = 'EFT_CRC_anaTrees_{tstamp}'.format(tstamp=tstamp1)
+master_label = 'EFT_anaWF_anaTrees_{tstamp}'.format(tstamp=tstamp1)
 
-ver = "v2"
+ver = "v1"
 #tag = "test/lobster_test_{tstamp}".format(tstamp=tstamp1)
 # tag = "special/tllq4f_EFT_MatchedNoHiggs_{tstamp}_NoMrg-JM1-JM2".format(tstamp=tstamp2)
 #tag = "central_sgnl_{tstamp}".format(tstamp=tstamp2)
@@ -24,6 +25,7 @@ ver = "v2"
 #tag = "private_sgnl_{tstamp}".format(tstamp=tstamp2)
 #tag = "data2017_{tstamp}".format(tstamp=tstamp2)
 tag = "special/central_ttH-WW-WZ-ttGJets_new_pmx_{tstamp}".format(tstamp=tstamp2)
+
 
 workdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=tag,ver=ver,path="/tmpscratch/users/$USER/analysisWorkflow")
 plotdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=tag,ver=ver,path="~/www/lobster")
@@ -58,7 +60,8 @@ processing = Category(
     cores=1,
     #runtime=60 * 30,  # Time in seconds
     memory=2500,
-    disk=2000
+    disk=2000,
+    tasks_max=2000  # maximum tasks in the queue (running+waiting)
 )
 
 mysamples = []
@@ -185,6 +188,8 @@ if ((not isdata) and (not doeftsamps)): # eventually rm the "not doeftsamps" her
     # mysamples.append(['ttZ','/TTZToLLNuNu_M-10_TuneCP5_PSweights_13TeV-amcatnlo-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])                     #a
     # mysamples.append(['tZq','/tZq_ll_4f_ckm_NLO_TuneCP5_PSweights_13TeV-amcatnlo-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v2/MINIAODSIM'])            #a
 
+    # mysamples.append(['tZq','/tZq_ll_4f_ckm_NLO_TuneCP5_PSweights_13TeV-amcatnlo-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
+
     ## Newer samples with 'new_pmx'
     mysamples.append(['ttH','/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
     mysamples.append(['WZ','/WZTo3LNu_TuneCP5_13TeV-amcatnloFXFX-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/MINIAODSIM'])
@@ -271,22 +276,60 @@ if ((not isdata) and doeftsamps):
     # 
     # mysamples.append(['tHq_multidim_batch6','Batch6/postLHE_step/v1/mAOD_step_tHq_16DttllScanpoints_run1/'])
 
-    ### Private EFT samples
-    hadoop_loc = '/store/user/awightma/'
+    ### Private EFT samples Round 5
+    #hadoop_loc = '/store/user/awightma/'
     ## ttH
-    mysamples.append(['ttH_multidim_b1','FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttHJet_HanModel16DttllScanpoints_run1/'])
+    #mysamples.append(['ttH_multidim_b1','FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttHJet_HanModel16DttllScanpoints_run1/'])
     ## ttlnu
-    mysamples.append(['ttlnu_multidim_b1','FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttlnuJet_HanModel16DttllScanpoints_run1/'])
+    #mysamples.append(['ttlnu_multidim_b1','FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttlnuJet_HanModel16DttllScanpoints_run1/'])
     ## ttll
-    mysamples.append(['ttll_multidim_b1','FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanModel16DttllScanpoints_run1/'])
-    mysamples.append(['ttll_multidim_b2','FullProduction/Round5/Batch2/postLHE_step/v2/mAOD_step_ttllNuNuJetNoHiggs_HanModel16DttllScanpoints_run1/'])
+    #mysamples.append(['ttll_multidim_b1','FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanModel16DttllScanpoints_run1/'])
+    #mysamples.append(['ttll_multidim_b2','FullProduction/Round5/Batch2/postLHE_step/v2/mAOD_step_ttllNuNuJetNoHiggs_HanModel16DttllScanpoints_run1/'])
     ## tHq
-    mysamples.append(['tHq_multidim_b1','FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_tHq4fMatched_HanModel16DttllScanpoints_run1/'])
+    #mysamples.append(['tHq_multidim_b1','FullProduction/Round5/Batch1/postLHE_step/v1/mAOD_step_tHq4fMatched_HanModel16DttllScanpoints_run1/'])
     ## tllq
-    #mysamples.append(['tllq_multidim_b1','Batch1/postLHE_step/v1/mAOD_step_tllq4fMatchedNoHiggs_HanModel16DttllScanpoints_run1/'])
-    mysamples.append(['tllq_multidim_b1','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])
-    mysamples.append(['tllq_multidim_b2','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0_extra/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])
+    #mysamples.append(['tllq_multidim_b1','Batch1/postLHE_step/v1/mAOD_step_tllq4fMatchedNoHiggs_HanModel16DttllScanpoints_run1/']) # OLD tllq SAMPLE, DO NOT USE!
+    #mysamples.append(['tllq_multidim_b1','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])
+    #mysamples.append(['tllq_multidim_b2','postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0_extra/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])
     
+    ### Private EFT samples Round 6
+    hadoop_loc = '/store/user/'
+    ## ttH
+    mysamples.append(['ttH_multidim_b1','kmohrman/FullProduction/Round6/Batch1/postLHE_step/v1/mAOD_step_ttHJet_HanV4ttXJetStartPtChecks_run2'])
+    mysamples.append(['ttH_multidim_b2','kmohrman/FullProduction/Round6/Batch2/postLHE_step/v1/mAOD_step_ttHJet_HanV4ttXJetStartPtChecks_run2'])
+    ## ttlnu
+    mysamples.append(['ttlnu_multidim_b1','kmohrman/FullProduction/Round6/Batch1/postLHE_step/v1/mAOD_step_ttlnuJet_HanV4ttXJetStartPtChecks_run1'])
+    mysamples.append(['ttlnu_multidim_b2','kmohrman/FullProduction/Round6/Batch2/postLHE_step/v1/mAOD_step_ttlnuJet_HanV4ttXJetStartPtChecks_run1'])
+    ## ttll
+    mysamples.append(['ttll_multidim_b1','kmohrman/FullProduction/Round6/Batch1/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXJetStartPtChecks_run2'])
+    mysamples.append(['ttll_multidim_b2','kmohrman/FullProduction/Round6/Batch2/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXJetStartPtChecks_run2'])
+    ## tHq
+    mysamples.append(['tHq_multidim_b1','kmohrman/FullProduction/Round6/Batch3/postLHE_step/v1/mAOD_step_tHq4f_HanV4tHqStartPtChecksMatchOff_run2'])
+    ## tllq
+    mysamples.append(['tllq_multidim_b1','awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])
+    mysamples.append(['tllq_multidim_b2','awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0_extra/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])
+    mysamples.append(['tllq_multidim_b3','awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0_extra2/v1/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])
+    ## IN PROGRESS STILL
+    #mysamples.append(['tllq_multidim_b4','kmohrman/FullProduction/Round6/Batch4/postLHE_step/v1/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0MatchOff_run1'])
+    
+    ### Others from R6 era
+    # mysamples.append(['ttH_multidim_b1','kmohrman/postLHE_step/2019_04_19/ttXJet-HanV4ttXJetSMCheck/v1/mAOD_step_ttHJet_HanV4ttXSMCheck_run0']) # 320k events
+    # mysamples.append(['ttH_multidim_b2','kmohrman/postLHE_step/2019_04_19/ttXJet-HanV4tXq4fSMCheck-b2/v1/mAOD_step_ttHJet_HanV4ttXSMCheck_run0']) # 323k events
+
+    # mysamples.append(['ttll_multidim_b1','kmohrman/postLHE_step/2019_04_19/ttXJet-HanV4ttXJetSMCheck/v1/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXSMCheck_run0']) # 325k events
+    # mysamples.append(['ttll_multidim_b2','kmohrman/postLHE_step/2019_04_19/ttXJet-HanV4tXq4fSMCheck-b2/v1/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXSMCheck_run0']) # 326k events
+
+    # mysamples.append(['ttlnu_multidim_b1','kmohrman/postLHE_step/2019_04_19/ttXJet-HanV4ttXJetSMCheck/v1/mAOD_step_ttlnuJet_HanV4ttXSMCheck_run0']) # 240k events
+    # mysamples.append(['ttlnu_multidim_b2','kmohrman/postLHE_step/2019_04_19/ttXJet-HanV4tXq4fSMCheck-b2/v1/mAOD_step_ttlnuJet_HanV4ttXSMCheck_run0']) # 241k events
+
+    # mysamples.append(['tHq_multidim_b1','kmohrman/postLHE_step/2019_04_19/tXq4f-HanV4tXq4fSMCheck/v1/mAOD_step_tHq4f_HanV4tXqSMCheckMatchOff_run0']) # 250k events
+    # mysamples.append(['tHq_multidim_b2','kmohrman/postLHE_step/2019_04_19/tXq4f-HanV4tXq4fSMCheck-b2/v1/mAOD_step_tHq4f_HanV4tXqSMCheckMatchOff_run0']) # 250k events
+
+    # mysamples.append(['tllq_multidim_b1','kmohrman/postLHE_step/2019_04_19/tXq4f-HanV4tXq4fSMCheck/v1/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4tXqSMCheckMatchOff_run0']) #250k events
+    # mysamples.append(['tllq_multidim_b2','kmohrman/postLHE_step/2019_04_19/tXq4f-HanV4tXq4fSMCheck-b2/v1/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4tXqSMCheckMatchOff_run0']) #250k events
+
+    ###
+
     # mysamples.append(['tllq_multidim_0partons','postLHE_step/2019_04_19/tllq4f-NoDim6Diagrams/v2/mAOD_step_tllq4f_NoDim6NoSchanW_run0/'])
 
     # mysamples.append(['tllq_multidim_JetMax1_b1','postLHE_step/2019_04_19/tllq4f_t-channelMatched_pythia-JetMax1-JetMax2_b1-b4/v1/mAOD_step_tllq4fMatchedNoSchanW_HanModel16DttllScanpointsXQCUT10JetMax1b1_run1'])
@@ -440,7 +483,7 @@ for label,samp in mysamples:
         mergesize = -1
         ds = Dataset(
             files=samp,
-            #files_per_task=10,
+            files_per_task=2,
             patterns=["*.root"]
         )
     else:
@@ -474,15 +517,15 @@ for label,samp in mysamples:
     if doskim:
         cms_cmd.extend(['skim=True'])
 
-    print "adding workflow: {0}".format(label)
+    print "Adding workflow: {0}".format(label)
+    print "\tSamples: {0}".format(samp)
     print "\tCmd: {0}".format(' '.join(cms_cmd))
+    print "\tmerge: {0}".format(mergesize)
     wf = Workflow(
         label=label,
         dataset=ds,
         category=processing,
-        #pset='osTwoLep_cfg.py',
         #arguments=['skim=True','jetCleanFakeable=True','data='+str(isdata)],
-        #command='cmsRun osTwoLep_cfg.py',
         command=' '.join(cms_cmd),
         #extra_inputs=[cmsswbase+"/src/L1Prefiring/EventWeightProducer/files/L1PrefiringMaps_new.root"],
         merge_size=mergesize,
