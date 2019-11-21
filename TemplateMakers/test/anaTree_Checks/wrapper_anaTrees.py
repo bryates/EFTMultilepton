@@ -4,17 +4,55 @@ import sys
 import os
 
 from utils import get_files,move_files,clean_dir
+from make_html import make_html
 
 # Python wrapper to the check_anaTrees script when trying to run by-hand (instead of via lobster)
 
+# Alias function
+pjoin = os.path.join
+
 USER_DIR = os.path.expanduser('~')
+CMSSW_DIR = os.environ['CMSSW_BASE']
 
 TIMESTAMP = datetime.datetime.now().strftime('%Y-%m-%d_%H%M')
 TIMESTAMP2 = datetime.datetime.now().strftime('%Y_%m_%d')
 HPATH = '/hadoop/store/user'
+SFILES = os.path.expandvars('/store/smallfiles/$USER/anatest_files')
 
-# Alias function
-pjoin = os.path.join
+fpath_a15 = os.path.join(SFILES,"TOP-19-001_unblinded_v1.root")
+fpath_a16 = os.path.join(SFILES,"anatest16.root")
+fpath_a17 = os.path.join(SFILES,"anatest17.root")
+fpath_a18 = os.path.join(SFILES,"anatest18.root")
+fpath_a19 = os.path.join(SFILES,"anatest19.root")
+fpath_a20 = os.path.join(SFILES,"anatest20.root")
+fpath_a21 = os.path.join(SFILES,"anatest21.root")
+fpath_a22 = os.path.join(SFILES,"anatest22.root")
+fpath_a23 = os.path.join(SFILES,"anatest23_v3.root")
+fpath_a24 = os.path.join(SFILES,"anatest24.root")
+fpath_a25 = os.path.join(SFILES,"anatest25.root")
+fpath_a26 = os.path.join(SFILES,"anatest26.root")
+fpath_a27 = os.path.join(SFILES,"anatest27.root")
+fpath_a28 = os.path.join(SFILES,"anatest28.root")
+fpath_a29 = os.path.join(SFILES,"anatest29.root")
+fpath_a30 = os.path.join(SFILES,"anatest30.root")
+fpath_a31 = os.path.join(SFILES,"anatest31.root")
+
+fpath_R6B1 = os.path.join(SFILES,"private_ttH-ttZ-ttW_HanV4_R6B1Only.root")
+fpath_R6B1_NSH = os.path.join(SFILES,"private_ttH-ttZ-ttW_HanV4_R6B1Only_NSH.root")
+fpath_R6e2_NSH = os.path.join(SFILES,"private_tZq_HanV4_R6-extra2Only_NSH.root")
+
+fpath_tllq_R6B1 = os.path.join(SFILES,"private_sgnl_tllq_R6B1.root")
+fpath_tllq_R6B2 = os.path.join(SFILES,"private_sgnl_tllq_R6B2.root")
+fpath_tllq_R6B3 = os.path.join(SFILES,"private_sgnl_tllq_R6B3.root")
+
+fpath_a28_redoFull = os.path.join(SFILES,"anatest28_redoFullWF-NoStreaming.root")
+fpath_a29_redoFull = os.path.join(SFILES,"private_sgnl_redoTrees-a29_NoStreaming.root")
+fpath_a29_redoFull_v2 = os.path.join(SFILES,"private_sgnl_redoTrees-a29_NoStreaming_v2.root")
+fpath_a29_noDupes = os.path.join(SFILES,"anatest29_NoDuplicates.root")
+fpath_a29_noDupes_v2 = os.path.join(SFILES,"anatest29_NoDuplicatesV2.root")
+
+fpath_HanV4SMChecks = os.path.join(SFILES,"private_sgnl_HanV4_SMCheck.root")
+fpath_HanOrigSMChecks = os.path.join(SFILES,"private_sgnl_HanOriginal_SMCheck.root")
 
 class Sample(object):
     def __init__(self,name,xsec,dirs=[]):
@@ -75,7 +113,7 @@ def getFiles(tdir,ext=''):
 def check_anaTrees():
     print "Running check_anaTrees()..."
     max_files = 10
-    events = 75000
+    events = 500#75000
     skim = False
     testing = False
 
@@ -163,11 +201,13 @@ def check_anaTrees():
 
     # samples = [tllq4f_JetMax2]
     samples = [
-        a25_central_ttH,
+        a25_private_ttH,
+
+        # a25_central_ttH,
         # a25_central_tHq,
-        a25_central_tZq,
-        a25_central_ttZ,
-        a25_central_ttW,
+        # a25_central_tZq,
+        # a25_central_ttZ,
+        # a25_central_ttW,
     ]
     for samp in samples:
         label = samp.name()
@@ -207,201 +247,154 @@ def check_anaTrees():
 # Wrapper to run the 'read_anaTreeChecks.C' macro
 def read_anaTreeChecks():
     print "Running read_anaTreeChecks()..."
+    # NOTE: I re-named some of the pt/eta histograms, so most of the samples in 'checkAnaTrees' don't work (before 2019-11-12)
 
-    # OLD METHOD (kept for historical referencing)
-    inputs = [
-        ##############################
-        # Previous version of samples with old naming
-        ##############################
-
-        # ("m_centralv1","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/central_tZq_v14v1"),
-        # ("m_centralv2","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/central_tZq_v14v2"),
-        # ("m_JetMax1","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax1"),
-        # ("m_JetMax2","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax2"),
-        # ("m_0pNoMerge","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_NoMerge"),
-        # ("m_0pJetMax1","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_JetMax1"),
-        # ("m_0pJetMax2","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_JetMax2"),
-
-        # ("m_centralv1_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/central_tZq_NoSkipHiggs_v14v1"),
-        # ("m_centralv2_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/central_tZq_NoSkipHiggs_v14v2"),
-        # ("m_JetMax1_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax1_NoSkipHiggs"),
-        # ("m_JetMax2_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax2_NoSkipHiggs"),
-        # ("m_0pNoMerge_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_NoMerge_NoSkipHiggs"),
-        # ("m_0pJetMax1_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_JetMax1_NoSkipHiggs"),
-        # ("m_0pJetMax2_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_JetMax2_NoSkipHiggs"),
-
-        #NOTE: The directory says 'JetMax2' but the pythia setting was really 'JetMax1'
-        # ('m_Match_JetMax1',"awightma/checkAnaTrees/tllq4f_MatchedNoHiggs0p_JetMax2_20191007_1044/v1/tllq4f_MatchedNoHiggs0p_JetMax2"),
-
-        # ('m_NoMLM_NoMerge',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggs_0j_NoMerge"),
-        # ('m_NoMLM_JetMax1',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggs_0j_JetMax1"),
-        # ('m_NoMLM_JetMax2',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggs_0j_JetMax2"),
-        # ('m_MLM_NoMerge',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggsMLM_0j_NoMerge"),
-        # ('m_MLM_JetMax1',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggsMLM_0j_JetMax1"),
-        # ('m_MLM_JetMax2',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggsMLM_0j_JetMax2"),
-
-        ##############################
-        # The most up-to-date samples with new naming
-        ##############################
-
-        # ("sp_JetMax2_1254","awightma/checkAnaTrees/test/lobster_test_20190927_1254/v1/tllq4f_JetMax2_FP"),
-        # ("sp_JetMax2_1308","awightma/checkAnaTrees/test/lobster_test_20191001_1308/v1/tllq4f_JetMax2"),
-        # ("sp_JetMax2_2005","awightma/checkAnaTrees/test/lobster_test_20191002_2005/v1/tllq4f_JetMax2"),
-        # ("sp_JetMax2_1556","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax2"),
-
-        # ("centralv1",       "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/central_tZq_v14v1"),
-        # ("centralv2",       "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/central_tZq_v14v2"),
-        # ("tchYesH_01p_JM1", "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax1"),
-        # ("tchYesH_01p_JM2", "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax2"),
-        # ("tchYesH_0p_NoMrg","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_NoMerge"),
-        # ("tchYesH_0p_JM1",  "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_JetMax1"),
-        # ("tchYesH_0p_JM2",  "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_JetMax2"),
-
-        # ("centralv1_NSH",       "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/central_tZq_NoSkipHiggs_v14v1"),
-        # ("centralv2_NSH",       "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/central_tZq_NoSkipHiggs_v14v2"),
-        # ("tchYesH_01p_JM1_NSH", "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax1_NoSkipHiggs"),
-        # ("tchYesH_01p_JM2_NSH", "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax2_NoSkipHiggs"),
-        # ("tchYesH_0p_NoMrg_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_NoMerge_NoSkipHiggs"),
-        # ("tchYesH_0p_JM1_NSH",  "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_JetMax1_NoSkipHiggs"),
-        # ("tchYesH_0p_JM2_NSH",  "awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_JetMax2_NoSkipHiggs"),
-
-        #NOTE: The directory says 'JetMax2' but the pythia setting was really 'JetMax1'
-        # ('MatchedNoH_JM1',"awightma/checkAnaTrees/tllq4f_MatchedNoHiggs0p_JetMax2_20191007_1044/v1/tllq4f_MatchedNoHiggs0p_JetMax2"),
-
-        # ('tchNoH_0p_NoMrg',    "awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggs_0j_NoMerge"),
-        # ('tchNoH_0p_JM1',      "awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggs_0j_JetMax1"),
-        # ('tchNoH_0p_JM2',      "awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggs_0j_JetMax2"),
-        # ('tchNoH_0p_MLM_NoMrg',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggsMLM_0j_NoMerge"),
-        # ('tchNoH_0p_MLM_JM1',  "awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggsMLM_0j_JetMax1"),
-        # ('tchNoH_0p_MLM_JM2',  "awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggsMLM_0j_JetMax2"),
-        # ('tchNoH_0p_xq0_NoMrg',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_xqcut0_20191008_0959/v1/tllq4f_tch_NoHiggs_0j_xqcut0_NoMerge"),
-        # ('tchNoH_0p_xq0_JM1',  "awightma/checkAnaTrees/tllq4f_tch_NoHiggs_xqcut0_20191008_0959/v1/tllq4f_tch_NoHiggs_0j_xqcut0_JetMax1"),
-        # ('tchNoH_0p_xq0_JM2',  "awightma/checkAnaTrees/tllq4f_tch_NoHiggs_xqcut0_20191008_0959/v1/tllq4f_tch_NoHiggs_0j_xqcut0_JetMax2"),
-
-        # ('tchNoH_0p_xq0_Stats',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_0j_xqcut0_2019-10-09_1808/v1/tllq4f_tch_NoHiggs_0j_xqcut0_NoMerge"),
-        
-        ##############################
-        # ana24 samples
-        ##############################
-        # ('a24_private_ttH',  "awightma/checkAnaTrees/ana24-priv_ana25-priv_ana25-cent_2019-10-17_1436/v1/a24_private_ttH"),
-        # ('a24_private_tHq',  "awightma/checkAnaTrees/ana24-priv_ana25-priv_ana25-cent_2019-10-17_1436/v1/a24_private_tHq"),
-        # ('a24_private_tllq', "awightma/checkAnaTrees/ana24-priv_ana25-priv_ana25-cent_2019-10-17_1436/v1/a24_private_tllq"),
-        # ('a24_private_ttll', "awightma/checkAnaTrees/ana24-priv_ana25-priv_ana25-cent_2019-10-17_1436/v1/a24_private_ttll"),
-        # ('a24_private_ttlnu',"awightma/checkAnaTrees/ana24-priv_ana25-priv_ana25-cent_2019-10-17_1436/v1/a24_private_ttlnu"),
-
-        ##############################
-        # ana25 samples
-        ##############################
-        # ('a25_private_ttH',  "awightma/checkAnaTrees/ana24-priv_ana25-priv_ana25-cent_2019-10-17_1436/v1/a25_private_ttH"),
-        # ('a25_private_tHq',  "awightma/checkAnaTrees/ana24-priv_ana25-priv_ana25-cent_2019-10-17_1436/v1/a25_private_tHq"),
-        # ('a25_private_tllq', "awightma/checkAnaTrees/ana24-priv_ana25-priv_ana25-cent_2019-10-17_1436/v1/a25_private_tllq"),
-        # ('a25_private_ttll', "awightma/checkAnaTrees/ana24-priv_ana25-priv_ana25-cent_2019-10-17_1436/v1/a25_private_ttll"),
-        # ('a25_private_ttlnu',"awightma/checkAnaTrees/ana24-priv_ana25-priv_ana25-cent_2019-10-17_1436/v1/a25_private_ttlnu"),
-
-        # ('a25_central_ttH',"awightma/checkAnaTrees/ana24-priv_ana25-priv_ana25-cent_2019-10-17_1436/v1/a25_central_ttH"),
-        # ('a25_central_tHq',"awightma/checkAnaTrees/ana24-priv_ana25-priv_ana25-cent_2019-10-17_1436/v1/a25_central_tHq"),
-        # ('a25_central_tZq',"awightma/checkAnaTrees/ana24-priv_ana25-priv_ana25-cent_2019-10-17_1436/v1/a25_central_tZq"),
-        # ('a25_central_ttZ',"awightma/checkAnaTrees/ana24-priv_ana25-priv_ana25-cent_2019-10-17_1436/v1/a25_central_ttZ"),
-        # ('a25_central_ttW',"awightma/checkAnaTrees/ana24-priv_ana25-priv_ana25-cent_2019-10-17_1436/v1/a25_central_ttW"),
-        ##############################
-        # Custom ordering of the samples
-        ##############################
-
-        # ("centralv2","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/central_tZq_v14v2"),
-        # ("tchYesH_01p_JM2","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax2"),
-        # ("tchYesH_01p_JM2_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_JetMax2_NoSkipHiggs"),
-        # ("tchYesH_0p_NoMrg","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_NoMerge"),
-        # ("tchYesH_0p_NoMrg_NSH","awightma/checkAnaTrees/test/lobster_test_20191003_1556/v1/tllq4f_0p_NoDim6_NoMerge_NoSkipHiggs"),
-        # ('MatchedNoH_JM1',"awightma/checkAnaTrees/tllq4f_MatchedNoHiggs0p_JetMax2_20191007_1044/v1/tllq4f_MatchedNoHiggs0p_JetMax2"),
-        # ('tchNoH_0p_NoMrg',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggs_0j_NoMerge"),
-        # ('tchNoH_0p_MLM_NoMrg',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_20191007_2018/v1/tllq4f_tch_NoHiggsMLM_0j_NoMerge"),
-        # ('tchNoH_0p_xq0_NoMrg',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_xqcut0_20191008_0959/v1/tllq4f_tch_NoHiggs_0j_xqcut0_NoMerge"),
-        # ('tchNoH_0p_xq0_Stats',"awightma/checkAnaTrees/tllq4f_tch_NoHiggs_0j_xqcut0_2019-10-09_1808/v1/tllq4f_tch_NoHiggs_0j_xqcut0_NoMerge"),
-    ]
-
-    spath = "awightma/checkAnaTrees/ana24-priv_ana25-priv_ana25-cent_2019-10-17_1436/v1"
-    ##############################
-    # ana24 samples
-    ##############################
-    a24_private_ttH   = Sample('a24priv_ttH',xsec=0.2151)
-    a24_private_tHq   = Sample('a24priv_tHq',xsec=7.7129e-2)
-    a24_private_tllq  = Sample('a24priv_tllq',xsec=0.0942)
-    a24_private_ttll  = Sample('a24priv_ttll',xsec=0.2529)
-    a24_private_ttlnu = Sample('a24priv_ttlnu',xsec=0.2043)
-
-    a24_private_ttH.addDirectory(spath,"a24_private_ttH")
-    a24_private_tHq.addDirectory(spath,"a24_private_tHq")
-    a24_private_tllq.addDirectory(spath,"a24_private_tllq")
-    a24_private_ttll.addDirectory(spath,"a24_private_ttll")
-    a24_private_ttlnu.addDirectory(spath,"a24_private_ttlnu")
+    # in pb
+    tZq_xsec = 0.2529
+    ttH_xsec = 0.2151
+    tHq_xsec = 7.7129e-2
+    ttZ_xsec = 0.2529
+    ttW_xsec = 0.2043
 
     ##############################
-    # ana25 samples
+    # ana28/ana29 samples
     ##############################
-    a25_private_ttH   = Sample('a25priv_ttH',xsec=0.2151)
-    a25_private_tHq   = Sample('a25priv_tHq',xsec=7.7129e-2)
-    a25_private_tllq  = Sample('a25priv_tllq',xsec=0.0942)
-    a25_private_ttll  = Sample('a25priv_ttll',xsec=0.2529)
-    a25_private_ttlnu = Sample('a25priv_ttlnu',xsec=0.2043)
+    # spath = "awightma/checkAnaTrees/ana28-priv_ana29-priv_NoStreaming_2019_11_11/v1"
+    spath = "awightma/checkAnaTrees/ana25-priv_ana25-cent_ana28-priv_ana29-priv_NoStreaming_2019_11_13/v1"
 
-    a25_private_ttH.addDirectory(spath,'a25_private_ttH')
-    a25_private_tHq.addDirectory(spath,'a25_private_tHq')
-    a25_private_tllq.addDirectory(spath,'a25_private_tllq')
-    a25_private_ttll.addDirectory(spath,'a25_private_ttll')
-    a25_private_ttlnu.addDirectory(spath,'a25_private_ttlnu')
+    a25_private_ttH = Sample('a25priv_ttH',xsec=ttH_xsec)
+    a25_private_tHq = Sample('a25priv_tHq',xsec=tHq_xsec)
+    a25_private_tZq = Sample('a25priv_tllq',xsec=tZq_xsec)
+    a25_private_ttZ = Sample('a25priv_ttll',xsec=ttZ_xsec)
+    a25_private_ttW = Sample('a25priv_ttlnu',xsec=ttW_xsec)
 
-    a25_central_ttH = Sample('a25cent_ttH',xsec=0.2151)
-    a25_central_tHq = Sample('a25cent_tHq',xsec=7.7129e-2)
-    a25_central_tZq = Sample('a25cent_tZq',xsec=0.0942)
-    a25_central_ttZ = Sample('a25cent_ttZ',xsec=0.2529)
-    a25_central_ttW = Sample('a25cent_ttW',xsec=0.2043)
+    a25_central_ttH = Sample('a25cent_ttH',xsec=ttH_xsec)
+    a25_central_tHq = Sample('a25cent_tHq',xsec=tHq_xsec)
+    a25_central_tZq = Sample('a25cent_tllq',xsec=tZq_xsec)
+    a25_central_ttZ = Sample('a25cent_ttll',xsec=ttZ_xsec)
+    a25_central_ttW = Sample('a25cent_ttlnu',xsec=ttW_xsec)
+
+    a28_private_ttH = Sample('a28priv_ttH',xsec=ttH_xsec)
+    a28_private_ttW = Sample('a28priv_ttlnu',xsec=ttW_xsec)
+    a28_private_ttZ = Sample('a28priv_ttll',xsec=ttZ_xsec)
+    a28_private_tZq = Sample('a28priv_tllq',xsec=tZq_xsec)
+    a28_private_tHq = Sample('a28priv_tHq',xsec=tHq_xsec)
+    
+    a29_private_ttH = Sample('a29priv_ttH',xsec=ttH_xsec)
+    a29_private_ttW = Sample('a29priv_ttlnu',xsec=ttW_xsec)
+    a29_private_ttZ = Sample('a29priv_ttll',xsec=ttZ_xsec)
+    a29_private_tZq = Sample('a29priv_tllq',xsec=tZq_xsec)
+    a29_private_tHq = Sample('a29priv_tHq',xsec=tHq_xsec)
 
     a25_central_ttH.addDirectory(spath,'a25_central_ttH')
-    a25_central_tHq.addDirectory(spath,'a25_central_tHq')
-    a25_central_tZq.addDirectory(spath,'a25_central_tZq')
-    a25_central_ttZ.addDirectory(spath,'a25_central_ttZ')
     a25_central_ttW.addDirectory(spath,'a25_central_ttW')
+    a25_central_ttZ.addDirectory(spath,'a25_central_ttZ')
+    a25_central_tZq.addDirectory(spath,'a25_central_tZq')
+    a25_central_tHq.addDirectory(spath,'a25_central_tHq')
 
-    spath = "awightma/checkAnaTrees/ana26_PDF-fix_2019-10-20_1440/v1"
-    ##############################
-    # ana25 samples
-    ##############################
-    a26_private_tllq = Sample('a26priv_tllq',xsec=0.2529)
-    a26_central_tZq  = Sample('a26cent_tZq',xsec=0.2529)
+    a25_private_ttH.addDirectory(spath,'a25_private_ttH')
+    a25_private_ttW.addDirectory(spath,'a25_private_ttW')
+    a25_private_ttZ.addDirectory(spath,'a25_private_ttZ')
+    a25_private_tZq.addDirectory(spath,'a25_private_tZq')
+    a25_private_tHq.addDirectory(spath,'a25_private_tHq')
 
-    a26_private_tllq.addDirectory(spath,'a26_private_tllq')
-    a26_central_tZq.addDirectory(spath,'a26_central_tZq')
+    a28_private_ttH.addDirectory(spath,'a28_private_ttH')
+    a28_private_ttW.addDirectory(spath,'a28_private_ttW')
+    a28_private_ttZ.addDirectory(spath,'a28_private_ttZ')
+    a28_private_tZq.addDirectory(spath,'a28_private_tZq')
+    a28_private_tHq.addDirectory(spath,'a28_private_tHq')
+
+    a29_private_ttH.addDirectory(spath,'a29_private_ttH')
+    a29_private_ttW.addDirectory(spath,'a29_private_ttW')
+    a29_private_ttZ.addDirectory(spath,'a29_private_ttZ')
+    a29_private_tZq.addDirectory(spath,'a29_private_tZq')
+    a29_private_tHq.addDirectory(spath,'a29_private_tHq')
+
+    ##############################
+    # ana29 (no duplicates) and SMCheck samples
+    ##############################
+    spath = 'awightma/checkAnaTrees/ana29-priv-NoDuplicates_HanOrig-HanV4-SMCheck_2019_11_20/v1'
+    a29noDupes_private_ttH = Sample('a29privNoDupe_ttH',xsec=ttH_xsec)
+    a29noDupes_private_ttW = Sample('a29privNoDupe_ttW',xsec=ttW_xsec)
+    a29noDupes_private_ttZ = Sample('a29privNoDupe_ttZ',xsec=ttZ_xsec)
+    a29noDupes_private_tZq = Sample('a29privNoDupe_tZq',xsec=tZq_xsec)
+    a29noDupes_private_tHq = Sample('a29privNoDupe_tHq',xsec=tHq_xsec)
+
+    ttH_HanOrigSMCheck = Sample('ttH_HanOrigSMCheck',xsec=ttH_xsec)
+    ttZ_HanOrigSMCheck = Sample('ttZ_HanOrigSMCheck',xsec=ttZ_xsec)
+    ttW_HanOrigSMCheck = Sample('ttW_HanOrigSMCheck',xsec=ttW_xsec)
+
+    ttH_HanV4SMCheck = Sample('ttH_HanV4SMCheck',xsec=ttH_xsec)
+    ttZ_HanV4SMCheck = Sample('ttZ_HanV4SMCheck',xsec=ttZ_xsec)
+    ttW_HanV4SMCheck = Sample('ttW_HanV4SMCheck',xsec=ttW_xsec)
+    tZq_HanV4SMCheck = Sample('tZq_HanV4SMCheck',xsec=tZq_xsec)
+    tHq_HanV4SMCheck = Sample('tHq_HanV4SMCheck',xsec=tHq_xsec)
+
+    a29noDupes_private_ttH.addDirectory(spath,'a29_private_ttH')
+    a29noDupes_private_ttW.addDirectory(spath,'a29_private_ttW')
+    a29noDupes_private_ttZ.addDirectory(spath,'a29_private_ttZ')
+    a29noDupes_private_tZq.addDirectory(spath,'a29_private_tZq')
+    a29noDupes_private_tHq.addDirectory(spath,'a29_private_tHq')
+
+    ttH_HanOrigSMCheck.addDirectory(spath,'ttH_HanOrigSMCheck')
+    ttZ_HanOrigSMCheck.addDirectory(spath,'ttZ_HanOrigSMCheck')
+    ttW_HanOrigSMCheck.addDirectory(spath,'ttW_HanOrigSMCheck')
+
+    ttH_HanV4SMCheck.addDirectory(spath,'ttH_HanV4SMCheck')
+    ttZ_HanV4SMCheck.addDirectory(spath,'ttZ_HanV4SMCheck')
+    ttW_HanV4SMCheck.addDirectory(spath,'ttW_HanV4SMCheck')
+    tZq_HanV4SMCheck.addDirectory(spath,'tZq_HanV4SMCheck')
+    tHq_HanV4SMCheck.addDirectory(spath,'tHq_HanV4SMCheck')
+
 
 
     inputs = [
-        # a25_central_ttH,
-        # a25_central_tHq,
-        # a25_central_tZq,
-        # a25_central_ttZ,
-        # a25_central_ttW,
-
-        # a24_private_ttH,
-        # a24_private_tHq,
-        # a24_private_tllq,
-        # a24_private_ttll,
-        # a24_private_ttlnu,
-
         # a25_private_ttH,
+        # a25_private_ttW,
+        # a25_private_ttZ,
+        # a25_private_tZq,
         # a25_private_tHq,
-        # a25_private_tllq,
-        # a25_private_ttll,
-        # a25_private_ttlnu,
 
-        a26_private_tllq,
+        # a25_central_ttH,
+        # a25_central_ttW,
+        # a25_central_ttZ,
+        # a25_central_tZq,
+        # a25_central_tHq,
 
-        a26_central_tZq,
+        a28_private_ttH,
+        a29_private_ttH,
+        a29noDupes_private_ttH,
+        ttH_HanOrigSMCheck,
+        ttH_HanV4SMCheck,
+
+        a28_private_ttW,
+        a29_private_ttW,
+        a29noDupes_private_ttW,
+        ttW_HanOrigSMCheck,
+        ttW_HanV4SMCheck,
+        
+        a28_private_ttZ,
+        a29_private_ttZ,
+        a29noDupes_private_ttZ,
+        ttZ_HanOrigSMCheck,
+        ttZ_HanV4SMCheck,
+        
+        a28_private_tZq,
+        a29_private_tZq,
+        a29noDupes_private_tZq,
+        tZq_HanV4SMCheck,
+
+        # a28_private_tHq,
+        # a29_private_tHq,
+        # a29noDupes_private_tHq,
+        # tHq_HanV4SMCheck,
     ]
 
     # dir_name = 'testing_{tstamp}'.format(tstamp=TIMESTAMP)
     # sub_dir = 'test'
 
-    sub_dir = 'anatest_checks'
-    dir_name = 'ttH_{tstamp}'.format(tstamp=TIMESTAMP)
+    sub_dir = 'a28-a29_checks'
+    dir_name = 'tZq_{tstamp}'.format(tstamp=TIMESTAMP2)
 
     move_output = False
     remake_merged_files = False # Force the recreation of the merged root files
@@ -442,52 +435,17 @@ def read_anaTreeChecks():
         output_dir = pjoin(USER_DIR,'www/eft_stuff/misc/anacheck_plots',sub_dir,dir_name)
         print "Output Dir: {dir}".format(dir=output_dir)
         if not os.path.exists(output_dir):
-            os.mkdir(output_dir)
+            # os.mkdir(output_dir)
+            os.makedirs(output_dir)
         clean_dir(output_dir,["^.*\.png$","^index.html$"])
         imgs = get_files('.',targets=["^.*\.png$"])
         move_files(files=imgs,target=output_dir)
+        make_html(output_dir)
 
-# Untested!
 def plot_systematic_variations():
-    geoff_dir = "/afs/crc.nd.edu/user/g/gsmith15/Public/for_Tony/"
-    tony_dir  = "/afs/crc.nd.edu/user/a/awightma/Public/for_tony/"
-    hist_dir  = "/afs/crc.nd.edu/user/a/awightma/CMSSW_Releases/CMSSW_8_1_0/src/CombineHarvester/TopEFT/hist_files/"
+    local_dir = os.path.join(CMSSW_BASE,'src/EFTMultilepton/TemplateMakers/test/MakeGoodPlot2')
 
-    fname_a15   = "TOP-19-001_unblinded_v1.root"
-    fname_a16   = "anatest16.root"
-    fname_a17   = "anatest17.root"
-    fname_a18   = "anatest18.root"
-    fname_a19   = "anatest19.root"
-    fname_a20   = "anatest20.root"
-    fname_a21   = "anatest21.root"
-    fname_a22   = "anatest22.root"
-    fname_a23v3 = "anatest23_v3.root"
-    fname_a24   = "anatest24.root"
-    fname_a25   = "anatest25.root"
-    fname_a26   = "anatest26.root"
-
-    fname_a29   = "anatest29.root"
-    fname_a30   = "anatest30.root"
-
-    fpath_a15 = os.path.join(hist_dir,fname_a15)
-    fpath_a16 = os.path.join(hist_dir,fname_a16)
-    fpath_a17 = os.path.join(hist_dir,fname_a17)
-    fpath_a18 = os.path.join(hist_dir,fname_a18)
-    fpath_a19 = os.path.join(hist_dir,fname_a19)
-    fpath_a20 = os.path.join(hist_dir,fname_a20)
-    fpath_a22 = os.path.join(hist_dir,fname_a22)
-
-    fpath_a21 = os.path.join(geoff_dir,fname_a21)
-
-    fpath_a23 = os.path.join(tony_dir,fname_a23v3)
-    fpath_a24 = os.path.join(tony_dir,fname_a24)
-    fpath_a25 = os.path.join(tony_dir,fname_a25)
-    fpath_a26 = os.path.join(tony_dir,fname_a26)
-    fpath_a29 = os.path.join(tony_dir,fname_a29)
-    fpath_a30 = os.path.join(tony_dir,fname_a30)
-
-    testing_dir = "/afs/crc.nd.edu/user/a/awightma/CMSSW_Releases/from_govner/CMSSW_9_4_6/src/EFTMultilepton/TemplateMakers/test/MakeGoodPlot2"
-    fpath_testing = os.path.join(testing_dir,"testing.root")
+    fpath_testing = os.path.join(local_dir,"testing.root")
 
     # fpath = fpath_a22
     # fpath = fpath_a29
@@ -506,8 +464,8 @@ def plot_systematic_variations():
     # samples = ['ttlnu_16D']
     samples = ['ttW','ttlnu_16D']
 
-    # syst = "Q2RF"
-    syst = "PDF"
+    syst = "Q2RF"
+    # syst = "PDF"
 
     move_output = False
     web_dir = "/afs/crc.nd.edu/user/a/awightma/www"
@@ -553,23 +511,6 @@ def compare_anatest_files():
 
     merged_dir = "/tmpscratch/users/awightma/analysisWorkflow/mergedHists/"
 
-    fname_a15   = "TOP-19-001_unblinded_v1.root"
-    fname_a16   = "anatest16.root"
-    fname_a17   = "anatest17.root"
-    fname_a18   = "anatest18.root"
-    fname_a19   = "anatest19.root"
-    fname_a20   = "anatest20.root"
-    fname_a21   = "anatest21.root"
-    fname_a22   = "anatest22.root"
-    fname_a23v3 = "anatest23_v3.root"
-    fname_a24   = "anatest24.root"
-    fname_a25   = "anatest25.root"
-    fname_a26   = "anatest26.root"
-    fname_a27   = "anatest27.root"
-    fname_a28   = "anatest28.root"
-    fname_a29   = "anatest29.root"
-    fname_a30   = "anatest30.root"
-
     fname_data           = "temp_data.root"
     fname_MuonEG         = "temp_MuonEG.root"
     fname_DoubleMuon     = "temp_DoubleMuon.root"
@@ -583,24 +524,7 @@ def compare_anatest_files():
 
     fname_tllq = 'temp_tllq_multidim.root'
 
-    fpath_a15 = os.path.join(hist_dir,fname_a15)
-    fpath_a16 = os.path.join(hist_dir,fname_a16)
-    fpath_a17 = os.path.join(hist_dir,fname_a17)
-    fpath_a18 = os.path.join(hist_dir,fname_a18)
-    fpath_a19 = os.path.join(hist_dir,fname_a19)
-    fpath_a20 = os.path.join(hist_dir,fname_a20)
-    fpath_a22 = os.path.join(hist_dir,fname_a22)
-
-    fpath_a21 = os.path.join(geoff_dir,fname_a21)
-
-    fpath_a23 = os.path.join(tony_dir,fname_a23v3)
-    fpath_a24 = os.path.join(tony_dir,fname_a24)
-    fpath_a25 = os.path.join(tony_dir,fname_a25)
-    fpath_a26 = os.path.join(tony_dir,fname_a26)
-    fpath_a27 = os.path.join(tony_dir,fname_a27)
-    fpath_a28 = os.path.join(tony_dir,fname_a28)
-    fpath_a29 = os.path.join(tony_dir,fname_a29)
-    fpath_a30 = os.path.join(tony_dir,fname_a30)
+    fname_testing = 'testing.root'
 
     fpath_data_a26 = os.path.join(merged_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_data)
 
@@ -621,6 +545,7 @@ def compare_anatest_files():
     fpath_tZq_incl_higgs = os.path.join(local_dir,fname_tZq_incl_higgs)
     fpath_tZq_base = os.path.join(local_dir,fname_tZq_base)
     fpath_tZq_v14v1_NSH = os.path.join(local_dir,fname_tZq_v14v1_NSH)
+    fpath_testing = os.path.join(local_dir,fname_testing)
 
     fpath_tllq_a25 = os.path.join(merged_dir,"2019_10_13_full_MC",fname_tllq)
     fpath_tllq_a28 = os.path.join(merged_dir,"2019_10_19_full_MC",fname_tllq)
@@ -657,7 +582,26 @@ def compare_anatest_files():
         # (fpath_a25,fpath_a28),
         # (fpath_a26,fpath_a28),
         # (fpath_a28,fpath_a29),
-        (fpath_a29,fpath_a30),
+        # (fpath_a29,fpath_a30),
+        # (fpatha_28,fpath_a31),
+        # (fpath_a28,fpath_a28_redoFull)
+
+        # (fpath_a30,fpath_testing)
+
+        # (fpath_a28_redoFull,fpath_a29_noDupes_v2),
+        # (fpath_a29_noDupes,fpath_a29_noDupes_v2),
+        # (fpath_a31,fpath_a29_noDupes_v2),
+        # (fpath_R6B1,fpath_a29_noDupes_v2),
+        # (fpath_R6B1_NSH,fpath_a29_noDupes_v2),
+        # (fpath_R6e2_NSH,fpath_a29_noDupes_v2),
+
+        (fpath_tllq_R6B1,fpath_tllq_R6B2),
+        (fpath_tllq_R6B1,fpath_tllq_R6B3),
+        (fpath_tllq_R6B2,fpath_tllq_R6B3),
+
+
+        # (fpath_HanV4SMChecks,fpath_HanOrigSMChecks),
+
     ]
 
     for idx,tup in enumerate(compare):
@@ -672,11 +616,65 @@ def compare_anatest_files():
         # run_process(cmd,verbose=True,indent=0)
         print "#"*100
 
+def make_yield_table():
+    # fpath = fpath_a29_noDupes
+
+    private_signal = ["tllq_16D","ttH_16D","ttll_16D","ttlnu_16D","tHq_16D"]
+    central_signal = ["tZq","ttH","ttZ","ttW"]
+    central_bkgd = ["ttGJets","WZ","WWW"]
+
+    # Dictionary map to set the yield table name -- the (0,0) cell of the table
+    fname_map = {
+        'private_ttH-ttZ-ttW_HanV4_R6B1Only': 'R6B1Only',
+        'private_ttH-ttZ-ttW_HanV4_R6B1Only_NSH': 'R6B1Only_NSH',
+        'private_tZq_HanV4_R6-extra2Only_NSH': 'tllq_R6e2NSH',
+        'private_sgnl_redoHistMaking-a29_NoStreaming': 'a29_redoHist',
+        'private_sgnl_redoTrees-a29_NoStreaming': 'a29_redoFull',
+        'private_sgnl_redoTrees-a29_NoStreaming_v2': 'a29_redoFull',
+        'anatest28_redoFullWF-NoStreaming': 'a28_redoFull',
+        'anatest29_NoDuplicates': 'a29_noDupes',
+        'anatest29_NoDuplicatesV2': 'a29_noDupesV2',
+        'private_sgnl_HanV4_SMCheck': 'HanV4SMCheck',
+        'private_sgnl_HanOriginal_SMCheck': 'HanOrigSMChk',
+        'private_sgnl_tllq_R6B1': 'tllq_R6B1',
+        'private_sgnl_tllq_R6B2': 'tllq_R6B2',
+        'private_sgnl_tllq_R6B3': 'tllq_R6B3',
+    }
+
+    lst = []
+    # lst.extend([fpath_a28,fpath_a28_redoFull,fpath_a29,fpath_a29_noDupes,fpath_a31])
+    # lst.extend([
+    #     fpath_a28_redoFull,
+    #     # fpath_a31,
+    #     # fpath_a29_noDupes,
+    #     fpath_a29_noDupes_v2,
+    #     fpath_HanV4SMChecks,
+    #     fpath_HanOrigSMChecks
+    # ])
+    lst.extend([
+        fpath_tllq_R6B1,
+        fpath_tllq_R6B2,
+        fpath_tllq_R6B3,
+    ])
+    # lst.extend([fpath_R6B1,fpath_R6B1_NSH,fpath_R6e2_NSH])
+    # lst.extend([fpath_a29_redoHist,fpath_a29_redoFull_v2])
+    for fp in lst:
+        h,t = os.path.split(fp)
+        name = t.rsplit('.')[0]
+        if fname_map.has_key(name):
+            name = fname_map[name]
+        print "Making yield table for {fp}".format(fp=fp)
+        cmd = ["root","-b","-l","-q"]
+        cmd_args = "\"{fp}\",\"{name}\"".format(fp=fp,name=name)
+        cmd.extend(['make_yield_table.C({args})'.format(args=cmd_args)])
+        subprocess.check_call(cmd)
+
 def main():
     # check_anaTrees()
-    # read_anaTreeChecks()
+    read_anaTreeChecks()
     # plot_systematic_variations()
-    compare_anatest_files()
+    # compare_anatest_files()
+    # make_yield_table()
 
 
 if __name__ == "__main__":
