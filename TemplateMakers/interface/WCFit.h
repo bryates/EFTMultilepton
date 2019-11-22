@@ -438,8 +438,8 @@ public:
             return;
         }
 
-        //int new_idx1,new_idx2,i,j;
-        int new_idx1,i;
+        int new_idx1,new_idx2,i,j;
+        // int new_idx1,i;
         std::pair<int,int> idx_pair1,idx_pair2;
 
         this->names.push_back(new_name);
@@ -449,15 +449,13 @@ public:
             idx_pair1 = std::make_pair(new_idx1,i);
             this->pairs.push_back(idx_pair1);
             this->coeffs.push_back(0.0);   // Extending makes no assumptions about the fit coefficients
-            //new_idx2 = this->pairs.size() - 1;
             // Extend the err_pairs and err_coeffs vectors
-            /*
+            new_idx2 = this->pairs.size() - 1;
             for (j = 0; j <= new_idx2; j++) {
                 idx_pair2 = std::make_pair(new_idx2,j);
                 this->err_pairs.push_back(idx_pair2);
                 this->err_coeffs.push_back(0.0);
             }
-            */
         }
     }
 
@@ -502,8 +500,7 @@ public:
 
         TDecompSVD svd(A);
         bool ok;
-        const TVectorD c_x = svd.Solve(b,ok);    // Solve for the fit parameters
-        /*
+        const TVectorD c_x = svd.Solve(b,ok);    // Solve for the fit parameters        
         for (uint i = 0; i < this->errSize(); i++) {
             if (i < this->size()) {
                 this->coeffs.at(i) = c_x(i);
@@ -511,10 +508,10 @@ public:
             idx_pair = this->err_pairs.at(i);
             this->err_coeffs.at(i) = (idx_pair.first == idx_pair.second) ? c_x(idx_pair.first)*c_x(idx_pair.second) : 2*c_x(idx_pair.first)*c_x(idx_pair.second);
         }
-        */
-        for (uint i = 0; i < this->size(); i++) {
-            this->coeffs.at(i) = c_x(i);
-        }
+        
+        // for (uint i = 0; i < this->size(); i++) {
+        //     this->coeffs.at(i) = c_x(i);
+        // }
     }
 };
 
