@@ -28,7 +28,6 @@ private:
     std::vector<double> err_coeffs; // The error fit structure constants
 
     std::string tag;    // Names the fit, for id
-    WCPoint start_pt;   // The starting point used by MadGraph to generate the sample
 
     int kPad = 12;
 
@@ -52,15 +51,6 @@ public:
         this->tag = _tag;
     }
 
-    // Specify the MadGraph starting point
-    void setStart(WCPoint pt) {
-        this->start_pt = pt;
-    }
-
-    void setStart(std::string id_tag, double wgt_val) {
-        this->start_pt = WCPoint(id_tag,wgt_val);
-    }
-
     // The number of pairs in the fit, should be equal to 1 + 2N + N(N-1)/2
     uint size() {
         //Note: pairs.size() and coeffs.size() should always be in 1-to-1 correspondance!
@@ -75,10 +65,6 @@ public:
 
     std::string getTag() {
         return this->tag;
-    }
-
-    WCPoint getStart() {
-        return this->start_pt;
     }
 
     // A vector of all non-zero WCs in the fit (includes 'sm')
@@ -277,7 +263,6 @@ public:
             this->err_pairs = added_fit.getErrorPairs();
             this->err_coeffs = added_fit.getErrorCoefficients();
             this->tag = added_fit.getTag();
-            this->start_pt = added_fit.getStart();
             return;
         }
 
