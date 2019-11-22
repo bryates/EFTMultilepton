@@ -27,7 +27,6 @@ private:
     std::vector<std::pair<int,int>> err_pairs;  // The pair dublets are the indicies of the 'pairs' vector
     std::vector<double> err_coeffs; // The error fit structure constants
 
-    std::vector<WCPoint> points;    // The WCPoints used to generate the fit
     std::string tag;    // Names the fit, for id
     WCPoint start_pt;   // The starting point used by MadGraph to generate the sample
 
@@ -80,10 +79,6 @@ public:
 
     WCPoint getStart() {
         return this->start_pt;
-    }
-
-    std::vector<WCPoint> getFitPoints() {
-        return this->points;
     }
 
     // A vector of all non-zero WCs in the fit (includes 'sm')
@@ -195,40 +190,6 @@ public:
         return this->err_coeffs.at(idx);
     }
 
-    // Returns the lowest strength for a particular WC from among all fit points
-    double getLowStrength(std::string wc_name) {
-        if (this->points.size() == 0) {
-            // No fit points were specified
-            return 0.0;
-        } else if (this->points.size() == 1) {
-            // Only one fit point was specified
-            return this->points.at(0).getStrength(wc_name);
-        }
-        double strength = this->points.at(0).getStrength(wc_name);
-        for (uint i = 1; i < this->points.size(); i++) {
-            if (this->points.at(i).getStrength(wc_name) < strength) {
-                strength = this->points.at(i).getStrength(wc_name);
-            }
-        }
-        return strength;
-    }
-
-    // Returns the largest strength for a particular WC from among all fit points
-    double getHighStrength(std::string wc_name) {
-        if (this->points.size() == 0) {
-            return 0.0;
-        } else if (this->points.size() == 1) {
-            return this->points.at(0).getStrength(wc_name);
-        }
-        double strength = this->points.at(0).getStrength(wc_name);
-        for (uint i = 1; i < this->points.size(); i++) {
-            if (this->points.at(i).getStrength(wc_name) > strength) {
-                strength = this->points.at(i).getStrength(wc_name);
-            }
-        }
-        return strength;
-    }
-
     // Returns the dimensionality of the fit (i.e. the number of WCs)
     int getDim() {
         return this->names.size() - 1;  // Exclude 'sm' term
@@ -306,7 +267,6 @@ public:
 
     //TODO: Change this to pass by reference
     void addFit(WCFit added_fit) {
-        
         if (added_fit.size() == 0) return;
 
         if (this->size() == 0) {
@@ -316,7 +276,6 @@ public:
             this->coeffs = added_fit.getCoefficients();
             this->err_pairs = added_fit.getErrorPairs();
             this->err_coeffs = added_fit.getErrorCoefficients();
-            this->points = added_fit.getFitPoints();
             this->tag = added_fit.getTag();
             this->start_pt = added_fit.getStart();
             return;
@@ -329,8 +288,7 @@ public:
             std::cout << "[ERROR] WCFit mismatch in error pairs! (addFit)" << std::endl;
             return;
         }
-
-        /*
+        
         for (uint i = 0; i < this->errSize(); i++) {
             if (i < this->size()) {
                 this->coeffs.at(i) += added_fit.getCoefficient(i);
@@ -338,10 +296,10 @@ public:
             // It is *very* important that we keep track of the err fit coeffs separately, since Sum(f^2) != (Sum(f))^2
             this->err_coeffs.at(i) += added_fit.getErrorCoefficient(i);
         }
-        */
-        for (uint i = 0; i < this->size(); i++) {
-            this->coeffs.at(i) += added_fit.getCoefficient(i);
-        }
+        
+        // for (uint i = 0; i < this->size(); i++) {
+        //     this->coeffs.at(i) += added_fit.getCoefficient(i);
+        // }
     }
 
     //NOTE: Should check that we are scaling the error fit properly...
@@ -360,7 +318,6 @@ public:
         this->coeffs.clear();
         this->err_pairs.clear();
         this->err_coeffs.clear();
-        this->points.clear();
     }
 
     // Save the fit to a text file
@@ -462,15 +419,14 @@ public:
     // Extract a n-Dim quadratic fit from a collection of WC phase space points
     void fitPoints(std::vector<WCPoint> pts) {
         this->clear();
-        this->points = pts;
 
-        if (this->points.size() == 0) {
+        if (pts.size() == 0) {
             // No points to fit!
             return;
         }
 
         this->extend(kSMstr);   // The SM term is always first
-        for (auto& kv: this->points.at(0).inputs) { // Assumes that all WCPoints have exact same list of WC names
+        for (auto& kv: pts.at(0).inputs) { // Assumes that all WCPoints have exact same list of WC names
             this->extend(kv.first);
         }
 
