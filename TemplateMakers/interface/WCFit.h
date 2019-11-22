@@ -25,7 +25,7 @@ private:
     std::vector<double> coeffs; // The fit structure constants
 
     std::vector<std::pair<int,int>> err_pairs;  // The pair dublets are the indicies of the 'pairs' vector
-    std::vector<double> err_coeffs; // The error fit structure constants
+    std::vector<float> err_coeffs; // The error fit structure constants
 
     std::string tag;    // Names the fit, for id
 
@@ -86,7 +86,7 @@ public:
         return this->err_pairs;
     }
 
-    std::vector<double> getErrorCoefficients() {
+    std::vector<float> getErrorCoefficients() {
         return this->err_coeffs;
     }
 
@@ -168,7 +168,7 @@ public:
     }
 
     // Can only access the error coefficients directly via the err_coeffs vector
-    double getErrorCoefficient(uint idx) {
+    float getErrorCoefficient(uint idx) {
         if (idx >= this->errSize()) {
             std::cout << "[ERROR] WCFit tried to access invalid index " << idx << std::endl;
             throw;
