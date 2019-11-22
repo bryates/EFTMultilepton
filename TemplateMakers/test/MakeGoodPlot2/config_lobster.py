@@ -19,24 +19,30 @@ lobster_step = "histMaking"
 # master_label = 'EFT_CRC_histMaking_{tstamp}'.format(tstamp=tstamp1)
 master_label = 'EFT_anaWF_histMaking_{tstamp}'.format(tstamp=tstamp1)
 
-out_ver = "v1"
-out_tag = "test/lobster_test_{tstamp}".format(tstamp=tstamp1)
-# out_tag = "private_sgnl_{tstamp}".format(tstamp=tstamp2)
-# out_tag = "special/geoff_inputfiles_central_bkgd_{tstamp}".format(tstamp=tstamp2)
-# out_tag = "special/tllq4f_SM_t-channel_{tstamp}_0partons".format(tstamp=tstamp2)
-# out_tag = "special/central_new_pmx_samples_{tstamp}".format(tstamp=tstamp2)
+ver = "v1"
+tag = "test/lobster_test_{tstamp}".format(tstamp=tstamp1)
+# tag = "private_sgnl_{tstamp}".format(tstamp=tstamp2)
+# tag = "special/geoff_inputfiles_central_bkgd_{tstamp}".format(tstamp=tstamp2)
+# tag = "special/tllq4f_SM_t-channel_{tstamp}_0partons".format(tstamp=tstamp2)
+# tag = "special/central_new_pmx_samples_{tstamp}".format(tstamp=tstamp2)
 
-# out_tag = "special/data-nominal_newGT-94X_dataRun2_v11_{tstamp}".format(tstamp=tstamp2)
-# out_tag = "special/data-ddbrs_newGT-94X_dataRun2_v11_{tstamp}".format(tstamp=tstamp2)
-# out_tag = "special/data-fakes_newGT-94X_dataRun2_v11_{tstamp}".format(tstamp=tstamp2)
-# out_tag = "special/data-QFs_newGT-94X_dataRun2_v11_{tstamp}".format(tstamp=tstamp2)
+# tag = "special/data-nominal_newGT-94X_dataRun2_v11_{tstamp}".format(tstamp=tstamp2)
+# tag = "special/data-ddbrs_newGT-94X_dataRun2_v11_{tstamp}".format(tstamp=tstamp2)
+# tag = "special/data-fakes_newGT-94X_dataRun2_v11_{tstamp}".format(tstamp=tstamp2)
+# tag = "special/data-QFs_newGT-94X_dataRun2_v11_{tstamp}".format(tstamp=tstamp2)
 
-# out_tag = "full_data_{tstamp}".format(tstamp=tstamp2)
-# out_tag = "full_MC_{tstamp}".format(tstamp=tstamp2)
+# tag = "full_data_{tstamp}".format(tstamp=tstamp2)
+# tag = "full_MC_{tstamp}".format(tstamp=tstamp2)
 
-workdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=out_tag,ver=out_ver,path="/tmpscratch/users/$USER/analysisWorkflow")
-plotdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=out_tag,ver=out_ver,path="~/www/lobster")
-output_path  = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=out_tag,ver=out_ver,path="/store/user/$USER")
+workdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=tag,ver=ver,path="/tmpscratch/users/$USER/analysisWorkflow")
+plotdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=tag,ver=ver,path="~/www/lobster")
+output_path  = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=tag,ver=ver,path="/store/user/$USER")
+
+URI_HDFS   = "{scheme}://{host}:{port}".format(scheme="hdfs",host="eddie.crc.nd.edu",port="19000")
+URI_ROOT   = "{scheme}://{host}/".format(scheme="root",host="deepthought.crc.nd.edu") # Note the extra slash after the hostname!
+URI_GSIFTP = "{scheme}://{host}".format(scheme="gsiftp",host="T3_US_NotreDame")
+URI_SRM    = "{scheme}://{host}".format(scheme="srm",host="T3_US_NotreDame")
+URI_FILE   = "{scheme}://{host}/hadoop".format(scheme="file",host="")
 
 ## current ##
 isdata = False
@@ -54,23 +60,22 @@ if isdata:
     #ddbr_or_nom=['_Fakes','_QFs']
     #ddbr_or_nom = ['nom']
 
-input_path = "/store/user/"
+input_path = "/store/user"
 storage = StorageConfiguration(
     input=[
-        "hdfs://eddie.crc.nd.edu:19000"  + input_path,
-        "root://deepthought.crc.nd.edu/" + input_path,  # Note the extra slash after the hostname!
-        "gsiftp://T3_US_NotreDame"       + input_path,
-        "srm://T3_US_NotreDame"          + input_path,
+        "{uri}{path}".format(uri=URI_HDFS  ,path=input_path),
+        "{uri}{path}".format(uri=URI_ROOT  ,path=input_path),
+        "{uri}{path}".format(uri=URI_GSIFTP,path=input_path),
+        "{uri}{path}".format(uri=URI_SRM   ,path=input_path),
     ],
     output=[
-        "hdfs://eddie.crc.nd.edu:19000"  + output_path,
-        # ND is not in the XrootD redirector, thus hardcode server.
-        "root://deepthought.crc.nd.edu/" + output_path, # Note the extra slash after the hostname!
-        "gsiftp://T3_US_NotreDame"       + output_path,
-        "srm://T3_US_NotreDame"          + output_path,
-        "file:///hadoop"                 + output_path,
+        "{uri}{path}".format(uri=URI_HDFS  ,path=output_path),
+        "{uri}{path}".format(uri=URI_ROOT  ,path=output_path),
+        "{uri}{path}".format(uri=URI_GSIFTP,path=output_path),
+        "{uri}{path}".format(uri=URI_SRM   ,path=output_path),
+        "{uri}{path}".format(uri=URI_FILE  ,path=output_path),
     ],
-    disable_input_streaming=True
+    disable_input_streaming = True
 )
 
 
