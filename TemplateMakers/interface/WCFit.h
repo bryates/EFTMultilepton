@@ -91,7 +91,7 @@ public:
     }
 
     // Returns a (ordered) pair of indicies corresponding to a particular quadratic term
-    std::pair<int,int> getIndexPair(std::string n1, std::string n2) {
+    std::pair<int,int> getIndexPair(std::string & n1, std::string & n2) {
         // Convention note: idx1 <= idx2 always!
         int idx1 = -1;
         int idx2 = -1;
@@ -133,7 +133,7 @@ public:
     }
 
     // Returns a particular structure constant from the fit function
-    double getCoefficient(std::string n1, std::string n2) {
+    double getCoefficient(std::string & n1, std::string & n2) {
         // Note: This is a very brute force method of finding the corresponding coefficient,
         //       the overloaded function method should be used whenever possible
         auto idx_pair = this->getIndexPair(n1,n2);
@@ -182,7 +182,7 @@ public:
     }
 
     // Checks to see if the fit includes the specified WC
-    bool hasCoefficient(std::string wc_name) {
+    bool hasCoefficient(std::string & wc_name) {
         for (auto& s: this->names) {
             if (s == wc_name) {
                 return true;
@@ -212,7 +212,7 @@ public:
     }
 
     // Overloaded function to evaluate the fit in 1-D at a specific WC
-    double evalPoint(std::string wc_name,double val) {
+    double evalPoint(std::string & wc_name,double val) {
         WCPoint pt;
         pt.setStrength(wc_name,val);
         return this->evalPoint(&pt);
@@ -245,14 +245,13 @@ public:
         return sqrt(v);
     }
 
-    double evalPointError(std::string wc_name,double val) {
+    double evalPointError(std::string & wc_name,double val) {
         WCPoint pt;
         pt.setStrength(wc_name,val);
         return this->evalPointError(&pt);
     }
 
-    //TODO: Change this to pass by reference
-    void addFit(WCFit added_fit) {
+    void addFit(WCFit & added_fit) {
         if (added_fit.size() == 0) return;
 
         if (this->size() == 0) {
@@ -306,7 +305,7 @@ public:
     }
 
     // Save the fit to a text file
-    void save(std::string fpath,bool append=false) {
+    void save(std::string & fpath,bool append=false) {
         if (!append) {
             std::cout << "Producing fitparams table..." << std::endl;
         }
@@ -402,7 +401,7 @@ public:
     }
 
     // Extract a n-Dim quadratic fit from a collection of WC phase space points
-    void fitPoints(std::vector<WCPoint> pts) {
+    void fitPoints(std::vector<WCPoint> & pts) {
         this->clear();
 
         if (pts.size() == 0) {
