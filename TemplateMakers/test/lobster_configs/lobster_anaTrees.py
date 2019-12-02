@@ -58,10 +58,9 @@ storage = StorageConfiguration(
 processing = Category(
     name='processing',
     cores=1,
-    #runtime=60 * 30,  # Time in seconds
     memory=2500,
     disk=2000,
-    tasks_max=2000  # maximum tasks in the queue (running+waiting)
+    # tasks_max=2000  # maximum tasks in the queue (running+waiting)
 )
 
 mysamples = []
@@ -476,21 +475,26 @@ workflows = []
 mergesize = '64M'
 if isdata:
     mergesize = '256M'
+
+DEFAULT_CATEGORY = 'default'
+cat_dict = {}
+cat_dict[DEFAULT_CATEGORY] = processing
+
 for label,samp in mysamples:
     ds = None
     #if (samp[:5]=='Batch'):
-    if (doeftsamps):
+    if doeftsamps:
         # Note: don't know why this has to be in list form, since LOBSTER ONLY READS THE FIRST ELEMENT!!! @#$%!
         storage.input=[
             #"hdfs://eddie.crc.nd.edu:19000"  + hadoop_loc,
             "root://deepthought.crc.nd.edu/" + hadoop_loc,  # Note the extra slash after the hostname!
-            #"gsiftp://T3_US_NotreDame"       + hadoop_loc,
+            "gsiftp://T3_US_NotreDame"       + hadoop_loc,
             #"srm://T3_US_NotreDame"          + hadoop_loc,
         ]
         mergesize = -1
         ds = Dataset(
             files=samp,
-            files_per_task=2,
+            files_per_task=3,
             patterns=["*.root"]
         )
     else:
@@ -499,6 +503,19 @@ for label,samp in mysamples:
             events_per_task=30000,
             lumi_mask=lumimask
         )
+    lst = label.split('_')
+    cat_name = DEFAULT_CATEGORY
+    if doeftsampes and len(lst) == 3 and lst[1] == 'multidim':
+        cat_name = '{proc}_{tag}'.format(proc=lst[0],tag=lst[1])
+        if not cat_dict.has_key(cat_name):
+            cat_dict[cat_name] = Category(
+                name=cat_name,
+                cores=1,
+                memory=2500,
+                disk=2000,
+                # tasks_max=2000  # maximum tasks in the queue (running+waiting)
+            )
+    cat = cat_dict[cat_name]
     cms_cmd = ['cmsRun','osTwoLep_cfg.py']
     if isdata:
         cms_cmd.extend(['data=True'])
@@ -531,10 +548,8 @@ for label,samp in mysamples:
     wf = Workflow(
         label=label,
         dataset=ds,
-        category=processing,
-        #arguments=['skim=True','jetCleanFakeable=True','data='+str(isdata)],
+        category=cat,
         command=' '.join(cms_cmd),
-        #extra_inputs=[cmsswbase+"/src/L1Prefiring/EventWeightProducer/files/L1PrefiringMaps_new.root"],
         merge_size=mergesize,
     )
     workflows.append(wf)
