@@ -250,12 +250,14 @@ print " "
 #   Central bkgds: ~10-15M (pre/post-merged)
 #   Central sgnls: ~15M (pre/post-merged)
 
-processing = Category(
-    name='processing',
-    cores=1,
-    memory=3500,
-    disk=4500
-)
+# processing = Category(
+#     name='processing',
+#     cores=1,
+#     memory=3500,
+#     disk=4500
+# )
+
+cat_dict = {}
 
 workflows = []
 for thing in ddbr_or_nom:
@@ -263,6 +265,14 @@ for thing in ddbr_or_nom:
     if thing != 'nom':
         extlabel=thing
     for label, dirs, nfiles in data:
+        if not cat_dict.has_key(label):
+            cat_dict[label] = Category(
+                name=label,
+                cores=1,
+                memory=3500,
+                disk=4500
+            )
+        cat = cat_dict[label]
         fpt=10
         #if (label=='tZq' or label=='ttW' or label=='ttZ' or label[:3]=='ttH' or label[:5]=='ttlnu' or label[:4]=='tllq' or label[:4]=='ttll'):
         if (label=='tZq' or label=='ttW' or label=='ttZ'):
@@ -287,7 +297,7 @@ for thing in ddbr_or_nom:
                 files_per_task=fpt,
                 patterns=["*.root"]
             ),
-            category=processing,
+            category=cat,
             command=' '.join(cmd),
             extra_inputs=extra_inputs,
             publish_label='test',
