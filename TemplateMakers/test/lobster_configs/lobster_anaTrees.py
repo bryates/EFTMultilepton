@@ -303,7 +303,7 @@ if ((not isdata) and doeftsamps):
     mysamples.append(['ttlnu_multidim_b1','kmohrman/FullProduction/Round6/Batch1/postLHE_step/v1/mAOD_step_ttlnuJet_HanV4ttXJetStartPtChecks_run1'])    # 4.9M
     mysamples.append(['ttlnu_multidim_b2','kmohrman/FullProduction/Round6/Batch2/postLHE_step/v1/mAOD_step_ttlnuJet_HanV4ttXJetStartPtChecks_run1'])    # 2.9M
     mysamples.append(['ttlnu_multidim_b3','kmohrman/FullProduction/Round6/Batch5/postLHE_step/v1/mAOD_step_ttlnuJet_HanV4ttXJetStartPtChecks_run1'])    # 2.9M
-    mysamples.append(['ttlnu_multidim_b4','kmohrman/FullProduction/Round6/Batch6/postLHE_step/v1/mAOD_step_ttlnuJet_HanV4ttXJetStartPtChecks_run1'])    # 4.9M
+    mysamples.append(['ttlnu_multidim_b4','kmohrman/FullProduction/Round6/Batch6/postLHE_step/v2/mAOD_step_ttlnuJet_HanV4ttXJetStartPtChecks_run1'])    # 4.9M
     ## ttll
     mysamples.append(['ttll_multidim_b1','kmohrman/FullProduction/Round6/Batch1/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXJetStartPtChecks_run2'])   # 5.6M
     mysamples.append(['ttll_multidim_b2','kmohrman/FullProduction/Round6/Batch2/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXJetStartPtChecks_run2'])   # 3.4M
