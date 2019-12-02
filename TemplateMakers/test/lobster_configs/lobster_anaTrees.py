@@ -5,7 +5,7 @@ from lobster.core import AdvancedOptions, Category, Config, Dataset, StorageConf
 import os
 
 isdata = False # remember to change osTwoLep_cfg.py
-doeftsamps = False
+doeftsamps = True
 singleSamp = None # default, to be overridden below if desired
 doskim = False
 
@@ -22,9 +22,9 @@ ver = "v1"
 # tag = "special/tllq4f_EFT_MatchedNoHiggs_{tstamp}_NoMrg-JM1-JM2".format(tstamp=tstamp2)
 #tag = "central_sgnl_{tstamp}".format(tstamp=tstamp2)
 #tag = "central_bkgd_{tstamp}".format(tstamp=tstamp2)
-#tag = "private_sgnl_{tstamp}".format(tstamp=tstamp2)
+tag = "private_sgnl_{tstamp}".format(tstamp=tstamp2)
 #tag = "data2017_{tstamp}".format(tstamp=tstamp2)
-tag = "special/central_ttH-WW-WZ-ttGJets_new_pmx_{tstamp}".format(tstamp=tstamp2)
+# tag = "special/central_ttH-WW-WZ-ttGJets_new_pmx_{tstamp}".format(tstamp=tstamp2)
 
 
 workdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=tag,ver=ver,path="/tmpscratch/users/$USER/analysisWorkflow")
@@ -294,23 +294,30 @@ if ((not isdata) and doeftsamps):
     
     ### Private EFT samples Round 6
     hadoop_loc = '/store/user/'
-    ## ttH
-    mysamples.append(['ttH_multidim_b1','kmohrman/FullProduction/Round6/Batch1/postLHE_step/v1/mAOD_step_ttHJet_HanV4ttXJetStartPtChecks_run2'])
-    mysamples.append(['ttH_multidim_b2','kmohrman/FullProduction/Round6/Batch2/postLHE_step/v1/mAOD_step_ttHJet_HanV4ttXJetStartPtChecks_run2'])
+    ## ttH (Bad starting point)
+    # mysamples.append(['ttH_multidim_b1','kmohrman/FullProduction/Round6/Batch1/postLHE_step/v1/mAOD_step_ttHJet_HanV4ttXJetStartPtChecks_run2'])  # 6.4M
+    # mysamples.append(['ttH_multidim_b2','kmohrman/FullProduction/Round6/Batch2/postLHE_step/v1/mAOD_step_ttHJet_HanV4ttXJetStartPtChecks_run2'])  # 3.8M
+    ## ttH (old/better starting point)
+    mysamples.append(['ttH_multidim_b1','kmohrman/FullProduction/Round6/Batch7/postLHE_step/v2/mAOD_step_ttHJet_HanV4ttXJetStartPtChecks_run0'])    # 12.8M
     ## ttlnu
-    mysamples.append(['ttlnu_multidim_b1','kmohrman/FullProduction/Round6/Batch1/postLHE_step/v1/mAOD_step_ttlnuJet_HanV4ttXJetStartPtChecks_run1'])
-    mysamples.append(['ttlnu_multidim_b2','kmohrman/FullProduction/Round6/Batch2/postLHE_step/v1/mAOD_step_ttlnuJet_HanV4ttXJetStartPtChecks_run1'])
+    mysamples.append(['ttlnu_multidim_b1','kmohrman/FullProduction/Round6/Batch1/postLHE_step/v1/mAOD_step_ttlnuJet_HanV4ttXJetStartPtChecks_run1'])    # 4.9M
+    mysamples.append(['ttlnu_multidim_b2','kmohrman/FullProduction/Round6/Batch2/postLHE_step/v1/mAOD_step_ttlnuJet_HanV4ttXJetStartPtChecks_run1'])    # 2.9M
+    mysamples.append(['ttlnu_multidim_b3','kmohrman/FullProduction/Round6/Batch5/postLHE_step/v1/mAOD_step_ttlnuJet_HanV4ttXJetStartPtChecks_run1'])    # 2.9M
+    mysamples.append(['ttlnu_multidim_b4','kmohrman/FullProduction/Round6/Batch6/postLHE_step/v1/mAOD_step_ttlnuJet_HanV4ttXJetStartPtChecks_run1'])    # 4.9M
     ## ttll
-    mysamples.append(['ttll_multidim_b1','kmohrman/FullProduction/Round6/Batch1/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXJetStartPtChecks_run2'])
-    mysamples.append(['ttll_multidim_b2','kmohrman/FullProduction/Round6/Batch2/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXJetStartPtChecks_run2'])
+    mysamples.append(['ttll_multidim_b1','kmohrman/FullProduction/Round6/Batch1/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXJetStartPtChecks_run2'])   # 5.6M
+    mysamples.append(['ttll_multidim_b2','kmohrman/FullProduction/Round6/Batch2/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXJetStartPtChecks_run2'])   # 3.4M
+    mysamples.append(['ttll_multidim_b3','kmohrman/FullProduction/Round6/Batch5/postLHE_step/v1/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXJetStartPtChecks_run2'])   # 3.4M
+    mysamples.append(['ttll_multidim_b4','kmohrman/FullProduction/Round6/Batch6/postLHE_step/v2/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXJetStartPtChecks_run2'])   # 5.6M
     ## tHq
-    mysamples.append(['tHq_multidim_b1','kmohrman/FullProduction/Round6/Batch3/postLHE_step/v1/mAOD_step_tHq4f_HanV4tHqStartPtChecksMatchOff_run2'])
+    mysamples.append(['tHq_multidim_b1','kmohrman/FullProduction/Round6/Batch3/postLHE_step/v1/mAOD_step_tHq4f_HanV4tHqStartPtChecksMatchOff_run2'])    # 10.0M
     ## tllq
-    mysamples.append(['tllq_multidim_b1','awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])
-    mysamples.append(['tllq_multidim_b2','awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0_extra/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])
-    mysamples.append(['tllq_multidim_b3','awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0_extra2/v1/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])
+    mysamples.append(['tllq_multidim_b1','awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])         # 0.5M
+    mysamples.append(['tllq_multidim_b2','awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0_extra/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])   # 2.0M
+    mysamples.append(['tllq_multidim_b3','awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0_extra2/v1/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])  # 5.0M
+    mysamples.append(['tllq_multidim_b4','kmohrman/FullProduction/Round6/Batch4/postLHE_step/v1/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0MatchOff_run1']) # 5.0M
+    mysamples.append(['tllq_multidim_b5','kmohrman/FullProduction/Round6/Batch6/postLHE_step/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0MatchOff_run1']) # 5.0M
     ## IN PROGRESS STILL
-    #mysamples.append(['tllq_multidim_b4','kmohrman/FullProduction/Round6/Batch4/postLHE_step/v1/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0MatchOff_run1'])
     
     ### Others from R6 era
     # mysamples.append(['ttH_multidim_b1','kmohrman/postLHE_step/2019_04_19/ttXJet-HanV4ttXJetSMCheck/v1/mAOD_step_ttHJet_HanV4ttXSMCheck_run0']) # 320k events
