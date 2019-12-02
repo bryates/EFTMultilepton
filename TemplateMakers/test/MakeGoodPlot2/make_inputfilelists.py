@@ -508,6 +508,8 @@ def anatest31_samples():
     tllq_priv  = Sample('tllq_multidim')
     ttlnu_priv = Sample('ttlnu_multidim')
 
+    samples = []
+
     path = 'awightma/analysisTrees/special/private_sgnl_reprocFullWF-a29_NoStreaming_2019_11_08/v1'
     ttH_priv.addDirectory(HADOOP_DIR,path,'ttH_multidim_b1')
     ttH_priv.addDirectory(HADOOP_DIR,path,'ttH_multidim_b2')
@@ -521,6 +523,36 @@ def anatest31_samples():
     tllq_priv.addDirectory(HADOOP_DIR,path,'tllq_multidim_b3')
 
     samples.extend([ttH_priv,tHq_priv,ttll_priv,tllq_priv,ttlnu_priv])
+    return samples
+
+# Significantly larger stats version of a31, with all ttH events using the old starting point
+def anatest32_samples():
+    ttH_priv = Sample('ttH_multidim')
+    tHq_priv = Sample('tHq_multidim')
+    ttZ_priv = Sample('ttll_multidim')
+    tZq_priv = Sample('tllq_multidim')
+    ttW_priv = Sample('ttlnu_multidim')
+
+    samples = []
+
+    path = 'awightma/analysisTrees/private_sgnl_2019_12_02/v2'
+    ttH_priv.addDirectory(HADOOP_DIR,path,'ttH_multidim_b1')
+    tHq_priv.addDirectory(HADOOP_DIR,path,'tHq_multidim_b1')
+    ttZ_priv.addDirectory(HADOOP_DIR,path,'ttll_multidim_b1')
+    ttZ_priv.addDirectory(HADOOP_DIR,path,'ttll_multidim_b2')
+    ttZ_priv.addDirectory(HADOOP_DIR,path,'ttll_multidim_b3')
+    ttZ_priv.addDirectory(HADOOP_DIR,path,'ttll_multidim_b4')
+    tZq_priv.addDirectory(HADOOP_DIR,path,'tllq_multidim_b1')
+    tZq_priv.addDirectory(HADOOP_DIR,path,'tllq_multidim_b2')
+    tZq_priv.addDirectory(HADOOP_DIR,path,'tllq_multidim_b3')
+    tZq_priv.addDirectory(HADOOP_DIR,path,'tllq_multidim_b4')
+    tZq_priv.addDirectory(HADOOP_DIR,path,'tllq_multidim_b5')
+    ttW_priv.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_b1')
+    ttW_priv.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_b2')
+    ttW_priv.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_b3')
+    ttW_priv.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_b4')
+
+    samples.extend([ttH_priv,tHq_priv,ttZ_priv,tZq_priv,ttW_priv])
     return samples
 
 ####################################################################################################
@@ -658,7 +690,6 @@ def HanOrigSMCheck():
 
     return samples
 
-
 ####################################################################################################
 
 def main():
@@ -677,13 +708,11 @@ def main():
     else:
         print "Making output directory: {}".format(out_dir)
         os.makedirs(out_dir)
-    # return
 
     log_file = os.path.join(out_dir,'out.log')
     outlog = logging.FileHandler(filename=log_file,mode='w')
     outlog.setLevel(logging.DEBUG)
     outlog.setFormatter(frmt)
-    # logging.getLogger('').addHandler(outlog)
 
     logger.addHandler(outlog)
 
@@ -698,8 +727,9 @@ def main():
     # samples = anatest27_samples()
     # samples = anatest29_samples()
     # samples = anatest31_samples()
+    samples = anatest32_samples()
 
-    samples = a29_NoDupesV2()
+    # samples = a29_NoDupesV2()
 
     logger.info("-"*100)
     for idx,s in enumerate(samples):
