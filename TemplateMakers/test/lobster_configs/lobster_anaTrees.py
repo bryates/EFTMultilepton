@@ -505,7 +505,7 @@ for label,samp in mysamples:
         )
     lst = label.split('_')
     cat_name = DEFAULT_CATEGORY
-    if doeftsampes and len(lst) == 3 and lst[1] == 'multidim':
+    if doeftsamps and len(lst) == 3 and lst[1] == 'multidim':
         cat_name = '{proc}_{tag}'.format(proc=lst[0],tag=lst[1])
         if not cat_dict.has_key(cat_name):
             cat_dict[cat_name] = Category(
