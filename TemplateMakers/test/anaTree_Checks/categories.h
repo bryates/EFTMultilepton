@@ -326,10 +326,24 @@ void print_table(TH1EFT* hist,TString row_name,double norm,bool incl_header) {
     //    std::cout << "Using norm: " << norm << std::endl;
     //}
 
+    std::vector<Analysis::Category> skip_cats {
+        Analysis::DiEleOSSF,
+        Analysis::DiMuonOSSF
+    };
+
     int width = 0;
     for (Int_t bin_idx = 1; bin_idx <= hist->GetNbinsX(); bin_idx++) {
         std::string label = hist->GetXaxis()->GetBinLabel(bin_idx);
         Analysis::Category cat = Analysis::getCategoryName(label);
+        bool skip_cat = false;
+        for (Analysis::Category to_skip: skip_cats) {
+            if (cat == to_skip) {
+                skip_cat = true;
+                break;
+            }
+        }
+        if (skip_cat) continue;
+
         double bin_val = hist->GetBinFit(bin_idx).evalPoint(sm_pt);
         double bin_err = hist->GetBinError(bin_idx);
         if (norm > 0) {
@@ -354,6 +368,15 @@ void print_table(TH1EFT* hist,TString row_name,double norm,bool incl_header) {
     for (Int_t bin_idx = 1; bin_idx <= hist->GetNbinsX(); bin_idx++) {
         std::string label = hist->GetXaxis()->GetBinLabel(bin_idx);
         Analysis::Category cat = Analysis::getCategoryName(label);
+        bool skip_cat = false;
+        for (Analysis::Category to_skip: skip_cats) {
+            if (cat == to_skip) {
+                skip_cat = true;
+                break;
+            }
+        }
+        if (skip_cat) continue;
+
         double bin_val = hist->GetBinFit(bin_idx).evalPoint(sm_pt);
         double bin_err = hist->GetBinError(bin_idx);
         if (norm > 0) {

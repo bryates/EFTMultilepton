@@ -151,7 +151,7 @@ TString get_header(std::vector<YieldCategory> & cats, TString table_name) {
 TString get_row(std::vector<YieldCategory> & cats, TString sample) {
     TString delim = " & ";
     std::stringstream row;
-    row << std::setw(12) << std::right << sample << " & ";
+    row << std::setw(12) << std::left << sample << " & ";
     for (YieldCategory cat: cats) {
         if (cat.yields.find(sample) == cat.yields.end()) {
             TString err_str = TString::Format("get_row(): Invalid sample - %s %s",cat.name.Data(),sample.Data());
@@ -211,18 +211,18 @@ void make_yield_table(TString fpath,TString table_name) {
     // Sub-list of private signals to include in the table
     std::vector<TString> private_sgnl {
         "tllq_16D",
-        // "ttH_16D",
-        // "ttll_16D",
-        // "ttlnu_16D",
-        // "tHq_16D",
+        "ttH_16D",
+        "ttll_16D",
+        "ttlnu_16D",
+        "tHq_16D",
     };
 
     // Sub-list of central signals to include in the table
     std::vector<TString> central_sgnl {
-        // "tZq",
-        // "ttH",
-        // "ttZ",
-        // "ttW",
+        "tZq",
+        "ttH",
+        "ttZ",
+        "ttW",
     };
 
     // Sub-list of MC backgrounds to include in the table
@@ -275,6 +275,10 @@ void make_yield_table(TString fpath,TString table_name) {
         cats_2lss_m.push_back(cat);
     }
     cats.push_back(merge_cats("2lss_m",cats_2lss_m));
+
+    for (TString bin: bins) {
+
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     for (TString bin: bins) {
@@ -284,6 +288,8 @@ void make_yield_table(TString fpath,TString table_name) {
         sum_samples("Bkgd Sum",cat,all_bkgds);
         cats.push_back(cat);
     }
+
+    cats.push_back(merge_cats("all",cats));
 
     std::cout << get_header(cats,table_name) << std::endl;
     // std::cout << get_header(cats,"") << std::endl;

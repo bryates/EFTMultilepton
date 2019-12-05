@@ -237,26 +237,8 @@ std::set<TString> find_all_systs(TFile* f) {
     return ret;
 }
 
-bool compare_histogram(TFile* f1, TFile* f2, TString hist_name, bool skip_identical=false) {
-// bool compare_histogram(TH1EFT* h1, TH1EFT* h2, TString hist_name, bool skip_identical=false) {
-    TH1EFT* h1 = (TH1EFT*)f1->Get(hist_name);
-    TH1EFT* h2 = (TH1EFT*)f2->Get(hist_name);
-
-    bool missing_histograms = false;
-    if (!h1) {
-        std::cout << "ERROR compare_histogram(): f1 does not have " << hist_name << std::endl;
-        missing_histograms = true;
-    }
-
-    if (!h2) {
-        std::cout << "ERROR compare_histogram(): f2 does not have " << hist_name << std::endl;
-        missing_histograms = true;
-    }
-
-    if (missing_histograms) {
-        return false;
-    }
-
+//TODO: This is a pretty big function to include in a utilities header file
+bool compare_histogram(TH1EFT* h1, TH1EFT* h2, TString hist_name, bool skip_identical=false) {
     if (h1->GetNbinsX() != h2->GetNbinsX()) {
         std::cout << "ERROR compare_histogram(): nBins mismatch in " << hist_name << std::endl;
         std::cout << "\tf1 hist has " << h1->GetNbinsX() << " bins" << std::endl;
@@ -289,49 +271,88 @@ bool compare_histogram(TFile* f1, TFile* f2, TString hist_name, bool skip_identi
         double bin1_err = h1->GetBinError(i);
         double bin2_err = h2->GetBinError(i);
 
-        bin1_err_sum += bin1_err*bin1_err;
-        bin2_err_sum += bin2_err*bin2_err;
+        double rel_err1 = 100*bin1_err / bin1;
+        double rel_err2 = 100*bin2_err / bin2;
+
+        double err_sqr1 = bin1_err*bin1_err;
+        double err_sqr2 = bin2_err*bin2_err;
+
+        // double sig_diff = diff / std::max(bin1_err,bin2_err);
+        double sig_diff = diff / sqrt(err_sqr1 + err_sqr2);
+
+        bin1_err_sum += err_sqr1;
+        bin2_err_sum += err_sqr2;
 
         bin_sum1 += bin1;
         bin_sum2 += bin2;
         abs_diff += abs(diff);
 
-        TString bin1_str = TString::Format("%+.2f +/- %+.2f",bin1,bin1_err);
-        TString bin2_str = TString::Format("%+.2f +/- %+.2f",bin2,bin2_err);
-        TString diff_str = TString::Format("(%+.2f)",diff);
+        TString bin1_str = TString::Format("%+.2f +/- %+.2f(%.1f%%)",bin1,bin1_err,rel_err1);
+        TString bin2_str = TString::Format("%+.2f +/- %+.2f(%.1f%%)",bin2,bin2_err,rel_err2);
+        TString diff_str = TString::Format("(%+.2f) (%+.1f std)",diff,sig_diff);
 
-        ss << indent << "Bin " << i << ": "
-                  << std::setw(16) << std::right << bin1_str << delim
-                  << std::setw(16) << std::right << bin2_str << delim
-                  << std::setw(7) << std::right << diff_str << std::endl;
+        bool skip_bin = (abs(sig_diff) <= 2.0);
+
+        skip_bin = false;
+        if (!skip_bin) {        
+            ss << indent << "Bin " << i << ": "
+                      << std::setw(25) << std::right << bin1_str << delim
+                      << std::setw(25) << std::right << bin2_str << delim
+                      << std::setw(7) << std::right << diff_str << std::endl;
+        }
     }
     bin1_err_sum = sqrt(bin1_err_sum);
     bin2_err_sum = sqrt(bin2_err_sum);
+
+    double sum1_rel_err = 100*bin1_err_sum / bin_sum1;
+    double sum2_rel_err = 100*bin2_err_sum / bin_sum2;
+
     double perc_diff = 0.0;
     if (bin_sum1) {
         perc_diff = 100*(bin_sum2 - bin_sum1) / bin_sum1;
     }
     double sum_diff = bin_sum2 - bin_sum1;
-    double sig_diff = sum_diff / bin2_err_sum;
-    TString sum1_str = TString::Format("%+.2f +/- %+.2f",bin_sum1,bin1_err_sum);
-    TString sum2_str = TString::Format("%+.2f +/- %+.2f",bin_sum2,bin2_err_sum);
+    // double sum_sig_diff = sum_diff / std::max(bin1_err_sum,bin2_err_sum);
+    double sum_sig_diff = sum_diff / sqrt(bin1_err_sum*bin1_err_sum + bin2_err_sum*bin2_err_sum);
+    TString sum1_str = TString::Format("%+.2f +/- %+.2f(%.1f%%)",bin_sum1,bin1_err_sum,sum1_rel_err);
+    TString sum2_str = TString::Format("%+.2f +/- %+.2f(%.1f%%)",bin_sum2,bin2_err_sum,sum2_rel_err);
     TString abs_str  = TString::Format("%+.3f",abs_diff);
     TString perc_str = TString::Format("%+.2f",perc_diff);
     TString sum_diff_str = TString::Format("%+.3f",sum_diff);
-    TString sig_diff_str = TString::Format("%+.1f",sig_diff);
+    TString sig_diff_str = TString::Format("%+.1f",sum_sig_diff);
     ss << "h1 Sum: " << sum1_str << std::endl;
     ss << "h2 Sum: " << sum2_str << " (" << perc_str << "%)" << std::endl;
     ss << "Sum Diff: " << sum_diff_str << " (" << sig_diff_str << " std)" << std::endl;
     ss << "Abs Diff: " << abs_str << std::endl;
-    // ss << std::endl;
 
-    bool within_error = abs(sig_diff) < 1.0;
+    bool within_error = abs(sum_sig_diff) < 1.0;
 
-    if (skip_identical && !within_error) {
+    if (!skip_identical || !within_error) {
         std::cout << ss.str();
     }
 
     return within_error;
+}
+
+//TODO: Unfinished, what was this to be used for? 
+int check_histogram(TFile* f, TString hist_name) {
+    TH1EFT* h = (TH1EFT*)f->Get(hist_name);
+
+    if (!h) {
+        std::cout << "ERROR check_histogram(): f does not have " << hist_name << std::endl;
+        return -1;
+    }
+
+    if (h->Integral() == 0) {
+        return -1;
+    }
+
+    double bin_sum = 0.0;
+    double bin_err_sum = 0.0;
+    for (Int_t i = 1; i <= h->GetNbinsX(); i++) {
+    }
+
+    return 0;
 }
 
 //ANAUTILS_H
