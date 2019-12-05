@@ -187,6 +187,22 @@
         * Reverted back to the a29 handling of the PDF/PSISR/muR/muF/muR+muF systematics in the creation of the anatest file (commit/ae346957db77a199087ef5f488bd7b8d4afdea3a)
         * Rolled back the fix that normalized the shape systematics for the non-private samples the same as the private samples - This is to make the anatest file as close as possible to the v29 file (commit/4c14213968992d80aaa009e97acaad82a135d708)
 
+--- anatest32 ---
+    Samples from '.../mergedHists/2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps'
+        temp_data.root temp_DoubleEG.root temp_DoubleMuon.root temp_Fakes.root temp_MuonEG.root temp_QFs.root temp_SingleElectron.root temp_SingleMuon.root
+    Samples from '.../mergedHists/2019_11_22_central_sgnl-bkgd_fixedErrors'
+        temp_ttH.root temp_ttW.root temp_ttZ.root temp_tZq.root temp_WW.root temp_WZ.root temp_ZZ.root temp_WWW.root temp_WWZ.root temp_WZZ.root temp_ZZZ.root temp_ttGJets.root
+    Samples from '.../mergedHists/2019_12_03_private_sgnl_a32'
+        temp_ttH_multidim.root temp_tHq_multidim.root temp_tllq_multidim.root temp_ttll_multidim.root temp_ttlnu_multidim.root
+    This version has significantly increased statistics for the private signal samples. ttH saw factors of ~2-4 improvement and are now all in the 2-6% relative unc. range. As for the other signal samples, they only improved by ~20-30% in each bin. For ttH, ttW, and ttZ the bin uncertainties seem to be in the <5% range for bins with appreciable expected yields (>0.5 expected events) and 7-12% range for the lower sensitivity bins. tZq still has fairly large uncertainties outside of the 3l sfz bins
+    Changes:
+        * Increased stats for the private signal samples: ttH - 12.8M, ttll - 18.0M, tHq - 10.0M, tllq - 17.5M, ttlnu - 15.7M
+        * The private ttH events were generated at the old (pre-a29) starting point, all other private samples still use the newer starting points
+        * Re-enables the storing of the WCFit stat errors (commit/ceabaa58859017bfeebdb1681ef3e25562bed8d4)
+        * Implements the correct statistics errors for the TH1EFT histograms (commit/a83a06f666c92c5e83684e85e6d9b36daf00178d)
+        * The coefficients for the stats error fit were switched from doubles to floats (commit/4b9ad80cf835c31600b5a37a41fe639ef829617d)
+        * The entire workflow was processed in the 'new_TH1EFT' branch: https://github.com/cms-govner/EFTMultilepton/tree/new_TH1EFT
+
 --- anatestXX (based on a27) ---
     -- On hold for now --
     Changes:
