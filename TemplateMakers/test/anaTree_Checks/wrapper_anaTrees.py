@@ -3,7 +3,7 @@ import datetime
 import sys
 import os
 
-from utils import get_files,move_files,clean_dir
+from EFTMultilepton.TemplateMakers.utils import get_files,move_files,clean_dir
 from make_html import make_html
 
 # Python wrapper to the check_anaTrees script when trying to run by-hand (instead of via lobster)
