@@ -19,40 +19,44 @@ TIMESTAMP2 = datetime.datetime.now().strftime('%Y_%m_%d')
 HPATH = '/hadoop/store/user'
 SFILES = os.path.expandvars('/store/smallfiles/$USER/anatest_files')
 
-fpath_a15 = os.path.join(SFILES,"TOP-19-001_unblinded_v1.root")
-fpath_a16 = os.path.join(SFILES,"anatest16.root")
-fpath_a17 = os.path.join(SFILES,"anatest17.root")
-fpath_a18 = os.path.join(SFILES,"anatest18.root")
-fpath_a19 = os.path.join(SFILES,"anatest19.root")
-fpath_a20 = os.path.join(SFILES,"anatest20.root")
-fpath_a21 = os.path.join(SFILES,"anatest21.root")
-fpath_a22 = os.path.join(SFILES,"anatest22.root")
-fpath_a23 = os.path.join(SFILES,"anatest23_v3.root")
-fpath_a24 = os.path.join(SFILES,"anatest24.root")
-fpath_a25 = os.path.join(SFILES,"anatest25.root")
-fpath_a26 = os.path.join(SFILES,"anatest26.root")
-fpath_a27 = os.path.join(SFILES,"anatest27.root")
-fpath_a28 = os.path.join(SFILES,"anatest28.root")
-fpath_a29 = os.path.join(SFILES,"anatest29.root")
-fpath_a30 = os.path.join(SFILES,"anatest30.root")
-fpath_a31 = os.path.join(SFILES,"anatest31.root")
+fpath_a15 = pjoin(SFILES,"TOP-19-001_unblinded_v1.root")
+fpath_a16 = pjoin(SFILES,"anatest16.root")
+fpath_a17 = pjoin(SFILES,"anatest17.root")
+fpath_a18 = pjoin(SFILES,"anatest18.root")
+fpath_a19 = pjoin(SFILES,"anatest19.root")
+fpath_a20 = pjoin(SFILES,"anatest20.root")
+fpath_a21 = pjoin(SFILES,"anatest21.root")
+fpath_a22 = pjoin(SFILES,"anatest22.root")
+fpath_a23 = pjoin(SFILES,"anatest23_v3.root")
+fpath_a24 = pjoin(SFILES,"anatest24.root")
+fpath_a25 = pjoin(SFILES,"anatest25.root")
+fpath_a26 = pjoin(SFILES,"anatest26.root")
+fpath_a27 = pjoin(SFILES,"anatest27.root")
+fpath_a28 = pjoin(SFILES,"anatest28.root")
+fpath_a29 = pjoin(SFILES,"anatest29.root")
+fpath_a30 = pjoin(SFILES,"anatest30.root")
+fpath_a31 = pjoin(SFILES,"anatest31.root")
+fpath_a32 = pjoin(SFILES,"anatest32.root")
 
-fpath_R6B1 = os.path.join(SFILES,"private_ttH-ttZ-ttW_HanV4_R6B1Only.root")
-fpath_R6B1_NSH = os.path.join(SFILES,"private_ttH-ttZ-ttW_HanV4_R6B1Only_NSH.root")
-fpath_R6e2_NSH = os.path.join(SFILES,"private_tZq_HanV4_R6-extra2Only_NSH.root")
+fpath_R6B1 = pjoin(SFILES,"private_ttH-ttZ-ttW_HanV4_R6B1Only.root")
+fpath_R6B1_NSH = pjoin(SFILES,"private_ttH-ttZ-ttW_HanV4_R6B1Only_NSH.root")
+fpath_R6e2_NSH = pjoin(SFILES,"private_tZq_HanV4_R6-extra2Only_NSH.root")
 
-fpath_tllq_R6B1 = os.path.join(SFILES,"private_sgnl_tllq_R6B1.root")
-fpath_tllq_R6B2 = os.path.join(SFILES,"private_sgnl_tllq_R6B2.root")
-fpath_tllq_R6B3 = os.path.join(SFILES,"private_sgnl_tllq_R6B3.root")
+fpath_tllq_R6B1 = pjoin(SFILES,"private_sgnl_tllq_R6B1.root")
+fpath_tllq_R6B2 = pjoin(SFILES,"private_sgnl_tllq_R6B2.root")
+fpath_tllq_R6B3 = pjoin(SFILES,"private_sgnl_tllq_R6B3.root")
 
-fpath_a28_redoFull = os.path.join(SFILES,"anatest28_redoFullWF-NoStreaming.root")
-fpath_a29_redoFull = os.path.join(SFILES,"private_sgnl_redoTrees-a29_NoStreaming.root")
-fpath_a29_redoFull_v2 = os.path.join(SFILES,"private_sgnl_redoTrees-a29_NoStreaming_v2.root")
-fpath_a29_noDupes = os.path.join(SFILES,"anatest29_NoDuplicates.root")
-fpath_a29_noDupes_v2 = os.path.join(SFILES,"anatest29_NoDuplicatesV2.root")
+fpath_a28_redoFull = pjoin(SFILES,"anatest28_redoFullWF-NoStreaming.root")
+fpath_a29_redoFull = pjoin(SFILES,"private_sgnl_redoTrees-a29_NoStreaming.root")
+fpath_a29_redoFull_v2 = pjoin(SFILES,"private_sgnl_redoTrees-a29_NoStreaming_v2.root")
+fpath_a29_noDupes = pjoin(SFILES,"anatest29_NoDuplicates.root")
+fpath_a29_noDupes_v2 = pjoin(SFILES,"anatest29_NoDuplicatesV2.root")
 
-fpath_HanV4SMChecks = os.path.join(SFILES,"private_sgnl_HanV4_SMCheck.root")
-fpath_HanOrigSMChecks = os.path.join(SFILES,"private_sgnl_HanOriginal_SMCheck.root")
+fpath_a28_fixedErrors = pjoin(SFILES,"anatest28_fixedErrors.root")
+fpath_a31_fixedErrors = pjoin(SFILES,"anatest31_fixedErrors.root")
+
+fpath_HanV4SMChecks = pjoin(SFILES,"private_sgnl_HanV4_SMCheck.root")
+fpath_HanOrigSMChecks = pjoin(SFILES,"private_sgnl_HanOriginal_SMCheck.root")
 
 class Sample(object):
     def __init__(self,name,xsec,dirs=[]):
@@ -76,7 +80,7 @@ class Sample(object):
         elif len(args) == 1:
             d = args[0]
         else:
-            d = os.path.join(*args)
+            d = pjoin(*args)
         if d in self.list():
             return
         self.__dirs.append(d)
@@ -247,7 +251,8 @@ def check_anaTrees():
 # Wrapper to run the 'read_anaTreeChecks.C' macro
 def read_anaTreeChecks():
     print "Running read_anaTreeChecks()..."
-    # NOTE: I re-named some of the pt/eta histograms, so most of the samples in 'checkAnaTrees' don't work (before 2019-11-12)
+    # NOTE: I re-named some of the pt/eta histograms, so most of the samples in 'checkAnaTrees'
+    #       don't work (before 2019-11-12)
 
     # in pb
     tZq_xsec = 0.2529
@@ -361,6 +366,17 @@ def read_anaTreeChecks():
         # a25_central_tZq,
         # a25_central_tHq,
 
+        a28_private_ttZ,
+        a29_private_ttZ,
+        a29noDupes_private_ttZ,
+        ttZ_HanOrigSMCheck,
+        ttZ_HanV4SMCheck,
+        
+        a28_private_tZq,
+        a29_private_tZq,
+        a29noDupes_private_tZq,
+        tZq_HanV4SMCheck,
+
         a28_private_ttH,
         a29_private_ttH,
         a29noDupes_private_ttH,
@@ -372,17 +388,6 @@ def read_anaTreeChecks():
         a29noDupes_private_ttW,
         ttW_HanOrigSMCheck,
         ttW_HanV4SMCheck,
-        
-        a28_private_ttZ,
-        a29_private_ttZ,
-        a29noDupes_private_ttZ,
-        ttZ_HanOrigSMCheck,
-        ttZ_HanV4SMCheck,
-        
-        a28_private_tZq,
-        a29_private_tZq,
-        a29noDupes_private_tZq,
-        tZq_HanV4SMCheck,
 
         # a28_private_tHq,
         # a29_private_tHq,
@@ -411,7 +416,7 @@ def read_anaTreeChecks():
         merged_fname = "{fname}.root".format(fname=name)
         hadd_cmd = ['hadd','-f']
         hadd_cmd.extend([merged_fname])
-        hadd_ops_split = len(hadd_cmd)  # This is the number of options before we start including the files to merge
+        hadd_ops_split = len(hadd_cmd)  # Number of options before we start including the files to merge
         hadd_cmd.extend(to_merge)
         s1 = ' '.join(hadd_cmd[:hadd_ops_split])
         s2 = '\n\t'.join(hadd_cmd[hadd_ops_split:])
@@ -443,9 +448,9 @@ def read_anaTreeChecks():
         make_html(output_dir)
 
 def plot_systematic_variations():
-    local_dir = os.path.join(CMSSW_BASE,'src/EFTMultilepton/TemplateMakers/test/MakeGoodPlot2')
+    local_dir = pjoin(CMSSW_BASE,'src/EFTMultilepton/TemplateMakers/test/MakeGoodPlot2')
 
-    fpath_testing = os.path.join(local_dir,"testing.root")
+    fpath_testing = pjoin(local_dir,"testing.root")
 
     # fpath = fpath_a22
     # fpath = fpath_a29
@@ -497,7 +502,7 @@ def plot_systematic_variations():
                 output_dir = "private_{name}".format(name=tmp)
             else:
                 raise RuntimeError("Unknown sample name: {name}".format(name=name))
-            output_path = os.path.join(web_dir,sub_dir,output_dir)
+            output_path = pjoin(web_dir,sub_dir,output_dir)
             print "Output: {path}".format(path=output_path)
             if not os.path.exists(output_dir):
                 os.mkdir(output_dir)
@@ -506,8 +511,10 @@ def plot_systematic_variations():
 def compare_anatest_files():
     geoff_dir = "/afs/crc.nd.edu/user/g/gsmith15/Public/for_Tony/"
     tony_dir  = "/afs/crc.nd.edu/user/a/awightma/Public/for_tony/"
-    hist_dir  = "/afs/crc.nd.edu/user/a/awightma/CMSSW_Releases/CMSSW_8_1_0/src/CombineHarvester/TopEFT/hist_files/"
-    local_dir = "/afs/crc.nd.edu/user/a/awightma/CMSSW_Releases/from_govner/CMSSW_9_4_6/src/EFTMultilepton/TemplateMakers/test/MakeGoodPlot2/"
+
+    cmssw_dirs = os.path.expanduser("~/CMSSW_Releases")
+    hist_dir  = pjoin(cmssw_dirs,"CMSSW_8_1_0/src/CombineHarvester/TopEFT/hist_files/")
+    local_dir = pjoin(cmssw_dirs,"from_govner/CMSSW_9_4_6/src/EFTMultilepton/TemplateMakers/test/MakeGoodPlot2/")
 
     merged_dir = "/tmpscratch/users/awightma/analysisWorkflow/mergedHists/"
 
@@ -526,29 +533,31 @@ def compare_anatest_files():
 
     fname_testing = 'testing.root'
 
-    fpath_data_a26 = os.path.join(merged_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_data)
+    fpath_data_a26 = pjoin(merged_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_data)
 
-    fpath_MuonEG_a26         = os.path.join(merged_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_MuonEG)
-    fpath_DoubleMuon_a26     = os.path.join(merged_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_DoubleMuon)
-    fpath_SingleMuon_a26     = os.path.join(merged_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_SingleMuon)
-    fpath_SingleElectron_a26 = os.path.join(merged_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_SingleElectron)
-    fpath_DoubleEG_a26       = os.path.join(merged_dir,"2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps",fname_DoubleEG)
+    tmp_name = "2019_07_08_from-standardhists_SRs_with_Round5_EFTsamps"
+    fpath_MuonEG_a26         = pjoin(merged_dir,tmp_name,fname_MuonEG)
+    fpath_DoubleMuon_a26     = pjoin(merged_dir,tmp_name,fname_DoubleMuon)
+    fpath_SingleMuon_a26     = pjoin(merged_dir,tmp_name,fname_SingleMuon)
+    fpath_SingleElectron_a26 = pjoin(merged_dir,tmp_name,fname_SingleElectron)
+    fpath_DoubleEG_a26       = pjoin(merged_dir,tmp_name,fname_DoubleEG)
 
-    fpath_data_a27 = os.path.join(merged_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_data)
+    fpath_data_a27 = pjoin(merged_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_data)
 
-    fpath_MuonEG_a27         = os.path.join(merged_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_MuonEG)
-    fpath_DoubleMuon_a27     = os.path.join(merged_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_DoubleMuon)
-    fpath_SingleMuon_a27     = os.path.join(merged_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_SingleMuon)
-    fpath_SingleElectron_a27 = os.path.join(merged_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_SingleElectron)
-    fpath_DoubleEG_a27       = os.path.join(merged_dir,"2019_10_22_data-nominal_newGT-94X_dataRun2_v11",fname_DoubleEG)
+    tmp_name = "2019_10_22_data-nominal_newGT-94X_dataRun2_v11"
+    fpath_MuonEG_a27         = pjoin(merged_dir,tmp_name,fname_MuonEG)
+    fpath_DoubleMuon_a27     = pjoin(merged_dir,tmp_name,fname_DoubleMuon)
+    fpath_SingleMuon_a27     = pjoin(merged_dir,tmp_name,fname_SingleMuon)
+    fpath_SingleElectron_a27 = pjoin(merged_dir,tmp_name,fname_SingleElectron)
+    fpath_DoubleEG_a27       = pjoin(merged_dir,tmp_name,fname_DoubleEG)
 
-    fpath_tZq_incl_higgs = os.path.join(local_dir,fname_tZq_incl_higgs)
-    fpath_tZq_base = os.path.join(local_dir,fname_tZq_base)
-    fpath_tZq_v14v1_NSH = os.path.join(local_dir,fname_tZq_v14v1_NSH)
-    fpath_testing = os.path.join(local_dir,fname_testing)
+    fpath_tZq_incl_higgs = pjoin(local_dir,fname_tZq_incl_higgs)
+    fpath_tZq_base = pjoin(local_dir,fname_tZq_base)
+    fpath_tZq_v14v1_NSH = pjoin(local_dir,fname_tZq_v14v1_NSH)
+    fpath_testing = pjoin(local_dir,fname_testing)
 
-    fpath_tllq_a25 = os.path.join(merged_dir,"2019_10_13_full_MC",fname_tllq)
-    fpath_tllq_a28 = os.path.join(merged_dir,"2019_10_19_full_MC",fname_tllq)
+    fpath_tllq_a25 = pjoin(merged_dir,"2019_10_13_full_MC",fname_tllq)
+    fpath_tllq_a28 = pjoin(merged_dir,"2019_10_19_full_MC",fname_tllq)
 
     fpath = fpath_a26
 
@@ -595,22 +604,51 @@ def compare_anatest_files():
         # (fpath_R6B1_NSH,fpath_a29_noDupes_v2),
         # (fpath_R6e2_NSH,fpath_a29_noDupes_v2),
 
-        (fpath_tllq_R6B1,fpath_tllq_R6B2),
-        (fpath_tllq_R6B1,fpath_tllq_R6B3),
-        (fpath_tllq_R6B2,fpath_tllq_R6B3),
+        # (fpath_tllq_R6B1,fpath_tllq_R6B2),
+        # (fpath_tllq_R6B1,fpath_tllq_R6B3),
+        # (fpath_tllq_R6B2,fpath_tllq_R6B3),
+
+        # (fpath_a28_fixedErrors,fpath_a31_fixedErrors,"a28 vs. a31","a28-a31"),
+        # (fpath_HanOrigSMChecks,fpath_HanV4SMChecks,"SM Orig vs. Hv4","SM_Check"),
+        # (fpath_HanOrigSMChecks,fpath_a28_fixedErrors,"SM Orig vs. a28","SM-a28"),
+        # (fpath_HanV4SMChecks,fpath_a31_fixedErrors,"SM Hv4 vs. a31","SM-a31"),
 
 
-        # (fpath_HanV4SMChecks,fpath_HanOrigSMChecks),
+        # (fpath_HanOrigSMChecks,fpath_a28_fixedErrors,"SM Orig","a28","SMOrig-a28"),
+        # (fpath_HanV4SMChecks,fpath_a31_fixedErrors  ,"SM Hv4" ,"a31","SMHv4-a31"),
+        # (fpath_HanOrigSMChecks,fpath_HanV4SMChecks  ,"SM Orig","Hv4","SMOrig-SMHv4"),
+        # (fpath_a28_fixedErrors,fpath_a31_fixedErrors,"a28"    ,"a31","a28-a31"),
 
+        # (fpath_a28_fixedErrors,fpath_a28_fixedErrors,"a28","a28","central-a28"),
+        # (fpath_a31_fixedErrors,fpath_a31_fixedErrors,"a31","a31","central-a31"),
+        # (fpath_HanOrigSMChecks,fpath_HanOrigSMChecks,"SM Orig","SM Orig","central-SMOrig"),
+        # (fpath_HanV4SMChecks,fpath_HanV4SMChecks    ,"Hv4","Hv4","central-SMHv4"),
+
+        # (fpath_a31_fixedErrors,fpath_a32,"a31","a32","a31-a32"),
+        # (fpath_a28_fixedErrors,fpath_a32,"a28","a32","a28-a32"),
+
+        (fpath_HanOrigSMChecks,fpath_a31_fixedErrors,"SM Orig","a31","SMOrig-a31"),
+        (fpath_HanV4SMChecks,fpath_a31_fixedErrors  ,"SM Hv4" ,"a31","SMHv4-a31"),
+
+        (fpath_HanOrigSMChecks,fpath_a32,"SM Orig","a32","SMOrig-a32"),
+        (fpath_HanV4SMChecks,fpath_a32,"SM Hv4","a32","SMHv4-a32"),
     ]
 
     for idx,tup in enumerate(compare):
-        fpath1,fpath2 = tup
+        fpath1,fpath2,f1_title,f2_title,out_name = tup
         h,fname1 = os.path.split(fpath1)
         h,fname2 = os.path.split(fpath2)
         print "Comparing: {fn1} --> {fn2}".format(fn1=fname1,fn2=fname2)
         cmd = ["root","-b","-l","-q"]
-        cmd_args = "\"{fp1}\",\"{fp2}\"".format(fp1=fpath1,fp2=fpath2)
+        cmd_args = []
+        cmd_args.append("\"{fp1}\",\"{fp2}\"".format(fp1=fpath1,fp2=fpath2))
+        cmd_args.append("\"{fn1}\",\"{fn2}\"".format(fn1=f1_title,fn2=f2_title))
+        cmd_args.append("\"{name}\"".format(name=out_name))
+        cmd_args = ",".join(cmd_args)
+        # cmd_args = "\"{fp1}\",\"{fp2}\",\"{fn1}\",\"{name}\"".format(
+        #     fp1=fpath1,fp2=fpath2,
+        #     title=cmp_title,name=out_name
+        # )
         cmd.extend(['compare_anatest_files.C({args})'.format(args=cmd_args)])
         subprocess.check_call(cmd)
         # run_process(cmd,verbose=True,indent=0)
@@ -639,25 +677,37 @@ def make_yield_table():
         'private_sgnl_tllq_R6B1': 'tllq_R6B1',
         'private_sgnl_tllq_R6B2': 'tllq_R6B2',
         'private_sgnl_tllq_R6B3': 'tllq_R6B3',
+        'anatest28_fixedErrors': 'a28_fixStats',
+        'anatest31_fixedErrors': 'a31_fixStats',
     }
 
     lst = []
     # lst.extend([fpath_a28,fpath_a28_redoFull,fpath_a29,fpath_a29_noDupes,fpath_a31])
-    # lst.extend([
-    #     fpath_a28_redoFull,
-    #     # fpath_a31,
-    #     # fpath_a29_noDupes,
-    #     fpath_a29_noDupes_v2,
-    #     fpath_HanV4SMChecks,
-    #     fpath_HanOrigSMChecks
-    # ])
     lst.extend([
-        fpath_tllq_R6B1,
-        fpath_tllq_R6B2,
-        fpath_tllq_R6B3,
+        fpath_a28_redoFull,
+        # fpath_a31,
+        # fpath_a29_noDupes,
+        # fpath_a29_noDupes_v2,
+        fpath_HanV4SMChecks,
+        fpath_HanOrigSMChecks,
+        fpath_a31_fixedErrors,
+        fpath_a32,
     ])
+    # lst.extend([
+    #     fpath_tllq_R6B1,
+    #     fpath_tllq_R6B2,
+    #     fpath_tllq_R6B3,
+    # ])
     # lst.extend([fpath_R6B1,fpath_R6B1_NSH,fpath_R6e2_NSH])
     # lst.extend([fpath_a29_redoHist,fpath_a29_redoFull_v2])
+    # lst.extend([
+    #     # fpath_a28_redoFull,
+    #     # fpath_a29_noDupes_v2,
+    #     # fpath_a28_fixedErrors,
+    #     # fpath_a31_fixedErrors,
+    #     fpath_HanOrigSMChecks,
+    #     fpath_HanV4SMChecks,
+    # ])
     for fp in lst:
         h,t = os.path.split(fp)
         name = t.rsplit('.')[0]
@@ -671,9 +721,9 @@ def make_yield_table():
 
 def main():
     # check_anaTrees()
-    read_anaTreeChecks()
+    # read_anaTreeChecks()
     # plot_systematic_variations()
-    # compare_anatest_files()
+    compare_anatest_files()
     # make_yield_table()
 
 
