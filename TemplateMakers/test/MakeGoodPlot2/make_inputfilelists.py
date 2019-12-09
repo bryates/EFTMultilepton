@@ -371,7 +371,7 @@ def anatest27_samples():
     MuonEG     = Sample('MuonEG')
 
     ttZ_central = Sample('ttZ')
-    ttW_central = Sample('ttW')    
+    ttW_central = Sample('ttW')
     ttH_central = Sample('ttH')
     tZq_central = Sample('tZq')
     tHq_central = Sample('tHq')
@@ -526,7 +526,33 @@ def anatest31_samples():
     return samples
 
 # Significantly larger stats version of a31, with all ttH events using the old starting point
-def anatest32_samples():
+def anatest32_samples(private_sgnl,central_sgnl,central_bkgd,data):
+    logger.info("include private_sgnl: {}".format(private_sgnl))
+    logger.info("include central_sgnl: {}".format(central_sgnl))
+    logger.info("include central_bkgd: {}".format(central_bkgd))
+    logger.info("include data: {}".format(data))
+
+    SingleElectron = Sample('SingleElectron')
+    SingleMuon = Sample('SingleMuon')
+    DoubleMuon = Sample('DoubleMuon')
+    DoubleEG   = Sample('DoubleEG')
+    MuonEG     = Sample('MuonEG')
+
+    ttZ_central = Sample('ttZ')
+    ttW_central = Sample('ttW')
+    ttH_central = Sample('ttH')
+    tZq_central = Sample('tZq')
+    tHq_central = Sample('tHq')
+
+    ttGJets_central = Sample('ttGJets')
+    ZZZ_central = Sample('ZZZ')
+    WZZ_central = Sample('WZZ')
+    WWZ_central = Sample('WWZ')
+    WWW_central = Sample('WWW')
+    ZZ_central  = Sample('ZZ')
+    WZ_central  = Sample('WZ')
+    WW_central  = Sample('WW')
+
     ttH_priv = Sample('ttH_multidim')
     tHq_priv = Sample('tHq_multidim')
     ttZ_priv = Sample('ttll_multidim')
@@ -535,7 +561,74 @@ def anatest32_samples():
 
     samples = []
 
-    path = 'awightma/analysisTrees/private_sgnl_2019_12_02/v2'
+    # Data samples
+    path = 'awightma/analysisTrees/data2017_2019_10_21/v1'
+    SingleElectron.addDirectory(HADOOP_DIR,path,'SingleElectron_Run2017B')
+    SingleElectron.addDirectory(HADOOP_DIR,path,'SingleElectron_Run2017C')
+    SingleElectron.addDirectory(HADOOP_DIR,path,'SingleElectron_Run2017D')
+    SingleElectron.addDirectory(HADOOP_DIR,path,'SingleElectron_Run2017E')
+    SingleElectron.addDirectory(HADOOP_DIR,path,'SingleElectron_Run2017F')
+
+    SingleMuon.addDirectory(HADOOP_DIR,path,'SingleMuon_Run2017B')
+    SingleMuon.addDirectory(HADOOP_DIR,path,'SingleMuon_Run2017C')
+    SingleMuon.addDirectory(HADOOP_DIR,path,'SingleMuon_Run2017D')
+    SingleMuon.addDirectory(HADOOP_DIR,path,'SingleMuon_Run2017E')
+    SingleMuon.addDirectory(HADOOP_DIR,path,'SingleMuon_Run2017F')
+    # SingleMuon.addDirectory(HADOOP_DIR,path,'SingleMuon_Run2017H')    # Has no data
+
+    DoubleMuon.addDirectory(HADOOP_DIR,path,'DoubleMuon_Run2017B')
+    DoubleMuon.addDirectory(HADOOP_DIR,path,'DoubleMuon_Run2017C')
+    DoubleMuon.addDirectory(HADOOP_DIR,path,'DoubleMuon_Run2017D')
+    DoubleMuon.addDirectory(HADOOP_DIR,path,'DoubleMuon_Run2017E')
+    DoubleMuon.addDirectory(HADOOP_DIR,path,'DoubleMuon_Run2017F')
+
+    DoubleEG.addDirectory(HADOOP_DIR,path,'DoubleEG_Run2017B')
+    DoubleEG.addDirectory(HADOOP_DIR,path,'DoubleEG_Run2017C')
+    DoubleEG.addDirectory(HADOOP_DIR,path,'DoubleEG_Run2017D')
+    DoubleEG.addDirectory(HADOOP_DIR,path,'DoubleEG_Run2017E')
+    DoubleEG.addDirectory(HADOOP_DIR,path,'DoubleEG_Run2017F')
+
+    MuonEG.addDirectory(HADOOP_DIR,path,'MuonEG_Run2017B')
+    MuonEG.addDirectory(HADOOP_DIR,path,'MuonEG_Run2017C')
+    MuonEG.addDirectory(HADOOP_DIR,path,'MuonEG_Run2017D')
+    MuonEG.addDirectory(HADOOP_DIR,path,'MuonEG_Run2017E')
+    MuonEG.addDirectory(HADOOP_DIR,path,'MuonEG_Run2017F')
+
+    if data: samples.extend([SingleElectron,SingleMuon,DoubleMuon,DoubleEG,MuonEG])
+
+    # Central samples (same as ana26)
+    path = 'awightma/analysisTrees/central_sgnl_2019_10_11/v1'
+    tHq_central.addDirectory(HADOOP_DIR,path,'tHq') # Excluding this from the list for now
+    ttW_central.addDirectory(HADOOP_DIR,path,'ttW')
+    ttZ_central.addDirectory(HADOOP_DIR,path,'ttZ')
+
+    # Updated to 'new_pmx' version (Note: The ttGJets sample failed horrifically)
+    path = 'awightma/analysisTrees/special/central_ttH-WW-WZ-ttGJets_new_pmx_2019_10_21/v3'
+    ttH_central.addDirectory(HADOOP_DIR,path,'ttH')
+
+    # Used the correct 4f PDF for the PDFUP/PDFDOWN unc. templates
+    path = 'awightma/analysisTrees/special/tZq_2019_10_17_fixPDF/v2'
+    tZq_central.addDirectory(HADOOP_DIR,path,'tZq')
+
+    if central_sgnl: samples.extend([ttW_central,ttZ_central,tZq_central,ttH_central])
+
+    path = 'awightma/analysisTrees/central_bkgd_2019_10_12/v1'
+    ttGJets_central.addDirectory(HADOOP_DIR,path,'ttGJets')
+    ttGJets_central.addDirectory(HADOOP_DIR,path,'ttGJets_ext')
+    ZZZ_central.addDirectory(HADOOP_DIR,path,'ZZZ')
+    WZZ_central.addDirectory(HADOOP_DIR,path,'WZZ')
+    WWZ_central.addDirectory(HADOOP_DIR,path,'WWZ')
+    WWW_central.addDirectory(HADOOP_DIR,path,'WWW')
+    WW_central.addDirectory(HADOOP_DIR,path,'WW')
+
+    # Updated to 'new_pmx' version (Note: The ttGJets sample failed horrifically)
+    path = 'awightma/analysisTrees/special/central_ttH-WW-WZ-ttGJets_new_pmx_2019_10_21/v3'
+    WZ_central.addDirectory(HADOOP_DIR,path,'WZ')
+    ZZ_central.addDirectory(HADOOP_DIR,path,'ZZ')
+
+    if central_bkgd: samples.extend([ttGJets_central,ZZZ_central,WZZ_central,WWZ_central,WWW_central,WW_central,WZ_central,ZZ_central])
+
+    path = 'awightma/analysisTrees/private_sgnl_2019_12_02/v3'
     ttH_priv.addDirectory(HADOOP_DIR,path,'ttH_multidim_b1')
     tHq_priv.addDirectory(HADOOP_DIR,path,'tHq_multidim_b1')
     ttZ_priv.addDirectory(HADOOP_DIR,path,'ttll_multidim_b1')
@@ -552,7 +645,7 @@ def anatest32_samples():
     ttW_priv.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_b3')
     ttW_priv.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_b4')
 
-    samples.extend([ttH_priv,tHq_priv,ttZ_priv,tZq_priv,ttW_priv])
+    if private_sgnl: samples.extend([ttH_priv,tHq_priv,ttZ_priv,tZq_priv,ttW_priv])
     return samples
 
 ####################################################################################################
@@ -695,7 +788,7 @@ def HanOrigSMCheck():
 def main():
     overwrite = True
     timestamp_directory = True
-    dir_name = 'testing'
+    dir_name = 'central_full_a32'
 
     if timestamp_directory:
         dir_name = '{tstamp}_{base}'.format(tstamp=TIMESTAMP1,base=dir_name)
@@ -727,7 +820,12 @@ def main():
     # samples = anatest27_samples()
     # samples = anatest29_samples()
     # samples = anatest31_samples()
-    samples = anatest32_samples()
+    samples = anatest32_samples(
+        private_sgnl=False,
+        central_sgnl=True,
+        central_bkgd=True,
+        data=False
+    )
 
     # samples = a29_NoDupesV2()
 

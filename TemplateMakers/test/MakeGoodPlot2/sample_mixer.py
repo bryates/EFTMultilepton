@@ -152,6 +152,30 @@ def main():
     central_MC_fixedErrors.addSample("temp_ZZZ.root")
     central_MC_fixedErrors.addSample("temp_ttGJets.root")
 
+    central_full_CR = Mixin("2019_12_06_central_full_CR")
+    central_full_CR.addSample("temp_ttH.root")
+    central_full_CR.addSample("temp_ttW.root")
+    central_full_CR.addSample("temp_ttZ.root")
+    central_full_CR.addSample("temp_tZq.root")
+    central_full_CR.addSample("temp_WW.root")
+    central_full_CR.addSample("temp_WZ.root")
+    central_full_CR.addSample("temp_ZZ.root")
+    central_full_CR.addSample("temp_WWW.root")
+    central_full_CR.addSample("temp_WWZ.root")
+    central_full_CR.addSample("temp_WZZ.root")
+    central_full_CR.addSample("temp_ZZZ.root")
+    central_full_CR.addSample("temp_ttGJets.root")
+
+    data_CR = Mixin("2019_12_09_data_CR_GT-94X_dataRun2_v6")
+    data_CR.addSample("temp_data.root")
+    data_CR.addSample("temp_Fakes.root")
+    data_CR.addSample("temp_QFs.root")
+    data_CR.addSample("temp_DoubleEG.root")
+    data_CR.addSample("temp_DoubleMuon.root")
+    data_CR.addSample("temp_MuonEG.root")
+    data_CR.addSample("temp_SingleElectron.root")
+    data_CR.addSample("temp_SingleMuon.root")
+
     private_sgnl_a28_fixedErrors = Mixin("2019_11_22_private_sgnl_a28_fixedErrors")
     private_sgnl_a28_fixedErrors.addSample("temp_ttH_multidim.root")
     private_sgnl_a28_fixedErrors.addSample("temp_tHq_multidim.root")
@@ -172,18 +196,30 @@ def main():
     private_sgnl_a32.addSample("temp_tllq_multidim.root")
     private_sgnl_a32.addSample("temp_ttll_multidim.root")
     private_sgnl_a32.addSample("temp_ttlnu_multidim.root")
+
+    private_sgnl_a32_CR = Mixin("2019_12_06_private_sgnl_CR")
+    private_sgnl_a32_CR.addSample("temp_ttH_multidim.root")
+    private_sgnl_a32_CR.addSample("temp_tHq_multidim.root")
+    private_sgnl_a32_CR.addSample("temp_tllq_multidim.root")
+    private_sgnl_a32_CR.addSample("temp_ttll_multidim.root")
+    private_sgnl_a32_CR.addSample("temp_ttlnu_multidim.root")
     ################################################################################################
 
     lst = [
         # standardHists,
         # new_pmx,
         # full_MC_2019_10_19,
-        standardHists,
-        central_MC_fixedErrors,
+        # standardHists,
+        # central_MC_fixedErrors,
         # private_sgnl_a28_fixedErrors,
         # private_sgnl_a31_fixedErrors,
-        private_sgnl_a32,
+        # private_sgnl_a32,
     ]
+    lst.extend([#CR stuff
+        central_full_CR,
+        private_sgnl_a32_CR,
+        data_CR
+    ])
     lst.extend([
         # a28_redo,
         # a31,
