@@ -28,7 +28,7 @@ class TH1EFT : public TH1D
         using TH1D::Scale;          // Bring the TH1D Scale fcts into scope (likely not needed)
 
         // TObject* Clone(const char* newname=0); UNFINISHED!!! I think I want to do this via Copy instead
-        // void Copy(TObject &obj); Needs to be tested!!
+        // void Copy(TObject &obj) const; Needs to be tested!!
 
         Int_t Fill(Double_t x, Double_t w, WCFit fit);
         WCFit GetBinFit(Int_t bin);
