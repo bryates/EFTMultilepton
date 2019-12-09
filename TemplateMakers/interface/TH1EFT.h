@@ -28,7 +28,7 @@ class TH1EFT : public TH1D
         using TH1D::Scale;          // Bring the TH1D Scale fcts into scope (likely not needed)
 
         // TObject* Clone(const char* newname=0); UNFINISHED!!! I think I want to do this via Copy instead
-        // void Copy(); UNFINISHED!!!!
+        // void Copy(TObject &obj); Needs to be tested!!
 
         Int_t Fill(Double_t x, Double_t w, WCFit fit);
         WCFit GetBinFit(Int_t bin);
@@ -75,6 +75,30 @@ void TH1EFT::SetBins(Int_t nx, Double_t xmin, Double_t xmax)
     
     TH1::SetBins(nx, xmin, xmax);
 }
+
+// Note: Since Clone calls Copy, this should make Clone work as well
+// void TH1EFT::Copy(TObject &obj) const
+// {
+//     TH1::Copy(obj);
+//     for (Int_t i = 1; i <= this->GetNbinsX(); i++) {
+//         WCFit bin_fit;
+//         bin_fit.addFit(this->GetBinFit(i));
+//         ((TH1EFT&)obj).hist_fits.push_back(bin_fit);
+//     }
+//     // OR //
+//     for (unsigned int i = 0; i < this->hist_fits.size(); i++) {
+//         WCFit bin_fit;
+//         bin_fit.addFit(this->hist_fits.at(i));
+//         ((TH1EFT&)obj).hist_fits.push_back(bin_fit);
+//     }
+//     WCFit of_fit;
+//     WCFit uf_fit;
+//     of_fit.addFit(this->overflow_fit);
+//     uf_fit.addFit(this->underflow_fit);
+//     ((TH1EFT&)obj).overflow_fit = of_fit;
+//     ((TH1EFT&)obj).underflow_fit = uf_fit;
+// }
+
 Bool_t TH1EFT::Add(const TH1 *h1, Double_t c1)
 {
     // check whether the object pointed to inherits from (or is a) TH1EFT:
@@ -85,8 +109,11 @@ Bool_t TH1EFT::Add(const TH1 *h1, Double_t c1)
                 this->hist_fits[i].addFit( ((TH1EFT*)h1)->hist_fits[i] );
             }
         } else { 
-            std::cout << "Attempt to add 2 TH1EFTs with different # of fits!" << std::endl;
-            std::cout << this->hist_fits.size() << ", " << ((TH1EFT*)h1)->hist_fits.size() << endl;
+            // std::cout << "Attempt to add 2 TH1EFTs with different # of fits!" << std::endl;
+            // std::cout << this->hist_fits.size() << ", " << ((TH1EFT*)h1)->hist_fits.size() << endl;
+            std::cout << "Attempt to add 2 TH1EFTs with different # of fits!"
+                      << " (" << this->hist_fits.size() << ", " << ((TH1EFT*)h1)->hist_fits.size() << ")"
+                      << std::endl;
         }
         this->overflow_fit.addFit( ((TH1EFT*)h1)->overflow_fit );
         this->underflow_fit.addFit( ((TH1EFT*)h1)->underflow_fit );
