@@ -1,12 +1,14 @@
 #include "includes.h"
 
 // void makeanatestfile() {
-void makeanatestfile(TString out_name) {
+void makeanatestfile(TString out_name,TString plot_option) {
     std::vector<int> samples;
 
     /* Note: all of the samples below need to be located in the same directory! This has the
         potential to make it very difficult to determine what samples were used to produce the
         output file, unless it is excessively named
+
+       plot_option can be one of: root, png, or pdf
     */
 
     // Diboson
@@ -55,12 +57,13 @@ void makeanatestfile(TString out_name) {
     //MakeGoodPlot *newplots = new MakeGoodPlot(samples,"/tmpscratch/users/awightma/combinedHists/anatest23_2019_08_09_tllq4f-tchannel-NoJets-NoEFT/");
     MakeGoodPlot *newplots = new MakeGoodPlot(samples,"/tmpscratch/users/awightma/analysisWorkflow/mergedHists/mixed_samples/");
     
-    std::cout << "Starting drawAllToFile" << std::endl;
-    //newplots->drawAllToFile("anatest23","root");
-    //newplots->drawAllToFile("dump_name","root");
+    // std::cout << "Starting drawAllToFile" << std::endl;
+    // newplots->drawAllToFile(out_name.Data(),plot_option.Data());
 
-    // newplots->drawAllToFile("anatest30","root");
-    newplots->drawAllToFile(out_name.Data(),"root");
+    // Will be saved under: ~awightma/www/eft_stuff/misc/geoff_plots
+    std::cout << "Starting drawAllToWebArea" << std::endl;
+    out_name += "/";
+    newplots->drawAllToWebArea(out_name.Data(),plot_option.Data());
 
     //delete newplots;
     std::cout << "Finished!" << std::endl;
