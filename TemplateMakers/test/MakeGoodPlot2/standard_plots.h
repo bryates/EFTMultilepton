@@ -9,7 +9,10 @@ void MakeGoodPlot::standard_plots()
     vector<TString> cats;
     vector<std::pair<TString,int>> quants;
 
-    bool sr = true;                                    //// <<-------------
+    bool debug = true;
+
+    // bool sr = true;                                    //// <<-------------
+    bool sr = false;
     
     bool scaleFromFits = sr;
     
@@ -37,8 +40,7 @@ void MakeGoodPlot::standard_plots()
     // cats.push_back("1l_e");
     
     
-    if (!sr)
-    {
+    if (!sr) {
         // CR quants
         // quants.push_back({"__nbjets.",-1});
         quants.push_back({"__njets.",-1});
@@ -89,9 +91,7 @@ void MakeGoodPlot::standard_plots()
         // quants.push_back({"__muFWeightDown",-1});
         // quants.push_back({"__muRmuFWeightUp",-1});
         // quants.push_back({"__muRmuFWeightDown",-1});
-    }
-    else
-    {
+    } else {
         // or ...
         // sig regions
         quants.push_back({"",-1});
@@ -118,8 +118,7 @@ void MakeGoodPlot::standard_plots()
         // cats.push_back("ge5l_1b.");
     }
     
-    if (!sr)
-    {
+    if (!sr) {
         // CR combo cats
         cats.push_back("2lss"); // if you don't want the combo plots just comment this    
         cats.push_back("3l_mix"); // if you don't want the combo plots just comment this
@@ -143,25 +142,24 @@ void MakeGoodPlot::standard_plots()
     // //t->Draw(l+"_segmentCompatibility>>all__segmentCompatibility(?,?,?)",cond);       // segmentCompatibility
     // quants.push_back({"__lepMVA",-1});
 
-    for (const TString cat : cats)
-    {
-        for (const auto quant : quants)
-        {
+    if (debug) std::cout << "Debug 1.0" << std::endl;
+
+    for (const TString cat : cats) {
+        for (const auto quant : quants) {
             canvect.push_back({new GoodPlot(cat+quant.first,"darren",1,1,scaleFromFits),quant.second});
         }
     }
     
+    if (debug) std::cout << "Debug 2.0" << std::endl;
     // construct hists for combined 2lss + 3l categories:
-    for (int i=0; i<numsamples; i++)
-    {     
-        for (const auto quant : quants)
-        {
-            for (int thisSyst=0; thisSyst<numberOfSysts; thisSyst++) // comment out for non-"." hists
-            //for (int thisSyst=0; thisSyst<1; thisSyst++) // comment out for "." hists
-            {
+    for (int i=0; i<numsamples; i++) {
+        if (debug) std::cout << "i - " << std::endl;
+        for (const auto quant : quants) {
+            if (debug) std::cout << "quant - " << quant.first << std::endl;
+            for (int thisSyst=0; thisSyst<numberOfSysts; thisSyst++) {// comment out for non-"." hists
+            //for (int thisSyst=0; thisSyst<1; thisSyst++) {// comment out for "." hists
                 // mainly for CRs //
-                if (!sr)
-                {
+                if (!sr) {
                     auto combohist1 = (TH1EFT*)hist[i].FindObject("2lss_p_ee"+quant.first+systint2str(thisSyst))->Clone("2lss"+quant.first+systint2str(thisSyst));
                     combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_p_emu"+quant.first+systint2str(thisSyst)));
                     combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_p_mumu"+quant.first+systint2str(thisSyst)));
@@ -181,9 +179,7 @@ void MakeGoodPlot::standard_plots()
                     combohist2->Add((TH1EFT*)hist[i].FindObject("3l_mix_m"+quant.first+systint2str(thisSyst)));
             
                     hist[i].Add(combohist2);
-                }
-                else
-                {
+                } else {
                     // --------------- //
                     // Mainly for SRs  //
             
@@ -226,27 +222,24 @@ void MakeGoodPlot::standard_plots()
     // n.b.: if this crashes, check first if there's a mismatch in number of systs saved in 
     // a given file and the number in numberOfSysts
 
+    if (debug) std::cout << "Debug 3.0" << std:;endl;
+
     // now actually make the plots and save them:
-    for (int i=0; i<numsamples; i++)
-    //for (int i=(numsamples-1); i>=0; i--)
-    {           
+    for (int i=0; i<numsamples; i++) {
+    //for (int i=(numsamples-1); i>=0; i--) {           
         cout << " " << endl;
         cout << "Doing " << sample_names[samples[i]] << " (" << samples[i] << ")" << endl;
         double wc = 0.;
-        if (samples[i]>99)
-        {
-            for (uint j=0; j<canvect.size(); j++)
-            {
+        if (samples[i]>99) {
+            for (uint j=0; j<canvect.size(); j++) {
                 canvect[j].first->addPlotData(*this,"same",i,"samp",canvect[j].second,"E"); // "E1X0"
             }
-
             continue;
         }
         
-        for (uint j=0; j<canvect.size(); j++)
-        {
+        for (uint j=0; j<canvect.size(); j++) {
             //canvect[j].first->addPlot(*this, "same", i, "samp");
-            
+            if (debug) std::cout << TString::Format("GoodPlot: %s (j=%d)",canvect[j].first->GetName(),j) << std::endl;
             canvect[j].first->addStackWithSumMC(*this,"same",i,"samp",canvect[j].second);
             
             ////canvect[j].first->addPlotNorm(*this, "same", i, "samp",canvect[j].second,"E");
@@ -266,6 +259,8 @@ void MakeGoodPlot::standard_plots()
     // if you're plotting the per-category hists:
     // cout << !canvect[0].first->sumDiboson << endl;
     
+    if (debug) std::cout << "Debug 4.0" << std::endl;
+
     bool doprintout = true;
     if (doprintout)
     {
