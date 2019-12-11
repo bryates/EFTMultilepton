@@ -81,7 +81,12 @@ class Sample(object):
 ####################################################################################################
 
 # Still need to double check that these re-create the inputfiles verbatim
-def legacy_geoff_samples():
+def legacy_geoff_samples(private_sgnl,central_sgnl,central_bkgd,data):
+    logger.info("include private_sgnl: {}".format(private_sgnl))
+    logger.info("include central_sgnl: {}".format(central_sgnl))
+    logger.info("include central_bkgd: {}".format(central_bkgd))
+    logger.info("include data: {}".format(data))
+
     # Central signal samples
     # Note: There isn't a central tHq sample
     path = "awightma/geoff_lobster_outputs/lobster_trees__EFT_test_27_2_19_central"
@@ -180,33 +185,11 @@ def legacy_geoff_samples():
     tHq_priv = Sample('tHq_multidim')
     tHq_priv.addDirectory(HADOOP_DIR,path,'tHq_multidim_batch1')
 
-    samples = [
-        ttZ_central,
-        ttW_central,
-        ttH_central,
-        tZq_central,
+    if private_sgnl: samples.extend([tllq_priv,ttlnu_priv,ttll_priv,ttH_priv,tHq_priv])
+    if central_sgnl: samples.extend([ttZ_central,ttW_central,ttH_central,tZq_central])
+    if central_bkgd: samples.extend([ttGJets_central,ZZZ_central,WZZ_central,WZ_central,WWZ_central,WWW_central,ZZ_central,WW_central])
+    if data: samples.extend([SingleMuon_data,SingleElectron_data,MuonEG_data,DoubleMuon_data,DoubleEG_data])
 
-        ttGJets_central,
-        ZZZ_central,
-        WZZ_central,
-        WZ_central,
-        WWZ_central,
-        WWW_central,
-        ZZ_central,
-        WW_central,
-
-        SingleMuon_data,
-        SingleElectron_data,
-        MuonEG_data,
-        DoubleMuon_data,
-        DoubleEG_data,
-
-        tllq_priv,
-        ttlnu_priv,
-        ttll_priv,
-        ttH_priv,
-        tHq_priv
-    ]
     return samples
 
 # 'Current' samples we want to use over the legacy geoff samples
@@ -813,19 +796,21 @@ def main():
     logger.info("Output Directory: {path}".format(path=out_dir))
     logger.info("Logging output to: {path}".format(path=log_file))
 
+    kwargs = {
+        'private_sgnl': True,
+        'central_sgnl': True,
+        'central_bkgd': True,
+        'data': True,
+    }
+
     # samples = private_samples()
-    # samples = legacy_geoff_samples()
+    # samples = legacy_geoff_samples(**kwargs)
     # samples = anatest25_samples()
     # samples = anatest26_samples()
     # samples = anatest27_samples()
     # samples = anatest29_samples()
     # samples = anatest31_samples()
-    samples = anatest32_samples(
-        private_sgnl=False,
-        central_sgnl=True,
-        central_bkgd=True,
-        data=False
-    )
+    samples = anatest32_samples(**kwargs)
 
     # samples = a29_NoDupesV2()
 
