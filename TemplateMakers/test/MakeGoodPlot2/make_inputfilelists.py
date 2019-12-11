@@ -185,6 +185,8 @@ def legacy_geoff_samples(private_sgnl,central_sgnl,central_bkgd,data):
     tHq_priv = Sample('tHq_multidim')
     tHq_priv.addDirectory(HADOOP_DIR,path,'tHq_multidim_batch1')
 
+    samples = []
+
     if private_sgnl: samples.extend([tllq_priv,ttlnu_priv,ttll_priv,ttH_priv,tHq_priv])
     if central_sgnl: samples.extend([ttZ_central,ttW_central,ttH_central,tZq_central])
     if central_bkgd: samples.extend([ttGJets_central,ZZZ_central,WZZ_central,WZ_central,WWZ_central,WWW_central,ZZ_central,WW_central])
@@ -804,13 +806,13 @@ def main():
     }
 
     # samples = private_samples()
-    # samples = legacy_geoff_samples(**kwargs)
+    samples = legacy_geoff_samples(**kwargs)
     # samples = anatest25_samples()
     # samples = anatest26_samples()
     # samples = anatest27_samples()
     # samples = anatest29_samples()
     # samples = anatest31_samples()
-    samples = anatest32_samples(**kwargs)
+    # samples = anatest32_samples(**kwargs)
 
     # samples = a29_NoDupesV2()
 
