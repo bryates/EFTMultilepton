@@ -84,7 +84,7 @@ class Sample(object):
 def legacy_geoff_samples():
     # Central signal samples
     # Note: There isn't a central tHq sample
-    path = "gesmith/lobster_trees__EFT_test_27_2_19_central"
+    path = "awightma/geoff_lobster_outputs/lobster_trees__EFT_test_27_2_19_central"
     ttZ_central = Sample('ttZ')
     ttZ_central.addDirectory(HADOOP_DIR,path,'ttZ')
 
@@ -94,12 +94,12 @@ def legacy_geoff_samples():
     ttH_central = Sample('ttH')
     ttH_central.addDirectory(HADOOP_DIR,path,'ttH')
 
-    path = "gesmith/lobster_trees__EFT_test_tZq_rmHiggs_8_7_19"
+    path = "awightma/geoff_lobster_outputs/lobster_trees__EFT_test_tZq_rmHiggs_8_7_19"
     tZq_central = Sample('tZq')
     tZq_central.addDirectory(HADOOP_DIR,path,'tZq')
 
     # Central bkgd samples
-    path = "gesmith/lobster_trees__EFT_test_20_2_19_central_a"
+    path = "awightma/geoff_lobster_outputs/lobster_trees__EFT_test_20_2_19_central_a"
     ttGJets_central = Sample('ttGJets')
     ttGJets_central.addDirectory(HADOOP_DIR,path,'ttGJets')
 
@@ -118,7 +118,7 @@ def legacy_geoff_samples():
     WWW_central = Sample('WWW')
     WWW_central.addDirectory(HADOOP_DIR,path,'WWW')
 
-    path = "gesmith/lobster_trees__EFT_test_20_2_19_central_b"
+    path = "awightma/geoff_lobster_outputs/lobster_trees__EFT_test_20_2_19_central_b"
     ZZ_central = Sample('ZZ')
     ZZ_central.addDirectory(HADOOP_DIR,path,'ZZ')
     
@@ -126,7 +126,7 @@ def legacy_geoff_samples():
     WW_central.addDirectory(HADOOP_DIR,path,'WW')
     
     # Data samples
-    path = "gesmith/lobster_trees__EFT_test_20_2_19_data_take2"
+    path = "awightma/geoff_lobster_outputs/lobster_trees__EFT_test_20_2_19_data_take2"
     SingleMuon_data = Sample('SingleMuon')
     SingleMuon_data.addDirectory(HADOOP_DIR,path,'SingleMuon_Run2017B')
     SingleMuon_data.addDirectory(HADOOP_DIR,path,'SingleMuon_Run2017C')
@@ -163,7 +163,7 @@ def legacy_geoff_samples():
     DoubleEG_data.addDirectory(HADOOP_DIR,path,'DoubleEG_Run2017F')
 
     # Private EFT samples
-    path = "gesmith/lobster_trees__EFT_test_EFTsamps_first_Round5_6_7_19"
+    path = "awightma/geoff_lobster_outputs/lobster_trees__EFT_test_EFTsamps_first_Round5_6_7_19"
     tllq_priv = Sample('tllq_multidim')
     tllq_priv.addDirectory(HADOOP_DIR,path,'tllq_multidim_batch1')
     
