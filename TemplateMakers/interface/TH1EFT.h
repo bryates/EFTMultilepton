@@ -27,8 +27,7 @@ class TH1EFT : public TH1D
         using TH1D::GetBinContent;  // Bring the TH1D GetBinContent fcts into scope
         using TH1D::Scale;          // Bring the TH1D Scale fcts into scope (likely not needed)
 
-        // TObject* Clone(const char* newname=0); UNFINISHED!!! I think I want to do this via Copy instead
-        // void Copy(TObject &obj) const; Needs to be tested!!
+        void Copy(TObject &obj) const;  // This allows Clone to properly copy the WCFit objects
 
         Int_t Fill(Double_t x, Double_t w, WCFit fit);
         WCFit GetBinFit(Int_t bin);
@@ -77,27 +76,21 @@ void TH1EFT::SetBins(Int_t nx, Double_t xmin, Double_t xmax)
 }
 
 // Note: Since Clone calls Copy, this should make Clone work as well
-// void TH1EFT::Copy(TObject &obj) const
-// {
-//     TH1::Copy(obj);
-//     for (Int_t i = 1; i <= this->GetNbinsX(); i++) {
-//         WCFit bin_fit;
-//         bin_fit.addFit(this->GetBinFit(i));
-//         ((TH1EFT&)obj).hist_fits.push_back(bin_fit);
-//     }
-//     // OR //
-//     for (unsigned int i = 0; i < this->hist_fits.size(); i++) {
-//         WCFit bin_fit;
-//         bin_fit.addFit(this->hist_fits.at(i));
-//         ((TH1EFT&)obj).hist_fits.push_back(bin_fit);
-//     }
-//     WCFit of_fit;
-//     WCFit uf_fit;
-//     of_fit.addFit(this->overflow_fit);
-//     uf_fit.addFit(this->underflow_fit);
-//     ((TH1EFT&)obj).overflow_fit = of_fit;
-//     ((TH1EFT&)obj).underflow_fit = uf_fit;
-// }
+void TH1EFT::Copy(TObject &obj) const
+{
+    TH1::Copy(obj);
+    for (unsigned int i = 0; i < this->hist_fits.size(); i++) {
+        WCFit bin_fit;
+        bin_fit.addFit(this->hist_fits.at(i));
+        ((TH1EFT&)obj).hist_fits.push_back(bin_fit);
+    }
+    WCFit of_fit;
+    WCFit uf_fit;
+    of_fit.addFit(this->overflow_fit);
+    uf_fit.addFit(this->underflow_fit);
+    ((TH1EFT&)obj).overflow_fit = of_fit;
+    ((TH1EFT&)obj).underflow_fit = uf_fit;
+}
 
 Bool_t TH1EFT::Add(const TH1 *h1, Double_t c1)
 {
@@ -244,7 +237,7 @@ void TH1EFT::ScaleFits(double amt)
 void TH1EFT::DumpFits()
 {
     for (uint i = 0; i < this->hist_fits.size(); i++) {
-        this->hist_fits.at(i).dump();
+        this->hist_fits.at(i).dump(i);
     }
 }
 #endif

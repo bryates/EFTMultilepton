@@ -52,46 +52,46 @@ public:
     }
 
     // The number of pairs in the fit, should be equal to 1 + 2N + N(N-1)/2
-    uint size() {
+    uint size() const {
         //Note: pairs.size() and coeffs.size() should always be in 1-to-1 correspondance!
         return this->pairs.size();
     }
 
     // The number of pairs in the error fit
-    uint errSize() {
+    uint errSize() const {
         //Note: err_pairs.size() and err_coeffs.size() should always be in 1-to-1 correspondance!
         return this->err_pairs.size();
     }
 
-    std::string getTag() {
+    std::string getTag() const {
         return this->tag;
     }
 
     // A vector of all non-zero WCs in the fit (includes 'sm')
-    std::vector<std::string> getNames() {
+    std::vector<std::string> getNames() const {
         return this->names;
     }
 
     // A vector of (ordered) indicies, indicating the WC names of the pairs in the quadratic function
-    std::vector<std::pair<int,int>> getPairs() {
+    std::vector<std::pair<int,int>> getPairs() const {
         return this->pairs;
     }
 
     // A vector of the coefficients for each term in the quadratic function
-    std::vector<double> getCoefficients() {
+    std::vector<double> getCoefficients() const {
         return this->coeffs;
     }
 
-    std::vector<std::pair<int,int>> getErrorPairs() {
+    std::vector<std::pair<int,int>> getErrorPairs() const {
         return this->err_pairs;
     }
 
-    std::vector<float> getErrorCoefficients() {
+    std::vector<float> getErrorCoefficients() const {
         return this->err_coeffs;
     }
 
     // Returns a (ordered) pair of indicies corresponding to a particular quadratic term
-    std::pair<int,int> getIndexPair(std::string & n1, std::string & n2) {
+    std::pair<int,int> getIndexPair(std::string & n1, std::string & n2) const {
         // Convention note: idx1 <= idx2 always!
         int idx1 = -1;
         int idx2 = -1;
@@ -124,7 +124,7 @@ public:
     }
 
     // Overloaded function for quickly getting a specific index pair
-    std::pair<int,int> getIndexPair(uint idx) {
+    std::pair<int,int> getIndexPair(uint idx) const {
         if (idx >= this->size()) {
             std::cout << "[ERROR] WCFit tried to access invalid index " << idx << std::endl;
             throw;
@@ -133,7 +133,7 @@ public:
     }
 
     // Returns a particular structure constant from the fit function
-    double getCoefficient(std::string & n1, std::string & n2) {
+    double getCoefficient(std::string & n1, std::string & n2) const {
         // Note: This is a very brute force method of finding the corresponding coefficient,
         //       the overloaded function method should be used whenever possible
         auto idx_pair = this->getIndexPair(n1,n2);
@@ -159,7 +159,7 @@ public:
     }
 
     // Overloaded function for quickly getting a specific structure constant
-    double getCoefficient(uint idx) {
+    double getCoefficient(uint idx) const {
         if (idx >= this->size()) {
             std::cout << "[ERROR] WCFit tried to access invalid index " << idx << std::endl;
             throw;
@@ -168,7 +168,7 @@ public:
     }
 
     // Can only access the error coefficients directly via the err_coeffs vector
-    float getErrorCoefficient(uint idx) {
+    float getErrorCoefficient(uint idx) const {
         if (idx >= this->errSize()) {
             std::cout << "[ERROR] WCFit tried to access invalid index " << idx << std::endl;
             throw;
@@ -177,12 +177,12 @@ public:
     }
 
     // Returns the dimensionality of the fit (i.e. the number of WCs)
-    int getDim() {
+    int getDim() const {
         return this->names.size() - 1;  // Exclude 'sm' term
     }
 
     // Checks to see if the fit includes the specified WC
-    bool hasCoefficient(std::string & wc_name) {
+    bool hasCoefficient(std::string & wc_name) const {
         for (auto& s: this->names) {
             if (s == wc_name) {
                 return true;
@@ -192,7 +192,7 @@ public:
     }
 
     // Evaluate the fit at a particular WC phase space point
-    double evalPoint(WCPoint* pt) {
+    double evalPoint(WCPoint* pt) const {
         uint i;
         double v,x1,x2,c;
         std::string n1,n2;
@@ -212,14 +212,14 @@ public:
     }
 
     // Overloaded function to evaluate the fit in 1-D at a specific WC
-    double evalPoint(std::string & wc_name,double val) {
+    double evalPoint(std::string & wc_name,double val) const {
         WCPoint pt;
         pt.setStrength(wc_name,val);
         return this->evalPoint(&pt);
     }
 
     // Evaluate the error fit at a particular WC phase space point
-    double evalPointError(WCPoint* pt) {
+    double evalPointError(WCPoint* pt) const {
         uint i;
         double v,x1,x2,x3,x4,c;
         std::string n1,n2,n3,n4;
@@ -245,13 +245,13 @@ public:
         return sqrt(v);
     }
 
-    double evalPointError(std::string & wc_name,double val) {
+    double evalPointError(std::string & wc_name,double val) const {
         WCPoint pt;
         pt.setStrength(wc_name,val);
         return this->evalPointError(&pt);
     }
 
-    void addFit(WCFit & added_fit) {
+    void addFit(const WCFit & added_fit) {
         if (added_fit.size() == 0) return;
 
         if (this->size() == 0) {
