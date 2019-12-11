@@ -1,6 +1,5 @@
 void MakeGoodPlot::standard_plots()
 {
-    
     std::vector<std::pair<GoodPlot*,int>> canvect;
     
     //canvect.push_back({new GoodPlot("category_yields","darren"),-1});
@@ -42,21 +41,22 @@ void MakeGoodPlot::standard_plots()
     
     if (!sr) {
         // CR quants
-        // quants.push_back({"__nbjets.",-1});
-        quants.push_back({"__njets.",-1});
-        // quants.push_back({"__jetpt.",2});        // 5
-        // quants.push_back({"__jeteta.",2});
-        // quants.push_back({"__jetDeepCSV.",5});       // 5
-        // quants.push_back({"__lep1pt.",2});      // 5
-        // quants.push_back({"__lep2pt.",2});      // 5
-        // quants.push_back({"__lepeta.",2});
-        // quants.push_back({"__llmass.",-1});
-        // quants.push_back({"__met.",2});         // 5
-        // quants.push_back({"__MHT.",4});         // 5    
-        // quants.push_back({"__PUMVA.",40});    
-        // quants.push_back({"__ntaus.",-1});
-        // quants.push_back({"__hadtopmass.",10});
-        // quants.push_back({"__HT.",10});
+        quants.push_back({"__nbjets.",-1});
+        ////quants.push_back({"__njets.",-1});
+        quants.push_back({"__jetpt.",-1});//2        // 5
+        quants.push_back({"__jeteta.",-1});//2
+        quants.push_back({"__jetDeepCSV.",5});       // 5
+        quants.push_back({"__lep1pt.",2});      // 5
+        quants.push_back({"__lep2pt.",2});      // 5
+        quants.push_back({"__lepeta.",-1});//2
+        quants.push_back({"__llmass.",-1});
+
+        //quants.push_back({"__met.",-1});//2         // 5
+        //quants.push_back({"__MHT.",-1});//4         // 5    
+        //quants.push_back({"__PUMVA.",-1});//40    
+        //quants.push_back({"__ntaus.",-1});
+        //quants.push_back({"__hadtopmass.",-1});//10
+        //quants.push_back({"__HT.",-1});//10
     
         // if doing any of the ones below, need to change the loop over systs also below!
         // quants.push_back({"__jetcsv",-1});
@@ -239,7 +239,7 @@ void MakeGoodPlot::standard_plots()
         
         for (uint j=0; j<canvect.size(); j++) {
             //canvect[j].first->addPlot(*this, "same", i, "samp");
-            if (debug) std::cout << TString::Format("GoodPlot: %s (j=%d)",canvect[j].first->GetName(),j) << std::endl;
+            if (debug) std::cout << TString::Format("GoodPlot: %s (j=%d)",canvect[j].first->GetName(),j) << std::endl;        
             canvect[j].first->addStackWithSumMC(*this,"same",i,"samp",canvect[j].second);
             
             ////canvect[j].first->addPlotNorm(*this, "same", i, "samp",canvect[j].second,"E");
@@ -258,10 +258,8 @@ void MakeGoodPlot::standard_plots()
 
     // if you're plotting the per-category hists:
     // cout << !canvect[0].first->sumDiboson << endl;
-    
     if (debug) std::cout << "Debug 4.0" << std::endl;
-
-    bool doprintout = true;
+    bool doprintout = false;//true;
     if (doprintout)
     {
         
@@ -411,18 +409,18 @@ void MakeGoodPlot::standard_plots()
         cout << "\\hline" << endl;*/
 
         // prob leave this commented out most of time?
-        if (!sr) 
-        {
-            for (uint blah=0; blah<cats.size(); blah++)
-            {
-                cout << " " << endl;
-                cout << cats[blah] << endl;
-                cout << sample_names[85] << ": " << 100*(ylds[blah][85] - ylds[blah][8])  / ylds[blah][8]  << "$\\pm$" << 100*sqrt(pow(ylds_unc[blah][85],2) + pow(ylds_unc[blah][8],2))  / ylds[blah][8]  << endl;
-                cout << sample_names[86] << ": " << 100*(ylds[blah][86] - ylds[blah][9])  / ylds[blah][9]  << "$\\pm$" << 100*sqrt(pow(ylds_unc[blah][86],2) + pow(ylds_unc[blah][9],2))  / ylds[blah][9]  << endl;
-                cout << sample_names[84] << ": " << 100*(ylds[blah][84] - ylds[blah][1])  / ylds[blah][1]  << "$\\pm$" << 100*sqrt(pow(ylds_unc[blah][84],2) + pow(ylds_unc[blah][1],2))  / ylds[blah][1]  << endl;
-                cout << sample_names[87] << ": " << 100*(ylds[blah][87] - ylds[blah][26]) / ylds[blah][26] << "$\\pm$" << 100*sqrt(pow(ylds_unc[blah][87],2) + pow(ylds_unc[blah][26],2)) / ylds[blah][26] << endl;
-            }
-        }
+        //if (!sr) 
+        //{
+        //    for (uint blah=0; blah<cats.size(); blah++)
+        //    {
+        //        cout << " " << endl;
+        //        cout << cats[blah] << endl;
+        //        cout << sample_names[85] << ": " << 100*(ylds[blah][85] - ylds[blah][8])  / ylds[blah][8]  << "$\\pm$" << 100*sqrt(pow(ylds_unc[blah][85],2) + pow(ylds_unc[blah][8],2))  / ylds[blah][8]  << endl;
+        //        cout << sample_names[86] << ": " << 100*(ylds[blah][86] - ylds[blah][9])  / ylds[blah][9]  << "$\\pm$" << 100*sqrt(pow(ylds_unc[blah][86],2) + pow(ylds_unc[blah][9],2))  / ylds[blah][9]  << endl;
+        //        cout << sample_names[84] << ": " << 100*(ylds[blah][84] - ylds[blah][1])  / ylds[blah][1]  << "$\\pm$" << 100*sqrt(pow(ylds_unc[blah][84],2) + pow(ylds_unc[blah][1],2))  / ylds[blah][1]  << endl;
+        //        cout << sample_names[87] << ": " << 100*(ylds[blah][87] - ylds[blah][26]) / ylds[blah][26] << "$\\pm$" << 100*sqrt(pow(ylds_unc[blah][87],2) + pow(ylds_unc[blah][26],2)) / ylds[blah][26] << endl;
+        //    }
+        //}
         // 85 // ttlnu_multidim
         // 86 // ttll_multidim
         // 84 // ttH_multidim
@@ -434,5 +432,6 @@ void MakeGoodPlot::standard_plots()
         // 1 // ttH  
         // 26 // tZq
     }
+    std::cout << "Finished standard_plots()" << std::endl;
 }
 
