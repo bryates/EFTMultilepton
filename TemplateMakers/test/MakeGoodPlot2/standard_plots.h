@@ -222,7 +222,7 @@ void MakeGoodPlot::standard_plots()
     // n.b.: if this crashes, check first if there's a mismatch in number of systs saved in 
     // a given file and the number in numberOfSysts
 
-    if (debug) std::cout << "Debug 3.0" << std:;endl;
+    if (debug) std::cout << "Debug 3.0" << std::endl;
 
     // now actually make the plots and save them:
     for (int i=0; i<numsamples; i++) {
