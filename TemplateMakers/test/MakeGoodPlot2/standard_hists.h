@@ -58,7 +58,7 @@ void HistMaker::standard_hists()
         
     bool passedtrig = passesAnyTrigger();
     //passedtrig = true; // <<<---------------------------------------   comment me!!!!!!!!!!!!
-        
+    
     th1d["single_ele_trigs"]->Fill(passesDatasetDependentTriggers(101),weight);
     th1d["double_ele_trigs"]->Fill(passesDatasetDependentTriggers(103),weight);
     th1d["single_mu_trigs"]->Fill(passesDatasetDependentTriggers(100),weight);
@@ -78,7 +78,7 @@ void HistMaker::standard_hists()
     if (removeDatasetOverlaps() && passedtrig) {
         for (int forchgfs=0; forchgfs<doNtimes; forchgfs++) {// in the case of QF background (only), loop through twice
             if (forchgfs==1) category = category2; // don't ever get here for nominal hists
-            for (int sys : systs) {   
+            for (int sys : systs) {
                 // these two conditionals skipped for nominal hists
                 if (dochgfs) {
                     weight = *wgt_intree;
@@ -108,7 +108,6 @@ void HistMaker::standard_hists()
                 int catSys = sys>2 ? 0 : sys;   // catSys = 0, or 1 or 2 in the case of JESup/down. Should I think be fine as-is. 
                                                 // q-flip, fake selections are special cases, which are already handled. 
                                                 // lepID, btag systs are SF variations on already-selected events.
-                
                 if (category[catSys]!="null") {
                     WCPoint smpt = WCPoint();
                     if (sys==0) {//Nominal
@@ -183,6 +182,7 @@ void HistMaker::standard_hists()
                                 weight *= totalSF(sys,category);    // bin=-1, nbins=0
                             }
                         }
+
                         if (sample>=84 && sample<=88) weight = getEventFit(abs(weight)).evalPoint(&smpt); // only for non-main-result hists!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
                         if (fillCRhists) th1d[category[sys]+"__njets."]->Fill(fillHistOverflowAware(th1d[category[sys]+"__njets."],jetsize),weight); // n.b.: to save fit using TH1EFT::Fill, separate last argument into 2 args: weight,getEventFit(weight)
@@ -223,7 +223,7 @@ void HistMaker::standard_hists()
 
                         for (const auto & lep : leptons) {
                             th1d[category[sys]+"__leppt"]->Fill(lep.obj.Pt(),weight);
-                            if (fillCRhists) th1d[category[sys]+"__lepeta."]->Fill(lep.obj.Eta(),weight);   
+                            if (fillCRhists) th1d[category[sys]+"__lepeta."]->Fill(lep.obj.Eta(),weight);
                             th1d[category[sys]+"__lepMVA"]->Fill(lep.lepMVA,weight);
                             th1d[category[sys]+"__dxy"]->Fill(lep.dxy,weight);
                             th1d[category[sys]+"__dz"]->Fill(lep.dz,weight);
@@ -244,18 +244,15 @@ void HistMaker::standard_hists()
                         
                         if (fillCRhists) th1d[category[sys]+"__HT."]->Fill(fillHistOverflowAware(th1d[category[sys]+"__HT."],total_ht),weight);
                         
-                        
                         if (fillCRhists) th1d[category[sys]+"__lep1pt."]->Fill(fillHistOverflowAware(th1d[category[sys]+"__lep1pt."],leptons[0].obj.Pt()),weight);
                         if (numleps>1) {
                             if (fillCRhists) th1d[category[sys]+"__lep2pt."]->Fill(fillHistOverflowAware(th1d[category[sys]+"__lep2pt."],leptons[1].obj.Pt()),weight);
                             for (int i=0; i<(numleps-1); i++) {
                                 for (int j=i+1; j<numleps; j++) {
-                                    if ((leptons[i].charge+leptons[j].charge)==0) {
-                                        auto obj12 = leptons[i].obj + leptons[j].obj;
-                                        if (fillCRhists) th1d[category[sys]+"__llmass."]->Fill(fillHistOverflowAware(th1d[category[sys]+"__llmass."],obj12.M()),weight);
-                                        //th1d[category[sys]+"__llmass.envup"]->Fill(obj12.M(),weight);
-                                        //th1d[category[sys]+"__llmass.envdown"]->Fill(obj12.M(),weight);
-                                    }
+                                    auto obj12 = leptons[i].obj + leptons[j].obj;
+                                    if (fillCRhists) th1d[category[sys]+"__llmass."]->Fill(fillHistOverflowAware(th1d[category[sys]+"__llmass."],obj12.M()),weight);
+                                    //th1d[category[sys]+"__llmass.envup"]->Fill(obj12.M(),weight);
+                                    //th1d[category[sys]+"__llmass.envdown"]->Fill(obj12.M(),weight);
                                 }
                             }
                         }
