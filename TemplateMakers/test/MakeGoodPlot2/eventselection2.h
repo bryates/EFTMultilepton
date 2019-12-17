@@ -90,7 +90,7 @@ string HistMaker::eventselection(std::vector<ttH::Jet> thejets, bool useFakeable
         double mindilepmass = getTwoObjKineExtreme(leptons,"min","mass"); // might need to be over more leps (to check)
            
         if (mindilepmass>12)
-        {            
+        {
             //if (numleps>=3) cout << "here1" << endl;
             if ( (leptons[0].correctedPt>25) && (leptons[1].correctedPt>20 || (leptons[1].correctedPt>15 && !tightercuts)) ) 
             {

@@ -22,8 +22,8 @@ bool HistMaker::passesDatasetDependentTriggers(int mysample)
             std::size_t found6 = (*passTrigger_intree)[k].find("dummytrg");
             std::size_t found8 = (*passTrigger_intree)[k].find("dummytrg");
                                                                                                              
-            if (found1!=std::string::npos || found2!=std::string::npos || found3!=std::string::npos || found4!=std::string::npos || found5!=std::string::npos || found6!=std::string::npos || found7!=std::string::npos || found8!=std::string::npos)                        
-            {
+            if (found1!=std::string::npos || found2!=std::string::npos || found3!=std::string::npos || found4!=std::string::npos ||
+                found5!=std::string::npos || found6!=std::string::npos || found7!=std::string::npos || found8!=std::string::npos) {
                 return true;
             }
         }
@@ -43,8 +43,8 @@ bool HistMaker::passesDatasetDependentTriggers(int mysample)
             std::size_t found3 = (*passTrigger_intree)[k].find("dummytrg");
             std::size_t found5 = (*passTrigger_intree)[k].find("dummytrg");            
         
-            if (found1!=std::string::npos || found2!=std::string::npos || found3!=std::string::npos  || found4!=std::string::npos  || found5!=std::string::npos || found6!=std::string::npos)
-            {
+            if (found1!=std::string::npos || found2!=std::string::npos || found3!=std::string::npos  || found4!=std::string::npos  ||
+                found5!=std::string::npos || found6!=std::string::npos) {
                 return true;
             }
         }
@@ -58,8 +58,7 @@ bool HistMaker::passesDatasetDependentTriggers(int mysample)
             
             std::size_t found3 = (*passTrigger_intree)[k].find("dummytrg");
             
-            if (found1!=std::string::npos || found2!=std::string::npos || found3!=std::string::npos || found4!=std::string::npos)
-            {
+            if (found1!=std::string::npos || found2!=std::string::npos || found3!=std::string::npos || found4!=std::string::npos) {
                 return true;
             }  
         }  
@@ -69,8 +68,7 @@ bool HistMaker::passesDatasetDependentTriggers(int mysample)
             std::size_t found2 = (*passTrigger_intree)[k].find("HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_v"); // 2017 -> check if/when ps'd (not in 2017B)
             std::size_t found3 = (*passTrigger_intree)[k].find("HLT_Ele16_Ele12_Ele8_CaloIdL_TrackIdL_v"); // ??? apparently disabled at high lumi but still being used..
                 
-            if (found1!=std::string::npos || found2!=std::string::npos || found3!=std::string::npos)
-            {
+            if (found1!=std::string::npos || found2!=std::string::npos || found3!=std::string::npos) {
                 return true;
             }
         }  
@@ -89,8 +87,8 @@ bool HistMaker::passesDatasetDependentTriggers(int mysample)
             std::size_t found1 = (*passTrigger_intree)[k].find("dummytrg");
             std::size_t found2 = (*passTrigger_intree)[k].find("dummytrg");
             
-            if (found1!=std::string::npos || found2!=std::string::npos || found3!=std::string::npos || found4!=std::string::npos || found5!=std::string::npos || found6!=std::string::npos|| found7!=std::string::npos || found8!=std::string::npos)
-            {
+            if (found1!=std::string::npos || found2!=std::string::npos || found3!=std::string::npos || found4!=std::string::npos ||
+                found5!=std::string::npos || found6!=std::string::npos || found7!=std::string::npos || found8!=std::string::npos) {
                 return true;
             }
         }
@@ -100,25 +98,26 @@ bool HistMaker::passesDatasetDependentTriggers(int mysample)
 }
 bool HistMaker::removeDatasetOverlaps()
 {
-    if (sample==100)
-    {
+    if (sample==100) {
         return passesDatasetDependentTriggers(100);
-    }
-    else if (sample==101)
-    {
-        return (!passesDatasetDependentTriggers(100) && passesDatasetDependentTriggers(101));
-    }
-    else if (sample==102)
-    {
-        return (!passesDatasetDependentTriggers(100) && !passesDatasetDependentTriggers(101) && passesDatasetDependentTriggers(102));
-    }
-    else if (sample==103)
-    {
-        return (!passesDatasetDependentTriggers(100) && !passesDatasetDependentTriggers(101) && !passesDatasetDependentTriggers(102) && passesDatasetDependentTriggers(103));
-    }
-    else if (sample==104)
-    {
-        return (!passesDatasetDependentTriggers(100) && !passesDatasetDependentTriggers(101) && !passesDatasetDependentTriggers(102) && !passesDatasetDependentTriggers(103) && passesDatasetDependentTriggers(104));
+    } else if (sample==101) {
+        return (!passesDatasetDependentTriggers(100)
+            && passesDatasetDependentTriggers(101));
+    } else if (sample==102) {
+        return (!passesDatasetDependentTriggers(100)
+            && !passesDatasetDependentTriggers(101)
+            && passesDatasetDependentTriggers(102));
+    } else if (sample==103) {
+        return (!passesDatasetDependentTriggers(100)
+            && !passesDatasetDependentTriggers(101)
+            && !passesDatasetDependentTriggers(102)
+            && passesDatasetDependentTriggers(103));
+    } else if (sample==104) {
+        return (!passesDatasetDependentTriggers(100)
+            && !passesDatasetDependentTriggers(101)
+            && !passesDatasetDependentTriggers(102)
+            && !passesDatasetDependentTriggers(103)
+            && passesDatasetDependentTriggers(104));
     }
     // in case of MC:
     else return true;
@@ -126,25 +125,26 @@ bool HistMaker::removeDatasetOverlaps()
 // the result of trying this alternative way was that there were a very small number of differences:
 // bool HistMaker::removeDatasetOverlaps()
 // {
-//     if (sample==104)
-//     {
+//     if (sample==104) {
 //         return passesDatasetDependentTriggers(104);
-//     }
-//     else if (sample==103)
-//     {
-//         return (!passesDatasetDependentTriggers(104) && passesDatasetDependentTriggers(103));
-//     }
-//     else if (sample==102)
-//     {
-//         return (!passesDatasetDependentTriggers(104) && !passesDatasetDependentTriggers(103) && passesDatasetDependentTriggers(102));
-//     }
-//     else if (sample==101)
-//     {
-//         return (!passesDatasetDependentTriggers(104) && !passesDatasetDependentTriggers(103) && !passesDatasetDependentTriggers(102) && passesDatasetDependentTriggers(101));
-//     }
-//     else if (sample==100)
-//     {
-//         return (!passesDatasetDependentTriggers(104) && !passesDatasetDependentTriggers(103) && !passesDatasetDependentTriggers(102) && !passesDatasetDependentTriggers(101) && passesDatasetDependentTriggers(100));
+//     } else if (sample==103) {
+//         return (!passesDatasetDependentTriggers(104)
+//             && passesDatasetDependentTriggers(103));
+//     } else if (sample==102) {
+//         return (!passesDatasetDependentTriggers(104)
+//             && !passesDatasetDependentTriggers(103)
+//             && passesDatasetDependentTriggers(102));
+//     } else if (sample==101) {
+//         return (!passesDatasetDependentTriggers(104)
+//             && !passesDatasetDependentTriggers(103)
+//             && !passesDatasetDependentTriggers(102)
+//             && passesDatasetDependentTriggers(101));
+//     } else if (sample==100) {
+//         return (!passesDatasetDependentTriggers(104)
+//             && !passesDatasetDependentTriggers(103)
+//             && !passesDatasetDependentTriggers(102)
+//             && !passesDatasetDependentTriggers(101)
+//             && passesDatasetDependentTriggers(100));
 //     }
 //     // in case of MC:
 //     else return true;
