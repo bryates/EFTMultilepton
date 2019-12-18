@@ -1,6 +1,6 @@
 #include "includes.h"
 
-void wrapper_lobster(TString sample, TString input_filenames, bool doQFs=false, bool dofakes=false)
+void wrapper_lobster(TString sample, TString input_filenames, TString output_name, bool doQFs=false, bool dofakes=false)
 {
     // input_filenames -> just "files.txt" provided by lobster. open and read files, add to chain as doing already below.
 
@@ -29,8 +29,7 @@ void wrapper_lobster(TString sample, TString input_filenames, bool doQFs=false, 
     //bool split = (sample_TString2int(sample)>=84 && sample_TString2int(sample)<=88) ? true : false;
     bool split = false;
     
-    if (!split)
-    {
+    if (!split) {
         TTreeReader reader(ch);
         // Fill histograms
         if (debug) cout << "Before Histmaker" << endl;
@@ -58,7 +57,7 @@ void wrapper_lobster(TString sample, TString input_filenames, bool doQFs=false, 
         //if (dofakes) supl="_Fakes";
     
         //TFile tempfile("temp_"+int2ss(sample)+"_"+int2ss(i)+".root","RECREATE");
-        TFile tempfile("output.root","RECREATE"); // the naming of this should now be handled by lobster
+        TFile tempfile(output_name,"RECREATE");
         sumObjArray->Write();
         if (debug) cout << "Hists dumped to file" << endl;           
         TH1D *scalehist = new TH1D("NumInitialWeightedMCevents","NumInitialWeightedMCevents",1,1,2);                    
@@ -66,17 +65,14 @@ void wrapper_lobster(TString sample, TString input_filenames, bool doQFs=false, 
         scalehist->Write();
         if (debug) cout << "Wrote NumInitialWeightedMCevents" << endl;
         tempfile.Close();
-    }    
-    else
-    {
+    } else {
         int entries = ch->GetEntries();
         //int entries = 2000;
         int eventsperloop = 5000; // adjust as needed
         int maxloops = ceil((double)entries/(double)eventsperloop);
         //////////////////////////////////////////////////
         
-        for (int i=0; i<maxloops; i++)
-        {
+        for (int i=0; i<maxloops; i++) {
             int firstevent = i*eventsperloop;
             int lastevent = min(entries,firstevent+eventsperloop);
             // Fill histograms
@@ -126,12 +122,11 @@ void wrapper_lobster(TString sample, TString input_filenames, bool doQFs=false, 
     //////////////////////////////////////////////////
     
     // garbage collection (if it becomes necessary):
-//     delete scalehist;
-//     delete sumObjArray;
-//     delete histmaker;
-//     // reader.SetTree(0); // ?
-//     delete ch; // might have to do something with reader first..
-//
-//     feb 2019: it did become necessary. See Histmaker dtor.
+    // delete scalehist;
+    // delete sumObjArray;
+    // delete histmaker;
+    // // reader.SetTree(0); // ?
+    // delete ch; // might have to do something with reader first..
 
+    // feb 2019: it did become necessary. See Histmaker dtor.
 }

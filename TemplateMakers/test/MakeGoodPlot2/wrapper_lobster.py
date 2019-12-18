@@ -12,23 +12,25 @@ print thisamp
 print thing
 print infiles
 
+fname = "files.txt"
+outf = "output.root"
 
-with open('files.txt', 'w') as fd:
+with open(fname,'w') as fd:
     for fn in infiles:
         fd.write('{}\n'.format(fn))
 
-#subprocess.check_call(["root", "-b", "-l", "-q", "wrapper_lobster.C+(\""+thisamp+"\", \"files.txt\")"])
+#subprocess.check_call(["root", "-b", "-l", "-q", "wrapper_lobster.C+(\""+thisamp+"\", \"files.txt\", \"output.root\")"])
 
+cmd_args = "\"{samp}\",\"{inf}\",\"{outf}\"".format(samp=thisamp,inf=fname,outf=outf)
 if (thing=='nom'):
     print "nom"
-    subprocess.check_call(["root", "-b", "-l", "-q", "wrapper_lobster.C+(\""+thisamp+"\", \"files.txt\")"])
-
+    subprocess.check_call(["root","-b","-l","-q","wrapper_lobster.C+({args})".format(args=cmd_args)])
 else:
     print "not nom!"
     #if (thisamp=='DoubleEG' or thisamp=='DoubleMuon' or thisamp=='MuonEG' or thisamp=='SingleElectron' or thisamp=='SingleMuon'):
     if (thing=='_QFs'):
         print "QFs"
-        subprocess.check_call(["root", "-b", "-l", "-q", "wrapper_lobster.C+(\""+thisamp+"\", \"files.txt\", true, false)"])
+        subprocess.check_call(["root","-b","-l","-q","wrapper_lobster.C+({args},true,false)".format(args=cmd_args)])
     elif (thing=='_Fakes'):
         print "Fakes"
-        subprocess.check_call(["root", "-b", "-l", "-q", "wrapper_lobster.C+(\""+thisamp+"\", \"files.txt\", false, true)"])
+        subprocess.check_call(["root","-b","-l","-q","wrapper_lobster.C+({args},false,true)".format(args=cmd_args)])
