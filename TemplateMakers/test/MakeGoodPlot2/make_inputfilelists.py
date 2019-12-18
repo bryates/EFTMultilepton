@@ -32,7 +32,6 @@ INPUTFILES_DIR = os.path.join(TMPSCRATCH_DIR,"analysisWorkflow/inputFiles")
 if not os.path.exists(INPUTFILES_DIR):
     os.makedirs(INPUTFILES_DIR)
 
-
 # frmt = LvlFormatter()
 # logging.getLogger().setLevel(logging.DEBUG)   # Modify the root logger
 
@@ -54,17 +53,83 @@ logger.setLevel(logging.DEBUG)
 logger.addHandler(console)
 
 class Sample(object):
+    '''
+        A basic container class for associating one or multiple directories
+            that contain root files with a particular sample. Also provides
+            methods for writing this information to a .txt file that can be
+            used in the histogram making step of the analysis workflow
+    '''
     def __init__(self,name,dirs=[]):
+        self.logger = logging.getLogger(__name__)
         self.__name = name
         self.__dirs = []
         for d in dirs: self.addDirectory(d)
 
+    # Return the name that this sample has been given
     def name(self):
         return self.__name
 
+    # Returns a list of all directories that have been associated with this sample
     def list(self):
         return self.__dirs
 
+    # Write the file paths of all root files from all attached directories to txt file
+    def write(self,out_dir,sub_index=False,skip_copy=False):
+        '''
+            out_dir   - Specifies the output directory name to be used
+            sub_index - In addition to the normal inputfile, will create
+                        an additional inputfile per added sample directory
+            skip_copy - Will skip copying any inputfiles to the output directory
+        '''
+        outf = 'inputfiles__{name}.txt'.format(name=self.name())
+        file_dict = {}
+        to_copy = []
+        lst = []
+
+        file_dict[outf] = []
+        to_copy.append(outf)
+        for tdir in self.list():
+            if not os.path.exists(tdir):
+                self.logger.info("Skipping unknown directory {dir}".format(dir=tdir))
+                continue
+            self.logger.info("Adding files from {dir}".format(dir=tdir))
+            sub_lst = []    # For sub indexing if needed
+            for fn in os.listdir(tdir):
+                fpath = os.path.join(tdir,fn)
+                if not os.path.isfile(fpath):
+                    continue
+                h,t = fn.rsplit('.',1)
+                if t == 'root':
+                    lst.append(fpath)
+                    sub_lst.append(fpath)
+            file_dict[outf].extend(sub_lst)
+            if sub_index:
+                sub_index_name = tdir.rsplit("/",1)[1]
+                sub_index_fn = "inputfiles__{name}.txt".format(name=sub_index_name)
+                if not file_dict.has_key(sub_index_fn):
+                    file_dict[sub_index_fn] = []
+                file_dict[sub_index_fn].extend(sub_lst)
+                if sub_index_fn in to_copy:
+                    raise RuntimeError("Duplicate output file name found! {}".format(sub_index_fn))
+                to_copy.append(sub_index_fn)
+        for fn in to_copy:
+            if not file_dict.has_key(fn):
+                raise RuntimeError("Missing dict entry for {}".format(fn))
+            file_lst = file_dict[fn]
+            if fn == outf:
+                self.logger.info("Creating file: {fn} (files: {nfiles})".format(fn=fn,nfiles=len(file_lst)))
+            else:
+                self.logger.info("Creating Sub-Indexed file: {fn} (files: {nfiles})".format(fn=fn,nfiles=len(file_lst)))
+            with open(fn,'w') as f:
+                for fpath in file_lst:
+                    f.write(fpath+"\n")
+        self.logger.info("Total Found files: {0:d}".format(len(file_dict[outf])))   # TODO: Find a better way to track total files
+        if not skip_copy:
+            for fn in to_copy:
+                self.logger.info("Copying {} to {}".format(fn,out_dir))
+                shutil.copy(fn,out_dir)
+
+    # Add a single directory containing root files to be associated with this sample
     def addDirectory(self,*args):
         if len(args) == 0:
             return
@@ -78,6 +143,7 @@ class Sample(object):
 
 ####################################################################################################
 # Define 'historic' groups of samples used in the analysis
+# TODO: Figure out a better way to document/record the groups
 ####################################################################################################
 
 # Still need to double check that these re-create the inputfiles verbatim
@@ -770,10 +836,69 @@ def HanOrigSMCheck():
 
 ####################################################################################################
 
+# These are analysis trees located in /scratch365/awightma for use when hadoop is unavailable
+def tmp_geoff_samples(private_sgnl,central_sgnl,central_bkgd,data):
+    logger.info("include private_sgnl: {}".format(private_sgnl))
+    logger.info("include central_sgnl: {}".format(central_sgnl))
+    logger.info("include central_bkgd: {}".format(central_bkgd))
+    logger.info("include data: {}".format(data))
+
+    SingleElectron = Sample('SingleElectron')
+    SingleMuon = Sample('SingleMuon')
+    DoubleMuon = Sample('DoubleMuon')
+    DoubleEG   = Sample('DoubleEG')
+    MuonEG     = Sample('MuonEG')
+
+    samples = []
+
+    # Data samples
+    path = '/scratch365/awightma/temp_workflow_steps/geoff_lobster_outputs/lobster_trees__EFT_test_20_2_19_data_take2'
+    SingleElectron.addDirectory(path,'SingleElectron_Run2017B')
+    SingleElectron.addDirectory(path,'SingleElectron_Run2017C')
+    SingleElectron.addDirectory(path,'SingleElectron_Run2017D')
+    SingleElectron.addDirectory(path,'SingleElectron_Run2017E')
+    SingleElectron.addDirectory(path,'SingleElectron_Run2017F')
+
+    SingleMuon.addDirectory(path,'SingleMuon_Run2017B')
+    SingleMuon.addDirectory(path,'SingleMuon_Run2017C')
+    SingleMuon.addDirectory(path,'SingleMuon_Run2017D')
+    SingleMuon.addDirectory(path,'SingleMuon_Run2017E')
+    SingleMuon.addDirectory(path,'SingleMuon_Run2017F')
+    # SingleMuon.addDirectory(HADOOP_DIR,path,'SingleMuon_Run2017H')    # Has no data
+
+    DoubleMuon.addDirectory(path,'DoubleMuon_Run2017B')
+    DoubleMuon.addDirectory(path,'DoubleMuon_Run2017C')
+    DoubleMuon.addDirectory(path,'DoubleMuon_Run2017D')
+    DoubleMuon.addDirectory(path,'DoubleMuon_Run2017E')
+    DoubleMuon.addDirectory(path,'DoubleMuon_Run2017F')
+
+    DoubleEG.addDirectory(path,'DoubleEG_Run2017B')
+    DoubleEG.addDirectory(path,'DoubleEG_Run2017C')
+    DoubleEG.addDirectory(path,'DoubleEG_Run2017D')
+    DoubleEG.addDirectory(path,'DoubleEG_Run2017E')
+    DoubleEG.addDirectory(path,'DoubleEG_Run2017F')
+
+    MuonEG.addDirectory(path,'MuonEG_Run2017B')
+    MuonEG.addDirectory(path,'MuonEG_Run2017C')
+    MuonEG.addDirectory(path,'MuonEG_Run2017D')
+    MuonEG.addDirectory(path,'MuonEG_Run2017E')
+    MuonEG.addDirectory(path,'MuonEG_Run2017F')
+
+    if data: samples.extend([SingleElectron,SingleMuon,DoubleMuon,DoubleEG,MuonEG])
+
+    return samples
+
 def main():
-    overwrite = True
+    overwrite = False
     timestamp_directory = True
-    dir_name = 'central_full_a32'
+    sub_index = False    # Will also create an inputfile for each directory of a sample
+    is_test = True      # In case we don't want to be making a bunch of useless output directories
+    dir_name = 'scratch365_geoff_inputfiles_full_data'
+
+    if is_test:
+        dir_name = 'testing'
+        overwrite = True
+        timestamp_directory = False
 
     if timestamp_directory:
         dir_name = '{tstamp}_{base}'.format(tstamp=TIMESTAMP1,base=dir_name)
@@ -798,21 +923,28 @@ def main():
     logger.info("Output Directory: {path}".format(path=out_dir))
     logger.info("Logging output to: {path}".format(path=log_file))
 
+    logger.info("Overwrite: {}".format(overwrite))
+    logger.info("Timestamp: {}".format(timestamp_directory))
+    logger.info("Sub-Index: {}".format(sub_index))
+    logger.info("Testing: {}".format(is_test))
+
+    # Dictionary for easily specifying which samples to be included
     kwargs = {
-        'private_sgnl': True,
-        'central_sgnl': True,
-        'central_bkgd': True,
+        'private_sgnl': False,
+        'central_sgnl': False,
+        'central_bkgd': False,
         'data': True,
     }
 
     # samples = private_samples()
-    samples = legacy_geoff_samples(**kwargs)
+    # samples = legacy_geoff_samples(**kwargs)
     # samples = anatest25_samples()
     # samples = anatest26_samples()
     # samples = anatest27_samples()
     # samples = anatest29_samples()
     # samples = anatest31_samples()
     # samples = anatest32_samples(**kwargs)
+    samples = tmp_geoff_samples(**kwargs)
 
     # samples = a29_NoDupesV2()
 
@@ -820,25 +952,7 @@ def main():
     for idx,s in enumerate(samples):
         outf = 'inputfiles__{name}.txt'.format(name=s.name())
         logger.info("[{}/{}] Making file: {fn}".format(idx+1,len(samples),fn=outf))
-        lst = []
-        for tdir in s.list():
-            if not os.path.exists(tdir):
-                logger.info("Skipping unknown directory {dir}".format(dir=tdir))
-                continue
-            logger.info("Adding files from {dir}".format(dir=tdir))
-            for fn in os.listdir(tdir):
-                fpath = os.path.join(tdir,fn)
-                if not os.path.isfile(fpath):
-                    continue
-                h,t = fn.rsplit('.',1)
-                if t == 'root':
-                    lst.append(fpath)
-        logger.info("Found files: {0:d}".format(len(lst)))
-        with open(outf,'w') as f:
-            for fpath in lst:
-                f.write(fpath+"\n")
-        logger.info("Copying {} to {}".format(outf,out_dir))
-        shutil.copy(outf,out_dir)
+        s.write(out_dir,sub_index=sub_index,skip_copy=is_test)
         logger.info("-"*100)
     logger.info("Finished!")
 
