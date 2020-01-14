@@ -8,14 +8,21 @@ WCFit HistMaker::getEventFit(double weight)
         std::vector<WCPoint> event_wgts;
 
         // loop over reweight points saved in tree for this event:
-        for (auto& kv: *eftwgts_intree)
-        {
+        for (auto& kv: *eftwgts_intree) {
             WCPoint new_pt(kv.first,kv.second);
             //WCPoint new_pt(kv.first,kv.second / (*originalXWGTUP_intree));
             event_wgts.push_back(new_pt);
         }
 
-        WCFit event_wgt_fit(event_wgts,""); // actually do the fit to the reweight points
+        // WCFit event_wgt_fit(event_wgts,""); // actually do the fit to the reweight points
+        WCFit event_wgt_fit;
+        if (event_wgts.size() == 0) {   // The EFT sample didn't have any EFT weights, so was very likely a SM sample
+            WCPoint tmp_smpt = WCPoint("",originalXWGTUP_intree);
+            event_wgt_fit = WCFit({tmp_smpt},"");
+        } else {
+            event_wgt_fit = WCFit(event_wgts,"");
+        }
+
         thisEventFit = event_wgt_fit; // copy to Histmaker member
     }
     
