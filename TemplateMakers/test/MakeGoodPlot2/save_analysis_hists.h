@@ -82,14 +82,28 @@ void MakeGoodPlot::save_analysis_hists()
     allSysts.push_back("MURMUFDOWN");
     allSysts.push_back("LEPIDUP");
     allSysts.push_back("LEPIDDOWN");
-    allSysts.push_back("PSISRUP");
-    allSysts.push_back("PSISRDOWN");
+    allSysts.push_back("PSISRUP");      // No longer calculated via a flat linear unc. over njet bins
+    allSysts.push_back("PSISRDOWN");    // No longer calculated via a flat linear unc. over njet bins
+    allSysts.push_back("PSFSRUP");      // No longer calculated via a flat linear unc. over njet bins
+    allSysts.push_back("PSFSRDOWN");    // No longer calculated via a flat linear unc. over njet bins
     allSysts.push_back("TRGUP");
     allSysts.push_back("TRGDOWN");
     allSysts.push_back("PUUP");
     allSysts.push_back("PUDOWN");  
     //allSysts.push_back("ADHOCNJUP");
     //allSysts.push_back("ADHOCNJDOWN");
+
+    // TODO: Not sure how I want to implement/include these histograms, since they will be coming
+    //       from hardcoded values, but which were calculated from histograms filled with properly
+    //       weighted events.
+    // allSysts.push_back("ISRUP");
+    // allSysts.push_back("ISRDOWN");
+    // allSysts.push_back("FSRUP");
+    // allSysts.push_back("FSRDOWN");
+
+    // TODO: I think I'm going to add this via hardcoded values in the datacard maker itself
+    // allSysts.push_back("QCUTUP");
+    // allSysts.push_back("QCUTDOWN");
     
     // for the other systs, need some way of picking MC-only, etc.
 
@@ -98,12 +112,10 @@ void MakeGoodPlot::save_analysis_hists()
     
     cout << "here1" << endl;
     
-    for (int i=0; i<numsamples; i++)
-    {     
-        for (const auto syst : allSysts)
-        {
-	        int thisSamp = samples[i];
-	        cout << i << ", " << thisSamp << ", " << syst << endl;
+    for (int i=0; i<numsamples; i++) {
+        for (const auto syst : allSysts) {
+            int thisSamp = samples[i];
+            std::cout << i << ", " << thisSamp << ", " << syst << std::endl;
 
             //auto combohist1 = (TH1EFT*)hist[i].FindObject("2lss_p_ee_1b."+syst); //->Clone("2lss."+syst);
             //combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_p_emu_1b."+syst));
@@ -116,7 +128,7 @@ void MakeGoodPlot::save_analysis_hists()
             //combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_p_mumu_2b."+syst));
             //combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_m_ee_2b."+syst));
             //combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_m_emu_2b."+syst));
-            //combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_m_mumu_2b."+syst));            
+            //combohist1->Add((TH1EFT*)hist[i].FindObject("2lss_m_mumu_2b."+syst));
             //if (debug) combohist1->DumpFits();
             //if (debug) cout << "Should be same as: " << endl;
             //if (debug) ((TH1EFT*)hist[i].FindObject("2lss_p_ee_1b."+syst))->DumpFits();
@@ -129,13 +141,21 @@ void MakeGoodPlot::save_analysis_hists()
             //combohist2->Add((TH1EFT*)hist[i].FindObject("3l_ppp_2b."+syst));
             //combohist2->Add((TH1EFT*)hist[i].FindObject("3l_mmm_2b."+syst));
             //combohist2->Add((TH1EFT*)hist[i].FindObject("3l_mix_2b."+syst));
-            //combohist2->Add((TH1EFT*)hist[i].FindObject("3l_mix_sfz_2b."+syst));            
+            //combohist2->Add((TH1EFT*)hist[i].FindObject("3l_mix_sfz_2b."+syst));
             //if (debug) combohist2->DumpFits();
             //if (debug) cout << "Should be same as: " << endl;
             //if (debug) ((TH1EFT*)hist[i].FindObject("3l_ppp_1b."+syst))->DumpFits();
             //hist[i].Add(combohist2);            
 
-	        if (!(thisSamp>=84 && thisSamp<=88) && (syst=="ADHOCNJUP" || syst=="ADHOCNJDOWN")) continue;
+            // if (!(thisSamp>=84 && thisSamp<=88) && (syst=="ADHOCNJUP" || syst=="ADHOCNJDOWN")) continue;
+            if (!(thisSamp >= 84 && thisSamp <= 88)) {
+                if (syst == "ADHOCNJUP" || "ADHOCNJDOWN") {
+                    continue;
+                } else if (syst == "QCUTUP" || "QCUTDOWN") {
+                    // Only the private signal samples will have these systematics included
+                    continue;
+                }
+            }
             if (thisSamp > 90 && (syst=="MURMUFUP" || syst=="MURMUFDOWN")) {
                 // The data-based samples haven't been re-made and so are missing these histograms
                 continue;
@@ -147,12 +167,12 @@ void MakeGoodPlot::save_analysis_hists()
             combohist2->Add((TH1EFT*)hist[i].FindObject("3l_mmm_1b."+syst));
             
             auto combohist3 = (TH1EFT*)hist[i].FindObject("3l_mix_p_2b."+syst); //->Clone("3l."+syst);
-            combohist3->Add((TH1EFT*)hist[i].FindObject("3l_ppp_2b."+syst));            
+            combohist3->Add((TH1EFT*)hist[i].FindObject("3l_ppp_2b."+syst));
             
             auto combohist4 = (TH1EFT*)hist[i].FindObject("3l_mix_m_2b."+syst); //->Clone("3l."+syst);
             combohist4->Add((TH1EFT*)hist[i].FindObject("3l_mmm_2b."+syst));
         }
-    } 
+    }
 
     // cout << "\\hline" << endl;
     // cout << " & 2lss ($e^{+}e^{+}$)";
@@ -173,8 +193,7 @@ void MakeGoodPlot::save_analysis_hists()
 
     //TH1EFT *data;
 
-    for (int i=0; i<numsamples; i++)
-    {    
+    for (int i=0; i<numsamples; i++) {    
         int thisSamp = samples[i];
         
         //cout << " " << endl;
@@ -204,12 +223,11 @@ void MakeGoodPlot::save_analysis_hists()
         //cout << "\\hline" << endl;
   
         vector<double> nomylds;
-        for (const TString thissyst : allSysts)
-        {
+        for (const TString thissyst : allSysts) {
             if (thissyst=="") cout << sample_names[thisSamp] << ": ";
             else cout << sample_names[thisSamp] << ", " << thissyst << ": ";
             
-            int cnt=0;            
+            int cnt=0;
             
             bool is_shape_syst = (thissyst=="PDFUP" || thissyst=="PDFDOWN" ||
                 thissyst=="MURUP" || thissyst=="MURDOWN" ||
@@ -218,10 +236,8 @@ void MakeGoodPlot::save_analysis_hists()
             // bool is_shape_syst = (thissyst == "PDFUP" || thissyst == "PDFDOWN" ||
             //     thissyst == "PSISRUP" || thissyst == "PSISRDOWN");
             
-            for (const TString thiscat : allAnaHists)
-            {   
+            for (const TString thiscat : allAnaHists) {
                 if (debug) cout << thiscat+thissyst << endl;
-                
                 
                 if (thisSamp!=95 && (thissyst=="FRUP" || thissyst=="FRDOWN")) continue;
                 if (thisSamp==95 && (thissyst!="FRUP" && thissyst!="FRDOWN" && thissyst!="")) continue;
@@ -234,9 +250,7 @@ void MakeGoodPlot::save_analysis_hists()
                 if (thissyst=="") thishist->SetName(thishist->GetName()+sample_names_reg[thisSamp]);
                 else thishist->SetName(thishist->GetName()+string(".")+sample_names_reg[thisSamp]);
                 
-                
-                if (thisSamp<40)
-                {
+                if (thisSamp<40) {
                     thishist->Scale(lumi*xsec[thisSamp]/numgen[thisSamp]);
 
                     // if (is_shape_syst) {
@@ -249,48 +263,38 @@ void MakeGoodPlot::save_analysis_hists()
                     // }
 
                     // Dibosons
-                    if (thisSamp==11)
-                    {
+                    if (thisSamp==11) {
                         if (thissyst=="") ((TH1EFT*)hist[i-1].FindObject(thiscat+thissyst+sample_names_reg[10]))->Add(thishist); // assumes i-1 is sample 10 (WZ)!!!
                         else ((TH1EFT*)hist[i-1].FindObject(thiscat+thissyst+string(".")+sample_names_reg[10]))->Add(thishist); // assumes i-1 is sample 10 (WZ)!!!
                     }
-                    if (thisSamp==12)
-                    {
+                    if (thisSamp==12) {
                         if (thissyst=="") ((TH1EFT*)hist[i-2].FindObject(thiscat+thissyst+sample_names_reg[10]))->Add(thishist); // assumes i-2 is sample 10 (WZ)!!!
                         else ((TH1EFT*)hist[i-2].FindObject(thiscat+thissyst+string(".")+sample_names_reg[10]))->Add(thishist); // assumes i-2 is sample 10 (WZ)!!!
                     }
                     // Tribosons
-                    if (thisSamp==23)
-                    {
+                    if (thisSamp==23) {
                         if (thissyst=="") ((TH1EFT*)hist[i-1].FindObject(thiscat+thissyst+sample_names_reg[22]))->Add(thishist); // assumes i-1 is sample 22 (WWW)!!!
                         else ((TH1EFT*)hist[i-1].FindObject(thiscat+thissyst+string(".")+sample_names_reg[22]))->Add(thishist); // assumes i-1 is sample 22 (WWW)!!!
                     }
-                    if (thisSamp==24)
-                    {
+                    if (thisSamp==24) {
                         if (thissyst=="") ((TH1EFT*)hist[i-2].FindObject(thiscat+thissyst+sample_names_reg[22]))->Add(thishist); // assumes i-2 is sample 22 (WWW)!!!
                         else ((TH1EFT*)hist[i-2].FindObject(thiscat+thissyst+string(".")+sample_names_reg[22]))->Add(thishist); // assumes i-2 is sample 22 (WWW)!!!
                     }
-                    if (thisSamp==25)
-                    {
+                    if (thisSamp==25) {
                         if (thissyst=="") ((TH1EFT*)hist[i-3].FindObject(thiscat+thissyst+sample_names_reg[22]))->Add(thishist); // assumes i-3 is sample 22 (WWW)!!!
                         else ((TH1EFT*)hist[i-3].FindObject(thiscat+thissyst+string(".")+sample_names_reg[22]))->Add(thishist); // assumes i-3 is sample 22 (WWW)!!!
                     }                    
-                }
-                else if(thisSamp>=40 && thisSamp<84) 
-                {
+                } else if(thisSamp>=40 && thisSamp<84) {
                     thishist->ScaleFits(lumi);
                     thishist->Scale(WCPoint());
                     // if (thissyst=="PDFUP" || thissyst=="PDFDOWN" || thissyst=="MURUP" || thissyst=="MURDOWN" || thissyst=="MUFUP" || thissyst=="MUFDOWN" || thissyst=="MURMUFUP" || thissyst=="MURMUFDOWN")
-                    if (is_shape_syst)
-                    {
+                    if (is_shape_syst) {
                         auto nomhist = (TH1EFT*)hist[i].FindObject(thiscat+sample_names_reg[thisSamp]); // should have already been scaled
                         double normamnt = (nomhist->GetEntries()!=0 && thishist->Integral()!=0.) ? nomhist->Integral()/thishist->Integral() : 1.;
                         thishist->ScaleFits(normamnt);
                         thishist->Scale(WCPoint());
                     }
-                }
-                else if(thisSamp>=84 && thisSamp<90) 
-                {
+                } else if(thisSamp>=84 && thisSamp<90) {
                     // Note: This assumes that all of the TH1EFT histograms have at least 1 bin
                     // Note: This should really be unnessecary, but is needed b/c samples w/o EFT reweighting
                     //          don't have any WCFits included in the TH1EFT histograms 
@@ -318,8 +322,7 @@ void MakeGoodPlot::save_analysis_hists()
                         //thishist->Scale(pt);
                         
                         // systematics that are shape-only variations:
-                        if (is_shape_syst)
-                        {
+                        if (is_shape_syst) {
                             auto nomhist = (TH1EFT*)hist[i].FindObject(thiscat+sample_names_reg[thisSamp]); // should have already been scaled
                             double normamnt = (nomhist->GetEntries()!=0 && thishist->Integral()!=0.) ? nomhist->Integral()/thishist->Integral() : 1.;
                             thishist->ScaleFits(normamnt);
@@ -329,10 +332,7 @@ void MakeGoodPlot::save_analysis_hists()
                         // TODO: What about the shape systematics?
                         thishist->Scale(lumi*xsec[thisSamp]/numgen[thisSamp]);
                     }
-                }
-                //else if (thisSamp>99)
-                else if (thisSamp==104)
-                {
+                } else if (thisSamp==104) {
                     //cout << "hey" << endl;
                     //if (thisSamp==100) data = (TH1EFT*)hist[i].FindObject(thiscat+thissyst+sample_names_reg[thisSamp])->Clone();
                     //else data->Add(thishist);
@@ -342,46 +342,39 @@ void MakeGoodPlot::save_analysis_hists()
                     data->Add((TH1EFT*)hist[i-1].FindObject(thiscat+sample_names_reg[103]));
                     data->Add((TH1EFT*)hist[i-2].FindObject(thiscat+sample_names_reg[102]));
                     data->Add((TH1EFT*)hist[i-3].FindObject(thiscat+sample_names_reg[101]));
-                    data->Add((TH1EFT*)hist[i-4].FindObject(thiscat+sample_names_reg[100]));                    
+                    data->Add((TH1EFT*)hist[i-4].FindObject(thiscat+sample_names_reg[100]));
                 }
                 
                 TString cltxt = "\\textcolor{black}{";
                 
-                if (thissyst=="")
-                {
+                if (thissyst=="") {
                     nomylds.push_back(thishist->Integral());
-                }
-                else
-                {
+                } else {
                     double offamnt = abs((thishist->Integral() - nomylds[cnt])/nomylds[cnt]);
                     if (offamnt>0.05) cltxt = "\\textcolor{red}{";
-                
                 }
 
                 // cout << " & " << cltxt << std::fixed << std::setprecision(2) << thishist->Integral() << "}";
                 //cout << " & " << cltxt << std::fixed << std::setprecision(2) << abs((thishist->Integral() - nomylds[cnt])/nomylds[cnt]) << "}";
                 
                 if (!(thisSamp>=10 && thisSamp<=12) && !(thisSamp>=22 && thisSamp<=25) && thisSamp<100) canvas.Add(thishist); //<-- last step 
-                if (thisSamp==12) 
-                {
+                if (thisSamp==12) {
                     if (thissyst=="") canvas.Add( (TH1EFT*)hist[i-2].FindObject(thiscat+thissyst+sample_names_reg[10]) );
                     else canvas.Add( (TH1EFT*)hist[i-2].FindObject(thiscat+thissyst+string(".")+sample_names_reg[10]) );
                 }
-                if (thisSamp==25) 
-                {
+                if (thisSamp==25) {
                     if (thissyst=="") canvas.Add( (TH1EFT*)hist[i-3].FindObject(thiscat+thissyst+sample_names_reg[22]) );
                     else canvas.Add( (TH1EFT*)hist[i-3].FindObject(thiscat+thissyst+string(".")+sample_names_reg[22]) );
                 }     
-                if (thisSamp==104)
-                {
+                if (thisSamp==104) {
                     auto data = (TH1EFT*)hist[i].FindObject(thiscat+sample_names_reg[thisSamp]);
                     data->SetName(thiscat+thissyst+"data");
                     //cout << "blah" << endl;
                     canvas.Add(data);
-                }           
+                }
                 cnt++;
             }
-            
+
             // cout << " \\\\ " << endl;   
             
             //for (const TString thiscat : cats)
@@ -402,13 +395,10 @@ void MakeGoodPlot::save_analysis_hists()
             //}
         }
 
-
-
         // Note: Need to run over muR/muF/muRmuF systematics again to compute the envelope and then
         //          normalize the result to get proper shape-only variations
         // Note: At this point all of the histograms should have already been properly (re-)scaled,
         //          we just want to compute the envelope and normalize
-        // TODO: Clean this code up to be more compact/concise
         if (thisSamp > 0 && thisSamp < 90) { // The muR/muF envelope is only for MC based samples
             // This is so we don't end up including unnecessary samples that were already merged into other samples
             bool is_merged_sample = false;
@@ -487,81 +477,9 @@ void MakeGoodPlot::save_analysis_hists()
                 TH1EFT* envhist_up   = calculateEnvelope(env_up_name,nomhist,up_variants);
                 TH1EFT* envhist_down = calculateEnvelope(env_down_name,nomhist,down_variants);
 
-                /*
-                Int_t nbins = nomhist->GetNbinsX();
-                Double_t xlo = nomhist->GetBinLowEdge(1);
-                Double_t xhi = nomhist->GetBinLowEdge(nbins+1);
-                TH1EFT* envhist_up   = new TH1EFT(env_up_name,"",nbins,xlo,xhi);
-                TH1EFT* envhist_down = new TH1EFT(env_down_name,"",nbins,xlo,xhi);
-
-                std::cout << std::fixed << std::setprecision(3);
-                // std::cout << "Sample: " << sample_names_reg[thisSamp] << std::endl;
-                // std::cout << "Category: " << thiscat << std::endl;
-                // Note: This ignores the underflow and overflow bins!
-                for (Int_t j = 1; j <= nbins; j++) {
-                    double nom_content = nomhist->GetBinContent(j);
-
-                    double mur_up_content    = murhist_up->GetBinContent(j);
-                    double muf_up_content    = mufhist_up->GetBinContent(j);
-                    double murmuf_up_content = murmufhist_up->GetBinContent(j);
-
-                    double mur_down_content    = murhist_down->GetBinContent(j);
-                    double muf_down_content    = mufhist_down->GetBinContent(j);
-                    double murmuf_down_content = murmufhist_down->GetBinContent(j);
-
-                    double extreme_value = 0.0;
-                    
-                    if (abs(nom_content - mur_up_content) > extreme_value) {
-                        extreme_value = abs(nom_content - mur_up_content);
-                        envhist_up->SetBinContent(j,murhist_up->GetBinContent(j));
-                        envhist_up->SetBinError(j,murhist_up->GetBinError(j));
-                        envhist_up->hist_fits.at(j-1) = murhist_up->GetBinFit(j);    // Note: We use j-1 here b/c of the off-by-one index
-                    }
-
-                    if (abs(nom_content - muf_up_content) > extreme_value) {
-                        extreme_value = abs(nom_content - muf_up_content);
-                        envhist_up->SetBinContent(j,mufhist_up->GetBinContent(j));
-                        envhist_up->SetBinError(j,mufhist_up->GetBinError(j));
-                        envhist_up->hist_fits.at(j-1) = mufhist_up->GetBinFit(j);    // Note: We use j-1 here b/c of the off-by-one index
-                    }
-
-                    if (abs(nom_content - murmuf_up_content) > extreme_value) {
-                        extreme_value = abs(nom_content - murmuf_up_content);
-                        envhist_up->SetBinContent(j,murmufhist_up->GetBinContent(j));
-                        envhist_up->SetBinError(j,murmufhist_up->GetBinError(j));
-                        envhist_up->hist_fits.at(j-1) = murmufhist_up->GetBinFit(j);    // Note: We use j-1 here b/c of the off-by-one index
-                    }
-
-                    extreme_value = 0.0;
-
-                    if (abs(nom_content - mur_down_content) > extreme_value) {
-                        extreme_value = abs(nom_content - mur_down_content);
-                        envhist_down->SetBinContent(j,murhist_down->GetBinContent(j));
-                        envhist_down->SetBinError(j,murhist_down->GetBinError(j));
-                        envhist_down->hist_fits.at(j-1) = murhist_down->GetBinFit(j);    // Note: We use j-1 here b/c of the off-by-one index
-                    }
-                    if (abs(nom_content - muf_down_content) > extreme_value) {
-                        extreme_value = abs(nom_content - muf_down_content);
-                        envhist_down->SetBinContent(j,mufhist_down->GetBinContent(j));
-                        envhist_down->SetBinError(j,mufhist_down->GetBinError(j));
-                        envhist_down->hist_fits.at(j-1) = mufhist_down->GetBinFit(j);    // Note: We use j-1 here b/c of the off-by-one index
-                    }
-                    if (abs(nom_content - murmuf_down_content) > extreme_value) {
-                        extreme_value = abs(nom_content - murmuf_down_content);
-                        envhist_down->SetBinContent(j,murmufhist_down->GetBinContent(j));
-                        envhist_down->SetBinError(j,murmufhist_down->GetBinError(j));
-                        envhist_down->hist_fits.at(j-1) = murmufhist_down->GetBinFit(j);    // Note: We use j-1 here b/c of the off-by-one index
-                    }
-                }
-                // std::cout << "Nominal Integral:  " << nomhist->Integral() << std::endl;
-                // std::cout << "Env Up Integral:   " << envhist_up->Integral() << std::endl;
-                // std::cout << "Env Down Integral: " << envhist_down->Integral() << std::endl;
-                */
-
-
                 // NOTE: This is not the correct thing to do. To do the proper 'shape' normalization
                 //      we need to divide the histogram by Ngen, where Ngen is the sum of all events
-                //      in the sample reweighted to to the corresponding UP/DOWN variant of the systematic
+                //      in the sample reweighted to the corresponding UP/DOWN variant of the systematic
                 //      being considered. Additionally, this normalization should be done BEFORE calculating
                 //      the envelope.
                 // Make them into shape-only systematics
@@ -592,5 +510,4 @@ void MakeGoodPlot::save_analysis_hists()
     }
     
     // That's it! Now just pick SaveAllToFile draw option
-    
 }

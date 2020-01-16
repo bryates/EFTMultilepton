@@ -41,10 +41,10 @@ TString systint2str(int syst)
     if (syst==34) return "FRETA2"; // not considered
     if (syst==35) return "PFUP"; // not considered
     if (syst==36) return "PFDOWN"; // not considered
-    if (syst==37) return "PSISRUP";                             // <--- shape-only
-    if (syst==38) return "PSISRDOWN";                           // <--- shape-only
-    if (syst==39) return "PSFSRUP"; // not considered
-    if (syst==40) return "PSFSRDOWN";  // not considered
+    if (syst==37) return "PSISRUP";     // Now calculated from actual event weights
+    if (syst==38) return "PSISRDOWN";   // Now calculated from actual event weights
+    if (syst==39) return "PSFSRUP";     // Now calculated from actual event weights
+    if (syst==40) return "PSFSRDOWN";   // Now calculated from actual event weights
     if (syst==41) return "TRGUP";
     if (syst==42) return "TRGDOWN";
     if (syst==43) return "PUUP";

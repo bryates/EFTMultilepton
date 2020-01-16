@@ -2,6 +2,9 @@ from config_lobster import mysamples
 import subprocess
 import sys
 
+# NOTE: This script should no longer be needed and the 'merge_histograms.py' script should be used
+#       instead.
+
 # directory containing lobster-produced hists to be hadded:
 #histdir = "/hadoop/store/user/gesmith/lobster_test_20190110_1303/"
 #outdir = "/tmpscratch/users/gsmith15/hhadded_hists/standardhists_SRs_othogbtags_group1_19_1_11/"

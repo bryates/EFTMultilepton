@@ -1,6 +1,8 @@
 // usage: root -l justmakefilelists.C+
 #include "includes.h" 
 
+// Note: This script should no longer be needed. Should use the 'make_inputfilelists.py' script instead
+
 void justmakefilelists()
 {
     vector<int> sv = 

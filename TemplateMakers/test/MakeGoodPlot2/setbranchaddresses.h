@@ -25,11 +25,11 @@ void HistMaker::setBranchAddresses( TTreeReader & newreader )
         muRmuFWeightUp_intree = TTreeReaderValue<double>(newreader, "muRmuFWeightUp");
         muRmuFWeightDown_intree = TTreeReaderValue<double>(newreader, "muRmuFWeightDown");
         
-        prefiringweight_intree = TTreeReaderValue<double>(newreader, "prefiringweight");        
-        prefiringweightup_intree = TTreeReaderValue<double>(newreader, "prefiringweightup");        
-        prefiringweightdown_intree = TTreeReaderValue<double>(newreader, "prefiringweightdown");        
-        preshowerISRweightUp_intree = TTreeReaderValue<double>(newreader, "preshowerISRweightUp");        
-        preshowerFSRweightUp_intree = TTreeReaderValue<double>(newreader, "preshowerFSRweightUp");        
+        prefiringweight_intree = TTreeReaderValue<double>(newreader, "prefiringweight");
+        prefiringweightup_intree = TTreeReaderValue<double>(newreader, "prefiringweightup");
+        prefiringweightdown_intree = TTreeReaderValue<double>(newreader, "prefiringweightdown");
+        preshowerISRweightUp_intree = TTreeReaderValue<double>(newreader, "preshowerISRweightUp");
+        preshowerFSRweightUp_intree = TTreeReaderValue<double>(newreader, "preshowerFSRweightUp");
         preshowerISRweightDown_intree = TTreeReaderValue<double>(newreader, "preshowerISRweightDown");
         preshowerFSRweightDown_intree = TTreeReaderValue<double>(newreader, "preshowerFSRweightDown");
         
