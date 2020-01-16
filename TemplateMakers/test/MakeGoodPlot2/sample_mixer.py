@@ -166,6 +166,25 @@ def main():
     central_full_CR.addSample("temp_ZZZ.root")
     central_full_CR.addSample("temp_ttGJets.root")
 
+    full_MC_a32_CR_lepOnly = Mixin("2019_12_10_full_MC_CR_lepOnlySelection")
+    full_MC_a32_CR_lepOnly.addSample("temp_ttH.root")
+    full_MC_a32_CR_lepOnly.addSample("temp_ttW.root")
+    full_MC_a32_CR_lepOnly.addSample("temp_ttZ.root")
+    full_MC_a32_CR_lepOnly.addSample("temp_tZq.root")
+    full_MC_a32_CR_lepOnly.addSample("temp_WW.root")
+    full_MC_a32_CR_lepOnly.addSample("temp_WZ.root")
+    full_MC_a32_CR_lepOnly.addSample("temp_ZZ.root")
+    full_MC_a32_CR_lepOnly.addSample("temp_WWW.root")
+    full_MC_a32_CR_lepOnly.addSample("temp_WWZ.root")
+    full_MC_a32_CR_lepOnly.addSample("temp_WZZ.root")
+    full_MC_a32_CR_lepOnly.addSample("temp_ZZZ.root")
+    full_MC_a32_CR_lepOnly.addSample("temp_ttGJets.root")
+    full_MC_a32_CR_lepOnly.addSample("temp_ttH_multidim.root")
+    full_MC_a32_CR_lepOnly.addSample("temp_tHq_multidim.root")
+    full_MC_a32_CR_lepOnly.addSample("temp_tllq_multidim.root")
+    full_MC_a32_CR_lepOnly.addSample("temp_ttll_multidim.root")
+    full_MC_a32_CR_lepOnly.addSample("temp_ttlnu_multidim.root")
+
     data_CR = Mixin("2019_12_09_data_CR_GT-94X_dataRun2_v6")
     data_CR.addSample("temp_data.root")
     data_CR.addSample("temp_Fakes.root")
@@ -175,6 +194,16 @@ def main():
     data_CR.addSample("temp_MuonEG.root")
     data_CR.addSample("temp_SingleElectron.root")
     data_CR.addSample("temp_SingleMuon.root")
+
+    data_CR_lepOnly = Mixin("2019_12_10_data_CR_lepOnlySelection_GT-94X_dataRun2_v6")
+    data_CR_lepOnly.addSample("temp_data.root")
+    data_CR_lepOnly.addSample("temp_Fakes.root")
+    data_CR_lepOnly.addSample("temp_QFs.root")
+    data_CR_lepOnly.addSample("temp_DoubleEG.root")
+    data_CR_lepOnly.addSample("temp_DoubleMuon.root")
+    data_CR_lepOnly.addSample("temp_MuonEG.root")
+    data_CR_lepOnly.addSample("temp_SingleElectron.root")
+    data_CR_lepOnly.addSample("temp_SingleMuon.root")
 
     private_sgnl_a28_fixedErrors = Mixin("2019_11_22_private_sgnl_a28_fixedErrors")
     private_sgnl_a28_fixedErrors.addSample("temp_ttH_multidim.root")
@@ -203,6 +232,95 @@ def main():
     private_sgnl_a32_CR.addSample("temp_tllq_multidim.root")
     private_sgnl_a32_CR.addSample("temp_ttll_multidim.root")
     private_sgnl_a32_CR.addSample("temp_ttlnu_multidim.root")
+
+    private_ttH_a32_CR_copyChanges = Mixin("2019_12_10_ttH_CR_check_copyChanges")
+    private_ttH_a32_CR_copyChanges.addSample("temp_ttH_multidim.root")
+
+    private_sgnl_a32_SR_copyChanges = Mixin("2019_12_11_full_MC_a32_SR_check_copyChanges")
+    private_sgnl_a32_SR_copyChanges.addSample("temp_ttH_multidim.root")
+    private_sgnl_a32_SR_copyChanges.addSample("temp_tHq_multidim.root")
+    private_sgnl_a32_SR_copyChanges.addSample("temp_tllq_multidim.root")
+    private_sgnl_a32_SR_copyChanges.addSample("temp_ttll_multidim.root")
+    private_sgnl_a32_SR_copyChanges.addSample("temp_ttlnu_multidim.root")
+
+    central_sgnl_a32_SR_copyChanges = Mixin("2019_12_11_full_MC_a32_SR_check_copyChanges")
+    central_sgnl_a32_SR_copyChanges.addSample("temp_ttH.root")
+    central_sgnl_a32_SR_copyChanges.addSample("temp_ttW.root")
+    central_sgnl_a32_SR_copyChanges.addSample("temp_ttZ.root")
+    central_sgnl_a32_SR_copyChanges.addSample("temp_tZq.root")
+
+    central_bkgd_a32_SR_copyChanges = Mixin("2019_12_11_full_MC_a32_SR_check_copyChanges")
+    central_bkgd_a32_SR_copyChanges.addSample("temp_WW.root")
+    central_bkgd_a32_SR_copyChanges.addSample("temp_WZ.root")
+    central_bkgd_a32_SR_copyChanges.addSample("temp_ZZ.root")
+    central_bkgd_a32_SR_copyChanges.addSample("temp_WWW.root")
+    central_bkgd_a32_SR_copyChanges.addSample("temp_WWZ.root")
+    central_bkgd_a32_SR_copyChanges.addSample("temp_WZZ.root")
+    central_bkgd_a32_SR_copyChanges.addSample("temp_ZZZ.root")
+    central_bkgd_a32_SR_copyChanges.addSample("temp_ttGJets.root")
+
+    data_SR_geoff_inputfiles_v1 = Mixin("2019_12_11_geoff_inputfiles_data_SR")
+    data_SR_geoff_inputfiles_v1.addSample("temp_data.root")
+    data_SR_geoff_inputfiles_v1.addSample("temp_DoubleEG.root")
+    data_SR_geoff_inputfiles_v1.addSample("temp_DoubleMuon.root")
+    data_SR_geoff_inputfiles_v1.addSample("temp_Fakes.root")
+    data_SR_geoff_inputfiles_v1.addSample("temp_MuonEG.root")
+    data_SR_geoff_inputfiles_v1.addSample("temp_QFs.root")
+    data_SR_geoff_inputfiles_v1.addSample("temp_SingleElectron.root")
+    data_SR_geoff_inputfiles_v1.addSample("temp_SingleMuon.root")
+
+    data_CR_geoff_inputfiles_v1 = Mixin("2019_12_11_geoff_inputfiles_data_CR")
+    data_CR_geoff_inputfiles_v1.addSample("temp_data.root")
+    data_CR_geoff_inputfiles_v1.addSample("temp_DoubleEG.root")
+    data_CR_geoff_inputfiles_v1.addSample("temp_DoubleMuon.root")
+    data_CR_geoff_inputfiles_v1.addSample("temp_Fakes.root")
+    data_CR_geoff_inputfiles_v1.addSample("temp_MuonEG.root")
+    data_CR_geoff_inputfiles_v1.addSample("temp_QFs.root")
+    data_CR_geoff_inputfiles_v1.addSample("temp_SingleElectron.root")
+    data_CR_geoff_inputfiles_v1.addSample("temp_SingleMuon.root")
+
+    full_MC_CR_a32_NewHistRanges = Mixin("2019_12_13_full_MC_a32_NewHistRanges")
+    full_MC_CR_a32_NewHistRanges.addSample("temp_WW.root")
+    full_MC_CR_a32_NewHistRanges.addSample("temp_WZ.root")
+    full_MC_CR_a32_NewHistRanges.addSample("temp_ZZ.root")
+    full_MC_CR_a32_NewHistRanges.addSample("temp_WWW.root")
+    full_MC_CR_a32_NewHistRanges.addSample("temp_WWZ.root")
+    full_MC_CR_a32_NewHistRanges.addSample("temp_WZZ.root")
+    full_MC_CR_a32_NewHistRanges.addSample("temp_ZZZ.root")
+    full_MC_CR_a32_NewHistRanges.addSample("temp_ttGJets.root")
+    # full_MC_CR_a32_NewHistRanges.addSample("temp_ttH.root")
+    # full_MC_CR_a32_NewHistRanges.addSample("temp_ttW.root")
+    # full_MC_CR_a32_NewHistRanges.addSample("temp_ttZ.root")
+    # full_MC_CR_a32_NewHistRanges.addSample("temp_tZq.root")
+    full_MC_CR_a32_NewHistRanges.addSample("temp_ttH_multidim.root")
+    full_MC_CR_a32_NewHistRanges.addSample("temp_tHq_multidim.root")
+    full_MC_CR_a32_NewHistRanges.addSample("temp_tllq_multidim.root")
+    full_MC_CR_a32_NewHistRanges.addSample("temp_ttll_multidim.root")
+    full_MC_CR_a32_NewHistRanges.addSample("temp_ttlnu_multidim.root")
+
+    data_CR_geoff_inputfiles_NewHistRanges = Mixin("2019_12_13_geoff_inputfiles_data_CR_NewHistRanges")
+    data_CR_geoff_inputfiles_NewHistRanges.addSample("temp_data.root")
+    data_CR_geoff_inputfiles_NewHistRanges.addSample("temp_DoubleEG.root")
+    data_CR_geoff_inputfiles_NewHistRanges.addSample("temp_DoubleMuon.root")
+    data_CR_geoff_inputfiles_NewHistRanges.addSample("temp_Fakes.root")
+    data_CR_geoff_inputfiles_NewHistRanges.addSample("temp_MuonEG.root")
+    data_CR_geoff_inputfiles_NewHistRanges.addSample("temp_QFs.root")
+    data_CR_geoff_inputfiles_NewHistRanges.addSample("temp_SingleElectron.root")
+    data_CR_geoff_inputfiles_NewHistRanges.addSample("temp_SingleMuon.root")
+
+    reproc_data_CR_NewHistRanges = Mixin("2019_12_13_reproc-data_CR_NewHistRanges")
+    data_CR_geoff_inputfiles_NewHistRanges.addSample("temp_data.root")
+    data_CR_geoff_inputfiles_NewHistRanges.addSample("temp_DoubleEG.root")
+    data_CR_geoff_inputfiles_NewHistRanges.addSample("temp_DoubleMuon.root")
+    data_CR_geoff_inputfiles_NewHistRanges.addSample("temp_Fakes.root")
+    data_CR_geoff_inputfiles_NewHistRanges.addSample("temp_MuonEG.root")
+    data_CR_geoff_inputfiles_NewHistRanges.addSample("temp_QFs.root")
+    data_CR_geoff_inputfiles_NewHistRanges.addSample("temp_SingleElectron.root")
+    data_CR_geoff_inputfiles_NewHistRanges.addSample("temp_SingleMuon.root")
+
+    private_tllq_SM_Q2RF_check = Mixin("2020_01_14_private_tllq_SM_Q2RF")
+    private_tllq_SM_Q2RF_check.addSample("temp_tllq_multidim.root")
+
     ################################################################################################
 
     lst = [
@@ -214,12 +332,22 @@ def main():
         # private_sgnl_a28_fixedErrors,
         # private_sgnl_a31_fixedErrors,
         # private_sgnl_a32,
+
+        # private_sgnl_a32_SR_copyChanges,
+        # central_sgnl_a32_SR_copyChanges,
+        # central_bkgd_a32_SR_copyChanges,
+        # data_SR_geoff_inputfiles_v1,
+        # private_tllq_SM_Q2RF_check,
     ]
     lst.extend([#CR stuff
-        central_full_CR,
-        private_sgnl_a32_CR,
-        data_CR
+        full_MC_CR_a32_NewHistRanges,
+        data_CR_geoff_inputfiles_NewHistRanges,
+        # reproc_data_CR_NewHistRanges,
     ])
+    # lst.extend([#CR lepOnlySelection
+    #     full_MC_a32_CR_lepOnly,
+    #     data_CR_lepOnly
+    # ])
     lst.extend([
         # a28_redo,
         # a31,
