@@ -834,6 +834,62 @@ def HanOrigSMCheck():
 
     return samples
 
+def tllq_SM_Q2RF_Check():
+    path = 'awightma/analysisTrees/special/private_tllq_SM_Q2RF-check_2020_01_13/v1'
+    tllq = Sample('tllq_multidim')
+
+    tllq.addDirectory(HADOOP_DIR,path,'tllq_multidim_b1')
+    tllq.addDirectory(HADOOP_DIR,path,'tllq_multidim_b2')
+
+    samples = [tllq]
+    return samples
+
+def private_sgnl_SM_ISR_FSR_Systematics():
+    path = 'awightma/analysisTrees/special/private_sgnl_SM_ISR-FSR-qCut_Systematics_2020_01_16/v1'
+
+    ttH   = Sample('ttH_multidim')
+    tHq   = Sample('tHq_multidim')
+    ttll  = Sample('ttll_multidim')
+    tllq  = Sample('tllq_multidim')
+    ttlnu = Sample('ttlnu_multidim')
+
+    ttH.addDirectory(HADOOP_DIR,path,'ttH_multidim_b1')
+    tHq.addDirectory(HADOOP_DIR,path,'tHq_multidim_b1')
+    ttll.addDirectory(HADOOP_DIR,path,'ttll_multidim_b1')
+    tllq.addDirectory(HADOOP_DIR,path,'tllq_multidim_b1')
+    ttlnu.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_b1')
+
+    samples = [ttH,tHq,ttll,tllq,ttlnu]
+    return samples
+
+def private_sgnl_SM_qCutUp_Systematics():
+    path = 'awightma/analysisTrees/special/private_sgnl_SM_ISR-FSR-qCut_Systematics_2020_01_16/v1'
+
+    ttH   = Sample('ttH_multidim')
+    ttll  = Sample('ttll_multidim')
+    ttlnu = Sample('ttlnu_multidim')
+
+    ttH.addDirectory(HADOOP_DIR,path,'ttH_multidim_qCutUp_b1')
+    ttll.addDirectory(HADOOP_DIR,path,'ttll_multidim_qCutUp_b1')
+    ttlnu.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_qCutUp_b1')
+
+    samples = [ttH,ttll,ttlnu]
+    return samples
+
+def private_sgnl_SM_qCutDown_Systematics():
+    path = 'awightma/analysisTrees/special/private_sgnl_SM_ISR-FSR-qCut_Systematics_2020_01_16/v1'
+
+    ttH   = Sample('ttH_multidim')
+    ttll  = Sample('ttll_multidim')
+    ttlnu = Sample('ttlnu_multidim')
+
+    ttH.addDirectory(HADOOP_DIR,path,'ttH_multidim_qCutDown_b1')
+    ttll.addDirectory(HADOOP_DIR,path,'ttll_multidim_qCutDown_b1')
+    ttlnu.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_qCutDown_b1')
+
+    samples = [ttH,ttll,ttlnu]
+    return samples
+
 ####################################################################################################
 
 # These are analysis trees located in /scratch365/awightma for use when hadoop is unavailable
@@ -944,7 +1000,11 @@ def main():
     # samples = anatest29_samples()
     # samples = anatest31_samples()
     # samples = anatest32_samples(**kwargs)
-    samples = tmp_geoff_samples(**kwargs)
+    # samples = tmp_geoff_samples(**kwargs)
+
+    samples = private_sgnl_SM_ISR_FSR_Systematics()
+    # samples = private_sgnl_SM_qCutUp_Systematics()
+    # samples = private_sgnl_SM_qCutDown_Systematics()
 
     # samples = a29_NoDupesV2()
 
