@@ -227,15 +227,19 @@ void make_yield_table(TString fpath,TString table_name) {
 
     // Sub-list of MC backgrounds to include in the table
     std::vector<TString> mc_bkgds {
-        // "ttGJets",
-        // "WZ",
-        // "WWW",
+        "ttGJets",
+        "WZ",
+        "WWW",
     };
 
     // Sub-list of data-driven backgrounds to include in the table
     std::vector<TString> dd_bkgds {
-        // "fakes",
-        // "charge_flips",
+        "fakes",
+        "charge_flips",
+    };
+
+    std::vector<TString> data {
+        "data"
     };
 
     std::vector<TString> all_bkgds;
@@ -246,6 +250,7 @@ void make_yield_table(TString fpath,TString table_name) {
     all_samples.insert(all_samples.end(),private_sgnl.begin(),private_sgnl.end());
     all_samples.insert(all_samples.end(),central_sgnl.begin(),central_sgnl.end());
     all_samples.insert(all_samples.end(),all_bkgds.begin(),all_bkgds.end());
+    all_samples.insert(all_samples.end(),data.begin(),data.end());
 
     // These represent the columns of the table
     std::vector<YieldCategory> cats;
@@ -275,10 +280,6 @@ void make_yield_table(TString fpath,TString table_name) {
         cats_2lss_m.push_back(cat);
     }
     cats.push_back(merge_cats("2lss_m",cats_2lss_m));
-
-    for (TString bin: bins) {
-
-    }
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     for (TString bin: bins) {
@@ -292,19 +293,21 @@ void make_yield_table(TString fpath,TString table_name) {
     cats.push_back(merge_cats("all",cats));
 
     std::cout << get_header(cats,table_name) << std::endl;
-    // std::cout << get_header(cats,"") << std::endl;
     std::cout << get_line_break(cats) << std::endl;
 
     for (TString s: private_sgnl) std::cout << get_row(cats,s) << std::endl;
     std::cout << get_line_break(cats) << std::endl;
 
-    // for (TString s: central_sgnl) std::cout << get_row(cats,s) << std::endl;
-    // std::cout << get_line_break(cats) << std::endl;
+    for (TString s: central_sgnl) std::cout << get_row(cats,s) << std::endl;
+    std::cout << get_line_break(cats) << std::endl;
 
-    // for (TString s: all_bkgds) std::cout << get_row(cats,s) << std::endl;
-    // std::cout << get_line_break(cats) << std::endl;
+    for (TString s: all_bkgds) std::cout << get_row(cats,s) << std::endl;
+    std::cout << get_line_break(cats) << std::endl;
 
-    // std::cout << get_row(cats,"Bkgd Sum") << std::endl;
+    std::cout << get_row(cats,"Bkgd Sum") << std::endl;
     std::cout << get_row(cats,"Private Sgnl") << std::endl;
-    // std::cout << get_row(cats,"Central Sgnl") << std::endl;
+    std::cout << get_row(cats,"Central Sgnl") << std::endl;
+
+    std::cout << get_line_break(cats) << std::endl;
+    std::cout << get_row(cats,"data") << std::endl;
 }

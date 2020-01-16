@@ -316,6 +316,26 @@ if ((not isdata) and doeftsamps):
     mysamples.append(['tllq_multidim_b3','awightma/postLHE_step/2019_04_19/tllq4f-tch-NoHiggs_0partons_xqcut0_extra2/v1/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0NoMerge_run1'])  # 5.0M
     mysamples.append(['tllq_multidim_b4','kmohrman/FullProduction/Round6/Batch4/postLHE_step/v1/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0MatchOff_run1']) # 5.0M
     mysamples.append(['tllq_multidim_b5','kmohrman/FullProduction/Round6/Batch6/postLHE_step/v2/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4Model16DttllScanpointsXQCUT0MatchOff_run1']) # 5.0M
+
+    ## For Checking the Q2RF scale unc. symtematic
+    # mysamples.append(['tllq_multidim_b1','kmohrman/postLHE_step/2019_04_19/tXq4f-HanV4tXq4fSMCheck/v1/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4tXqSMCheckMatchOff_run0']) # 250k
+    # mysamples.append(['tllq_multidim_b2','kmohrman/postLHE_step/2019_04_19/tXq4f-HanV4tXq4fSMCheck-b2/v1/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4tXqSMCheckMatchOff_run0']) # 250k
+
+    ### For extracting the ISR/FSR and qCut systematics (for the qCut systs the nominal, up, and down each need to be done separately)
+    ## Nominal qCut: 19
+    # mysamples.append(['ttH_multidim_b1'  ,'awightma/postLHE_step/2019_04_19/HanV4-DedicatedSM-withPSWeights/v5/mAOD_step_ttHJet_HanV4ttXSMCheck_run0'])
+    # mysamples.append(['ttlnu_multidim_b1','awightma/postLHE_step/2019_04_19/HanV4-DedicatedSM-withPSWeights/v5/mAOD_step_ttlnuJet_HanV4ttXSMCheck_run0'])
+    # mysamples.append(['ttll_multidim_b1' ,'awightma/postLHE_step/2019_04_19/HanV4-DedicatedSM-withPSWeights/v5/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXSMCheck_run0'])
+    # mysamples.append(['tllq_multidim_b1' ,'awightma/postLHE_step/2019_04_19/HanV4-DedicatedSM-withPSWeights/v5/mAOD_step_tllq4fNoSchanWNoHiggs0p_HanV4tXqSMCheckMatchOff_run0'])
+    # mysamples.append(['tHq_multidim_b1'  ,'awightma/postLHE_step/2019_04_19/HanV4-DedicatedSM-withPSWeights/v5/mAOD_step_tHq4f_HanV4tXqSMCheckMatchOff_run0'])
+    ## Up qCut: 25
+    # mysamples.append(['ttH_multidim_b1'  ,'awightma/postLHE_step/2019_04_19/HanV4-DedicatedSM-withPSWeights/v5/mAOD_step_ttHJet_HanV4ttXSMCheckqCutUp_run0'])
+    # mysamples.append(['ttlnu_multidim_b1','awightma/postLHE_step/2019_04_19/HanV4-DedicatedSM-withPSWeights/v5/mAOD_step_ttlnuJet_HanV4ttXSMCheckqCutUp_run0'])
+    # mysamples.append(['ttll_multidim_b1' ,'awightma/postLHE_step/2019_04_19/HanV4-DedicatedSM-withPSWeights/v5/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXSMCheckqCutUp_run0'])
+    ## Down qCut: 15
+    # mysamples.append(['ttH_multidim_b1'  ,'awightma/postLHE_step/2019_04_19/HanV4-DedicatedSM-withPSWeights/v5/mAOD_step_ttHJet_HanV4ttXSMCheckqCutDown_run0'])
+    # mysamples.append(['ttlnu_multidim_b1','awightma/postLHE_step/2019_04_19/HanV4-DedicatedSM-withPSWeights/v5/mAOD_step_ttlnuJet_HanV4ttXSMCheckqCutDown_run0'])
+    # mysamples.append(['ttll_multidim_b1' ,'awightma/postLHE_step/2019_04_19/HanV4-DedicatedSM-withPSWeights/v5/mAOD_step_ttllNuNuJetNoHiggs_HanV4ttXSMCheckqCutDown_run0'])
     ## IN PROGRESS STILL
     
     ### Others from R6 era

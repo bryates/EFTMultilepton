@@ -55,6 +55,10 @@ fpath_a29_noDupes_v2 = pjoin(SFILES,"anatest29_NoDuplicatesV2.root")
 fpath_a28_fixedErrors = pjoin(SFILES,"anatest28_fixedErrors.root")
 fpath_a31_fixedErrors = pjoin(SFILES,"anatest31_fixedErrors.root")
 
+fpath_a32_copyChanges = pjoin(SFILES,"anatest32_copyChanges.root")
+
+fpath_a32_tllq_SM_Q2RF_check = pjoin(SFILES,"anatest32_tllq_SM_Q2RF_check.root")
+
 fpath_HanV4SMChecks = pjoin(SFILES,"private_sgnl_HanV4_SMCheck.root")
 fpath_HanOrigSMChecks = pjoin(SFILES,"private_sgnl_HanOriginal_SMCheck.root")
 
@@ -627,11 +631,16 @@ def compare_anatest_files():
         # (fpath_a31_fixedErrors,fpath_a32,"a31","a32","a31-a32"),
         # (fpath_a28_fixedErrors,fpath_a32,"a28","a32","a28-a32"),
 
-        (fpath_HanOrigSMChecks,fpath_a31_fixedErrors,"SM Orig","a31","SMOrig-a31"),
-        (fpath_HanV4SMChecks,fpath_a31_fixedErrors  ,"SM Hv4" ,"a31","SMHv4-a31"),
+        # (fpath_HanOrigSMChecks,fpath_a31_fixedErrors,"SM Orig","a31","SMOrig-a31"),
+        # (fpath_HanV4SMChecks,fpath_a31_fixedErrors  ,"SM Hv4" ,"a31","SMHv4-a31"),
 
-        (fpath_HanOrigSMChecks,fpath_a32,"SM Orig","a32","SMOrig-a32"),
-        (fpath_HanV4SMChecks,fpath_a32,"SM Hv4","a32","SMHv4-a32"),
+        # (fpath_HanOrigSMChecks,fpath_a32,"SM Orig","a32","SMOrig-a32"),
+        # (fpath_HanV4SMChecks,fpath_a32,"SM Hv4","a32","SMHv4-a32"),
+
+        # (fpath_a32,fpath_a32_copyChanges,"a32-base","a32-copy","a32-copyChanges"),
+        # (fpath_a32,fpath_a32,"f1-title","f2-title",""),
+
+        (fpath_a32,fpath_a32_tllq_SM_Q2RF_check,"f1","f2",""),
     ]
 
     for idx,tup in enumerate(compare):
@@ -679,19 +688,21 @@ def make_yield_table():
         'private_sgnl_tllq_R6B3': 'tllq_R6B3',
         'anatest28_fixedErrors': 'a28_fixStats',
         'anatest31_fixedErrors': 'a31_fixStats',
+        'anatest32_copyChanges': 'a32_copyCh',
     }
 
     lst = []
     # lst.extend([fpath_a28,fpath_a28_redoFull,fpath_a29,fpath_a29_noDupes,fpath_a31])
     lst.extend([
-        fpath_a28_redoFull,
+        # fpath_a28_redoFull,
         # fpath_a31,
         # fpath_a29_noDupes,
         # fpath_a29_noDupes_v2,
-        fpath_HanV4SMChecks,
-        fpath_HanOrigSMChecks,
-        fpath_a31_fixedErrors,
+        # fpath_HanV4SMChecks,
+        # fpath_HanOrigSMChecks,
+        # fpath_a31_fixedErrors,
         fpath_a32,
+        fpath_a32_copyChanges,
     ])
     # lst.extend([
     #     fpath_tllq_R6B1,

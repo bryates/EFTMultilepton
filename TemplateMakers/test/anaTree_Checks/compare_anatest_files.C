@@ -181,17 +181,17 @@ void compare_anatest_files(TString fp1, TString fp2, TString f1_title, TString f
         // "data",
         // "charge_flips",
         // "fakes",
-        //"tZq",
+        // "tZq",
         //"ttH",
         //"ttW",
         //"ttZ",
         // "WZ",
         // "WWW",
         // "ttGJets",
-        "ttll_16D",
-        "ttlnu_16D",
-        // "tllq_16D",
-        "ttH_16D",
+        // "ttll_16D",
+        // "ttlnu_16D",
+        "tllq_16D",
+        // "ttH_16D",
         // "tHq_16D",
     };
 
@@ -205,15 +205,15 @@ void compare_anatest_files(TString fp1, TString fp2, TString f1_title, TString f
         "2lss_m_emu_2b",
         "2lss_m_mumu_2b",
 
-        "3l_mix_sfz_1b",
-        "3l_mix_m_1b",
-        "3l_mix_p_1b",
+        // "3l_mix_sfz_1b",
+        // "3l_mix_m_1b",
+        // "3l_mix_p_1b",
         /* "3l_ppp_1b", */
         /* "3l_mmm_1b", */
 
-        "3l_mix_sfz_2b",
-        "3l_mix_m_2b",
-        "3l_mix_p_2b",
+        // "3l_mix_sfz_2b",
+        // "3l_mix_m_2b",
+        // "3l_mix_p_2b",
         /* "3l_ppp_2b", */
         /* "3l_mmm_2b", */
 
