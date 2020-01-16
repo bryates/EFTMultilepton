@@ -25,6 +25,10 @@ tag = "test/lobster_test_{tstamp}".format(tstamp=tstamp1)
 # tag = "special/geoff_inputfiles_central_bkgd_{tstamp}".format(tstamp=tstamp2)
 # tag = "special/tllq4f_SM_t-channel_{tstamp}_0partons".format(tstamp=tstamp2)
 # tag = "special/central_new_pmx_samples_{tstamp}".format(tstamp=tstamp2)
+# tag = "special/geoff_inputfiles_data_CR_{tstamp}".format(tstamp=tstamp2)
+# tag = "special/geoff_inputfiles_data_CR_NewHistRanges_{tstamp}".format(tstamp=tstamp2)
+# tag = "special/reproc-data_CR_NewHistRanges_{tstamp}".format(tstamp=tstamp2)
+# tag = "special/full_MC_a32_CR_NewHistRanges_{tstamp}".format(tstamp=tstamp2)
 
 # tag = "special/data-nominal_newGT-94X_dataRun2_v11_{tstamp}".format(tstamp=tstamp2)
 # tag = "special/data-ddbrs_newGT-94X_dataRun2_v11_{tstamp}".format(tstamp=tstamp2)
@@ -32,7 +36,10 @@ tag = "test/lobster_test_{tstamp}".format(tstamp=tstamp1)
 # tag = "special/data-QFs_newGT-94X_dataRun2_v11_{tstamp}".format(tstamp=tstamp2)
 
 # tag = "full_data_{tstamp}".format(tstamp=tstamp2)
+# tag = "full_data_CR_{tstamp}".format(tstamp=tstamp2)
+# tag = "full_data_CR_lepOnlySelection_{tstamp}".format(tstamp=tstamp2)
 # tag = "full_MC_{tstamp}".format(tstamp=tstamp2)
+# tag = "full_MC_CR_lepOnlySelection_{tstamp}".format(tstamp=tstamp2)
 
 workdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=tag,ver=ver,path="/tmpscratch/users/$USER/analysisWorkflow")
 plotdir_path = "{path}/{step}/{tag}/{ver}".format(step=lobster_step,tag=tag,ver=ver,path="~/www/lobster")
@@ -67,6 +74,7 @@ storage = StorageConfiguration(
         "{uri}{path}".format(uri=URI_ROOT  ,path=input_path),
         "{uri}{path}".format(uri=URI_GSIFTP,path=input_path),
         "{uri}{path}".format(uri=URI_SRM   ,path=input_path),
+        "{uri}{path}".format(uri=URI_FILE  ,path=input_path),
     ],
     output=[
         "{uri}{path}".format(uri=URI_HDFS  ,path=output_path),
