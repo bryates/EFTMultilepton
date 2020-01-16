@@ -86,7 +86,8 @@ logging.getLogger('').addHandler(console)
 
 def run_process(inputs,verbose=True,indent=0,prepend=''):
     indent_str = "\t"*indent
-    p = subprocess.Popen(inputs,stdout=subprocess.PIPE)
+    # p = subprocess.Popen(inputs,stdout=subprocess.PIPE)
+    p = subprocess.Popen(inputs,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
     stdout = []
     while True:
         l = p.stdout.readline()
