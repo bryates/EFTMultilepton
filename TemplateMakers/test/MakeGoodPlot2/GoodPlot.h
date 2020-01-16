@@ -711,7 +711,8 @@ void GoodPlot::addPlotData(MakeGoodPlot &thisMGP, TString thehist, int i, TStrin
             // copy settings from top plot:
             dataMCratio->Divide(sumdata,sumback);
             dataMCratio->GetYaxis()->SetTitle("Data/(S+B)");
-            dataMCratio->GetYaxis()->SetRangeUser(-1.0,3.0);
+            // dataMCratio->GetYaxis()->SetRangeUser(-1.0,3.0);
+            dataMCratio->GetYaxis()->SetRangeUser(0.1,1.9);
             dataMCratio->SetLabelSize(sumback->GetLabelSize());
             //cout << "Y Title offset from stack: " << sumback->GetTitleOffset("Y") << endl;
             dataMCratio->SetTitleSize(sumback->GetTitleSize("Y")*0.7/0.3, "Y");
