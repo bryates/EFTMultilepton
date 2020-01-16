@@ -16,8 +16,11 @@ WCFit HistMaker::getEventFit(double weight)
 
         // WCFit event_wgt_fit(event_wgts,""); // actually do the fit to the reweight points
         WCFit event_wgt_fit;
-        if (event_wgts.size() == 0) {   // The EFT sample didn't have any EFT weights, so was very likely a SM sample
-            WCPoint tmp_smpt = WCPoint("",originalXWGTUP_intree);
+        if (event_wgts.size() == 0) {
+            // The EFT sample didn't have any EFT weights, so was very likely a SM sample. This means
+            //  that we should fill our histograms with weights that match how the 'NumInitialWeightedMCevents'
+            //  histogram was filled, which in this case means giving all events a unit weight of 1.
+            WCPoint tmp_smpt = WCPoint("",1.0);
             event_wgt_fit = WCFit({tmp_smpt},"");
         } else {
             event_wgt_fit = WCFit(event_wgts,"");
