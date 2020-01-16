@@ -6,9 +6,10 @@ void HistMaker::run(TTreeReader & newreader, int firstevent, int lastevent)
     int count = 0;
     event_counter = 0;
     while (newreader.Next()) {
+        Long64_t entry = newreader.GetCurrentEntry();
         doOneEvent();
         count++;
         // if (event_counter > 100) break;
-        if (count%5000==0) cout << "Event: " << count << endl;
+        if (count%5000==1) cout << "Event: " << entry << endl;
     }
 }
