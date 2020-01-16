@@ -677,10 +677,6 @@ double HistMaker::totalSF(int iSys, vector<string> category, int bin, int nbins)
     
     weight *= triggersf;
     
-    // parton shower SF (comment out ones below if using this)
-    if (iSys==37 || iSys==38) weight *= partonShowerSF(bin, category, iSys, nbins);
-    //weight *= adhocNjetSF(bin, category, iSys);                                                                                                           //////////    <<-----------------------  !!!!!!! don't leave commented !!!!!!!
-    
     ///////////  lep SFs ///////////
     // see email from Marco, etc. See also here for prelim. lepMVA sfs:
     // /afs/cern.ch/work/s/sesanche/public/forTTH/SFs_may17/
@@ -794,11 +790,15 @@ double HistMaker::totalSF(int iSys, vector<string> category, int bin, int nbins)
     if (iSys==47) weight *= (*muRmuFWeightUp_intree);
     if (iSys==48) weight *= (*muRmuFWeightDown_intree);
     
-    // commented out since using function above now
-    //if (iSys==37) weight *= (*preshowerISRweightUp_intree);
-    //if (iSys==38) weight *= (*preshowerISRweightDown_intree);
-    //if (iSys==39) weight *= (*preshowerFSRweightUp_intree);
-    //if (iSys==40) weight *= (*preshowerFSRweightDown_intree);
+    // parton shower SF (comment out ones below if using this)
+    // if (iSys==37 || iSys==38) weight *= partonShowerSF(bin, category, iSys, nbins);
+    //weight *= adhocNjetSF(bin, category, iSys);           //////////    <<-----------------------  !!!!!!! don't leave commented !!!!!!!
+
+    // Make sure to comment this out if using the partonShowerSF() method instead
+    if (iSys==37) weight *= (*preshowerISRweightUp_intree);
+    if (iSys==38) weight *= (*preshowerISRweightDown_intree);
+    if (iSys==39) weight *= (*preshowerFSRweightUp_intree);
+    if (iSys==40) weight *= (*preshowerFSRweightDown_intree);
     
 
     // this is not set up this way, at the end of this function, by mistake:
