@@ -57,13 +57,13 @@ void makeanatestfile(TString out_name,TString plot_option) {
     //MakeGoodPlot *newplots = new MakeGoodPlot(samples,"/tmpscratch/users/awightma/combinedHists/anatest23_2019_08_09_tllq4f-tchannel-NoJets-NoEFT/");
     MakeGoodPlot *newplots = new MakeGoodPlot(samples,"/tmpscratch/users/awightma/analysisWorkflow/mergedHists/mixed_samples/");
     
-    // std::cout << "Starting drawAllToFile" << std::endl;
-    // newplots->drawAllToFile(out_name.Data(),plot_option.Data());
+    std::cout << "Starting drawAllToFile" << std::endl;
+    newplots->drawAllToFile(out_name.Data(),plot_option.Data());
 
     // Will be saved under: ~awightma/www/eft_stuff/misc/geoff_plots
-    std::cout << "Starting drawAllToWebArea" << std::endl;
-    out_name += "/";
-    newplots->drawAllToWebArea(out_name.Data(),plot_option.Data());
+    // std::cout << "Starting drawAllToWebArea" << std::endl;
+    // out_name += "/";
+    // newplots->drawAllToWebArea(out_name.Data(),plot_option.Data());
 
     //delete newplots;
     std::cout << "Finished!" << std::endl;
