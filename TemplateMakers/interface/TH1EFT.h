@@ -23,6 +23,9 @@ class TH1EFT : public TH1D
         WCFit overflow_fit;
         WCFit underflow_fit;
 
+        // These 'using' lines mean that if we explicitly reimplement one of the overloaded methods
+        //  from the base class, the base class overloaded versions with different input function
+        //  signatures will still be used
         using TH1D::Fill;           // Bring the TH1D Fill fcts into scope
         using TH1D::GetBinContent;  // Bring the TH1D GetBinContent fcts into scope
         using TH1D::Scale;          // Bring the TH1D Scale fcts into scope (likely not needed)
@@ -177,7 +180,7 @@ WCFit TH1EFT::GetSumFit()
 // Returns a bin scaled by the the corresponding fit evaluated at a particular WC point
 Double_t TH1EFT::GetBinContent(Int_t bin, WCPoint wc_pt)
 {
-    if (this->GetBinFit(bin).getDim() <= 0) {
+    if (this->GetBinFit(bin).getDim() < 0) {
         // We don't have a fit for this bin, return regular bin contents
         return GetBinContent(bin);
     }
