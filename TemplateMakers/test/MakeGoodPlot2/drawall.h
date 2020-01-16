@@ -86,8 +86,10 @@ void MakeGoodPlot::drawAllToWebArea(string plotfile, string plotoption)
         return;
     }
     
-    plotfile = "/afs/crc.nd.edu/user/g/gsmith15/www/"+plotfile; // the "~" doesn't seem to work with ofstream files
-    
+    // TODO: Change this so it doesn't need to be hardcoded...
+    // plotfile = "/afs/crc.nd.edu/user/g/gsmith15/www/"+plotfile; // the "~" doesn't seem to work with ofstream files
+    plotfile = "/afs/crc.nd.edu/user/a/awightma/www/eft_stuff/misc/geoff_plots/" + plotfile;
+
     string syscmd = "mkdir "+plotfile;
     system(syscmd.c_str());
     
