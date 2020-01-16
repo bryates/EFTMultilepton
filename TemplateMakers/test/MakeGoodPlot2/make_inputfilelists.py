@@ -845,7 +845,7 @@ def tllq_SM_Q2RF_Check():
     return samples
 
 def private_sgnl_SM_ISR_FSR_Systematics():
-    path = 'awightma/analysisTrees/special/private_sgnl_SM_ISR-FSR-qCut_Systematics_2020_01_16/v1'
+    path = 'awightma/analysisTrees/special/private_sgnl_SM_ISR-FSR-qCut_Systematics_2020_01_16/v2'
 
     ttH   = Sample('ttH_multidim')
     tHq   = Sample('tHq_multidim')
@@ -863,7 +863,7 @@ def private_sgnl_SM_ISR_FSR_Systematics():
     return samples
 
 def private_sgnl_SM_qCutUp_Systematics():
-    path = 'awightma/analysisTrees/special/private_sgnl_SM_ISR-FSR-qCut_Systematics_2020_01_16/v1'
+    path = 'awightma/analysisTrees/special/private_sgnl_SM_ISR-FSR-qCut_Systematics_2020_01_16/v2'
 
     ttH   = Sample('ttH_multidim')
     ttll  = Sample('ttll_multidim')
@@ -877,7 +877,7 @@ def private_sgnl_SM_qCutUp_Systematics():
     return samples
 
 def private_sgnl_SM_qCutDown_Systematics():
-    path = 'awightma/analysisTrees/special/private_sgnl_SM_ISR-FSR-qCut_Systematics_2020_01_16/v1'
+    path = 'awightma/analysisTrees/special/private_sgnl_SM_ISR-FSR-qCut_Systematics_2020_01_16/v2'
 
     ttH   = Sample('ttH_multidim')
     ttll  = Sample('ttll_multidim')
