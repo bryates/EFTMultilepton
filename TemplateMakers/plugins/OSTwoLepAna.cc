@@ -211,11 +211,21 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
         // https://twiki.cern.ch/twiki/bin/viewauth/CMS/TopModGen#Event_Generation
         if (GenInfo->weights().size()==14) // test if PS weights present
         {
+            // IMPORTANT NOTE: For the private produced samples, these should not be normalized by
+            //      originalXWGTUP_intree as that results in MASSIVE weights. For the central samples
+            //      they should be normalized by originalXWGTUP_intree. This might just be an idiosyncrasy
+            //      of either LO or NLO MadGraph samples.
             std::vector<double> genwgtinfo = GenInfo->weights();
-            preshowerISRweightUp_intree = genwgtinfo[2]/originalXWGTUP_intree;
-            preshowerFSRweightUp_intree = genwgtinfo[3]/originalXWGTUP_intree;
-            preshowerISRweightDown_intree = genwgtinfo[4]/originalXWGTUP_intree;
-            preshowerFSRweightDown_intree = genwgtinfo[5]/originalXWGTUP_intree;
+            // For central samples
+            // preshowerISRweightUp_intree = genwgtinfo[2]/originalXWGTUP_intree;
+            // preshowerFSRweightUp_intree = genwgtinfo[3]/originalXWGTUP_intree;
+            // preshowerISRweightDown_intree = genwgtinfo[4]/originalXWGTUP_intree;
+            // preshowerFSRweightDown_intree = genwgtinfo[5]/originalXWGTUP_intree;
+            // For private samples
+            preshowerISRweightUp_intree = genwgtinfo[2];
+            preshowerFSRweightUp_intree = genwgtinfo[3];
+            preshowerISRweightDown_intree = genwgtinfo[4];
+            preshowerFSRweightDown_intree = genwgtinfo[5];
         }
 
         // Add EFT weights
