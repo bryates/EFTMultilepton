@@ -166,6 +166,10 @@ class OSTwoLepAna: public MultileptonAna, public edm::EDAnalyzer
         int singleMuCount;
         int singleTauCount;
         int singleJetCount;
+
+        std::string ps_wgt_red = "reduced";
+        std::string ps_wgt_def = "default";
+        std::string ps_wgt_con = "conservative";
 };
 
 void OSTwoLepAna::tree_add_branches()

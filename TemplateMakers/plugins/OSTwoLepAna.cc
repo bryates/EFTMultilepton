@@ -13,6 +13,7 @@ OSTwoLepAna::OSTwoLepAna(const edm::ParameterSet& constructparams) ://Anything t
     skip_higgs = constructparams.getParameter<bool> ("skipHiggs");
     is_private_sample = constructparams.getParameter<bool>("isPrivateSample");
     is_4f_scheme = constructparams.getParameter<bool>("is4fScheme");
+    ps_wgt_type = constructparams.getParameter<string>("psWeightType");
     entire_pset = constructparams;
     parse_params();
   
@@ -131,7 +132,8 @@ void OSTwoLepAna::endJob() {
 
 } // job completion (cutflow table, etc.)
 
-void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetup) // this function is called once at each event
+// this function is called once at each event
+void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetup)
 {
   
     // analysis goes here
@@ -153,8 +155,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
     prunedGenParticles prunedParticles;
     packedGenParticles packedParticles;
     edm::Handle<std::vector<reco::GenJet> > genjets;
-    if (!isData)
-    {
+    if (!isData) {
         prunedParticles = get_collection(event, genParticles_token_);
         packedParticles = get_collection(event, genPackedParticles_token_);
         genjets = get_collection(event, genJet_token_);
@@ -163,7 +164,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
     // bandaid for tllq, ttll. Should comment out otherwise!!!
     // Note: This doesn't always find events that had an intermediate higgs!!!
     if (skip_higgs) {
-        for (const auto & gp : *prunedParticles) if (abs(gp.pdgId())==25) return;                           // <<<------------------------------------------------ !!!!!!!!!!!!!!!!!
+        for (const auto & gp : *prunedParticles) if (abs(gp.pdgId())==25) return;                   // <<<--------- !!!!!!!!!!!!!!!!!
     }
 
     ///////////////////
@@ -172,7 +173,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
     ////////
     ///////////////////
     
-    //int numBadMu = (*get_collection(event, badmu_token_));                                            // <------ ?
+    //int numBadMu = (*get_collection(event, badmu_token_));                                        // <------ ?
     int numBadMu = 0;
     
     /////////////////////
@@ -195,8 +196,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
     
     if (debug) cout << "before !isData" << endl;
     
-    if (!isData)
-    {
+    if (!isData) {
         if (debug) cout << "inside MC-only area" << endl;
         
         event.getByToken(genInfo_token_,GenInfo);
@@ -209,28 +209,44 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
         originalXWGTUP_intree = LHEInfo->originalXWGTUP();  // original cross-section
         
         // https://twiki.cern.ch/twiki/bin/viewauth/CMS/TopModGen#Event_Generation
-        if (GenInfo->weights().size()==14) // test if PS weights present
-        {
+        if (GenInfo->weights().size()==14) {// test if PS weights present
             // IMPORTANT NOTE: For the private produced samples, these should not be normalized by
             //      originalXWGTUP_intree as that results in MASSIVE weights. For the central samples
             //      they should be normalized by originalXWGTUP_intree. This might just be an idiosyncrasy
-            //      of either LO or NLO MadGraph samples.
+            //      of either LO or NLO MadGraph samples, or due to a MG runcard setting
             std::vector<double> genwgtinfo = GenInfo->weights();
-            // For central samples
-            // preshowerISRweightUp_intree = genwgtinfo[2]/originalXWGTUP_intree;
-            // preshowerFSRweightUp_intree = genwgtinfo[3]/originalXWGTUP_intree;
-            // preshowerISRweightDown_intree = genwgtinfo[4]/originalXWGTUP_intree;
-            // preshowerFSRweightDown_intree = genwgtinfo[5]/originalXWGTUP_intree;
-            // For private samples
-            preshowerISRweightUp_intree = genwgtinfo[2];
-            preshowerFSRweightUp_intree = genwgtinfo[3];
-            preshowerISRweightDown_intree = genwgtinfo[4];
-            preshowerFSRweightDown_intree = genwgtinfo[5];
+            int isr_hi_idx,isr_lo_idx,fsr_hi_idx,isr_lo_idx;
+            if (ps_wgt_type == ps_wgt_red) {            
+                isr_hi_idx = 2;
+                fsr_hi_idx = 3;
+                isr_lo_idx = 4;
+                fsr_lo_idx = 5;
+            } else if (ps_wgt_type == ps_wgt_def) {            
+                isr_hi_idx = 6;
+                fsr_hi_idx = 7;
+                isr_lo_idx = 8;
+                fsr_lo_idx = 9;
+            } else if (ps_wgt_type == ps_wgt_con) {
+                isr_hi_idx = 10;
+                fsr_hi_idx = 11;
+                isr_lo_idx = 12;
+                fsr_lo_idx = 13;
+            }
+            if (is_private_sample) {
+                preshowerISRweightUp_intree = genwgtinfo[isr_hi_idx];
+                preshowerFSRweightUp_intree = genwgtinfo[fsr_hi_idx];
+                preshowerISRweightDown_intree = genwgtinfo[isr_lo_idx];
+                preshowerFSRweightDown_intree = genwgtinfo[fsr_lo_idx];
+            } else {
+                preshowerISRweightUp_intree = genwgtinfo[isr_hi_idx]/originalXWGTUP_intree;
+                preshowerFSRweightUp_intree = genwgtinfo[fsr_hi_idx]/originalXWGTUP_intree;
+                preshowerISRweightDown_intree = genwgtinfo[isr_lo_idx]/originalXWGTUP_intree;
+                preshowerFSRweightDown_intree = genwgtinfo[fsr_lo_idx]/originalXWGTUP_intree;
+            }
         }
 
         // Add EFT weights
-        for (auto wgt_info: LHEInfo->weights())
-        {
+        for (auto wgt_info: LHEInfo->weights()) {
             auto LHEwgtstr = string(wgt_info.id);
             std::size_t foundstr = LHEwgtstr.find("EFTrwgt"); // only save our EFT weights
             if ( foundstr!=std::string::npos ) {
@@ -320,7 +336,11 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
         }
         LHAPDF::PDFSet nnpdfSet(pdf_set_name.Data());
 
-        // LHAPDF::PDFSet nnpdfSet("NNPDF31_nnlo_hessian_pdfas"); // NNPDF30_nlo_as_0118 = central (powheg-only?) samples    //NNPDF31_nlo_hessian_pdfas  = EFT samples // NNPDF31_nnlo_hessian_pdfas = newer EFT samps, amcatnlo, some central powheg samples
+        // NNPDF30_nlo_as_0118 = central (powheg-only?) samples
+        // NNPDF31_nlo_hessian_pdfas = EFT samples
+        // NNPDF31_nnlo_hessian_pdfas = newer EFT samps, amcatnlo, some central powheg samples
+        
+        // LHAPDF::PDFSet nnpdfSet("NNPDF31_nnlo_hessian_pdfas");
         // LHAPDF::PDFSet nnpdfSet("NNPDF31_nnlo_as_0118_nf_4");    // For 4f PDFs
 
         // NNPDF30_nlo_as_0118: besides ttH powheg: ?  
@@ -340,17 +360,19 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
             pdfID_end = 321000;
         }
         // Note: These are the 5f PDFs
-        // int pdfID_start = 306001;  //305800; //NNPDF31_nlo_hessian_pdfas       //260001; //NNPDF30_nlo_as_0118      //306001 NNPDF31_nnlo_hessian_pdfas, hessian
-        // int pdfID_end = 306102;    //305902; //NNPDF31_nlo_hessian_pdfas       //260100; //NNPDF30_nlo_as_0118      //306102 NNPDF31_nnlo_hessian_pdfas, hessian
-
+        // int pdfID_start = 306001;  //305800; //NNPDF31_nlo_hessian_pdfas
+                                      //260001; //NNPDF30_nlo_as_0118
+                                      //306001; //NNPDF31_nnlo_hessian_pdfas, hessian
+        // int pdfID_end = 306102;    //305902; //NNPDF31_nlo_hessian_pdfas
+                                      //260100; //NNPDF30_nlo_as_0118
+                                      //306102; //NNPDF31_nnlo_hessian_pdfas, hessian
         // Note: These are the 4f PDFs
         // int pdfID_start = 320901;
         // int pdfID_end = 321000;
 
         // obtain weights
         auto& mcWeights = LHEInfo->weights();
-        for (size_t i = 0; i < mcWeights.size(); i++)
-        {
+        for (size_t i = 0; i < mcWeights.size(); i++) {
             // use the mapping to identify the weight
             auto wgtstr = string(mcWeights[i].id);
             //cout << wgtstr << endl;
@@ -361,12 +383,10 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
             //cout << mcWeights[i].id << endl;
             int idInt = stoi(mcWeights[i].id);
             //cout << "after stoi, i=" << i << endl;
-            if (pdfIdMap_.find(idInt) != pdfIdMap_.end())
-            {
+            if (pdfIdMap_.find(idInt) != pdfIdMap_.end()) {
                 int setId = pdfIdMap_[idInt];
                 //std::cout << "  ---->" << wgtstr << " : " << setId << std::endl;
-                if (setId >= pdfID_start && setId <= pdfID_end) // NNPDF30_nlo_as_0118
-                {
+                if (setId >= pdfID_start && setId <= pdfID_end) {// NNPDF30_nlo_as_0118
                     // divide by original weight to get scale-factor-like number
                     nnpdfWeights.push_back(mcWeights[i].wgt / originalXWGTUP_intree);
                 }
@@ -376,20 +396,19 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
         // create the combined up/down variations
         double weightUp = 1.;
         double weightDown = 1.;
-        if (nnpdfWeights.size() > 0)
-        {
-            // in rare cases it might happen that not all weights are present, so in order to
+        if (nnpdfWeights.size() > 0) {
+            // In rare cases it might happen that not all weights are present, so in order to
             // use LHAPDF's uncertainty function, we fill up the vector
             // this is expected not to have a big impact
-            while ((int)nnpdfWeights.size() < (pdfID_end - pdfID_start + 1))
-            {
+            while ((int)nnpdfWeights.size() < (pdfID_end - pdfID_start + 1)) {
                 nnpdfWeights.push_back(1.);
             }
             // first value must be the nominal value, i.e. 1 since we normalize by original weight
-            nnpdfWeights.insert(nnpdfWeights.begin(), 1.);                                                                      // <<----------
+            nnpdfWeights.insert(nnpdfWeights.begin(), 1.);                                          // <<----------
             // calculate combined weights
             // std::cout << "nnpdfWeights size is: " << (int)nnpdfWeights.size() << std::endl;
-            const LHAPDF::PDFUncertainty pdfUnc = nnpdfSet.uncertainty(nnpdfWeights, 68.268949);    // 2nd arg is the CL (in %) to rescale the uncertainties to, 68.268949 is the default
+            // 2nd arg is the CL (in %) to rescale the uncertainties to, 68.268949 is the default
+            const LHAPDF::PDFUncertainty pdfUnc = nnpdfSet.uncertainty(nnpdfWeights, 68.268949);
             weightUp = pdfUnc.central + pdfUnc.errplus;
             weightDown = pdfUnc.central - pdfUnc.errminus;
         }
@@ -425,40 +444,28 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
 
     // count number of weighted mc events we started with:
     
-    
-    
-    // EFTrwgt183_ctW_0.0_ctp_0.0_cpQM_0.0_  cpt_0.0   _cQei_0.0_ctZ_0.0_cQlMi_0.0_cQl3i_0.0_ctG_0.0_ctlTi_0.0_cbW_0.0_cpQ3_0.0_ctei_0.0   _ctli_0.0   _ctlSi_0.0_cptb_0.0
-    // EFTrwgt183_ctW_0.0_ctp_0.0_cpQM_0.0_  ctli_0.0   _cQei_0.0_ctZ_0.0_cQlMi_0.0_cQl3i_0.0_ctG_0.0_ctlTi_0.0_cbW_0.0_cpQ3_0.0_ctei_0.0  _cpt_0.0   _ctlSi_0.0_cptb_0.0
-
+    // EFTrwgt183_ctW_0.0_ctp_0.0_cpQM_0.0_cpt_0.0_cQei_0.0_ctZ_0.0_cQlMi_0.0_cQl3i_0.0_ctG_0.0_ctlTi_0.0_cbW_0.0_cpQ3_0.0_ctei_0.0_ctli_0.0_ctlSi_0.0_cptb_0.0
+    // EFTrwgt183_ctW_0.0_ctp_0.0_cpQM_0.0_ctli_0.0_cQei_0.0_ctZ_0.0_cQlMi_0.0_cQl3i_0.0_ctG_0.0_ctlTi_0.0_cbW_0.0_cpQ3_0.0_ctei_0.0_cpt_0.0_ctlSi_0.0_cptb_0.0
     // std::string smpoint = "EFTrwgt183_ctW_0.0_ctp_0.0_cpQM_0.0_ctli_0.0_cQei_0.0_ctZ_0.0_cQlMi_0.0_cQl3i_0.0_ctG_0.0_ctlTi_0.0_cbW_0.0_cpQ3_0.0_ctei_0.0_cpt_0.0_ctlSi_0.0_cptb_0.0";    
-    
-    
     string smpoint = "";
     
-    for (auto thing : eftwgts_intree)
-    {
-        // the order of the EFT operators in the string can vary, so can only go by the first piece
-        
+    for (auto thing : eftwgts_intree) {
+        // Note: The order of the EFT operators in the string can vary, so can only go by the first piece
         //cout << thing.first << " : " << thing.second << endl;
         std::size_t found = thing.first.find("EFTrwgt183");
-        if (found!=std::string::npos)
-        {
+        if (found!=std::string::npos) {
             smpoint = thing.first;
             break;
         }
-        
     }
 
     //if (eftwgts_intree.find(smpoint) == eftwgts_intree.end())
-    if (smpoint == "")
-    {
+    if (smpoint == "") {
         numInitialWeightedMCevents->Fill(1,mcwgt_intree);
-    }
-    else
-    {   
-        
-        // for EFT samples, fill this histogram with the SM-reweighted events, in order to make life easier later when normalizing to SM expectation
-        // ideally, would be less confusing (and possibly helpful?) to just set mcwgt to this value, but would have to change some things downstream...
+    } else {   
+        // for EFT samples, fill this histogram with the SM-reweighted events, in order to make life
+        // easier later when normalizing to SM expectation ideally, would be less confusing (and possibly helpful?)
+        // to just set mcwgt to this value, but would have to change some things downstream...
         numInitialWeightedMCevents->Fill(1,eftwgts_intree[smpoint]);
     }
 
@@ -470,20 +477,15 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
     //double numGenPV = -1;
     edm::Handle<std::vector< PileupSummaryInfo > > PupInfo;
     event.getByToken(puInfoToken,PupInfo);
-    if(PupInfo.isValid())
-    {
-      for( std::vector<PileupSummaryInfo>::const_iterator PVI = PupInfo->begin(); PVI != PupInfo->end(); ++PVI )
-      {
-          int BX = PVI->getBunchCrossing();
-          if( BX==0 )
-          {
-            numTruePV = PVI->getTrueNumInteractions();
-            //numGenPV  = PVI->getPU_NumInteractions();
-          }
-      }
+    if(PupInfo.isValid()) {
+        for( std::vector<PileupSummaryInfo>::const_iterator PVI = PupInfo->begin(); PVI != PupInfo->end(); ++PVI ) {
+            int BX = PVI->getBunchCrossing();
+            if( BX==0 ) {
+                numTruePV = PVI->getTrueNumInteractions();
+                //numGenPV  = PVI->getPU_NumInteractions();
+            }
+        }
     }
-
-
 
     /////////
     ///
@@ -565,8 +567,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
     
     if (debug) cout << "before skim" << endl;
     
-    if ( skim_statement )
-    {
+    if ( skim_statement ) {
         eventnum_intree = event.id().event();
         lumiBlock_intree = event.id().luminosityBlock();
         runNumber_intree = event.id().run();
@@ -583,8 +584,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
         vecPatJet correctedRawJets_JECdown;
         vecPatJet correctedRawJets_JECup;
 
-        for (auto j: correctedRawJets)
-        {
+        for (auto j: correctedRawJets) {
             junc_->setJetEta(j.eta());
             junc_->setJetPt(j.pt());
             auto unc = junc_->getUncertainty(true);
@@ -592,8 +592,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
             correctedRawJets_JECdown.push_back(j);
         }
 
-        for (auto j: correctedRawJets)
-        {
+        for (auto j: correctedRawJets) {
             junc_->setJetEta(j.eta());
             junc_->setJetPt(j.pt());
             auto unc = junc_->getUncertainty(true);
@@ -605,8 +604,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
         edm::Handle<edm::ValueMap<float>> qgHandle;
         event.getByToken(qg_token_, qgHandle);
         int jet_counter = 0;
-        for(auto jet = pfjets->begin();  jet != pfjets->end(); ++jet)
-        {
+        for(auto jet = pfjets->begin();  jet != pfjets->end(); ++jet) {
             edm::RefToBase<pat::Jet> jetRef(edm::Ref<pat::JetCollection> (pfjets, jet - pfjets->begin()));
             float qgLikelihood = (*qgHandle)[jetRef];
             correctedRawJets[jet_counter].addUserFloat("qgid",qgLikelihood);
@@ -636,12 +634,11 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
         ///
         ////////
 
-        if ( jetCleanFakeable )
-        {
+        if ( jetCleanFakeable ) {
             // Do we really need/want this option? Yes.
             selectedJets_preselected = cleanObjects<pat::Jet,pat::Muon>(selectedJets_preselected,selectedMuons_fakeable,0.4);
             selectedJets_preselected = cleanObjects<pat::Jet,pat::Electron>(selectedJets_preselected,selectedElectrons_fakeable,0.4);
-            selectedJets_preselected_noTauClean = cleanObjects<pat::Jet,pat::Muon>(selectedJets_preselected_noTauClean,selectedMuons_fakeable,0.4);            
+            selectedJets_preselected_noTauClean = cleanObjects<pat::Jet,pat::Muon>(selectedJets_preselected_noTauClean,selectedMuons_fakeable,0.4);
             selectedJets_preselected_noTauClean = cleanObjects<pat::Jet,pat::Electron>(selectedJets_preselected_noTauClean,selectedElectrons_fakeable,0.4);
             
             selectedJets_JECup_preselected = cleanObjects<pat::Jet,pat::Muon>(selectedJets_JECup_preselected,selectedMuons_fakeable,0.4);
@@ -651,11 +648,8 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
             selectedJets_JECup_preselected_noTauClean = cleanObjects<pat::Jet,pat::Muon>(selectedJets_JECup_preselected_noTauClean,selectedMuons_fakeable,0.4);
             selectedJets_JECup_preselected_noTauClean = cleanObjects<pat::Jet,pat::Electron>(selectedJets_JECup_preselected_noTauClean,selectedElectrons_fakeable,0.4);
             selectedJets_JECdown_preselected_noTauClean = cleanObjects<pat::Jet,pat::Muon>(selectedJets_JECdown_preselected_noTauClean,selectedMuons_fakeable,0.4);
-            selectedJets_JECdown_preselected_noTauClean = cleanObjects<pat::Jet,pat::Electron>(selectedJets_JECdown_preselected_noTauClean,selectedElectrons_fakeable,0.4);            
-            
-        }
-        else
-        {
+            selectedJets_JECdown_preselected_noTauClean = cleanObjects<pat::Jet,pat::Electron>(selectedJets_JECdown_preselected_noTauClean,selectedElectrons_fakeable,0.4);
+        } else {
             selectedJets_preselected = cleanObjects<pat::Jet,pat::Muon>(selectedJets_preselected,selectedMuons_preselected,0.4);
             selectedJets_preselected = cleanObjects<pat::Jet,pat::Electron>(selectedJets_preselected,selectedElectrons_preselected,0.4);
             selectedJets_preselected_noTauClean = cleanObjects<pat::Jet,pat::Muon>(selectedJets_preselected_noTauClean,selectedMuons_preselected,0.4);            
@@ -668,13 +662,8 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
             selectedJets_JECup_preselected_noTauClean = cleanObjects<pat::Jet,pat::Muon>(selectedJets_JECup_preselected_noTauClean,selectedMuons_preselected,0.4);
             selectedJets_JECup_preselected_noTauClean = cleanObjects<pat::Jet,pat::Electron>(selectedJets_JECup_preselected_noTauClean,selectedElectrons_preselected,0.4);
             selectedJets_JECdown_preselected_noTauClean = cleanObjects<pat::Jet,pat::Muon>(selectedJets_JECdown_preselected_noTauClean,selectedMuons_preselected,0.4);
-            selectedJets_JECdown_preselected_noTauClean = cleanObjects<pat::Jet,pat::Electron>(selectedJets_JECdown_preselected_noTauClean,selectedElectrons_preselected,0.4); 
-            
+            selectedJets_JECdown_preselected_noTauClean = cleanObjects<pat::Jet,pat::Electron>(selectedJets_JECdown_preselected_noTauClean,selectedElectrons_preselected,0.4);    
         }
-
-
-
-
 
         vecPatJet selectedJets_loose = cleanObjects<pat::Jet,pat::Muon>(correctedRawJets,selectedMuons_tight,0.4);
         selectedJets_loose = cleanObjects<pat::Jet,pat::Electron>(selectedJets_loose,selectedElectrons_tight,0.4);
@@ -696,12 +685,9 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
         //cout << hlt_alltrigs.size() << endl;
 
         // if event passes an HLT path add it to the tree:
-        for (unsigned int trigit=0; trigit<hlt_alltrigs.size(); trigit++)
-        {
-            try
-            {
-                if (triggerResults->accept(hltConfig_.triggerIndex(hlt_alltrigs[trigit])))
-                {
+        for (unsigned int trigit=0; trigit<hlt_alltrigs.size(); trigit++) {
+            try {
+                if (triggerResults->accept(hltConfig_.triggerIndex(hlt_alltrigs[trigit]))) {
                     passTrigger_intree.push_back(hlt_alltrigs[trigit]); //don't care about prescales
                     // pair: <L1 prescale, HLT prescale>
                     // std::pair<int,int> prescaleVals= hltPrescaleProvider_.prescaleValues(event, evsetup, hlt_alltrigs[trigit]);
@@ -720,9 +706,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
                     //       }
                     //   }
                 }
-            }
-            catch(...)
-            {
+            } catch(...) {
                 cout << "problem with trigger loop..." << endl;
                 continue;
             }
@@ -770,8 +754,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
         vector<ttH::GenParticle> packed_genParticles;
         vector<ttH::GenParticle> gen_jets;
 
-        if (!isData)
-        {
+        if (!isData) {
             pruned_genParticles = GetCollection(*prunedParticles);
             packed_genParticles = GetCollection(*packedParticles);
             gen_jets = GetCollection(*genjets); 
@@ -784,8 +767,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
         /////////////////////////
         
         
-        if (!isData) 
-        {
+        if (!isData)  {
             int higgs_daughter = GetHiggsDaughterId(*prunedParticles);
             higgs_decay_intree = higgs_daughter;
         }
@@ -852,8 +834,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
         
         met_intree = theMET;
         
-        if (!isData)
-        {
+        if (!isData) {
             pruned_genParticles_intree = pruned_genParticles;
             packed_genParticles_intree = packed_genParticles;
             genJets_intree = gen_jets;
@@ -885,7 +866,9 @@ void OSTwoLepAna::beginRun(edm::Run const& run, edm::EventSetup const& evsetup)
 
     else std::cout << "Warning, didn't find process " << hltTag << std::endl;
 
-    std::cout << " HLTConfig processName " << hltConfig_.processName() << " tableName " << hltConfig_.tableName() << " size " << hltConfig_.size() << std::endl; // " globalTag: " << hltConfig_.globalTag() << std::endl;
+    std::cout << " HLTConfig processName " << hltConfig_.processName()
+              << " tableName " << hltConfig_.tableName()
+              << " size " << hltConfig_.size() << std::endl; // " globalTag: " << hltConfig_.globalTag() << std::endl;
 
     // also get the L1 + HLT prescales:    
     //if (hltPrescaleProvider_.init(run,evsetup,hltTag,changed)) std::cout << "Got L1 + HLT prescales .." << std::endl;
@@ -950,22 +933,17 @@ void OSTwoLepAna::beginRun(edm::Run const& run, edm::EventSetup const& evsetup)
     hlt_trigstofind.push_back("HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v"); // new 2017
     
 
-    for (int trigit=0; trigit<triggersize; trigit++)
-    {
+    for (int trigit=0; trigit<triggersize; trigit++) {
         if (debug) cout << myTriggernames[trigit] << endl;
-    
-        for (unsigned int trigit2=0; trigit2<hlt_trigstofind.size(); trigit2++)
-        {
+        for (unsigned int trigit2=0; trigit2<hlt_trigstofind.size(); trigit2++) {
             std::size_t found = myTriggernames[trigit].find(hlt_trigstofind[trigit2]);
-            if (found!=std::string::npos)
-            {
+            if (found!=std::string::npos) {
                 hlt_alltrigs.push_back(myTriggernames[trigit]);
             }
         }
     }
 
-    if (!isData)
-    {
+    if (!isData) {
         /////////////////
         //// pdf weights mapping
         /////////////////
@@ -1023,17 +1001,14 @@ void OSTwoLepAna::beginRun(edm::Run const& run, edm::EventSetup const& evsetup)
 
         if (debug) cout << "before loop over pdf stuff in beginRun" << endl;
         
-        for (std::vector<LHERunInfoProduct::Header>::const_iterator it = runInfo->headers_begin(); it != runInfo->headers_end(); it++)
-        {
-            if (it->tag() != weightTag)
-            {
+        for (std::vector<LHERunInfoProduct::Header>::const_iterator it = runInfo->headers_begin(); it != runInfo->headers_end(); it++) {
+            if (it->tag() != weightTag) {
                 //cout << it->tag() << endl;
                 continue;
             }
 
             std::vector<std::string> lines = it->lines();
-            for (size_t i = 0; i < lines.size(); i++)
-            {
+            for (size_t i = 0; i < lines.size(); i++) {
                 //std::cout << lines[i];
                 size_t startPos = lines[i].find(startStr);
                 size_t setPos = lines[i].find(setStr);
@@ -1041,19 +1016,15 @@ void OSTwoLepAna::beginRun(edm::Run const& run, edm::EventSetup const& evsetup)
                 //std::cout << (startPos == std::string::npos) << std::endl;
                 //std::cout << (setPos == std::string::npos)   << std::endl;
                 //std::cout << (endPos == std::string::npos)   << std::endl;
-                if (startPos == std::string::npos || setPos == std::string::npos || endPos == std::string::npos)
-                {
+                if (startPos == std::string::npos || setPos == std::string::npos || endPos == std::string::npos) {
                     continue;
                 }
                 std::string weightId = lines[i].substr(startPos + startStr.size() + 1, setPos - startPos - startStr.size() - 2); // this has changed, modify it???
                 std::string setId = lines[i].substr(setPos + setStr.size(), endPos - setPos - setStr.size() - 1); // this has changed, modify it???
                 //std::cout << weightId << " : " << setId << std::endl;
-                try
-                {
+                try {
                     pdfIdMap_[stoi(weightId)] = stoi(setId);
-                }
-                catch (...)
-                {
+                } catch (...) {
                     std::cerr << "error while parsing the lhe run xml header: ";
                     std::cerr << "cannot interpret as ints:" << weightId << " -> " << setId << std::endl;
                 }

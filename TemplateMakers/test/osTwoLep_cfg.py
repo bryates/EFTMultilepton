@@ -34,6 +34,9 @@ options.register("isPrivateSample", False,
 options.register("is4fScheme", False,
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.bool, "The sample uses 4-flavor PDF set")
+options.register("psWeightType","default",
+                 VarParsing.VarParsing.multiplicity.singleton,
+                 VarParsing.VarParsing.varType.string,"Which PS weights to use for ISR/FSR systematics")
 options.parseArguments()
 
 from Configuration.StandardSequences.Eras import eras
@@ -394,6 +397,7 @@ process.OSTwoLepAna.skim = cms.bool( options.skim )
 process.OSTwoLepAna.skipHiggs = cms.bool( options.skipHiggs )
 process.OSTwoLepAna.isPrivateSample = cms.bool( options.isPrivateSample )
 process.OSTwoLepAna.is4fScheme = cms.bool( options.is4fScheme )
+process.OSTwoLepAna.psWeightType = cms.string( options.psWeightType )
 
 
 ######################################

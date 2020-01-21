@@ -138,8 +138,9 @@ class MultileptonAna: public MiniAODHelper
 {
  protected:
   
-  bool isData;
   string sampleName;
+  string ps_wgt_type;
+  bool isData;
   int sampleNumber;
   bool debug;
   bool jetCleanFakeable;
