@@ -215,7 +215,10 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
             //      they should be normalized by originalXWGTUP_intree. This might just be an idiosyncrasy
             //      of either LO or NLO MadGraph samples, or due to a MG runcard setting
             std::vector<double> genwgtinfo = GenInfo->weights();
-            int isr_hi_idx,isr_lo_idx,fsr_hi_idx,isr_lo_idx;
+            int isr_hi_idx = -1;
+            int isr_lo_idx = -1;
+            int fsr_hi_idx = -1;
+            int fsr_lo_idx = -1;
             if (ps_wgt_type == ps_wgt_red) {            
                 isr_hi_idx = 2;
                 fsr_hi_idx = 3;
