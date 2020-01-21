@@ -371,7 +371,7 @@ void HistMaker::bookHistos()
                 th1efts[ii]->SetBins(tlssnbins,tlssmin,tlssmax);
             } else if (s.BeginsWith("3l_")) {
                 th1efts[ii]->SetBins(tlnbins,tlmin,tlmax);
-            } else if (s.BeginsWith("4l_") || s.BeginsWith("ge5l_")) {
+            } else if (s.BeginsWith("4l") || s.BeginsWith("ge5l")) {
                 th1efts[ii]->SetBins(4,1,5);
             }
             ii++;
