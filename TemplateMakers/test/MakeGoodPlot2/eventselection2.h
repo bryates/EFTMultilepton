@@ -24,14 +24,11 @@ string HistMaker::eventselection(std::vector<ttH::Jet> thejets, bool useFakeable
     
     //bool sshelper = false;
     
-    if (!useFakeable)
-    {
+    if (!useFakeable) {
         leptons = tight_leptons;
         electrons = tight_electrons;
         muons = tight_muons;   
-    }
-    else
-    {
+    } else {
         leptons = fakeable_leptons;
         electrons = fakeable_electrons;
         muons = fakeable_muons;
@@ -60,13 +57,10 @@ string HistMaker::eventselection(std::vector<ttH::Jet> thejets, bool useFakeable
     bool jetbpass3l = false;                                                                                     // change this if switching between SRs / CRs!!!!!
     
     
-    if (isSR) // see ctr
-    {
+    if (isSR) {// see ctr
         jetbpass2l = sr2lss;       
         jetbpass3l = sr3l;
-    }
-    else
-    {
+    } else {
         jetbpass2l = cr2lss;  
         jetbpass3l = cr3l;
     }
@@ -85,161 +79,101 @@ string HistMaker::eventselection(std::vector<ttH::Jet> thejets, bool useFakeable
     //     if (leptest.lepMVA<0.9) testcutpass = false;
     // }
     
-    if (numleps>1 && testcutpass)
-    {    
+    if (numleps>1 && testcutpass) {    
         double mindilepmass = getTwoObjKineExtreme(leptons,"min","mass"); // might need to be over more leps (to check)
-           
-        if (mindilepmass>12)
-        {
+        if (mindilepmass>12) {
             //if (numleps>=3) cout << "here1" << endl;
-            if ( (leptons[0].correctedPt>25) && (leptons[1].correctedPt>20 || (leptons[1].correctedPt>15 && !tightercuts)) ) 
-            {
+            if ( (leptons[0].correctedPt>25) && (leptons[1].correctedPt>20 || (leptons[1].correctedPt>15 && !tightercuts)) ) {
                 //if (numleps>=3) cout << "here2" << endl;
                 //if ( (numleps==2 || (useFakeable && numleps>=2)) && jetbpass2l)
-                if ( numleps==2 && jetbpass2l )
-                {
-                    // SS2l
-                    if (leptons[0].charge == leptons[1].charge)
-                    {                
-                        for (const auto & ele : electrons)
-                        {
+                if ( numleps==2 && jetbpass2l ) {
+                    if (leptons[0].charge == leptons[1].charge) { // SS2l
+                        for (const auto & ele : electrons) {
                             if (!ele.isGsfCtfScPixChargeConsistent) return "null";
                             //if (ele.lepMVA<0.5) return "null";
                         }
-                        for (const auto & mu : muons) 
-                        {
+                        for (const auto & mu : muons) {
                             if (!(mu.chargeFlip<0.2)) return "null";
                             //if (mu.lepMVA<0.5) return "null";
                             //if (mu.idMediumPOG==false) return "null";
                         }
                         
-                        if (leptons[0].charge+leptons[1].charge == 2)
-                        {                    
-                            if (nummuons==2)
-                            {
+                        if (leptons[0].charge+leptons[1].charge == 2) {                    
+                            if (nummuons==2) {
                                 return "2lss_p_mumu";
-                            }
-                            else if (numeles==2)
-                            {
+                            } else if (numeles==2) {
                                 return "2lss_p_ee";
-                            }
-                            else if (numeles==1 && nummuons==1)
-                            {
+                            } else if (numeles==1 && nummuons==1) {
                                 return "2lss_p_emu";
                             }
-                        }
-                        else
-                        {
-                            if (nummuons==2)
-                            {
+                        } else {
+                            if (nummuons==2) {
                                 return "2lss_m_mumu";
-                            }
-                            else if (numeles==2)
-                            {
+                            } else if (numeles==2) {
                                 return "2lss_m_ee";
-                            }
-                            else if (numeles==1 && nummuons==1)
-                            {
+                            } else if (numeles==1 && nummuons==1) {
                                 return "2lss_m_emu";
                             }                
                         }                   
-                    }
-                    // OS2l
-                    else 
-                    {
-                        // SFOS
-                        if (nummuons==2)
-                        {
+                    } else { // OS2l
+                        if (nummuons==2) { // SFOS
                             // the following cut is temporary!
                             //if (tightercuts && (muons)[0].correctedPt<30.) return "null"; // for triggering on 1mu only
                             
                             double vetoZmass = pickFromSortedTwoObjKine(muons,"mass",1,91.2);                        
-                            if (abs(vetoZmass-91.2)<10)
-                            {
+                            if (abs(vetoZmass-91.2)<10) {
                                 return "2los_sfz_mumu";
-                            }
-                            else
-                            {
+                            } else {
                                 return "2los_mumu";
                             }
-                        }
-                        // SFOS                    
-                        else if (numeles==2)
-                        {
+                        } else if (numeles==2) { // SFOS
                             //if (tightercuts && (*tight_electrons_intree)[0].correctedPt<40.) return "null"; // for triggering on 1ele only
-                            
                             double vetoZmass = pickFromSortedTwoObjKine(electrons,"mass",1,91.2);
-                            if (abs(vetoZmass-91.2)<10)
-                            {
+                            if (abs(vetoZmass-91.2)<10) {
                                  return "2los_sfz_ee";                           
-                            }
-                            else
-                            {
+                            } else {
                                 return "2los_ee";                            
                             }
-                        }
-                        else if (numeles==1 && nummuons==1)
-                        {
+                        } else if (numeles==1 && nummuons==1) {
                             // the following 2 cuts are temporary!
                             //if (tightercuts && (*tight_muons_intree)[0].correctedPt<30.) return "null"; // for triggering on 1mu only
                             //if ((*met_intree)[0].correctedPt<100.) return "null"; // for triggering on 1mu only
-                            
                             return "2los_emu";
                         }           
                     }
                 }            
                 //else if ((numleps==3 || (useFakeable && numleps>=3)) && jetbpass3l)
-                if ((numleps==3 || (useFakeable && numleps>=3)) && jetbpass3l)                
-                {                    
-                    if (leptons[2].correctedPt>10.)
-                    {
-                        if (leptons[0].charge + leptons[1].charge + leptons[2].charge == 3)
-                        {
+                if ((numleps==3 || (useFakeable && numleps>=3)) && jetbpass3l) {                    
+                    if (leptons[2].correctedPt>10.) {
+                        if (leptons[0].charge + leptons[1].charge + leptons[2].charge == 3) {
                             return "3l_ppp";
-                        }
-                        else if (leptons[0].charge + leptons[1].charge + leptons[2].charge == -3)
-                        {
+                        } else if (leptons[0].charge + leptons[1].charge + leptons[2].charge == -3) {
                             return "3l_mmm";                    
-                        }
-                        else
-                        {                    
+                        } else {                    
                             double vetoZmass = pickFromSortedTwoObjKine(leptons,"massSFOS",1,91.2);
-                            if (abs(vetoZmass-91.2)<10)
-                            {
+                            if (abs(vetoZmass-91.2)<10) {
                                 return "3l_mix_sfz";                           
-                            }
-                            else
-                            {
-                                if (leptons[0].charge + leptons[1].charge + leptons[2].charge == 1)
-                                {
+                            } else {
+                                if (leptons[0].charge + leptons[1].charge + leptons[2].charge == 1) {
                                     return "3l_mix_p";
-                                }
-                                else
-                                {
+                                } else {
                                     return "3l_mix_m";
-                                }   
-                                                   
-                            }                                         
+                                }                 
+                            }
                         }
                     }
-                }
-                else if (numleps>=4) // && jetsize>0 && tagsize>0) // check this. it's >1, >0 according to AN.
-                {
+                } else if (numleps>=4) { // && jetsize>0 && tagsize>0) // check this. it's >1, >0 according to AN.
                     return "4l";
                 }
                 //else if (numleps>=5) // && jetsize>0 && tagsize>0) // combine with 4l!
                 //{
                 //    return "ge5l";
                 //}
-                                
             } // end lep pt req
         } // end dilep mass cut
     } // end ge2 leps
-    if ((numleps==1 || (useFakeable && numleps>=1)) && jetsize>=4 && tagsize>=2 && testcutpass) // jetsize>=1 && tagsize==0
-    {
-        if (leptons[0].correctedPt>40.) // should really be >35, at least for eles
-        {
-              
+    if ((numleps==1 || (useFakeable && numleps>=1)) && jetsize>=4 && tagsize>=2 && testcutpass) {// jetsize>=1 && tagsize==0
+        if (leptons[0].correctedPt>40.) {// should really be >35, at least for eles
             // "poor man's" single lep (if you skimmed on >=2 preselected leptons)
             // bool isfake=false;
             // for (const auto & lep : *preselected_leptons_intree) 
@@ -247,14 +181,9 @@ string HistMaker::eventselection(std::vector<ttH::Jet> thejets, bool useFakeable
             //     if (lep.lepMVA<0.5) isfake=true;
             // }
             // if (!isfake) return "null";
-            
-            
-            if (nummuons==1)
-            {   
+            if (nummuons==1) {
                 return "1l_mu";
-            }
-            else if (numeles==1)
-            {
+            } else if (numeles==1) {
                 return "1l_e";
             }
         }
