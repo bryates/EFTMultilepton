@@ -10,9 +10,9 @@
 //      or by telling the lobster sandbox to include a directory containing these files
 //#include "EFTMultilepton/TemplateMakers/test/anaTree_Checks/utils.h"
 
-namespace WorkingPoint {
-    enum WP {Loose,Medium,Tight};
-}
+// namespace WorkingPoint {
+//     enum WP {Loose,Medium,Tight};
+// }
 
 namespace Lepton {
     enum Category {None,TwoLepOS,TwoLepSS,ThreeLep,FourLep};
@@ -37,6 +37,7 @@ namespace Lepton {
 namespace BTag {
     enum Tagger {CSV,DeepCSV};
     enum Category {None,OneBTag,TwoBTag};
+    enum WorkingPoint {Loose,Medium,Tight};
 
     // Returns the BTag::Category based on the jet collection+Lepton::Category passed to it
     // NOTE: This depends on Lepton::Category, so it implicitly includes any cuts that were used to get the lepton category
@@ -66,24 +67,24 @@ namespace BTag {
     }
 
     // See: https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
-    double getWP(Tagger tagger, WorkingPoint::WP wp) {
+    double getWP(Tagger tagger, BTag::WorkingPoint wp) {
         if (tagger == CSV) {
-            if (wp == WorkingPoint::Loose) {
+            if (wp == BTag::Loose) {
                 return 0.5426;
-            } else if (wp == WorkingPoint::Medium) {
+            } else if (wp == BTag::Medium) {
                 return 0.8484;
-            } else if (wp == WorkingPoint::Tight) {
+            } else if (wp == BTag::Tight) {
                 return 0.941;
             } else {
                 std::cout << "Invalid WorkingPoint for CSV tagger" << std::endl;
                 throw;
             }
         } else if (tagger == DeepCSV) {
-            if (wp == WorkingPoint::Loose) {
+            if (wp == BTag::Loose) {
                 return 0.1522;
-            } else if (wp == WorkingPoint::Medium) {
+            } else if (wp == BTag::Medium) {
                 return 0.4941;
-            } else if (wp == WorkingPoint::Tight) {
+            } else if (wp == BTag::Tight) {
                 return 0.8001;
             } else {
                 std::cout << "Invalid WorkingPoint for DeepCSV tagger" << std::endl;
@@ -97,7 +98,7 @@ namespace BTag {
 
     // Jet passes a particular btag req.
     template <typename T>
-    bool passesWP(const T& jet, Tagger tagger, WorkingPoint::WP wp) {
+    bool passesWP(const T& jet, Tagger tagger, BTag::WorkingPoint wp) {
         double cut = getWP(tagger,wp);
         if (tagger == CSV) {
             return (jet.csv > cut);
@@ -110,7 +111,7 @@ namespace BTag {
 
     // Return a list of jets that pass a given btag req.
     template <typename T>
-    std::vector<T> applyCut(const std::vector<T> jets, Tagger tagger, WorkingPoint::WP wp) {
+    std::vector<T> applyCut(const std::vector<T> jets, Tagger tagger, BTag::WorkingPoint wp) {
         std::vector<T> kept;
         for (const T& jet: jets) {
             if (passesWP(jet,tagger,wp)) {
@@ -124,10 +125,10 @@ namespace BTag {
 namespace Analysis {
     enum Category {
        None,
-       DiEleOSSF,DiMuonOSSF,
-       DiEleSSPlus,DiEleSSMinus,
-       DiMixSSPlus,DiMixSSMinus,
-       DiMuonSSPlus,DiMuonSSMinus,
+       TwoEleOSSF,TwoMuonOSSF,
+       TwoEleSSPlus,TwoEleSSMinus,
+       TwoMixSSPlus,TwoMixSSMinus,
+       TwoMuonSSPlus,TwoMuonSSMinus,
        ThreeLepOneBTagPlus,ThreeLepOneBTagMinus,ThreeLepOneBTagSFOSZ,
        ThreeLepTwoBTagPlus,ThreeLepTwoBTagMinus,ThreeLepTwoBTagSFOSZ
     };
@@ -135,14 +136,14 @@ namespace Analysis {
     // Maps a std::string to a specific Analysis::Category, should be 1-to-1 with kCategoryToString
     const std::map<std::string,Analysis::Category> kStringToCategory = {
         {"" ,Analysis::None},
-        {"e+e-" ,Analysis::DiEleOSSF},
-        {"mu+mu-" ,Analysis::DiMuonOSSF},
-        {"e+e+" ,Analysis::DiEleSSPlus},
-        {"e-e-" ,Analysis::DiEleSSMinus},
-        {"e+mu+" ,Analysis::DiMixSSPlus},
-        {"e-mu-" ,Analysis::DiMixSSMinus},
-        {"mu+mu+" ,Analysis::DiMuonSSPlus},
-        {"mu-mu-" ,Analysis::DiMuonSSMinus},
+        {"e+e-" ,Analysis::TwoEleOSSF},
+        {"mu+mu-" ,Analysis::TwoMuonOSSF},
+        {"e+e+" ,Analysis::TwoEleSSPlus},
+        {"e-e-" ,Analysis::TwoEleSSMinus},
+        {"e+mu+" ,Analysis::TwoMixSSPlus},
+        {"e-mu-" ,Analysis::TwoMixSSMinus},
+        {"mu+mu+" ,Analysis::TwoMuonSSPlus},
+        {"mu-mu-" ,Analysis::TwoMuonSSMinus},
         {"3l1b+" ,Analysis::ThreeLepOneBTagPlus},
         {"3l1b-" ,Analysis::ThreeLepOneBTagMinus},
         {"sfz1b" ,Analysis::ThreeLepOneBTagSFOSZ},
@@ -154,14 +155,14 @@ namespace Analysis {
     // Maps an Analysis::Category to a specific string, should be in 1-to-1 correspondance with kStringToCategory
     const std::map<Analysis::Category,std::string> kCategoryToString = {
         {Analysis::None,""},
-        {Analysis::DiEleOSSF,"e+e-"},
-        {Analysis::DiMuonOSSF,"mu+mu-"},
-        {Analysis::DiEleSSPlus,"e+e+"},
-        {Analysis::DiEleSSMinus,"e-e-"},
-        {Analysis::DiMixSSPlus,"e+mu+"},
-        {Analysis::DiMixSSMinus,"e-mu-"},
-        {Analysis::DiMuonSSPlus,"mu+mu+"},
-        {Analysis::DiMuonSSMinus,"mu-mu-"},
+        {Analysis::TwoEleOSSF,"e+e-"},
+        {Analysis::TwoMuonOSSF,"mu+mu-"},
+        {Analysis::TwoEleSSPlus,"e+e+"},
+        {Analysis::TwoEleSSMinus,"e-e-"},
+        {Analysis::TwoMixSSPlus,"e+mu+"},
+        {Analysis::TwoMixSSMinus,"e-mu-"},
+        {Analysis::TwoMuonSSPlus,"mu+mu+"},
+        {Analysis::TwoMuonSSMinus,"mu-mu-"},
         {Analysis::ThreeLepOneBTagPlus,"3l1b+"},
         {Analysis::ThreeLepOneBTagMinus,"3l1b-"},
         {Analysis::ThreeLepOneBTagSFOSZ,"sfz1b"},
@@ -175,19 +176,20 @@ namespace Analysis {
         return (kCategoryToString.count(cat)) ? kCategoryToString.at(cat) : "";
     }
 
+    // Returns the Analysis::Category mapped to the given string (or None)
     Analysis::Category getCategoryName(std::string s) {
         return (kStringToCategory.count(s)) ? kStringToCategory.at(s) : Analysis::None;
     }
 
     // Returns the Lepton::Category that the Analysis::Category is a subset of
     Lepton::Category getParentLeptonCategory(Analysis::Category cat) {
-        if (cat == DiEleOSSF || cat == DiMuonOSSF) {
+        if (cat == TwoEleOSSF || cat == TwoMuonOSSF) {
             return Lepton::TwoLepOS;
-        } else if (cat == DiEleSSPlus || cat == DiEleSSMinus) {
+        } else if (cat == TwoEleSSPlus || cat == TwoEleSSMinus) {
             return Lepton::TwoLepSS;
-        } else if (cat == DiMixSSPlus || cat == DiMixSSMinus) {
+        } else if (cat == TwoMixSSPlus || cat == TwoMixSSMinus) {
             return Lepton::TwoLepSS;
-        } else if (cat == DiMuonSSPlus || cat == DiMuonSSMinus) {
+        } else if (cat == TwoMuonSSPlus || cat == TwoMuonSSMinus) {
             return Lepton::TwoLepSS;
         } else if (cat == ThreeLepOneBTagPlus || cat == ThreeLepOneBTagMinus || cat == ThreeLepOneBTagSFOSZ) {
             return Lepton::ThreeLep;
@@ -204,9 +206,9 @@ namespace Analysis {
         // group order: n-leptons,lep-flavor,btag,charge,issfz
         /*if (cat == Lepton::TwoLepSS) {
             vec = {
-               DiEleSSPlus,DiEleSSMinus,
-               DiMixSSPlus,DiMixSSMinus,
-               DiMuonSSPlus,DiMuonSSMinus
+               TwoEleSSPlus,TwoEleSSMinus,
+               TwoMixSSPlus,TwoMixSSMinus,
+               TwoMuonSSPlus,TwoMuonSSMinus
             };
         } else if (cat == Lepton::ThreeLep) {
             vec = {
@@ -215,15 +217,15 @@ namespace Analysis {
             };
         }*/
 
-        // (alternate) group order: n-leptons,issfz,btag,charge
+        // (alternate) group order: n-leptons,issfz,btag,charge,lep-flavor
         if (cat == Lepton::TwoLepOS) {
             vec = {
-                DiEleOSSF,DiMuonOSSF
+                TwoEleOSSF,TwoMuonOSSF
             };
         } else if (cat == Lepton::TwoLepSS) {
             vec = {
-                DiEleSSPlus,DiMixSSPlus,DiMuonSSPlus,
-                DiEleSSMinus,DiMixSSMinus,DiMuonSSMinus
+                TwoEleSSPlus,TwoMixSSPlus,TwoMuonSSPlus,
+                TwoEleSSMinus,TwoMixSSMinus,TwoMuonSSMinus
             };
         } else if (cat == Lepton::ThreeLep) {
             vec = {
@@ -250,19 +252,19 @@ namespace Analysis {
 
         if (lep_cat == Lepton::TwoLepOS && is_sfz && jets.size() >= 4) {
             if (n_eles == 2) {
-                return Analysis::DiEleOSSF;
+                return Analysis::TwoEleOSSF;
             } else if (n_muons == 2) {
-                return Analysis::DiMuonOSSF;
+                return Analysis::TwoMuonOSSF;
             } else {
                 return Analysis::None;
             }
         } else if (lep_cat == Lepton::TwoLepSS && jets.size() >= 4) {
             if (n_eles == 2) {
-                return (charge > 0) ? Analysis::DiEleSSPlus : Analysis::DiEleSSMinus;
+                return (charge > 0) ? Analysis::TwoEleSSPlus : Analysis::TwoEleSSMinus;
             } else if (n_muons == 2) {
-                return (charge > 0) ? Analysis::DiMuonSSPlus : Analysis::DiMuonSSMinus;
+                return (charge > 0) ? Analysis::TwoMuonSSPlus : Analysis::TwoMuonSSMinus;
             } else if (n_eles == 1 && n_muons == 1) {
-                return (charge > 0) ? Analysis::DiMixSSPlus : Analysis::DiMixSSMinus;
+                return (charge > 0) ? Analysis::TwoMixSSPlus : Analysis::TwoMixSSMinus;
             } else {
                 std::cout << "[Error] Analysis::getCategory() - Invalid number of leptons for Lepton::TwoLepSS category!" << std::endl;
                 throw;
@@ -327,8 +329,8 @@ void print_table(TH1EFT* hist,TString row_name,double norm,bool incl_header) {
     //}
 
     std::vector<Analysis::Category> skip_cats {
-        Analysis::DiEleOSSF,
-        Analysis::DiMuonOSSF
+        Analysis::TwoEleOSSF,
+        Analysis::TwoMuonOSSF
     };
 
     int width = 0;

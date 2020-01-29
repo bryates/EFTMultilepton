@@ -250,8 +250,8 @@ void runit(TChain* ch, TString outf_name, int max_events, double sm_xsec, int sk
         std::vector<ttH::Jet> cleaned_jets = kinematicCut(*preselected_jets_intree,"pt",30.0,0);
         cleaned_jets = kinematicCut(cleaned_jets,"eta",2.5,1);
         cleaned_jets = sortParticles(cleaned_jets);
-        std::vector<ttH::Jet> loose_jets = BTag::applyCut(cleaned_jets,BTag::Tagger::DeepCSV,WorkingPoint::Loose);
-        std::vector<ttH::Jet> medium_jets = BTag::applyCut(cleaned_jets,BTag::Tagger::DeepCSV,WorkingPoint::Medium);
+        std::vector<ttH::Jet> loose_jets = BTag::applyCut(cleaned_jets,BTag::Tagger::DeepCSV,BTag::WorkingPoint::Loose);
+        std::vector<ttH::Jet> medium_jets = BTag::applyCut(cleaned_jets,BTag::Tagger::DeepCSV,BTag::WorkingPoint::Medium);
         auto sorted_leps = sortParticles(*tight_leptons_intree);
         sw.updateTimer("3 Cut Checks");
 
@@ -390,22 +390,22 @@ void runit(TChain* ch, TString outf_name, int max_events, double sm_xsec, int sk
 
         h_sumSM_incl->Fill(0,sm_wgt,wc_fit);
         h_smwgts_incl->Fill(fabs(sm_wgt));
-        if (ana_cat == Analysis::DiEleSSPlus) {
+        if (ana_cat == Analysis::TwoEleSSPlus) {
             h_sumSM_ee_p->Fill(0,sm_wgt,wc_fit);
             h_smwgts_ee_p->Fill(fabs(sm_wgt));
-        } else if (ana_cat == Analysis::DiEleSSMinus) {
+        } else if (ana_cat == Analysis::TwoEleSSMinus) {
             h_sumSM_ee_m->Fill(0,sm_wgt,wc_fit);
             h_smwgts_ee_m->Fill(fabs(sm_wgt));
-        } else if (ana_cat == Analysis::DiMixSSPlus) {
+        } else if (ana_cat == Analysis::TwoMixSSPlus) {
             h_sumSM_emu_p->Fill(0,sm_wgt,wc_fit);
             h_smwgts_emu_p->Fill(fabs(sm_wgt));
-        } else if (ana_cat == Analysis::DiMixSSMinus) {
+        } else if (ana_cat == Analysis::TwoMixSSMinus) {
             h_sumSM_emu_m->Fill(0,sm_wgt,wc_fit);
             h_smwgts_emu_m->Fill(fabs(sm_wgt));
-        } else if (ana_cat == Analysis::DiMuonSSPlus) {
+        } else if (ana_cat == Analysis::TwoMuonSSPlus) {
             h_sumSM_mumu_p->Fill(0,sm_wgt,wc_fit);
             h_smwgts_mumu_p->Fill(fabs(sm_wgt));
-        } else if (ana_cat == Analysis::DiMuonSSMinus) {
+        } else if (ana_cat == Analysis::TwoMuonSSMinus) {
             h_sumSM_mumu_m->Fill(0,sm_wgt,wc_fit);
             h_smwgts_mumu_m->Fill(fabs(sm_wgt));
         }
