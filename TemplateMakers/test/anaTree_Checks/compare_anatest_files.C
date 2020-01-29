@@ -10,6 +10,68 @@ void print_diff(TString header,std::set<TString> s) {
     }
 }
 
+std::set<TString> find_all_samples(TFile* f) {
+    std::set<TString> ret;
+    TIter next(f->GetListOfKeys());
+    TKey *key;
+    while ((key=(TKey*)next())) {
+        TString key_name = key->GetName();
+        std::vector<std::string> words;
+        split_string(key_name.Data(),words,".");
+        if (words.size() == 3) {
+            TString bin = words.at(0);
+            TString syst = words.at(1);
+            TString samp = words.at(2);
+            ret.insert(samp);
+        }
+    }
+    return ret;
+}
+
+std::set<TString> find_all_bins(TFile* f) {
+    std::set<TString> ret;
+    TIter next(f->GetListOfKeys());
+    TKey *key;
+    while ((key=(TKey*)next())) {
+        TString key_name = key->GetName();
+        std::vector<std::string> words;
+        split_string(key_name.Data(),words,".");
+        if (words.size() == 3) {
+            TString bin = words.at(0);
+            TString syst = words.at(1);
+            TString samp = words.at(2);   
+            ret.insert(bin);
+        } else if (words.size() == 2 && words.at(1).size() == 0) {
+            std::vector<std::string> tmp_words;
+            split_string(words.at(0),tmp_words,"__");
+            // if (tmp_words.size() > 1) {
+            //     continue;
+            // }
+            TString bin = words.at(0);
+            ret.insert(bin);
+        }
+    }
+    return ret;
+}
+
+std::set<TString> find_all_systs(TFile* f) {
+    std::set<TString> ret;
+    TIter next(f->GetListOfKeys());
+    TKey *key;
+    while ((key=(TKey*)next())) {
+        TString key_name = key->GetName();
+        std::vector<std::string> words;
+        split_string(key_name.Data(),words,".");
+        if (words.size() == 3) {
+            TString bin = words.at(0);
+            TString syst = words.at(1);
+            TString samp = words.at(2);   
+            ret.insert(syst);
+        }
+    }
+    return ret;
+}
+
 double fill_stat_dist(TH1EFT* h1, TH1EFT* h2, TString hist_name, TH1D* stat_hist) {
     if (h1->GetNbinsX() != h2->GetNbinsX()) {
         std::cout << "ERROR fill_stat_dist(): nBins mismatch in " << hist_name << std::endl;

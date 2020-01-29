@@ -27,17 +27,7 @@ void binLogX(TH1D* hist) {
     delete[] new_bins;
 }
 
-template <typename Lep, typename Jet>
-void print_event(std::string str, std::vector<Lep> leptons, std::vector<Jet> loose_jets, std::vector<Jet> medium_jets) {
-    std::cout << "Printing Event: " << str << std::endl;
-    for (const Lep& lep: leptons) {
-        std::cout << "Lepton: " << lep.pdgID << " (Q=" << lep.charge << ")" << std::endl;
-    }
-    std::cout << "btagLoose:  " << loose_jets.size() << std::endl;
-    std::cout << "btagMedium: " << medium_jets.size() << std::endl;
-    std::cout << std::endl;
-}
-
+// Returns a new vector of particles that pass a specified kinematic cut
 template <typename T>
 std::vector<T> kinematicCut(std::vector<T> input, std::string cut_name, double cut_val, double cut_type) {
     // cut_type = 0 --> cut is minimum allowed
@@ -62,6 +52,7 @@ std::vector<T> kinematicCut(std::vector<T> input, std::string cut_name, double c
     return kept;
 }
 
+// Returns a new vector of particles that match at least one of the given pdgIDs
 template <typename T>
 std::vector<T> splitCollection(std::vector<T> input, std::set<int> pdgIDs_to_keep) {
     std::vector<T> kept;
@@ -72,6 +63,7 @@ std::vector<T> splitCollection(std::vector<T> input, std::set<int> pdgIDs_to_kee
     }
 }
 
+// Returns a new vector that is the concatenation of the two inputs
 template <typename T>
 std::vector<T> mergeCollection(std::vector<T> v1, std::vector<T> v2) {
     std::vector<T> merged(v1);
@@ -79,11 +71,13 @@ std::vector<T> mergeCollection(std::vector<T> v1, std::vector<T> v2) {
     return merged;
 }
 
+// Returns the invariant mass between two particles
 template <typename T>
 double getInvMass(const T& p1, const T& p2) {
     return (p1.obj + p2.obj).M();
 }
 
+// Returns the sum of charges from all input particles
 template <typename T>
 int sumCharge(std::vector<T> & input) {
     int q = 0;
@@ -91,6 +85,7 @@ int sumCharge(std::vector<T> & input) {
     return q;
 }
 
+// Returns the number of particles with the specified pdgID
 template <typename T>
 int countParticles(std::vector<T> & input, int pdg_id) {
     int count = 0;
@@ -102,6 +97,7 @@ int countParticles(std::vector<T> & input, int pdg_id) {
     return count;
 }
 
+// Returns the min inv. mass from considering all pairs of input particles
 template <typename T>
 double getMinInvMass(std::vector<T> input) {
     double min_mass = -1;
@@ -110,7 +106,6 @@ double getMinInvMass(std::vector<T> input) {
         for (uint j = i; j < input.size(); j++) {
             if (i == j) continue;
             T p2 = input.at(j);
-            // double inv_mass = (p1.obj + p2.obj).M();
             double inv_mass = getInvMass(p1,p2);
             if (min_mass == -1) {
                 min_mass = inv_mass;
@@ -122,6 +117,7 @@ double getMinInvMass(std::vector<T> input) {
     return min_mass;
 }
 
+// Checks if the collection of leptons has an OSSF lepton pair close to the z-mass
 template <typename T>
 bool hasSFZ(std::vector<T> leptons, double cut_window) {
     for (uint i = 0; i < leptons.size(); i++) {
@@ -139,12 +135,14 @@ bool hasSFZ(std::vector<T> leptons, double cut_window) {
     return false;
 }
 
+// Returns a new vector of particles sorted by highest pt
 template <typename T> vector<T> sortParticles(vector<T> & particles) {
     vector<T> sorted_particles(particles.begin(),particles.end());
     std::sort(sorted_particles.begin(),sorted_particles.end(), [] (T a, T b) {return a.obj.Pt() > b.obj.Pt();});
     return sorted_particles;
 }
 
+// Helper function to print percantage of progress in processing an event sample
 void printProgress(int current_index, int total_entries, int interval=20) {
     if (current_index % max(int(total_entries*interval/100.),interval) == 0) {
         float fraction = 100.*current_index/total_entries;
@@ -164,7 +162,7 @@ std::set<TString> set_diff(std::set<TString> s1, std::set<TString> s2) {
     return new_set;
 }
 
-// Returns a new set that exists in both s1 and s2
+// Returns a new set with elements that exists in both s1 and s2
 std::set<TString> set_intersection(std::set<TString> s1, std::set<TString> s2) {
     std::set<TString> new_set;
     for (TString element: s1) {
@@ -175,69 +173,8 @@ std::set<TString> set_intersection(std::set<TString> s1, std::set<TString> s2) {
     return new_set;
 }
 
-std::set<TString> find_all_samples(TFile* f) {
-    std::set<TString> ret;
-    TIter next(f->GetListOfKeys());
-    TKey *key;
-    while ((key=(TKey*)next())) {
-        TString key_name = key->GetName();
-        std::vector<std::string> words;
-        split_string(key_name.Data(),words,".");
-        if (words.size() == 3) {
-            TString bin = words.at(0);
-            TString syst = words.at(1);
-            TString samp = words.at(2);
-            ret.insert(samp);
-        }
-    }
-    return ret;
-}
-
-std::set<TString> find_all_bins(TFile* f) {
-    std::set<TString> ret;
-    TIter next(f->GetListOfKeys());
-    TKey *key;
-    while ((key=(TKey*)next())) {
-        TString key_name = key->GetName();
-        std::vector<std::string> words;
-        split_string(key_name.Data(),words,".");
-        if (words.size() == 3) {
-            TString bin = words.at(0);
-            TString syst = words.at(1);
-            TString samp = words.at(2);   
-            ret.insert(bin);
-        } else if (words.size() == 2 && words.at(1).size() == 0) {
-            std::vector<std::string> tmp_words;
-            split_string(words.at(0),tmp_words,"__");
-            // if (tmp_words.size() > 1) {
-            //     continue;
-            // }
-            TString bin = words.at(0);
-            ret.insert(bin);
-        }
-    }
-    return ret;
-}
-
-std::set<TString> find_all_systs(TFile* f) {
-    std::set<TString> ret;
-    TIter next(f->GetListOfKeys());
-    TKey *key;
-    while ((key=(TKey*)next())) {
-        TString key_name = key->GetName();
-        std::vector<std::string> words;
-        split_string(key_name.Data(),words,".");
-        if (words.size() == 3) {
-            TString bin = words.at(0);
-            TString syst = words.at(1);
-            TString samp = words.at(2);   
-            ret.insert(syst);
-        }
-    }
-    return ret;
-}
-
 //TODO: This is a pretty big function to include in a utilities header file
+// Prints a bin-by-bin comparison of the two given histograms
 bool compare_histogram(TH1EFT* h1, TH1EFT* h2, TString hist_name, bool skip_identical=false) {
     if (h1->GetNbinsX() != h2->GetNbinsX()) {
         std::cout << "ERROR compare_histogram(): nBins mismatch in " << hist_name << std::endl;
@@ -332,27 +269,6 @@ bool compare_histogram(TH1EFT* h1, TH1EFT* h2, TString hist_name, bool skip_iden
     }
 
     return within_error;
-}
-
-//TODO: Unfinished, what was this to be used for? 
-int check_histogram(TFile* f, TString hist_name) {
-    TH1EFT* h = (TH1EFT*)f->Get(hist_name);
-
-    if (!h) {
-        std::cout << "ERROR check_histogram(): f does not have " << hist_name << std::endl;
-        return -1;
-    }
-
-    if (h->Integral() == 0) {
-        return -1;
-    }
-
-    double bin_sum = 0.0;
-    double bin_err_sum = 0.0;
-    for (Int_t i = 1; i <= h->GetNbinsX(); i++) {
-    }
-
-    return 0;
 }
 
 //ANAUTILS_H
