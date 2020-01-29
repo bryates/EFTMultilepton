@@ -15,7 +15,7 @@
 // }
 
 namespace Lepton {
-    enum Category {None,TwoLepOS,TwoLepSS,ThreeLep,FourLep};
+    enum Category {None,OneLep,TwoLepOS,TwoLepSS,ThreeLep,FourLep};
 
     // Returns the Lepton::Category based on the lepton collection passed to it
     // NOTE: Checks the min invariant dilepton mass cut
@@ -23,7 +23,9 @@ namespace Lepton {
     Lepton::Category getCategory(std::vector<T> leptons) {
         double min_inv_mass = getMinInvMass(leptons);
         int charge = sumCharge(leptons);
-        if (leptons.size() == 2 && min_inv_mass > 12.0) {
+        if (leptons.size() == 1) {
+            return Lepton::OneLep;
+        } else if (leptons.size() == 2 && min_inv_mass > 12.0) {
             return (charge != 0) ? Lepton::TwoLepSS : Lepton::TwoLepOS;
         } else if (leptons.size() == 3) {
             return Lepton::ThreeLep;
@@ -39,8 +41,9 @@ namespace BTag {
     enum Category {None,OneBTag,TwoBTag};
     enum WorkingPoint {Loose,Medium,Tight};
 
+    // NOTE: This depends on Lepton::Category, so it implicitly includes any cuts that were used to
+    //       get the lepton category
     // Returns the BTag::Category based on the jet collection+Lepton::Category passed to it
-    // NOTE: This depends on Lepton::Category, so it implicitly includes any cuts that were used to get the lepton category
     template <typename T>
     BTag::Category getCategory(std::vector<T> loose_jets, std::vector<T> medium_jets, Lepton::Category lep_cat) {
         if (lep_cat == Lepton::TwoLepSS || lep_cat == Lepton::TwoLepOS) {
@@ -67,7 +70,8 @@ namespace BTag {
     }
 
     // See: https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
-    double getWP(Tagger tagger, BTag::WorkingPoint wp) {
+    // Returns the corresponding working point cut value for a given tagger
+    double getWP(BTag::Tagger tagger, BTag::WorkingPoint wp) {
         if (tagger == CSV) {
             if (wp == BTag::Loose) {
                 return 0.5426;
@@ -76,7 +80,7 @@ namespace BTag {
             } else if (wp == BTag::Tight) {
                 return 0.941;
             } else {
-                std::cout << "Invalid WorkingPoint for CSV tagger" << std::endl;
+                std::cout << "[Error] BTag::getWP() - Invalid WorkingPoint for CSV tagger" << std::endl;
                 throw;
             }
         } else if (tagger == DeepCSV) {
@@ -87,31 +91,32 @@ namespace BTag {
             } else if (wp == BTag::Tight) {
                 return 0.8001;
             } else {
-                std::cout << "Invalid WorkingPoint for DeepCSV tagger" << std::endl;
+                std::cout << "[Error] BTag::getWP() - Invalid WorkingPoint for DeepCSV tagger" << std::endl;
                 throw;
             }
         } else {
-            std::cout << "Invalid tagger" << std::endl;
+            std::cout << "[Error] BTag::getWP() - Invalid tagger" << std::endl;
             throw;
         }
     }
 
     // Jet passes a particular btag req.
     template <typename T>
-    bool passesWP(const T& jet, Tagger tagger, BTag::WorkingPoint wp) {
+    bool passesWP(const T& jet, BTag::Tagger tagger, BTag::WorkingPoint wp) {
         double cut = getWP(tagger,wp);
         if (tagger == CSV) {
             return (jet.csv > cut);
         } else if (tagger == DeepCSV) {
             return (jet.DeepCSV > cut);
         } else {
+            // Note: Since BTag::getWP() should throw on an invalid Tagger, we should never get here
             return false;
         }
     }
 
     // Return a list of jets that pass a given btag req.
     template <typename T>
-    std::vector<T> applyCut(const std::vector<T> jets, Tagger tagger, BTag::WorkingPoint wp) {
+    std::vector<T> applyCut(const std::vector<T> jets, BTag::Tagger tagger, BTag::WorkingPoint wp) {
         std::vector<T> kept;
         for (const T& jet: jets) {
             if (passesWP(jet,tagger,wp)) {
@@ -123,6 +128,9 @@ namespace BTag {
 }
 
 namespace Analysis {
+    // TODO: Need to figure out how we want to handle optionally merging categories, currently each
+    //       'fundamental' category can be apart of only one merged category at a time, which is a
+    //       bit restrictive.
     enum Category {
        None,
        TwoEleOSSF,TwoMuonOSSF,
@@ -130,7 +138,11 @@ namespace Analysis {
        TwoMixSSPlus,TwoMixSSMinus,
        TwoMuonSSPlus,TwoMuonSSMinus,
        ThreeLepOneBTagPlus,ThreeLepOneBTagMinus,ThreeLepOneBTagSFOSZ,
-       ThreeLepTwoBTagPlus,ThreeLepTwoBTagMinus,ThreeLepTwoBTagSFOSZ
+       ThreeLepTwoBTagPlus,ThreeLepTwoBTagMinus,ThreeLepTwoBTagSFOSZ,
+       FourLepTwoBTag,
+       // Merged Categories
+       TwoLepOSSF,
+       TwoLepSSPlus,TwoLepSSMinus
     };
 
     // Maps a std::string to a specific Analysis::Category, should be 1-to-1 with kCategoryToString
@@ -149,7 +161,11 @@ namespace Analysis {
         {"sfz1b" ,Analysis::ThreeLepOneBTagSFOSZ},
         {"3l2b+" ,Analysis::ThreeLepTwoBTagPlus},
         {"3l2b-" ,Analysis::ThreeLepTwoBTagMinus},
-        {"sfz2b" ,Analysis::ThreeLepTwoBTagSFOSZ}
+        {"sfz2b" ,Analysis::ThreeLepTwoBTagSFOSZ},
+        // Merged Categories
+        {"2los",Analysis::TwoLepOSSF},
+        {"2lss+",Analysis::TwoLepSSPlus},
+        {"2lss-",Analysis::TwoLepSSMinus}
     };
 
     // Maps an Analysis::Category to a specific string, should be in 1-to-1 correspondance with kStringToCategory
@@ -168,7 +184,11 @@ namespace Analysis {
         {Analysis::ThreeLepOneBTagSFOSZ,"sfz1b"},
         {Analysis::ThreeLepTwoBTagPlus,"3l2b+"},
         {Analysis::ThreeLepTwoBTagMinus,"3l2b-"},
-        {Analysis::ThreeLepTwoBTagSFOSZ,"sfz2b"}
+        {Analysis::ThreeLepTwoBTagSFOSZ,"sfz2b"},
+        // Merged Categories
+        {Analysis::TwoLepOSSF,"2los"},
+        {Analysis::TwoLepSSPlus,"2lss+"},
+        {Analysis::TwoLepSSMinus,"2lss-"}
     };
 
     // Returns the string name of Analysis::Category
@@ -179,6 +199,19 @@ namespace Analysis {
     // Returns the Analysis::Category mapped to the given string (or None)
     Analysis::Category getCategoryName(std::string s) {
         return (kStringToCategory.count(s)) ? kStringToCategory.at(s) : Analysis::None;
+    }
+
+    // Returns the category that 'cat' is merged into (if any). This might be overly restrictive...
+    Analysis::Category getMergedCategory(Analysis::Category cat) {
+        if (cat == TwoEleOSSF || cat == TwoMuonOSSF) {
+            return TwoLepOSSF;
+        } else if (cat == TwoEleSSPlus || cat == TwoMixSSPlus || cat == TwoMuonSSPlus) {
+            return TwoLepSSPlus;
+        } else if (cat == TwoEleSSMinus || cat == TwoMixSSMinus || cat == TwoMuonSSMinus) {
+            return TwoLepSSMinus;
+        } else {// The category is not apart of any defined merged category, so it is its own merged category
+            return cat;
+        }
     }
 
     // Returns the Lepton::Category that the Analysis::Category is a subset of
@@ -200,7 +233,8 @@ namespace Analysis {
     }
 
     // Returns a vector of Analysis::Category that are a subset of the Lepton::Category
-    // NOTE: This is what determines the bin order in the histograms!
+    // Note1: This is what determines the bin order in the histograms!
+    // Note2: This feels like something that should be defined in the Lepton namespace
     std::vector<Analysis::Category> getLeptonChildCategories(Lepton::Category cat) {
         std::vector<Analysis::Category> vec;
         // group order: n-leptons,lep-flavor,btag,charge,issfz
@@ -247,7 +281,8 @@ namespace Analysis {
         int n_eles = countParticles(leptons,11);
         int n_muons = countParticles(leptons,13);
 
-        bool is_sfz = hasSFZ(leptons,10.0);
+        double z_mass_window = 10.0;
+        bool is_sfz = hasSFZ(leptons,z_mass_window);
         int charge = sumCharge(leptons);
 
         if (lep_cat == Lepton::TwoLepOS && is_sfz && jets.size() >= 4) {
@@ -279,6 +314,15 @@ namespace Analysis {
                 return (charge > 0) ? Analysis::ThreeLepTwoBTagPlus : Analysis::ThreeLepTwoBTagMinus;
             } else {
                 std::cout << "[Error] Analysis::getCategory() - Invalid btag category for Lepton::ThreeLep category!" << std::endl;
+                throw;
+            }
+        } else if (lep_cat == Lepton::FourLep) {
+            if (btag_cat == BTag::OneBTag) {
+                return Analysis::None;
+            } else if (btag_cat == BTag::TwoBTag) {
+                return Analysis::FourLepTwoBTag;
+            } else {
+                std::cout << "[Error] Analysis::getCategory() - Invalid btag category for Lepton::FourLep category!" << std::endl;
                 throw;
             }
         }
