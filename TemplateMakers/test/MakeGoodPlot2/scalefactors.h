@@ -452,74 +452,57 @@ double HistMaker::partonShowerSF(int bin, vector<string> category, int sys, int 
 
     // return 1.;
 }
+
 double triggerSF(int pdgid1, int pdgid2, int nlep, double leadingleppt, int sys=0)
 {
-    if (nlep>=3) 
-    {
-        if (sys==41) return 1.05;
-        if (sys==42) return 0.95;
-        return 1.0;    
-    }
-    int comb = abs(pdgid1)+abs(pdgid2);
-    
-    if (comb==1010) comb = 22; //kludge for 1l
-    if (comb==1012) comb = 26; //kludge for 1l
-    
-    double sys_amt = 0.;
-    
-    if (comb==22) // ee
-    {
-        if (leadingleppt<30.)
-        {
-            if (sys==41) return 0.027+0.02+0.937;
-            if (sys==42) return 0.937-(0.027+0.02);
-            return 0.937;
-        }
-        else
-        {
-            if (sys==41) return 0.002+0.02+0.991;
-            if (sys==42) return 0.991-(0.002+0.02);
-            return 0.991;
-        }
-    }
-    else if (comb==24)  // em
-    {
-        if (leadingleppt<35.) 
-        {
-            if (sys==41) return 0.008+0.02+0.952;
-            if (sys==42) return 0.952-(0.008+0.02);
-            return 0.952;
-        }
-        else if (leadingleppt>=35. && leadingleppt<50.) 
-        {
-            if (sys==41) return 0.003+0.02+0.983;
-            if (sys==42) return 0.983-(0.003+0.02);
-            return 0.983;
-        }
-        else 
-        {
-            if (sys==41) return 0.001+0.02+1.;
-            if (sys==42) return 1.-(0.001+0.02);
-            return 1.0;
+    // Default return values
+    double sf_nom = 1.0;
+    double sf_unc = 0.0;
+    if (nlep>=3) {
+        sf_nom = 1.00;
+        sf_unc = 0.05;
+    } else {    
+        int comb = abs(pdgid1)+abs(pdgid2);
+        if (comb==1010) comb = 22; //kludge for 1l
+        if (comb==1012) comb = 26; //kludge for 1l
+        
+        // Uncertainty associated with the parametrization of the trg eff. as a function of the
+        //  leading lepton pt alone
+        double sys_amt = 0.02;
+        if (comb==22) {// ee
+            if (leadingleppt<30.) {
+                sf_nom = 0.937;
+                sf_unc = 0.027+sys_amt;
+            } else {
+                sf_nom = 0.991;
+                sf_unc = 0.002+sys_amt;
+            }
+        } else if (comb==24) {// em
+            if (leadingleppt<35.) {
+                sf_nom = 0.952;
+                sf_unc = 0.008+sys_amt;
+            } else if (leadingleppt>=35. && leadingleppt<50.) {
+                sf_nom = 0.983;
+                sf_unc = 0.003+sys_amt;
+            } else  {
+                sf_nom = 1.000;
+                sf_unc = 0.001+sys_amt;
+            }
+        } else if (comb==26) {// mm
+            if (leadingleppt<35.) {
+                sf_nom = 0.972;
+                sf_unc = 0.006+sys_amt;
+            } else {
+                sf_nom = 0.994;
+                sf_unc = 0.001+sys_amt;
+            }
         }
     }
-    else if (comb==26)  // mm
-    {
-        if (leadingleppt<35.) 
-        {
-            if (sys==41) return 0.006+0.02+0.972;
-            if (sys==42) return 0.972-(0.006+0.02);            
-            return 0.972;
-        }
-        else
-        {
-            if (sys==41) return 0.001+0.02+0.994;
-            if (sys==42) return 0.994-(0.001+0.02);
-            return 0.994;
-        }
-    }
-    return 1.;
+    if (sys==41) return sf_nom+sf_unc;
+    if (sys==42) return sf_nom-sf_unc;
+    return sf_nom;
 }
+
 double HistMaker::muonSF(double mu_pt, double mu_eta, int lepmult, int sys)
 {
     double musf = 1.;
