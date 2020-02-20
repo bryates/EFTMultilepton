@@ -5,20 +5,22 @@ void MakeGoodPlot::get_rate_info()
     // ttH
 
     // pb
-    xsec[1]=0.5085*(1-0.577); // https://twiki.cern.ch/twiki/bin/view/CMS/XsdbTutorialSep
-    q2up[1]=0.057*xsec[1];	
-    q2down[1]=-0.093*xsec[1];	
-    pdfup[1]=0.088*xsec[1];	
-    pdfdown[1]=-0.088*xsec[1];
+    xsec[1]   =  0.5085*(1-0.577); // https://twiki.cern.ch/twiki/bin/view/CMS/XsdbTutorialSep
+    q2up[1]   =  0.057*xsec[1];
+    q2down[1] = -0.093*xsec[1];
+    pdfup[1]  =  0.088*xsec[1];
+    pdfdown[1]= -0.088*xsec[1];
     
     xsec[46]=0.5085;
     
     // TTJets
-    xsec[5] = 831.76; // https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO
-    q2up[5]=19.77;
-    q2down[5]=-29.20;
-    pdfup[5]=35.06;
-    pdfdown[5]=-35.06;               
+    // https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO
+    // (2020-02-07)
+    xsec[5]   =  831.76;
+    q2up[5]   =  19.77;
+    q2down[5] = -29.20;
+    pdfup[5]  =  35.06;
+    pdfdown[5]= -35.06;
 
     // // Z+Jets
     // xsec[6]=1921.8*3;
@@ -27,20 +29,24 @@ void MakeGoodPlot::get_rate_info()
     // pdfup[6]= 0.;
     // pdfdown[6]= 0.;
     
-     // Z+Jets (DY M>50)
-    xsec[6]=1921.8*3; // https://twiki.cern.ch/twiki/bin/viewauth/CMS/StandardModelCrossSectionsat13TeV
-    q2up[6]= 0.6*3; 
-    q2down[6]= -0.6*3;
-    pdfup[6]= 33.2*3;
-    pdfdown[6]= -33.2*3;   
+    // Z+Jets (DY M>50)
+    // https://twiki.cern.ch/twiki/bin/viewauth/CMS/StandardModelCrossSectionsat13TeV
+    // (2020-02-07)
+    xsec[6]    =  6077.22;
+    q2up[6]    =  0.02*xsec[6]; 
+    q2down[6]  = -0.02*xsec[6];
+    pdfup[6]   =  14.78;
+    pdfdown[6] = -14.78;
     
 
     // W+Jets
-    xsec[7]=61526.7; // https://twiki.cern.ch/twiki/bin/viewauth/CMS/StandardModelCrossSectionsat13TeV
-    q2up[7]=497.1;
-    q2down[7]=-264.6;
-    pdfup[7]=2312.7;
-    pdfdown[7]=-2312.7;
+    // https://twiki.cern.ch/twiki/bin/viewauth/CMS/StandardModelCrossSectionsat13TeV
+    // (2020-02-07)
+    xsec[7]    =  20508.9*3;
+    q2up[7]    =  165.7*3;
+    q2down[7]  = -88.2*3;
+    pdfup[7]   =  770.9*3;
+    pdfdown[7] = -770.9*3;
 
     // TTWJets
                    
@@ -54,179 +60,180 @@ void MakeGoodPlot::get_rate_info()
 
     
     // diboson (WZ)
-    xsec[10]=4.42965; // <- to 3lnu.
-    q2up[10]=0.02*xsec[10]; 
-    q2down[10]=-0.02*xsec[10]; 
-    pdfup[10]=0.02*xsec[10];
-    pdfdown[10]=-0.02*xsec[10]; 
+    xsec[10]    =  4.42965; // <- to 3lnu.
+    q2up[10]    =  0.02*xsec[10];
+    q2down[10]  = -0.02*xsec[10];
+    pdfup[10]   =  0.02*xsec[10];
+    pdfdown[10] = -0.02*xsec[10]; 
 
     // diboson (ZZ)
-    xsec[11]=1.256; // to 4l. Inclusive is 16.523.
-    q2up[11]=0.02*xsec[11]; 
-    q2down[11]=-0.02*xsec[11]; 
-    pdfup[11]=0.02*xsec[11];
-    pdfdown[11]=-0.02*xsec[11]; 
+    xsec[11]    =  1.256; // to 4l. Inclusive is 16.523.
+    q2up[11]    =  0.02*xsec[11]; 
+    q2down[11]  = -0.02*xsec[11]; 
+    pdfup[11]   =  0.02*xsec[11];
+    pdfdown[11] = -0.02*xsec[11]; 
     
     // diboson (WW)
-    xsec[12]=  12.178; // dilep xsec from https://twiki.cern.ch/twiki/bin/view/CMS/XsdbTutorialSep
+    xsec[12] = 12.178; // dilep xsec from https://twiki.cern.ch/twiki/bin/view/CMS/XsdbTutorialSep
     //xsec[12]= 118.7; // inclusive is 118.7 // https://twiki.cern.ch/twiki/bin/viewauth/CMS/StandardModelCrossSectionsat13TeV
     // q2up[12]=0.; // fixed scale 
     // q2down[12]=0.; //
     // pdfup[12]=0.025*118.7;
     // pdfdown[12]=-0.022*118.7;
-    q2up[12]=0.02*xsec[12]; 
-    q2down[12]=-0.02*xsec[12]; 
-    pdfup[12]=0.02*xsec[12];
-    pdfdown[12]=-0.02*xsec[12]; 
+    q2up[12]    =  0.02*xsec[12]; 
+    q2down[12]  = -0.02*xsec[12]; 
+    pdfup[12]   =  0.02*xsec[12];
+    pdfdown[12] = -0.02*xsec[12]; 
     
         
     // dilepton ttbar
-    xsec[13]=831.76*(3*0.108)*(3*0.108); // https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO
-    q2up[13]=19.77*(3*0.108)*(3*0.108);
-    q2down[13]=-29.20*(3*0.108)*(3*0.108);
-    pdfup[13]=35.06*(3*0.108)*(3*0.108);
-    pdfdown[13]=-35.06*(3*0.108)*(3*0.108);
+    xsec[13]    = 831.76*(3*0.108)*(3*0.108); // https://twiki.cern.ch/twiki/bin/view/LHCPhysics/TtbarNNLO
+    q2up[13]    =  19.77*(3*0.108)*(3*0.108);
+    q2down[13]  = -29.20*(3*0.108)*(3*0.108);
+    pdfup[13]   =  35.06*(3*0.108)*(3*0.108);
+    pdfdown[13] = -35.06*(3*0.108)*(3*0.108);
 
     // ttbar: 1l from top
-    xsec[14]=831.76*(3*0.108)*(0.676); // specifically 1l from top, so don't have an extra factor of 2 here
-    q2up[14]=19.77*(3*0.108)*(0.676);
-    q2down[14]=-29.20*(3*0.108)*(0.676);
-    pdfup[14]=35.06*(3*0.108)*(0.676);
-    pdfdown[14]=-35.06*(3*0.108)*(0.676);            
+    xsec[14]    = 831.76*(3*0.108)*(0.676); // specifically 1l from top, so don't have an extra factor of 2 here
+    q2up[14]    =  19.77*(3*0.108)*(0.676);
+    q2down[14]  = -29.20*(3*0.108)*(0.676);
+    pdfup[14]   =  35.06*(3*0.108)*(0.676);
+    pdfdown[14] = -35.06*(3*0.108)*(0.676);            
 
     // ttbar: 1l from anti-top
-    xsec[15]=831.76*(3*0.108)*(0.676); // specifically 1l from antitop, so don't have an extra factor of 2 here
-    q2up[15]=19.77*(3*0.108)*(0.676);
-    q2down[15]=-29.20*(3*0.108)*(0.676);
-    pdfup[15]=35.06*(3*0.108)*(0.676);
-    pdfdown[15]=-35.06*(3*0.108)*(0.676);
+    xsec[15]    = 831.76*(3*0.108)*(0.676); // specifically 1l from antitop, so don't have an extra factor of 2 here
+    q2up[15]    =  19.77*(3*0.108)*(0.676);
+    q2down[15]  = -29.20*(3*0.108)*(0.676);
+    pdfup[15]   =  35.06*(3*0.108)*(0.676);
+    pdfdown[15] = -35.06*(3*0.108)*(0.676);
     
     
     // DY low M
-    xsec[16]=18610.;
-    q2up[16]=0.; // <- to be updated.. ?
-    q2down[16]=0.; // <- to be updated.. ?
-    pdfup[16]=0.; // <- to be updated.. ?
-    pdfdown[16]=0.; // <- to be updated.. ?
+    xsec[16]    = 18610.;
+    q2up[16]    = 0.; // <- to be updated.. ?
+    q2down[16]  = 0.; // <- to be updated.. ?
+    pdfup[16]   = 0.; // <- to be updated.. ?
+    pdfdown[16] = 0.; // <- to be updated.. ?
  
  
     // Single top info: https://twiki.cern.ch/twiki/bin/view/LHCPhysics/SingleTopRefXsec
     // SingleTop_tWchan_top
-    xsec[17]=35.85;
-    q2up[17]=0.9;
-    q2down[17]=0.9;
-    pdfup[17]=1.7;
-    pdfdown[17]=1.7;
+    xsec[17]   = 35.85;
+    q2up[17]   = 0.9;
+    q2down[17] = 0.9;
+    pdfup[17]  = 1.7;
+    pdfdown[17]= 1.7;
 
     // SingleTop_tWchan_antitop
-    xsec[18]=35.85;
-    q2up[18]=0.9;
-    q2down[18]=0.9;
-    pdfup[18]=1.7;
-    pdfdown[18]= 1.7;
+    // TODO: Are the q2 and pdf variations correct??
+    xsec[18]    = 35.85;
+    q2up[18]    = 0.9;
+    q2down[18]  = 0.9;
+    pdfup[18]   = 1.7;
+    pdfdown[18] = 1.7;
 
     // SingleTop_tchan_top
-    xsec[19]=136.02;
-    q2up[19]=4.09;
-    q2down[19]=-2.92;
-    pdfup[19]=3.52;
-    pdfdown[19]=-3.52;
+    xsec[19]    = 136.02;
+    q2up[19]    =  4.09;
+    q2down[19]  = -2.92; // ??
+    pdfup[19]   =  3.52;
+    pdfdown[19] = -3.52; // ??
 
     // SingleTop_tchan_antitop
-    xsec[20]=80.95;
-    q2up[20]=2.53;
-    q2down[20]=-1.71;
-    pdfup[20]=3.18;
-    pdfdown[20]=-3.18;
+    xsec[20]    = 80.95;
+    q2up[20]    =  2.53;
+    q2down[20]  = -1.71; // ??
+    pdfup[20]   =  3.18;
+    pdfdown[20] = -3.18; // ??
 
     // SingleTop_schan (leptonic decays)
-    xsec[21]=3.34; // 10.32*(3*0.108)
-    q2up[21]=0.29*(3*0.108);
-    q2down[21]=-0.24*(3*0.108);
-    pdfup[21]=0.27*(3*0.108);
-    pdfdown[21]=-0.27*(3*0.108);
+    xsec[21]    =  3.34; // 10.32*(3*0.108)
+    q2up[21]    =  0.29*(3*0.108);
+    q2down[21]  = -0.24*(3*0.108); // ??
+    pdfup[21]   =  0.27*(3*0.108);
+    pdfdown[21] = -0.27*(3*0.108); // ??
 
 
     //dummy["WWW"] = 22;
-    xsec[22]=0.2086;
+    xsec[22]    =  0.2086;
     //q2up[22]=0.0002024;
     //q2down[22]=0.0002024;
-    q2up[22]=0.05*xsec[22];
-    q2down[22]=-0.05*xsec[22];    
-    pdfup[22]=0.05*xsec[22];
-    pdfdown[22]=-0.05*xsec[22]; 
+    q2up[22]    =  0.05*xsec[22];
+    q2down[22]  = -0.05*xsec[22];    
+    pdfup[22]   =  0.05*xsec[22];
+    pdfdown[22] = -0.05*xsec[22]; 
     
     //dummy["WWZ"] = 23;
-    xsec[23]=0.1651;
+    xsec[23]    =  0.1651;
     //q2up[23]=0.0001724;
     //q2down[23]=0.0001724;
-    q2up[23]=0.05*xsec[23];
-    q2down[23]=-0.05*xsec[23];    
-    pdfup[23]=0.05*xsec[23];
-    pdfdown[23]=-0.05*xsec[23];
+    q2up[23]    =  0.05*xsec[23];
+    q2down[23]  = -0.05*xsec[23];    
+    pdfup[23]   =  0.05*xsec[23];
+    pdfdown[23] = -0.05*xsec[23];
     
     //dummy["WZZ"] = 24;
-    xsec[24]=0.05565;
+    xsec[24]    =  0.05565;
     //q2up[24]=5.5e-05;
     //q2down[24]=5.5e-05;
-    q2up[24]=0.05*xsec[24];
-    q2down[24]=-0.05*xsec[24];    
-    pdfup[24]=0.05*xsec[24];
-    pdfdown[24]=-0.05*xsec[24];    
+    q2up[24]    =  0.05*xsec[24];
+    q2down[24]  = -0.05*xsec[24];    
+    pdfup[24]   =  0.05*xsec[24];
+    pdfdown[24] = -0.05*xsec[24];    
     
     //dummy["ZZZ"] = 25;
-    xsec[25]=0.01398;
     //q2up[25]=1.496e-05;
     //q2down[25]=1.496e-05;
-    q2up[25]=0.05*xsec[25];
-    q2down[25]=-0.05*xsec[25];    
-    pdfup[25]=0.05*xsec[25];
-    pdfdown[25]=-0.05*xsec[25];    
+    xsec[25]    =  0.01398;
+    q2up[25]    =  0.05*xsec[25];
+    q2down[25]  = -0.05*xsec[25];    
+    pdfup[25]   =  0.05*xsec[25];
+    pdfdown[25] = -0.05*xsec[25];    
     
     
     //dummy["tZq"] = 26;
     //xsec[26]=0.0758*(1./0.97); // <-------- trailing factor is a by-hand accounting for the fact that we removed 3% of events
     //xsec[26]=0.0758;
-    xsec[26]=0.0942;
-    q2up[26]=0.0001989;
-    q2down[26]=0.0001989;
-    pdfup[26]=0.; // <- to be updated..
-    pdfdown[26]=0.; // <- to be updated..   
+    xsec[26]    = 0.0942;
+    q2up[26]    = 0.0001989;
+    q2down[26]  = 0.0001989;
+    pdfup[26]   = 0.; // <- to be updated..
+    pdfdown[26] = 0.; // <- to be updated..   
     
     //dummy["tttt"] = 27;
-    xsec[27]=0.009103;
-    q2up[27]=1.401e-05;
-    q2down[27]=1.401e-05;
-    pdfup[27]=0.; // <- to be updated..
-    pdfdown[27]=0.; // <- to be updated..       
+    xsec[27]    = 0.009103;
+    q2up[27]    = 1.401e-05;
+    q2down[27]  = 1.401e-05;
+    pdfup[27]   = 0.; // <- to be updated..
+    pdfdown[27] = 0.; // <- to be updated..       
     
     //dummy["ttWW"] = 28;
-    xsec[28]=0.007834;
-    q2up[28]=6.335e-06;
-    q2down[28]=6.335e-06;
-    pdfup[28]=0.; // <- to be updated..
-    pdfdown[28]=0.; // <- to be updated..       
+    xsec[28]    = 0.007834;
+    q2up[28]    = 6.335e-06;
+    q2down[28]  = 6.335e-06;
+    pdfup[28]   = 0.; // <- to be updated..
+    pdfdown[28] = 0.; // <- to be updated..       
     
     //dummy["ttWZ"] = 29;
-    xsec[29]=0.002938;
-    q2up[29]=1.773e-06;
-    q2down[29]=1.773e-06;
-    pdfup[29]=0.; // <- to be updated..
-    pdfdown[29]=0.; // <- to be updated.. 
+    xsec[29]    = 0.002938;
+    q2up[29]    = 1.773e-06;
+    q2down[29]  = 1.773e-06;
+    pdfup[29]   = 0.; // <- to be updated..
+    pdfdown[29] = 0.; // <- to be updated.. 
     
     // TTGJets
-    xsec[30]=3.697;
-    q2up[30]=0.1*xsec[30];
-    q2down[30]=-0.1*xsec[30];
-    pdfup[30]=0.05*xsec[30]; // <- to be updated..
-    pdfdown[30]=-0.05*xsec[30]; // <- to be updated.. 
+    xsec[30]    =  3.697;
+    q2up[30]    =  0.1*xsec[30];
+    q2down[30]  = -0.1*xsec[30];
+    pdfup[30]   =  0.05*xsec[30]; // <- to be updated..
+    pdfdown[30] = -0.05*xsec[30]; // <- to be updated.. 
     
     // tHq
-    xsec[31]=7.7129e-02; //2.879E-03+7.425e-02; // https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV
-    q2up[31]=0.08*xsec[31];
-    q2down[31]=-0.149*xsec[31];
-    pdfup[31]=0.0045*xsec[31];
-    pdfdown[31]=-0.0045*xsec[31];
+    xsec[31]    =  7.7129e-02; //2.879E-03+7.425e-02; // https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageAt13TeV
+    q2up[31]    =  0.08*xsec[31];
+    q2down[31]  = -0.149*xsec[31];
+    pdfup[31]   =  0.0045*xsec[31];
+    pdfdown[31] = -0.0045*xsec[31];
     
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     
@@ -300,44 +307,43 @@ void MakeGoodPlot::get_rate_info()
     //////////////////////////////////////  "V2" //////////////////////////////////////////////
     
     // ttH
-    xsec[84]=xsec[1];
-    q2up[84]=0.057*xsec[84];
-    q2down[84]=-0.093*xsec[84];
-    pdfup[84]=0.036*xsec[84];
-    pdfdown[84]=-0.036*xsec[84];
+    xsec[84]    = xsec[1];
+    q2up[84]    =  0.057*xsec[84];
+    q2down[84]  = -0.093*xsec[84];
+    pdfup[84]   =  0.036*xsec[84];
+    pdfdown[84] = -0.036*xsec[84];
         
     //16D ttlnu
-    xsec[85]=xsec[8];
-    q2up[85]=0.13*xsec[85];
-    q2down[85]=-0.12*xsec[85];
-    pdfup[85]=0.02*xsec[85];
-    pdfdown[85]=-0.02*xsec[85];    
+    xsec[85]    = xsec[8];
+    q2up[85]    =  0.13*xsec[85];
+    q2down[85]  = -0.12*xsec[85];
+    pdfup[85]   =  0.02*xsec[85];
+    pdfdown[85] = -0.02*xsec[85];    
     
     // tllq
-    xsec[87]=xsec[26];
-    q2up[87]=0.01*xsec[87];
-    q2down[87]=-0.01*xsec[87];
-    pdfup[87]=0.04*xsec[87];
-    pdfdown[87]=-0.04*xsec[87];
+    xsec[87]    = xsec[26];
+    q2up[87]    =  0.01*xsec[87];
+    q2down[87]  = -0.01*xsec[87];
+    pdfup[87]   =  0.04*xsec[87];
+    pdfdown[87] = -0.04*xsec[87];
  
     // ttll    
-    xsec[86]=xsec[9];    // <---- new samps. 
-    q2up[86]=0.1*xsec[86];
-    q2down[86]=-0.12*xsec[86];
-    pdfup[86]=0.03*xsec[86];
-    pdfdown[86]=-0.03*xsec[86];
+    xsec[86]    = xsec[9];    // <---- new samps. 
+    q2up[86]    =  0.1*xsec[86];
+    q2down[86]  = -0.12*xsec[86];
+    pdfup[86]   =  0.03*xsec[86];
+    pdfdown[86] = -0.03*xsec[86];
     
     //16D tHq
-    xsec[88]=xsec[31]; 
-    
-    
+    xsec[88]=xsec[31];
+
     ////////// test ////////
 
-    xsec[0]=xsec[1];
-    q2up[0]=0.13*xsec[8];
-    q2down[0]=-0.12*xsec[8];
-    pdfup[0]=0.02*xsec[8];
-    pdfdown[0]=-0.02*xsec[8];
+    xsec[0]    = xsec[1];
+    q2up[0]    =  0.13*xsec[8];
+    q2down[0]  = -0.12*xsec[8];
+    pdfup[0]   =  0.02*xsec[8];
+    pdfdown[0] = -0.02*xsec[8];
 }
 
 /* [1] (from skype chat with Kevin)
