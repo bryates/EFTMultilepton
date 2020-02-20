@@ -318,8 +318,29 @@ def main():
     data_CR_geoff_inputfiles_NewHistRanges.addSample("temp_SingleElectron.root")
     data_CR_geoff_inputfiles_NewHistRanges.addSample("temp_SingleMuon.root")
 
+    private_sgnl_SM_ISR_FSR_Systematics = Mixin("2020_01_20_private_sgnl_SM_ISR_FSR_Systematics_Default-PSWeights_moreStats")
+    private_sgnl_SM_ISR_FSR_Systematics.addSample("temp_ttH_multidim.root")
+    private_sgnl_SM_ISR_FSR_Systematics.addSample("temp_ttll_multidim.root")
+    private_sgnl_SM_ISR_FSR_Systematics.addSample("temp_ttlnu_multidim.root")
+    private_sgnl_SM_ISR_FSR_Systematics.addSample("temp_tllq_multidim.root")
+    private_sgnl_SM_ISR_FSR_Systematics.addSample("temp_tHq_multidim.root")
+
     private_tllq_SM_Q2RF_check = Mixin("2020_01_14_private_tllq_SM_Q2RF")
     private_tllq_SM_Q2RF_check.addSample("temp_tllq_multidim.root")
+
+    private_sgnl_EFT_DataLimsHigh = Mixin("2020_02_19_private_sgnl_EFT_DataLimsHigh")
+    private_sgnl_EFT_DataLimsHigh.addSample("temp_ttH_multidim.root")
+    private_sgnl_EFT_DataLimsHigh.addSample("temp_ttll_multidim.root")
+    private_sgnl_EFT_DataLimsHigh.addSample("temp_ttlnu_multidim.root")
+    private_sgnl_EFT_DataLimsHigh.addSample("temp_tllq_multidim.root")
+    private_sgnl_EFT_DataLimsHigh.addSample("temp_tHq_multidim.root")
+
+    private_sgnl_EFT_DataLimsLow = Mixin("2020_02_19_private_sgnl_EFT_DataLimsLow")
+    private_sgnl_EFT_DataLimsLow.addSample("temp_ttH_multidim.root")
+    private_sgnl_EFT_DataLimsLow.addSample("temp_ttll_multidim.root")
+    private_sgnl_EFT_DataLimsLow.addSample("temp_ttlnu_multidim.root")
+    private_sgnl_EFT_DataLimsLow.addSample("temp_tllq_multidim.root")
+    private_sgnl_EFT_DataLimsLow.addSample("temp_tHq_multidim.root")
 
     ################################################################################################
 
@@ -337,11 +358,14 @@ def main():
         # central_sgnl_a32_SR_copyChanges,
         # central_bkgd_a32_SR_copyChanges,
         # data_SR_geoff_inputfiles_v1,
+        private_sgnl_SM_ISR_FSR_Systematics,
         # private_tllq_SM_Q2RF_check,
+        #private_sgnl_EFT_DataLimsHigh,
+        #private_sgnl_EFT_DataLimsLow,
     ]
     lst.extend([#CR stuff
-        full_MC_CR_a32_NewHistRanges,
-        data_CR_geoff_inputfiles_NewHistRanges,
+        #full_MC_CR_a32_NewHistRanges,
+        #data_CR_geoff_inputfiles_NewHistRanges,
         # reproc_data_CR_NewHistRanges,
     ])
     # lst.extend([#CR lepOnlySelection

@@ -862,32 +862,102 @@ def private_sgnl_SM_ISR_FSR_Systematics():
     samples = [ttH,tHq,ttll,tllq,ttlnu]
     return samples
 
+def private_sgnl_SM_ISR_FSR_Default_Systematics():
+    ttH   = Sample('ttH_multidim')
+    tHq   = Sample('tHq_multidim')
+    ttll  = Sample('ttll_multidim')
+    tllq  = Sample('tllq_multidim')
+    ttlnu = Sample('ttlnu_multidim')
+
+    path = 'awightma/analysisTrees/special/private_sgnl_SM_ISR-FSR-qCut_Systematics_Default-PSWeights_moreStats_2020_01_18/v1'
+    ttH.addDirectory(HADOOP_DIR,path,'ttH_multidim_b1')
+    ttH.addDirectory(HADOOP_DIR,path,'ttH_multidim_b2')
+    tHq.addDirectory(HADOOP_DIR,path,'tHq_multidim_b1')
+    tHq.addDirectory(HADOOP_DIR,path,'tHq_multidim_b2')
+    ttll.addDirectory(HADOOP_DIR,path,'ttll_multidim_b1')
+    ttll.addDirectory(HADOOP_DIR,path,'ttll_multidim_b2')
+    tllq.addDirectory(HADOOP_DIR,path,'tllq_multidim_b1')
+    tllq.addDirectory(HADOOP_DIR,path,'tllq_multidim_b2')
+    ttlnu.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_b1')
+    ttlnu.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_b2')
+
+    samples = [ttH,tHq,ttll,tllq,ttlnu]
+    return samples
+
 def private_sgnl_SM_qCutUp_Systematics():
-    path = 'awightma/analysisTrees/special/private_sgnl_SM_ISR-FSR-qCut_Systematics_2020_01_16/v2'
+    path = 'awightma/analysisTrees/special/private_sgnl_SM_ISR-FSR-qCut_Systematics_Default-PSWeights_moreStats_2020_01_18/v1'
 
     ttH   = Sample('ttH_multidim')
     ttll  = Sample('ttll_multidim')
     ttlnu = Sample('ttlnu_multidim')
 
     ttH.addDirectory(HADOOP_DIR,path,'ttH_multidim_qCutUp_b1')
+    ttH.addDirectory(HADOOP_DIR,path,'ttH_multidim_qCutUp_b2')
     ttll.addDirectory(HADOOP_DIR,path,'ttll_multidim_qCutUp_b1')
+    ttll.addDirectory(HADOOP_DIR,path,'ttll_multidim_qCutUp_b2')
     ttlnu.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_qCutUp_b1')
+    ttlnu.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_qCutUp_b2')
 
     samples = [ttH,ttll,ttlnu]
     return samples
 
 def private_sgnl_SM_qCutDown_Systematics():
-    path = 'awightma/analysisTrees/special/private_sgnl_SM_ISR-FSR-qCut_Systematics_2020_01_16/v2'
+    path = 'awightma/analysisTrees/special/private_sgnl_SM_ISR-FSR-qCut_Systematics_Default-PSWeights_moreStats_2020_01_18/v1'
 
     ttH   = Sample('ttH_multidim')
     ttll  = Sample('ttll_multidim')
     ttlnu = Sample('ttlnu_multidim')
 
     ttH.addDirectory(HADOOP_DIR,path,'ttH_multidim_qCutDown_b1')
+    ttH.addDirectory(HADOOP_DIR,path,'ttH_multidim_qCutDown_b2')
     ttll.addDirectory(HADOOP_DIR,path,'ttll_multidim_qCutDown_b1')
+    ttll.addDirectory(HADOOP_DIR,path,'ttll_multidim_qCutDown_b2')
     ttlnu.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_qCutDown_b1')
+    ttlnu.addDirectory(HADOOP_DIR,path,'ttlnu_multidim_qCutDown_b2')
 
     samples = [ttH,ttll,ttlnu]
+    return samples
+
+def private_sgnl_EFT_Q2RFUp_Systematics():
+    path = 'awightma/analysisTrees/special'
+
+    ttH   = Sample('ttH_multidim')
+    tHq   = Sample('tHq_multidim')
+    ttll  = Sample('ttll_multidim')
+    tllq  = Sample('tllq_multidim')
+    ttlnu = Sample('ttlnu_multidim')
+
+    subdir = 'private_sgnl_EFT_ttXJet-HanV4startPt2017DataLims_2020_02_18/v1'
+    ttH.addDirectory(HADOOP_DIR,path,subdir,'ttH_multidim_highLimits_b1')
+    ttll.addDirectory(HADOOP_DIR,path,subdir,'ttll_multidim_highLimits_b1')
+    ttlnu.addDirectory(HADOOP_DIR,path,subdir,'ttlnu_multidim_highLimits_b1')
+
+    subdir = 'private_sgnl_EFT_tXq4f-HanV4startPt2017DataLims_2020_02_19/v1'
+    tllq.addDirectory(HADOOP_DIR,path,subdir,'tllq_multidim_highLimits_b1')
+    tHq.addDirectory(HADOOP_DIR,path,subdir,'tHq_multidim_highLimits_b1')
+
+    samples = [ttH,ttll,ttlnu,tllq,tHq]
+    return samples
+
+def private_sgnl_EFT_Q2RFDown_Systematics():
+    path = 'awightma/analysisTrees/special'
+
+    ttH   = Sample('ttH_multidim')
+    tHq   = Sample('tHq_multidim')
+    ttll  = Sample('ttll_multidim')
+    tllq  = Sample('tllq_multidim')
+    ttlnu = Sample('ttlnu_multidim')
+
+    subdir = 'private_sgnl_EFT_ttXJet-HanV4startPt2017DataLims_2020_02_18/v1'
+    ttH.addDirectory(HADOOP_DIR,path,subdir,'ttH_multidim_highLimits_b1')
+    ttll.addDirectory(HADOOP_DIR,path,subdir,'ttll_multidim_highLimits_b1')
+    ttlnu.addDirectory(HADOOP_DIR,path,subdir,'ttlnu_multidim_highLimits_b1')
+
+    subdir = 'private_sgnl_EFT_tXq4f-HanV4startPt2017DataLims_2020_02_19/v1'
+    tllq.addDirectory(HADOOP_DIR,path,subdir,'tllq_multidim_highLimits_b1')
+    tHq.addDirectory(HADOOP_DIR,path,subdir,'tHq_multidim_highLimits_b1')
+
+    samples = [ttH,ttll,ttlnu,tllq,tHq]
     return samples
 
 ####################################################################################################
@@ -948,8 +1018,13 @@ def main():
     overwrite = False
     timestamp_directory = True
     sub_index = False    # Will also create an inputfile for each directory of a sample
-    is_test = True      # In case we don't want to be making a bunch of useless output directories
-    dir_name = 'scratch365_geoff_inputfiles_full_data'
+    is_test = False      # In case we don't want to be making a bunch of useless output directories
+    #dir_name = 'private_sgnl_SM_ISR_FSR_Systematics'
+    #dir_name = 'private_sgnl_SM_ISR_FSR_Default_Systematics'
+    #dir_name = 'private_sgnl_SM_qCutUp_Systematics_moreStats'
+    #dir_name = 'private_sgnl_SM_qCutDown_Systematics_moreStats'
+    dir_name = 'private_sgnl_EFT_Q2RFUp_Systematics'
+    #dir_name = 'private_sgnl_EFT_Q2RFDown_Systematics'
 
     if is_test:
         dir_name = 'testing'
@@ -1002,9 +1077,12 @@ def main():
     # samples = anatest32_samples(**kwargs)
     # samples = tmp_geoff_samples(**kwargs)
 
-    samples = private_sgnl_SM_ISR_FSR_Systematics()
-    # samples = private_sgnl_SM_qCutUp_Systematics()
-    # samples = private_sgnl_SM_qCutDown_Systematics()
+    #samples = private_sgnl_SM_ISR_FSR_Reduced_Systematics()
+    #samples = private_sgnl_SM_ISR_FSR_Default_Systematics()
+    #samples = private_sgnl_SM_qCutUp_Systematics()
+    #samples = private_sgnl_SM_qCutDown_Systematics()
+    samples = private_sgnl_EFT_Q2RFUp_Systematics()
+    #samples = private_sgnl_EFT_Q2RFDown_Systematics()
 
     # samples = a29_NoDupesV2()
 
