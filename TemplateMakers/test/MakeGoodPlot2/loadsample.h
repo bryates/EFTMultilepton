@@ -190,6 +190,55 @@ double getNumInitialMCevents (int sample, TChain &ch)
     return returnedEvents;
 }
 
+// Replacement for the above getNumInitialMCevents, but done this way so we don't have to go and replace
+//  the function everywhere it exists
+double getNumSystMCevents(TChain &ch, std::string syst)
+{
+    double returnedEvents = -1.0;
+    TH1D *sumHist = new TH1D("h","h",1,1,2);
+
+    TObjArray *fileElements=ch.GetListOfFiles();
+    TIter next(fileElements);
+    TChainElement *chEl=0;
+    while (( chEl=(TChainElement*)next() ))
+    {
+        // Do it this way because this is actually not a TFile 
+        // (it's TNetXNGFile or similar) when opening remotely,
+        // and you will not be able to access anything if you
+        // declare it as a TFile:
+        auto f = TFile::Open(chEl->GetTitle());
+        TH1D* temphist = 0;
+        if (syst == "PDFUP") {
+            temphist = (TH1D*)f->Get("OSTwoLepAna/numSummedWeights_pdfUp");
+        } else if (syst == "PDFDOWN") {
+            temphist = (TH1D*)f->Get("OSTwoLepAna/numSummedWeights_pdfDown");
+        } else if (syst == "MURUP") {
+            temphist = (TH1D*)f->Get("OSTwoLepAna/numSummedWeights_muRUp");
+        } else if (syst == "MURDOWN") {
+            temphist = (TH1D*)f->Get("OSTwoLepAna/numSummedWeights_muRDown");
+        } else if (syst == "MUFUP") {
+            temphist = (TH1D*)f->Get("OSTwoLepAna/numSummedWeights_muFUp");
+        } else if (syst == "MUFDOWN") {
+            temphist = (TH1D*)f->Get("OSTwoLepAna/numSummedWeights_muFDown");
+        } else if (syst == "MURMUFUP") {
+            temphist = (TH1D*)f->Get("OSTwoLepAna/numSummedWeights_muRmuFUp");
+        } else if (syst == "MURMUFDOWN") {
+            temphist = (TH1D*)f->Get("OSTwoLepAna/numSummedWeights_muRmuFDown");
+        } else {
+            temphist = (TH1D*)f->Get("OSTwoLepAna/numInitialWeightedMCevents");
+        }
+
+        if (temphist) {
+            sumHist->Add(temphist);
+        }
+        f->Close();
+    }
+    if (sumHist) {
+        returnedEvents = sumHist->Integral();
+    }
+    delete sumHist;
+}
+
 //double loadsample(const int samp, TChain &ch)
 TString loadsample(const int samp)
 {

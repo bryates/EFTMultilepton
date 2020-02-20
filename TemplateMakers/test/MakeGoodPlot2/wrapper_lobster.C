@@ -48,8 +48,17 @@ void wrapper_lobster(TString sample, TString input_filenames, TString output_nam
         //////////////////////////////////////////////////
         // Dump histos to file
     
-        double numgen = 1.;            
-        numgen = getNumInitialMCevents(0,*ch); // use this to get numgen (To do -> should really remove the first arg as it's just a dummy int now)
+        // double numgen = 1.;            
+        // numgen = getNumInitialMCevents(0,*ch); // use this to get numgen (To do -> should really remove the first arg as it's just a dummy int now)
+        double numgen = getNumSystMCevents(*ch,"");
+        double pdfUp_gen      = getNumSystMCevents(*ch,"PDFUP");
+        double pdfDown_gen    = getNumSystMCevents(*ch,"PDFDOWN");
+        double muRUp_gen      = getNumSystMCevents(*ch,"MURUP");
+        double muRDown_gen    = getNumSystMCevents(*ch,"MURDOWN");
+        double muFUp_gen      = getNumSystMCevents(*ch,"MUFUP");
+        double muFDown_gen    = getNumSystMCevents(*ch,"MUFDOWN");
+        double muRmuFUp_gen   = getNumSystMCevents(*ch,"MURMUFUP");
+        double muRmuFDown_gen = getNumSystMCevents(*ch,"MURMUFDOWN");
         if (debug) cout << "Ran getNumInitialMCevents: " << numgen << endl;
     
         //TString supl="_Nom";
@@ -60,9 +69,35 @@ void wrapper_lobster(TString sample, TString input_filenames, TString output_nam
         TFile tempfile(output_name,"RECREATE");
         sumObjArray->Write();
         if (debug) cout << "Hists dumped to file" << endl;           
-        TH1D *scalehist = new TH1D("NumInitialWeightedMCevents","NumInitialWeightedMCevents",1,1,2);                    
+        TH1D* scalehist = new TH1D("NumInitialWeightedMCevents","NumInitialWeightedMCevents",1,1,2);
+        TH1D* pdfUp_hist      = new TH1D("numSummedWeights_pdfUp"     ,"numSummedWeights_pdfUp"     ,1,1,2);
+        TH1D* pdfDown_hist    = new TH1D("numSummedWeights_pdfDown"   ,"numSummedWeights_pdfDown"   ,1,1,2);
+        TH1D* muRUp_hist      = new TH1D("numSummedWeights_muRUp"     ,"numSummedWeights_muRUp"     ,1,1,2);
+        TH1D* muRDown_hist    = new TH1D("numSummedWeights_muRDown"   ,"numSummedWeights_muRDown"   ,1,1,2);
+        TH1D* muFUp_hist      = new TH1D("numSummedWeights_muFUp"     ,"numSummedWeights_muFUp"     ,1,1,2);
+        TH1D* muFDown_hist    = new TH1D("numSummedWeights_muFDown"   ,"numSummedWeights_muFDown"   ,1,1,2);
+        TH1D* muRmuFUp_hist   = new TH1D("numSummedWeights_muRmuFUp"  ,"numSummedWeights_muRmuFUp"  ,1,1,2);
+        TH1D* muRmuFDown_hist = new TH1D("numSummedWeights_muRmuFDown","numSummedWeights_muRmuFDown",1,1,2);
+        
         scalehist->SetBinContent(1,numgen);
+        pdfUp_hist->SetBinContent(1,pdfUp_gen);
+        pdfDown_hist->SetBinContent(1,pdfDown_gen);
+        muRUp_hist->SetBinContent(1,muRUp_gen);
+        muRDown_hist->SetBinContent(1,muRDown_gen);
+        muFUp_hist->SetBinContent(1,muFUp_gen);
+        muFDown_hist->SetBinContent(1,muFDown_gen);
+        muRmuFUp_hist->SetBinContent(1,muRmuFUp_gen);
+        muRmuFDown_hist->SetBinContent(1,muRmuFDown_gen);
+        
         scalehist->Write();
+        pdfUp_hist->Write();
+        pdfDown_hist->Write();
+        muRUp_hist->Write();
+        muRDown_hist->Write();
+        muFUp_hist->Write();
+        muFDown_hist->Write();
+        muRmuFUp_hist->Write();
+        muRmuFDown_hist->Write();
         if (debug) cout << "Wrote NumInitialWeightedMCevents" << endl;
         tempfile.Close();
     } else {

@@ -63,13 +63,13 @@ void OSTwoLepAna::beginJob()
 
     // book histos:
     numInitialWeightedMCevents = newfs->make<TH1D>("numInitialWeightedMCevents","numInitialWeightedMCevents",1,1,2);
-    numSummedWeights_pdfUp = newfs->make<TH1D>("numSummedWeights_pdfUp","numSummedWeights for pdfUp",1,1,2);
+    numSummedWeights_pdfUp   = newfs->make<TH1D>("numSummedWeights_pdfUp"  ,"numSummedWeights for pdfUp"  ,1,1,2);
     numSummedWeights_pdfDown = newfs->make<TH1D>("numSummedWeights_pdfDown","numSummedWeights for pdfDown",1,1,2);
-    numSummedWeights_muRUp = newfs->make<TH1D>("numSummedWeights_muRUp","numSummedWeights for muRUp",1,1,2);
+    numSummedWeights_muRUp   = newfs->make<TH1D>("numSummedWeights_muRUp"  ,"numSummedWeights for muRUp"  ,1,1,2);
     numSummedWeights_muRDown = newfs->make<TH1D>("numSummedWeights_muRDown","numSummedWeights for muRDown",1,1,2);
-    numSummedWeights_muFUp = newfs->make<TH1D>("numSummedWeights_muFUp","numSummedWeights for muFUp",1,1,2);
+    numSummedWeights_muFUp   = newfs->make<TH1D>("numSummedWeights_muFUp"  ,"numSummedWeights for muFUp"  ,1,1,2);
     numSummedWeights_muFDown = newfs->make<TH1D>("numSummedWeights_muFDown","numSummedWeights for muFDown",1,1,2);
-    numSummedWeights_muRmuFUp = newfs->make<TH1D>("numSummedWeights_muRmuFUp","numSummedWeights for muRmuFUp",1,1,2);
+    numSummedWeights_muRmuFUp   = newfs->make<TH1D>("numSummedWeights_muRmuFUp"  ,"numSummedWeights for muRmuFUp"  ,1,1,2);
     numSummedWeights_muRmuFDown = newfs->make<TH1D>("numSummedWeights_muRmuFDown","numSummedWeights for mmuFuRDown",1,1,2);
 
     // add the tree:
@@ -118,17 +118,17 @@ void OSTwoLepAna::endJob() {
     cout << "muRmuFWeightSumUp: " << muRmuFWeightSumUp << endl;
     cout << "muRmuFWeightSumDown: " << muRmuFWeightSumDown << endl;
 
-    numSummedWeights_pdfUp->Fill(1, nnpdfWeightSumUp);
-    numSummedWeights_pdfDown->Fill(1, nnpdfWeightSumDown);
+    // numSummedWeights_pdfUp->Fill(1, nnpdfWeightSumUp);
+    // numSummedWeights_pdfDown->Fill(1, nnpdfWeightSumDown);
 
-    numSummedWeights_muRUp->Fill(1, muRWeightSumUp);
-    numSummedWeights_muRDown->Fill(1, muRWeightSumDown);
+    // numSummedWeights_muRUp->Fill(1, muRWeightSumUp);
+    // numSummedWeights_muRDown->Fill(1, muRWeightSumDown);
 
-    numSummedWeights_muFUp->Fill(1, muFWeightSumUp);
-    numSummedWeights_muFDown->Fill(1, muFWeightSumDown);
+    // numSummedWeights_muFUp->Fill(1, muFWeightSumUp);
+    // numSummedWeights_muFDown->Fill(1, muFWeightSumDown);
 
-    numSummedWeights_muRmuFUp->Fill(1, muRmuFWeightSumUp);
-    numSummedWeights_muRmuFDown->Fill(1, muRmuFWeightSumDown);
+    // numSummedWeights_muRmuFUp->Fill(1, muRmuFWeightSumUp);
+    // numSummedWeights_muRmuFDown->Fill(1, muRmuFWeightSumDown);
 
 } // job completion (cutflow table, etc.)
 
@@ -318,14 +318,16 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
             }
         }
 
-        muRWeightSumUp += muRWeightUp_intree*mcwgt_intree;
-        muRWeightSumDown += muRWeightDown_intree*mcwgt_intree;
+        // Note: This doesn't work for reweighted EFT samples, since 'mcwgt_intree' needs to be the
+        //          reweighted value at the SM point
+        // muRWeightSumUp += muRWeightUp_intree*mcwgt_intree;
+        // muRWeightSumDown += muRWeightDown_intree*mcwgt_intree;
 
-        muFWeightSumUp += muFWeightUp_intree*mcwgt_intree;
-        muFWeightSumDown += muFWeightDown_intree*mcwgt_intree;
+        // muFWeightSumUp += muFWeightUp_intree*mcwgt_intree;
+        // muFWeightSumDown += muFWeightDown_intree*mcwgt_intree;
 
-        muRmuFWeightSumUp += muRmuFWeightUp_intree*mcwgt_intree;
-        muRmuFWeightSumDown += muRmuFWeightDown_intree*mcwgt_intree;
+        // muRmuFWeightSumUp += muRmuFWeightUp_intree*mcwgt_intree;
+        // muRmuFWeightSumDown += muRmuFWeightDown_intree*mcwgt_intree;
 
         //-------------
         // pdf weights and Q^2 weights
@@ -349,11 +351,6 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
         // NNPDF30_nlo_as_0118: besides ttH powheg: ?  
         // NNPDF31_nnlo_hessian_pdfas: wz, all tribosons, ttGJets, the central PS sig samps
         // NNPDF31_nnlo_hessian_pdfas but choose "hessian" option below: single (anti-)top, zz, ww,
-        //
-
-        // // sums for renormalization
-        // double nnpdfWeightSumUp = 0.;
-        // double nnpdfWeightSumDown = 0.;
 
         // pdf ID start and end ???
         int pdfID_start = 306001;
@@ -462,17 +459,46 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
         }
     }
 
+    numSummedWeights_pdfUp->Fill(1,mcwgt_intree*nnpdfWeightUp_intree);
+    numSummedWeights_pdfDown->Fill(1,mcwgt_intree*nnpdfWeightDown_intree);
+    numSummedWeights_muRUp->Fill(1,mcwgt_intree*muRWeightUp_intree);
+    numSummedWeights_muRDown->Fill(1,mcwgt_intree*muRWeightDown_intree);
+    numSummedWeights_muFUp->Fill(1,mcwgt_intree*muFWeightUp_intree);
+    numSummedWeights_muFDown->Fill(1,mcwgt_intree*muFWeightDown_intree);
+    numSummedWeights_muRmuFUp->Fill(1,mcwgt_intree*muRmuFWeightUp_intree);
+    numSummedWeights_muRmuFDown->Fill(1,mcwgt_intree*muRmuFWeightDown_intree);
+
     //if (eftwgts_intree.find(smpoint) == eftwgts_intree.end())
     if (smpoint == "") {
         numInitialWeightedMCevents->Fill(1,mcwgt_intree);
+
+        // numSummedWeights_pdfUp->Fill(1,mcwgt_intree*nnpdfWeightUp_intree);
+        // numSummedWeights_pdfDown->Fill(1,mcwgt_intree*nnpdfWeightDown_intree);
+        // numSummedWeights_muRUp->Fill(1,mcwgt_intree*muRWeightUp_intree);
+        // numSummedWeights_muRDown->Fill(1,mcwgt_intree*muRWeightDown_intree);
+        // numSummedWeights_muFUp->Fill(1,mcwgt_intree*muFWeightUp_intree);
+        // numSummedWeights_muFDown->Fill(1,mcwgt_intree*muFWeightDown_intree);
+        // numSummedWeights_muRmuFUp->Fill(1,mcwgt_intree*muRmuFWeightUp_intree);
+        // numSummedWeights_muRmuFDown->Fill(1,mcwgt_intree*muRmuFWeightDown_intree);
     } else {   
         // for EFT samples, fill this histogram with the SM-reweighted events, in order to make life
         // easier later when normalizing to SM expectation ideally, would be less confusing (and possibly helpful?)
         // to just set mcwgt to this value, but would have to change some things downstream...
         numInitialWeightedMCevents->Fill(1,eftwgts_intree[smpoint]);
+
+        // Note: This isn't quite the right thing to do, since the EFT weights and the systs weights
+        //          aren't necessarily factorizable, e.g. Sum(W_sm)*Sum(W_syst) != Sum(W_sm*W_syst)
+        // numSummedWeights_pdfUp->Fill(1,eftwgts_intree[smpoint]*nnpdfWeightUp_intree);
+        // numSummedWeights_pdfDown->Fill(1,eftwgts_intree[smpoint]*nnpdfWeightDown_intree);
+        // numSummedWeights_muRUp->Fill(1,eftwgts_intree[smpoint]*muRWeightUp_intree);
+        // numSummedWeights_muRDown->Fill(1,eftwgts_intree[smpoint]*muRWeightDown_intree);
+        // numSummedWeights_muFUp->Fill(1,eftwgts_intree[smpoint]*muFWeightUp_intree);
+        // numSummedWeights_muFDown->Fill(1,eftwgts_intree[smpoint]*muFWeightDown_intree);
+        // numSummedWeights_muRmuFUp->Fill(1,eftwgts_intree[smpoint]*muRmuFWeightUp_intree);
+        // numSummedWeights_muRmuFDown->Fill(1,eftwgts_intree[smpoint]*muRmuFWeightDown_intree);
     }
 
-    int numpvs =                GetVertices(event);
+    int numpvs = GetVertices(event);
     if (numpvs<1) return; // skips event
     if (debug) cout << "numpvs: " << numpvs << endl;
 

@@ -229,6 +229,7 @@ void MakeGoodPlot::save_analysis_hists()
             
             int cnt=0;
             
+            // bool is_shape_syst = (thissyst=="PDFUP" || thissyst=="PDFDOWN");
             bool is_shape_syst = (thissyst=="PDFUP" || thissyst=="PDFDOWN" ||
                 thissyst=="MURUP" || thissyst=="MURDOWN" ||
                 thissyst=="MUFUP" || thissyst=="MUFDOWN" ||
@@ -249,9 +250,8 @@ void MakeGoodPlot::save_analysis_hists()
                 
                 if (thissyst=="") thishist->SetName(thishist->GetName()+sample_names_reg[thisSamp]);
                 else thishist->SetName(thishist->GetName()+string(".")+sample_names_reg[thisSamp]);
-                
                 if (thisSamp<40) {
-                    thishist->Scale(lumi*xsec[thisSamp]/numgen[thisSamp]);
+                    // thishist->Scale(lumi*xsec[thisSamp]/numgen[thisSamp]);
 
                     // if (is_shape_syst) {
                     //     auto nomhist = (TH1EFT*)hist[i].FindObject(thiscat+sample_names_reg[thisSamp]); // should have already been scaled
@@ -261,6 +261,27 @@ void MakeGoodPlot::save_analysis_hists()
                     //     double normamnt = (nomhist->GetEntries() != 0 && thishist->Integral() != 0.) ? nomhist->Integral()/thishist->Integral() : 1.;
                     //     thishist->Scale(normamnt);
                     // }
+
+                    double ngen_fluct = numgen[thisSamp];   // For no syst fluctuation
+                    if (thissyst == "PDFUP") {
+                        ngen_fluct = ((TH1D*)hist[i].FindObject("numSummedWeights_pdfUp"))->Integral();
+                    } else if (thissyst == "PDFDOWN") {
+                        ngen_fluct = ((TH1D*)hist[i].FindObject("numSummedWeights_pdfDown"))->Integral();
+                    } else if (thissyst == "MURUP") {
+                        ngen_fluct = ((TH1D*)hist[i].FindObject("numSummedWeights_muRUp"))->Integral();
+                    } else if (thissyst == "MURDOWN") {
+                        ngen_fluct = ((TH1D*)hist[i].FindObject("numSummedWeights_muRDown"))->Integral();
+                    } else if (thissyst == "MUFUP") {
+                        ngen_fluct = ((TH1D*)hist[i].FindObject("numSummedWeights_muFUp"))->Integral();
+                    } else if (thissyst == "MUFDOWN") {
+                        ngen_fluct = ((TH1D*)hist[i].FindObject("numSummedWeights_muFDown"))->Integral();
+                    } else if (thissyst == "MURMUFUP") {
+                        ngen_fluct = ((TH1D*)hist[i].FindObject("numSummedWeights_muRmuFUp"))->Integral();
+                    } else if (thissyst == "MURMUFDOWN") {
+                        ngen_fluct = ((TH1D*)hist[i].FindObject("numSummedWeights_muRmuFDown"))->Integral();
+                    }
+                    double normamnt = lumi*xsec[thisSamp] / ngen_fluct;
+                    thishist->Scale(normamnt);
 
                     // Dibosons
                     if (thisSamp==11) {
@@ -298,39 +319,46 @@ void MakeGoodPlot::save_analysis_hists()
                     // Note: This assumes that all of the TH1EFT histograms have at least 1 bin
                     // Note: This should really be unnessecary, but is needed b/c samples w/o EFT reweighting
                     //          don't have any WCFits included in the TH1EFT histograms 
+                    double ngen_fluct = numgen[thisSamp];   // For no syst fluctuation
+                    if (thissyst == "PDFUP") {
+                        ngen_fluct = ((TH1D*)hist[i].FindObject("numSummedWeights_pdfUp"))->Integral();
+                    } else if (thissyst == "PDFDOWN") {
+                        ngen_fluct = ((TH1D*)hist[i].FindObject("numSummedWeights_pdfDown"))->Integral();
+                    } else if (thissyst == "MURUP") {
+                        ngen_fluct = ((TH1D*)hist[i].FindObject("numSummedWeights_muRUp"))->Integral();
+                    } else if (thissyst == "MURDOWN") {
+                        ngen_fluct = ((TH1D*)hist[i].FindObject("numSummedWeights_muRDown"))->Integral();
+                    } else if (thissyst == "MUFUP") {
+                        ngen_fluct = ((TH1D*)hist[i].FindObject("numSummedWeights_muFUp"))->Integral();
+                    } else if (thissyst == "MUFDOWN") {
+                        ngen_fluct = ((TH1D*)hist[i].FindObject("numSummedWeights_muFDown"))->Integral();
+                    } else if (thissyst == "MURMUFUP") {
+                        ngen_fluct = ((TH1D*)hist[i].FindObject("numSummedWeights_muRmuFUp"))->Integral();
+                    } else if (thissyst == "MURMUFDOWN") {
+                        ngen_fluct = ((TH1D*)hist[i].FindObject("numSummedWeights_muRmuFDown"))->Integral();
+                    }
+                    double normamnt = lumi*xsec[thisSamp] / ngen_fluct;
                     if (thishist->GetBinFit(1).size() || thishist->GetBinFit(2).size()) {// The histogram uses WCFits to scale the bin contents
                         // The OR in the above if statement is b/c the 4l_2b 2jet bin never gets filled despite existing
-                        double addlfactor = 1.;
-                        //if (thisSamp==87 && (thiscat=="3l_mix_p_1b." || thiscat=="3l_mix_m_1b." || thiscat=="3l_mix_p_2b." || thiscat=="3l_mix_m_2b."))
-                        //{
-                        //    addlfactor = extra_tllq_factor_3lnonZ;
-                        //}
-                        //else if (thisSamp==87 && 
-                        //            (thiscat=="2lss_p_ee_2b." || thiscat=="2lss_p_emu_2b." || thiscat=="2lss_p_mumu_2b." ||
-                        //             thiscat=="2lss_m_ee_2b." || thiscat=="2lss_m_emu_2b." || thiscat=="2lss_m_mumu_2b.")
-                        //        )
-                        //{
-                        //    addlfactor = extra_tllq_factor_2lss;
-                        //}
+
+                        // See rateinfo.h for xsec[sample]
+                        // thishist->ScaleFits(lumi*xsec[thisSamp]/numgen[thisSamp]); // using updated norm method for EFT samps
+                        // thishist->Scale(WCPoint()); // SM
                         
-                        //thishist->ScaleFits(addlfactor*lumi*xsec[thisSamp]); // see rateinfo.h
-                        thishist->ScaleFits(lumi*xsec[thisSamp]/numgen[thisSamp]); // using updated norm method for EFT samps
+                        // These systematics that are shape-only variations:
+                        // if (is_shape_syst) {
+                        //     auto nomhist = (TH1EFT*)hist[i].FindObject(thiscat+sample_names_reg[thisSamp]); // should have already been scaled
+                        //     double normamnt = (nomhist->GetEntries()!=0 && thishist->Integral()!=0.) ? nomhist->Integral()/thishist->Integral() : 1.;
+                        //     thishist->ScaleFits(normamnt);
+                        //     thishist->Scale(WCPoint()); // SM
+                        // }
+
+                        thishist->ScaleFits(normamnt);
                         thishist->Scale(WCPoint()); // SM
-                        
-                        //WCPoint pt;
-                        //pt.setStrength("ctZ",10.);
-                        //thishist->Scale(pt);
-                        
-                        // systematics that are shape-only variations:
-                        if (is_shape_syst) {
-                            auto nomhist = (TH1EFT*)hist[i].FindObject(thiscat+sample_names_reg[thisSamp]); // should have already been scaled
-                            double normamnt = (nomhist->GetEntries()!=0 && thishist->Integral()!=0.) ? nomhist->Integral()/thishist->Integral() : 1.;
-                            thishist->ScaleFits(normamnt);
-                            thishist->Scale(WCPoint()); // SM
-                        }
                     } else {
                         // TODO: What about the shape systematics?
-                        thishist->Scale(lumi*xsec[thisSamp]/numgen[thisSamp]);
+                        // thishist->Scale(lumi*xsec[thisSamp]/numgen[thisSamp]);
+                        thishist->Scale(normamnt);
                     }
                 } else if (thisSamp==104) {
                     //cout << "hey" << endl;
@@ -483,20 +511,21 @@ void MakeGoodPlot::save_analysis_hists()
                 //      being considered. Additionally, this normalization should be done BEFORE calculating
                 //      the envelope.
                 // Make them into shape-only systematics
-                double normamnt = 0.0;
-                if (thisSamp < 40) {
-                    normamnt = (nomhist->GetEntries()!=0 && envhist_up->Integral()!=0.) ? nomhist->Integral()/envhist_up->Integral() : 1.;
-                    envhist_up->Scale(normamnt);
-                    normamnt = (nomhist->GetEntries()!=0 && envhist_down->Integral()!=0.) ? nomhist->Integral()/envhist_down->Integral() : 1.;
-                    envhist_down->Scale(normamnt);
-                } else if (thisSamp >= 40 && thisSamp < 90) {            
-                    normamnt = (nomhist->GetEntries()!=0 && envhist_up->Integral()!=0.) ? nomhist->Integral()/envhist_up->Integral() : 1.;
-                    envhist_up->ScaleFits(normamnt);
-                    envhist_up->Scale(WCPoint());
-                    normamnt = (nomhist->GetEntries()!=0 && envhist_down->Integral()!=0.) ? nomhist->Integral()/envhist_down->Integral() : 1.;
-                    envhist_down->ScaleFits(normamnt);
-                    envhist_down->Scale(WCPoint());
-                }
+                // double normamnt = 0.0;
+                // double normamnt = 1.0;
+                // if (thisSamp < 40) {
+                //     // normamnt = (nomhist->GetEntries()!=0 && envhist_up->Integral()!=0.) ? nomhist->Integral()/envhist_up->Integral() : 1.;
+                //     envhist_up->Scale(normamnt);
+                //     // normamnt = (nomhist->GetEntries()!=0 && envhist_down->Integral()!=0.) ? nomhist->Integral()/envhist_down->Integral() : 1.;
+                //     envhist_down->Scale(normamnt);
+                // } else if (thisSamp >= 40 && thisSamp < 90) {            
+                //     // normamnt = (nomhist->GetEntries()!=0 && envhist_up->Integral()!=0.) ? nomhist->Integral()/envhist_up->Integral() : 1.;
+                //     envhist_up->ScaleFits(normamnt);
+                //     envhist_up->Scale(WCPoint());
+                //     // normamnt = (nomhist->GetEntries()!=0 && envhist_down->Integral()!=0.) ? nomhist->Integral()/envhist_down->Integral() : 1.;
+                //     envhist_down->ScaleFits(normamnt);
+                //     envhist_down->Scale(WCPoint());
+                // }
 
                 canvas.Add(envhist_up);
                 canvas.Add(envhist_down);
