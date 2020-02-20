@@ -237,6 +237,7 @@ double getNumSystMCevents(TChain &ch, std::string syst)
         returnedEvents = sumHist->Integral();
     }
     delete sumHist;
+    return returnedEvents;
 }
 
 //double loadsample(const int samp, TChain &ch)
