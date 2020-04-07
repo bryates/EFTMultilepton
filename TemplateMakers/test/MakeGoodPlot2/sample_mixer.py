@@ -3,6 +3,12 @@ import shutil
 
 from EFTMultilepton.TemplateMakers.utils import clean_dir
 
+####################################################################################################
+# Utility script for copying already hadded .root files to a specific directory. The point of this
+#   is so that the 'makeanatestfile.C' macro can be run without having to edit or recompile it.
+#   This also provides some useful printouts for logging purposes
+####################################################################################################
+
 BASE_PATH = os.path.expandvars("/tmpscratch/users/$USER/analysisWorkflow/mergedHists")
 MIXED_DIR = "mixed_samples"
 
@@ -342,6 +348,12 @@ def main():
     private_sgnl_EFT_DataLimsLow.addSample("temp_tllq_multidim.root")
     private_sgnl_EFT_DataLimsLow.addSample("temp_tHq_multidim.root")
 
+    private_sgnl_SM_Proper_Shape_Systematics = Mixin("2020_02_20_private_sgnl_SM_Proper_Shape_Systematics")
+    private_sgnl_SM_Proper_Shape_Systematics.addSample("temp_ttH_multidim.root")
+    private_sgnl_SM_Proper_Shape_Systematics.addSample("temp_ttll_multidim.root")
+    private_sgnl_SM_Proper_Shape_Systematics.addSample("temp_ttlnu_multidim.root")
+    private_sgnl_SM_Proper_Shape_Systematics.addSample("temp_tllq_multidim.root")
+    private_sgnl_SM_Proper_Shape_Systematics.addSample("temp_tHq_multidim.root")
     ################################################################################################
 
     lst = [
@@ -358,10 +370,11 @@ def main():
         # central_sgnl_a32_SR_copyChanges,
         # central_bkgd_a32_SR_copyChanges,
         # data_SR_geoff_inputfiles_v1,
-        private_sgnl_SM_ISR_FSR_Systematics,
+        # private_sgnl_SM_ISR_FSR_Systematics,
         # private_tllq_SM_Q2RF_check,
         #private_sgnl_EFT_DataLimsHigh,
         #private_sgnl_EFT_DataLimsLow,
+        private_sgnl_SM_Proper_Shape_Systematics,
     ]
     lst.extend([#CR stuff
         #full_MC_CR_a32_NewHistRanges,

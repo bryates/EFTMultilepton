@@ -3,6 +3,12 @@ from glob import glob
 from lobster import cmssw
 from lobster.core import AdvancedOptions, Category, Config, Dataset, StorageConfiguration, Workflow
 
+####################################################################################################
+# Lobster config for running the HistMaking step of the analysis. The basic script that the lobster
+#   master runs is 'wrapper_lobster.py', which itself calls 'wrapper_lobster.C' which is what does
+#   the actual creation and filling of the histograms.
+####################################################################################################
+
 version = datetime.datetime.now().strftime('%Y%m%d_%H%M')
 
 #thisround = "lobster_trees__EFT_test_14_4_18/" # old Fall17 MINIAOD
@@ -29,6 +35,16 @@ tag = "test/lobster_test_{tstamp}".format(tstamp=tstamp1)
 # tag = "special/geoff_inputfiles_data_CR_NewHistRanges_{tstamp}".format(tstamp=tstamp2)
 # tag = "special/reproc-data_CR_NewHistRanges_{tstamp}".format(tstamp=tstamp2)
 # tag = "special/full_MC_a32_CR_NewHistRanges_{tstamp}".format(tstamp=tstamp2)
+
+# tag = "special/private_sgnl_SM_ISR_FSR_Systematics_Default-PSWeights_moreStats_{tstamp}".format(tstamp=tstamp2)
+# tag = "special/private_sgnl_SM_ISR_FSR_Proper_Shape_Systematics_Default-PSWeights_moreStats_{tstamp}".format(tstamp=tstamp2)
+# tag = "special/private_sgnl_SM_qCutUp_Systematics_moreStats_{tstamp}".format(tstamp=tstamp2)
+# tag = "special/private_sgnl_SM_qCutDown_Systematics_moreStats_{tstamp}".format(tstamp=tstamp2)
+# tag = "special/private_sgnl_EFT_DataLimsHigh_Systematics_{tstamp}".format(tstamp=tstamp2)
+# tag = "special/private_sgnl_EFT_DataLimsLow_Systematics_{tstamp}".format(tstamp=tstamp2)
+# tag = "special/private_sgnl_SM_Proper_Shape_Systematics_{tstamp}".format(tstamp=tstamp2)
+# tag = "special/private_sgnl_EFT_DataLimsHigh_Proper_Shape_Systematics_{tstamp}".format(tstamp=tstamp2)
+# tag = "special/private_sgnl_EFT_DataLimsLow_Proper_Shape_Systematics_{tstamp}".format(tstamp=tstamp2)
 
 # tag = "special/data-nominal_newGT-94X_dataRun2_v11_{tstamp}".format(tstamp=tstamp2)
 # tag = "special/data-ddbrs_newGT-94X_dataRun2_v11_{tstamp}".format(tstamp=tstamp2)
@@ -98,8 +114,8 @@ if (not isdata):
     # mysamples.append('SingleTop_tchan_antitop')
     # mysamples.append('SingleTop_tchan_top')
     
-    mysamples.append('WW')                                
-    mysamples.append('WZ')  
+    mysamples.append('WW')
+    mysamples.append('WZ')
     mysamples.append('ZZ')
     mysamples.append('WWW')
     mysamples.append('WWZ')
