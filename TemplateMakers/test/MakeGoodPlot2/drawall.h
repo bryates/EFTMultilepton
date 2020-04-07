@@ -74,7 +74,7 @@ void MakeGoodPlot::drawAllToFile(string plotfile, string plotoption)
     std::cout << "Done: drawAllToFile" << std::endl;
 }
 
-void MakeGoodPlot::drawAllToWebArea(string plotfile, string plotoption)
+void MakeGoodPlot::drawAllToWebArea(string webarea, string plotfile, string plotoption)
 {
     cout << "here2" << endl;
     if (plotoption=="root")
@@ -88,12 +88,16 @@ void MakeGoodPlot::drawAllToWebArea(string plotfile, string plotoption)
     
     // TODO: Change this so it doesn't need to be hardcoded...
     // plotfile = "/afs/crc.nd.edu/user/g/gsmith15/www/"+plotfile; // the "~" doesn't seem to work with ofstream files
-    plotfile = "/afs/crc.nd.edu/user/a/awightma/www/eft_stuff/misc/geoff_plots/" + plotfile;
+    // plotfile = "/afs/crc.nd.edu/user/a/awightma/www/eft_stuff/misc/geoff_plots/" + plotfile;
 
-    string syscmd = "mkdir "+plotfile;
+    string plot_path = webarea + plotfile;
+
+    // string syscmd = "mkdir "+plotfile;
+    string syscmd = "mkdir "+plot_path;
     system(syscmd.c_str());
     
-    syscmd = "cp index.html "+plotfile+"/.";
+    // syscmd = "cp index.html "+plotfile+"/.";
+    syscmd = "cp index.html "+plot_path+"/.";
     system(syscmd.c_str());
          
     //plotfile = plotfile+"/images";
@@ -101,7 +105,10 @@ void MakeGoodPlot::drawAllToWebArea(string plotfile, string plotoption)
     //system(syscmd.c_str());
     
     //plotfile = plotfile+"/output";
-    plotfile = plotfile+"/";
-    drawAllToFile(plotfile,plotoption);
+    // plotfile = plotfile+"/";
+    // drawAllToFile(plotfile,plotoption);
+    
+    plot_path = plot_path+"/";
+    drawAllToFile(plot_path,plotoption);
     
 }

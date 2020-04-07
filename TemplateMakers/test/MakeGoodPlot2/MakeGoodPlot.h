@@ -85,7 +85,8 @@ class MakeGoodPlot
         void drawAll();
         void drawAllToScreen() { drawAll(); }
         void drawAllToFile(string plotfile, string plotoption="pdf");
-        void drawAllToWebArea(string plotfile, string plotoption="pdf");
+        // void drawAllToWebArea(string plotfile, string plotoption="pdf");
+        void drawAllToWebArea(string webarea,string plotfile, string plotoption="pdf");
     
 };
 
