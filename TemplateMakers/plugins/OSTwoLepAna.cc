@@ -585,8 +585,10 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
     //vecPatMuon selectedMuons_tight = GetSelectedMuons( selectedMuons_fakeable, 10, muonID::muonTight);
     //vecPatElectron selectedElectrons_tight = GetSelectedElectrons( selectedElectrons_fakeable, 10, electronID::electronTight );
 
-    vecPatMuon selectedMuons_tight = GetSelectedMuons( selectedMuons_preselected, 10, muonID::muonTightMvaBased);
-    vecPatElectron selectedElectrons_tight = GetSelectedElectrons( selectedElectrons_preselected, 15, electronID::electronTightMvaBased );
+    vecPatMuon selectedMuons_tight = GetSelectedMuons( selectedMuons_preselected, 10, muonID::muonTight);
+    vecPatElectron selectedElectrons_tight = GetSelectedElectrons( selectedElectrons_preselected, 15, electronID::electronTight );
+    //vecPatMuon selectedMuons_tight = GetSelectedMuons( selectedMuons_preselected, 10, muonID::muonTightMvaBased);
+    //vecPatElectron selectedElectrons_tight = GetSelectedElectrons( selectedElectrons_preselected, 15, electronID::electronTightMvaBased );
 
     bool skim_statement = true;
     //if (skim) skim_statement = (selectedMuons_preselected.size()+selectedElectrons_preselected.size())>=2;
@@ -649,6 +651,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
     
         /// the jet selection:
         vecPatJet selectedJets_preselected = GetSelectedJets(cleaned_rawJets, 25., 2.4, jetID::jetTight, '-' );                    // 25., 2.4, jetID::jetPU, '-'
+        //vecPatJet selectedJets_preselected = GetSelectedJets(cleaned_rawJets, 25., 2.4, jetID::jetTight, '-' );                    // 25., 2.4, jetID::jetPU, '-'
         vecPatJet selectedJets_JECup_preselected = GetSelectedJets(cleaned_rawJets_JECup, 25., 2.4, jetID::jetTight, '-' );        // 25., 2.4, jetID::jetPU, '-'
         vecPatJet selectedJets_JECdown_preselected = GetSelectedJets(cleaned_rawJets_JECdown, 25., 2.4, jetID::jetTight, '-' );    // 25., 2.4, jetID::jetPU, '-'
 
@@ -679,8 +682,10 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
             selectedJets_JECdown_preselected_noTauClean = cleanObjects<pat::Jet,pat::Muon>(selectedJets_JECdown_preselected_noTauClean,selectedMuons_fakeable,0.4);
             selectedJets_JECdown_preselected_noTauClean = cleanObjects<pat::Jet,pat::Electron>(selectedJets_JECdown_preselected_noTauClean,selectedElectrons_fakeable,0.4);
         } else {
-            selectedJets_preselected = cleanObjects<pat::Jet,pat::Muon>(selectedJets_preselected,selectedMuons_preselected,0.4);
-            selectedJets_preselected = cleanObjects<pat::Jet,pat::Electron>(selectedJets_preselected,selectedElectrons_preselected,0.4);
+            selectedJets_preselected = cleanObjects<pat::Jet,pat::Muon>(selectedJets_preselected,selectedMuons_tight,0.4);
+            selectedJets_preselected = cleanObjects<pat::Jet,pat::Electron>(selectedJets_preselected,selectedElectrons_tight,0.4);
+            //selectedJets_preselected = cleanObjects<pat::Jet,pat::Muon>(selectedJets_preselected,selectedMuons_preselected,0.4);
+            //selectedJets_preselected = cleanObjects<pat::Jet,pat::Electron>(selectedJets_preselected,selectedElectrons_preselected,0.4);
             selectedJets_preselected_noTauClean = cleanObjects<pat::Jet,pat::Muon>(selectedJets_preselected_noTauClean,selectedMuons_preselected,0.4);            
             selectedJets_preselected_noTauClean = cleanObjects<pat::Jet,pat::Electron>(selectedJets_preselected_noTauClean,selectedElectrons_preselected,0.4);
             
