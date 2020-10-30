@@ -195,6 +195,12 @@ namespace ttH
     bool passPUID; // only available in >90X MINIAOD
     double PUMVA;
     int pdgID; //place holder for Geoff's templated functions
+
+    double nHadFrac; 
+    double nEmFrac;
+    double nMult;
+    double cMult;
+    double cHadFrac;
     
     void clear(void)
     {
