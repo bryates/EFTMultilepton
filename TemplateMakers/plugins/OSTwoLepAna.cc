@@ -644,7 +644,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
             jet_counter +=1;
         }
 
-        vecPatJet cleaned_rawJets  = cleanObjects<pat::Jet,pat::Tau>(correctedRawJets,selectedTaus_preselected,0.4);
+        //vecPatJet cleaned_rawJets  = cleanObjects<pat::Jet,pat::Tau>(correctedRawJets,selectedTaus_preselected,0.4);
         vecPatJet cleaned_rawJets_JECup  = cleanObjects<pat::Jet,pat::Tau>(correctedRawJets_JECup,selectedTaus_preselected,0.4);
         vecPatJet cleaned_rawJets_JECdown  = cleanObjects<pat::Jet,pat::Tau>(correctedRawJets_JECdown,selectedTaus_preselected,0.4);
     
