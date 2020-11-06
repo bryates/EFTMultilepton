@@ -5,8 +5,8 @@ from lobster.core import AdvancedOptions, Category, Config, Dataset, StorageConf
 import os
 
 
-version = "EFT_test_27_2_19_central"
-outdir = "/store/user/gesmith/lobster_trees__"+version
+version = "EFT_syn_6_11_20_central_noNdaud_noMult_noTauClean_R03rhoEA_v2"
+outdir = "/store/user/byates/lobster_trees__"+version
 isdata = False # remember to change osTwoLep_cfg.py
 doeftsamps = False
 singleSamp = None # default, to be overridden below if desired
@@ -346,20 +346,26 @@ if (singleSamp is not None):
     
     
 
+mysamples = []
+mysamples.append(['ttH','/store/mc/RunIIFall17MiniAODv2/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/MINIAODSIM/PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/100000/1CD3FC30-9C70-E811-8800-0025905B857A.root'])
 workflows = []
 mergesize = '0.05G'
 for label, samp in mysamples:
     
     thisdataset=None
-    if (samp[:5]=='Batch'):
-        storage.input=[ # Note: don't know why this has to be in list form, since LOBSTER ONLY READS THE FIRST ELEMENT!!! @#$%!
-                        "root://deepthought.crc.nd.edu//store/user/awightma/FullProduction/Round4/",
-                        ]
+    if (samp[:5]=='Batch') or 1:
+        #storage.input=[ # Note: don't know why this has to be in list form, since LOBSTER ONLY READS THE FIRST ELEMENT!!! @#$%!
+        #                "root://deepthought.crc.nd.edu//store/user/awightma/FullProduction/Round4/",
+        #                ]
         mergesize = -1
+        storage.input=["root://ndcms.crc.nd.edu/"]
         thisdataset=Dataset(
-            files=samp,
+            #files=samp,
             #files_per_task=10, #?
+            #patterns=["*.root"]
+            files=['/store/mc/RunIIFall17MiniAODv2/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/MINIAODSIM/PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/100000/1CD3FC30-9C70-E811-8800-0025905B857A.root', '/store/mc/RunIIFall17MiniAODv2/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/MINIAODSIM/PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/100000/BAFEEB05-9670-E811-BA71-0CC47A4D7654.root', '/store/mc/RunIIFall17MiniAODv2/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/MINIAODSIM/PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/100000/527068EC-9770-E811-ABBB-0025905A48F2.root'],
             patterns=["*.root"]
+
         )
     else:
         thisdataset=cmssw.Dataset(
@@ -391,8 +397,10 @@ config = Config(
     storage=storage,
     workflows=workflows,
     advanced=AdvancedOptions(
+        payload=100,
         bad_exit_codes=[127, 160],
         log_level=1,
+        dashboard=False,
         xrootd_servers=['ndcms.crc.nd.edu','cmsxrootd.fnal.gov'] # Needed for running over external samples
     )
 )
