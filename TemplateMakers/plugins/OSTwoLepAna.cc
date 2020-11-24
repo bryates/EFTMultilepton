@@ -587,6 +587,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
 
     vecPatMuon selectedMuons_tight = GetSelectedMuons( selectedMuons_preselected, 10, muonID::muonTight);
     vecPatElectron selectedElectrons_tight = GetSelectedElectrons( selectedElectrons_preselected, 15, electronID::electronTight );
+    selectedElectrons_tight = cleanObjects<pat::Electron,pat::Muon>(selectedElectrons_tight,selectedMuons_tight,0.05);
     //vecPatMuon selectedMuons_tight = GetSelectedMuons( selectedMuons_preselected, 10, muonID::muonTightMvaBased);
     //vecPatElectron selectedElectrons_tight = GetSelectedElectrons( selectedElectrons_preselected, 15, electronID::electronTightMvaBased );
 
