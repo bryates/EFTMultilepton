@@ -5,7 +5,7 @@ from lobster.core import AdvancedOptions, Category, Config, Dataset, StorageConf
 import os
 
 
-version = "EFT_syn_23_11_20_central_noNdaud_noMult_noIso_noSuperCluster_noHoE"
+version = "EFT_syn_24_11_20_central_noNdaud_noMult_noIso_noSuperCluster_noHoE_noEMuClean"
 outdir = "/store/user/byates/lobster_trees__"+version
 isdata = False # remember to change osTwoLep_cfg.py
 doeftsamps = False
