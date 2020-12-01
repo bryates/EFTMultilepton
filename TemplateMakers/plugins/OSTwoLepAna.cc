@@ -549,7 +549,7 @@ void OSTwoLepAna::analyze(const edm::Event& event, const edm::EventSetup& evsetu
     ////////
 
 
-    double min_tau_pt = 10.; // lowered for studies
+    double min_tau_pt = 20.; // lowered for studies
 
     vecPatTau selectedTaus_raw = GetSelectedTaus( *taus, min_tau_pt, tauID::tauRaw );
     vecPatTau selectedTaus_preselected = GetSelectedTaus( *taus, min_tau_pt, tauID::tauLoose );
