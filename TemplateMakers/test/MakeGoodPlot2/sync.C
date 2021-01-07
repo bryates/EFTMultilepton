@@ -419,10 +419,10 @@ void sync(bool full=true) {
         for(auto it : goodeetrig)
             myfile << it << "\t";
         myfile << std::endl;
-        */
         for(auto &it : goodtrig)
             myfile << it << ",";
         myfile << std::endl;
+        */
         printQuantity(myfile, goodevent);
         printQuantity(myfile, goodeetrig);
         printQuantity(myfile, goodemtrig);
