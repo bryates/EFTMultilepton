@@ -44,7 +44,7 @@ int findHLT(const std::vector<string> *trig, const std::unordered_set<string> &s
   return 0;
 }
 
-void test() {
+void sync(bool full=true) {
     std::vector<int> events = {4962184, 4962191, 4962189, 4962186, 4962204, 4962182, 4962200, 4962196, 4962199, 4962206, 4962201, 4962205, 4962214, 4962198, 4962216, 4962221, 4962239, 4962220, 4962215, 4962187, 4962208, 4962223, 4962228, 4962225, 4962217, 4962237, 4962212, 4962231, 4962233, 4962209, 4962188, 4962249, 4962238, 4962244, 4962222, 4962224, 4962236, 4962245, 4962264, 4962246, 4962243, 4962240, 4962248, 4962262, 4962265, 4962254, 4962255, 4962273, 4962293, 4962232, 4962298, 4962271, 4962270, 4962247, 4962290, 4962302, 4962283, 4962274, 4962299, 4962297, 4962295, 4962258, 4962312, 4962303, 4962325, 4962268, 4962300, 4962326, 4962322, 4962287, 4962319, 4962318, 4962314, 4962330, 4962327, 4962333, 4962323, 4962309, 4962332, 4962331, 4962343, 4962353, 4962338, 4962354, 4962308, 4962340, 4962339, 4962328, 4962360, 4962363, 4962365, 4962355, 4962366, 4962380, 4962358, 4962341, 4962369, 4962383, 4962362, 4962368};
     std::unordered_set<int> eventSet;
     std::unordered_set<string> eeTrig;
@@ -60,6 +60,7 @@ void test() {
     std::unordered_set<string> eemmTrig;
     std::unordered_set<string> mmmeTrig;
     std::map<TString, int> count;
+    count["events"] = 0;
     count["ele0"] = 0;
     count["ele1"] = 0;
     count["ele2"] = 0;
@@ -121,7 +122,8 @@ void test() {
     for(auto e : events)
         eventSet.insert(e);
     std::vector<TString> SingleMuonTriggers = {"HLT_IsoMu24", "HLT_IsoMu27"};
-    std::vector<TString> SingleElecTriggers = {"HLT_Ele32_WPTight_Gsf_L1DoubleEG", "HLT_Ele35_WPTight_Gsf"};
+    std::vector<TString> SingleElecTriggers = {"HLT_Ele32_WPTight_Gsf", "HLT_Ele35_WPTight_Gsf"};
+    //std::vector<TString> SingleElecTriggers = {"HLT_Ele32_WPTight_Gsf_L1DoubleEG", "HLT_Ele35_WPTight_Gsf"};
     std::vector<TString> DoubleMuonTrig = {"HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ", "HLT_Mu17_TrkIsoVVL_Mu8_TrkIsoVVL_DZ_Mass3p8"};
     std::vector<TString> DoubleElecTrig = {"HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL", "HLT_Ele23_Ele12_CaloIdL_TrackIdL_IsoVL_DZ"};
     std::vector<TString> MuonEGTrig = {"HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL", "HLT_Mu23_TrkIsoVVL_Ele12_CaloIdL_TrackIdL_IsoVL_DZ", "HLT_Mu12_TrkIsoVVL_Ele23_CaloIdL_TrackIdL_IsoVL_DZ"};
@@ -230,6 +232,7 @@ void test() {
     myhtml.open ("/afs/crc.nd.edu/user/b/byates2/www/sync.html");
     myhtml << "<table>\n";
     //TString path = "/hadoop/store/user/byates/lobster_trees__EFT_syn_2_11_20_central_noNdaud_noMult_noTauClean/ttH/";
+    //TString path = "/hadoop/store/user/byates/lobster_trees__EFT_syn_24_11_20_central_noNdaud_noMult_noIso_noSuperCluster_noHoE_noEMuClean/ttH/";
     TString path = "/hadoop/store/user/byates/lobster_trees__EFT_syn_14_12_20_central_noNdaud_noMult_noIso_noSuperCluster_noHoE_noEMuClean_minTauIsoID_preselected/ttH/";
     std::vector<TString> files = {"output_tree_1.root","output_tree_2.root","output_tree_3.root"};
     //std::vector<TString> files = {"/hadoop/store/user/byates/lobster_trees__EFT_syn_29_10_20_central_noNdaud_noMult_rawJets/ttH/output_tree_3.root"};
@@ -287,7 +290,7 @@ void test() {
         tagcut = 0.4941;
         for(int ievent = 0; ievent < summaryTree->GetEntries(); ievent++) {
             summaryTree->GetEntry(ievent);
-            //if(eventSet.find(eventnum) == eventSet.end()) continue;
+            if(!full) if(eventSet.find(eventnum) == eventSet.end()) continue;
             *jet = simpleJetCut(*jet,"pt",30.0);
             *jet = simpleJetCut(*jet,"eta",2.4);
             auto taggedjetsmedium = keepTagged(*jet,"DM"); // DM = DeepCSV Medium WP
@@ -316,6 +319,7 @@ void test() {
               else goodeetrig.push_back(0);
             }
             */
+            count["events"]++;
             count["eetrig"] += findHLT(trig, eeTrig, goodeetrig);
             count["emtrig"] += findHLT(trig, emTrig, goodemtrig);
             count["mmtrig"] += findHLT(trig, mmTrig, goodmmtrig);
@@ -415,10 +419,10 @@ void test() {
         for(auto it : goodeetrig)
             myfile << it << "\t";
         myfile << std::endl;
+        */
         for(auto &it : goodtrig)
             myfile << it << ",";
         myfile << std::endl;
-        */
         printQuantity(myfile, goodevent);
         printQuantity(myfile, goodeetrig);
         printQuantity(myfile, goodemtrig);
@@ -443,10 +447,12 @@ void test() {
     for(auto & it : count) {
         std::cout << it.first << "=" << it.second << std::endl;
         if(it.first.Contains("trig")) continue;
+        if(it.first.Contains("events")) continue;
         myhtml << "<tr>\n<th>" << it.first << "</th>\n<th>" << it.second << "</th>\n</tr>";
     }
     for(auto & it : count) {
         if(!it.first.Contains("trig")) continue;
+        if(it.first.Contains("events")) continue;
         myhtml << "<tr>\n<th>" << it.first << "</th>\n<th>" << it.second << "</th>\n</tr>";
     }
  
@@ -463,6 +469,7 @@ void test() {
     //printHTML(myhtml, "eemmtrig", goodeemmtrig);
     //printHTML(myhtml, "mmmetrig", goodmmmetrig);
 
+    myhtml << "<tr>\n<th>events</th>\n<th>" << count["events"] << "</th>\n</tr>";
     myhtml << "</table>";
     myfile.close();
     myhtml.close();
