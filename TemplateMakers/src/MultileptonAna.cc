@@ -379,6 +379,14 @@ vector<ttH::Tau> MultileptonAna::GetCollection(vecPatTau theobjs)
       tau.decayModeFinding = iTau.tauID("decayModeFinding");
       tau.mvaID = iTau.tauID("byMediumIsolationMVArun2v1DBdR03oldDMwLT");
 
+      tau.byLooseCombinedIsolationDeltaBetaCorr3Hits = iTau.tauID("byLooseCombinedIsolationDeltaBetaCorr3Hits");
+      tau.byVLooseIsolationMVArun2v1DBoldDMwLT2015 = iTau.tauID("byVLooseIsolationMVArun2v1DBoldDMwLT");
+      tau.byVLooseIsolationMVArun2v1DBnewDMwLT = iTau.tauID("byVLooseIsolationMVArun2v1DBnewDMwLT");
+      tau.byVLooseIsolationMVArun2v1DBdR03oldDMwLT = iTau.tauID("byVLooseIsolationMVArun2v1DBdR03oldDMwLT");
+      //tau.byVVLooseIsolationMVArun2v1DBoldDMwLT = iTau.tauID("byVVLooseIsolationMVArun2v1DBoldDMwLT");
+      //tau.byVVLooseIsolationMVArun2v1DBoldDMwLT2017v2 = iTau.tauID("byVVLooseIsolationMVArun2v1DBoldDMwLT2017v2");
+      //tau.byVVLooseIsolationMVArun2v1DBnewDMwLT2017v2 = iTau.tauID("byVVLooseIsolationMVArun2v1DBnewDMwLT2017v2");
+
       tauCollection.push_back(tau);
 
   }
@@ -567,6 +575,7 @@ MultileptonAna::GetSelectedTaus(const std::vector<pat::Tau>& inputTaus, const fl
           break;        
         case tauID::tauLoose:
 	  passSelection = ((tau.userFloat("idPreselection")>0.5) && passPt);
+          //passSelection |= (tau.tauID("byVLooseIsolationMVArun2v1DBoldDMwLT2015") > 0.5);
 	  break;
         case tauID::tauMedium:
 	  passSelection = ((tau.userFloat("idSelection")>0.5) && passPt);

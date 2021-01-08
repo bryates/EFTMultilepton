@@ -163,6 +163,14 @@ namespace ttH
     double decayModeFinding;
     double mvaID;
     //double miniIso; // to be added..
+
+    double byLooseCombinedIsolationDeltaBetaCorr3Hits;
+    double byVLooseIsolationMVArun2v1DBoldDMwLT2015;
+    double byVLooseIsolationMVArun2v1DBnewDMwLT;
+    double byVLooseIsolationMVArun2v1DBdR03oldDMwLT;
+    double byVVLooseIsolationMVArun2v1DBoldDMwLT;
+    double byVVLooseIsolationMVArun2v1DBoldDMwLT2017v2;
+    double byVVLooseIsolationMVArun2v1DBnewDMwLT2017v2;
     
     virtual ~Tau(){};
     //ClassDef(Tau, 1); 
