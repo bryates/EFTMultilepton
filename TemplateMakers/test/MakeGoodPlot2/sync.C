@@ -233,7 +233,10 @@ void sync(bool full=true) {
     myhtml << "<table>\n";
     //TString path = "/hadoop/store/user/byates/lobster_trees__EFT_syn_2_11_20_central_noNdaud_noMult_noTauClean/ttH/";
     //TString path = "/hadoop/store/user/byates/lobster_trees__EFT_syn_24_11_20_central_noNdaud_noMult_noIso_noSuperCluster_noHoE_noEMuClean/ttH/";
-    TString path = "/hadoop/store/user/byates/lobster_trees__EFT_syn_14_12_20_central_noNdaud_noMult_noIso_noSuperCluster_noHoE_noEMuClean_minTauIsoID_preselected/ttH/";
+    //TString path = "/hadoop/store/user/byates/lobster_trees__EFT_syn_14_12_20_central_noNdaud_noMult_noIso_noSuperCluster_noHoE_noEMuClean_minTauIsoID_preselected/ttH/";
+    // Good agreement https://indico.cern.ch/event/955306/attachments/2147494/3620217/Sync.%20Nov.20.pdf
+    //TString path = "/hadoop/store/user/byates/lobster_trees__EFT_syn_10_12_20_central_noNdaud_noMult_noIso_noSuperCluster_noHoE_noEMuClean_minTauIsoID_preselected_tau20pt_tauIDsaved_tauIsolation/ttH/";
+    TString path = "/hadoop/store/user/byates/lobster_trees__EFT_syn_8_1_21_central_noNdaud_noMult_noIso_noSuperCluster_noHoE_noEMuClean_minTauIsoID_preselected_emuClean_v1/ttH/";
     std::vector<TString> files = {"output_tree_1.root","output_tree_2.root","output_tree_3.root"};
     //std::vector<TString> files = {"/hadoop/store/user/byates/lobster_trees__EFT_syn_29_10_20_central_noNdaud_noMult_rawJets/ttH/output_tree_3.root"};
     //std::vector<TString> files = {"/hadoop/store/user/byates/lobster_trees__EFT_syn_22_10_20_central/ttH/output_tree_3.root"};
@@ -259,8 +262,8 @@ void sync(bool full=true) {
         summaryTree->SetBranchAddress("preselected_taus", &tau);
         vector<ttH::Jet> *jet = 0;
         //summaryTree->SetBranchAddress("raw_jets", &jet);
-        summaryTree->SetBranchAddress("preselected_jets", &jet);
-        //summaryTree->SetBranchAddress("preselected_jets_noTauClean", &jet);
+        //summaryTree->SetBranchAddress("preselected_jets", &jet);
+        summaryTree->SetBranchAddress("preselected_jets_noTauClean", &jet);
         int eventnum = 0;
         summaryTree->SetBranchAddress("eventnum", &eventnum);
         vector<string> *trig = 0;
