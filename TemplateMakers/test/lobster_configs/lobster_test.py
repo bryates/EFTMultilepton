@@ -5,9 +5,9 @@ from lobster.core import AdvancedOptions, Category, Config, Dataset, StorageConf
 import os
 
 
-version = "EFT_syn_24_11_20_central_noNdaud_noMult_noIso_noSuperCluster_noHoE_noEMuClean"
+version = "EFT_syn_11_1_21_data_noNdaud_noMult_noIso_noSuperCluster_noHoE_noEMuClean_minTauIsoID_preselected_emuClean_v1"
 outdir = "/store/user/byates/lobster_trees__"+version
-isdata = False # remember to change osTwoLep_cfg.py
+isdata = True # remember to change osTwoLep_cfg.py
 doeftsamps = False
 singleSamp = None # default, to be overridden below if desired
 
@@ -363,7 +363,10 @@ for label, samp in mysamples:
             #files=samp,
             #files_per_task=10, #?
             #patterns=["*.root"]
-            files=['/store/mc/RunIIFall17MiniAODv2/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/MINIAODSIM/PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/100000/1CD3FC30-9C70-E811-8800-0025905B857A.root', '/store/mc/RunIIFall17MiniAODv2/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/MINIAODSIM/PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/100000/BAFEEB05-9670-E811-BA71-0CC47A4D7654.root', '/store/mc/RunIIFall17MiniAODv2/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/MINIAODSIM/PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/100000/527068EC-9770-E811-ABBB-0025905A48F2.root'],
+            #ttH sync
+            #files=['/store/mc/RunIIFall17MiniAODv2/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/MINIAODSIM/PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/100000/1CD3FC30-9C70-E811-8800-0025905B857A.root', '/store/mc/RunIIFall17MiniAODv2/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/MINIAODSIM/PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/100000/BAFEEB05-9670-E811-BA71-0CC47A4D7654.root', '/store/mc/RunIIFall17MiniAODv2/ttHJetToNonbb_M125_TuneCP5_13TeV_amcatnloFXFX_madspin_pythia8/MINIAODSIM/PU2017_12Apr2018_new_pmx_94X_mc2017_realistic_v14-v1/100000/527068EC-9770-E811-ABBB-0025905A48F2.root'],
+            #data sync (MuonEG 2017B)
+            files=['/store/data/Run2017B/MuonEG/MINIAOD/31Mar2018-v1/100000/66F82862-C237-E811-AB66-00266CF33050.root','/store/data/Run2017B/MuonEG/MINIAOD/31Mar2018-v1/100000/FA3C26FC-9337-E811-804F-002590DE6E52.root'],
             patterns=["*.root"]
 
         )
