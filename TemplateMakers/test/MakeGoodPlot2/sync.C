@@ -44,8 +44,9 @@ int findHLT(const std::vector<string> *trig, const std::unordered_set<string> &s
   return 0;
 }
 
-void sync(bool full=true) {
-    std::vector<int> events = {4962184, 4962191, 4962189, 4962186, 4962204, 4962182, 4962200, 4962196, 4962199, 4962206, 4962201, 4962205, 4962214, 4962198, 4962216, 4962221, 4962239, 4962220, 4962215, 4962187, 4962208, 4962223, 4962228, 4962225, 4962217, 4962237, 4962212, 4962231, 4962233, 4962209, 4962188, 4962249, 4962238, 4962244, 4962222, 4962224, 4962236, 4962245, 4962264, 4962246, 4962243, 4962240, 4962248, 4962262, 4962265, 4962254, 4962255, 4962273, 4962293, 4962232, 4962298, 4962271, 4962270, 4962247, 4962290, 4962302, 4962283, 4962274, 4962299, 4962297, 4962295, 4962258, 4962312, 4962303, 4962325, 4962268, 4962300, 4962326, 4962322, 4962287, 4962319, 4962318, 4962314, 4962330, 4962327, 4962333, 4962323, 4962309, 4962332, 4962331, 4962343, 4962353, 4962338, 4962354, 4962308, 4962340, 4962339, 4962328, 4962360, 4962363, 4962365, 4962355, 4962366, 4962380, 4962358, 4962341, 4962369, 4962383, 4962362, 4962368};
+void sync(bool full=true, bool isData=false) {
+    //std::vector<int> events = {4962184, 4962191, 4962189, 4962186, 4962204, 4962182, 4962200, 4962196, 4962199, 4962206, 4962201, 4962205, 4962214, 4962198, 4962216, 4962221, 4962239, 4962220, 4962215, 4962187, 4962208, 4962223, 4962228, 4962225, 4962217, 4962237, 4962212, 4962231, 4962233, 4962209, 4962188, 4962249, 4962238, 4962244, 4962222, 4962224, 4962236, 4962245, 4962264, 4962246, 4962243, 4962240, 4962248, 4962262, 4962265, 4962254, 4962255, 4962273, 4962293, 4962232, 4962298, 4962271, 4962270, 4962247, 4962290, 4962302, 4962283, 4962274, 4962299, 4962297, 4962295, 4962258, 4962312, 4962303, 4962325, 4962268, 4962300, 4962326, 4962322, 4962287, 4962319, 4962318, 4962314, 4962330, 4962327, 4962333, 4962323, 4962309, 4962332, 4962331, 4962343, 4962353, 4962338, 4962354, 4962308, 4962340, 4962339, 4962328, 4962360, 4962363, 4962365, 4962355, 4962366, 4962380, 4962358, 4962341, 4962369, 4962383, 4962362, 4962368};
+    std::vector<int> events = {7453107,4673750,4675654,10727005};
     std::unordered_set<int> eventSet;
     std::unordered_set<string> eeTrig;
     std::unordered_set<string> emTrig;
@@ -118,6 +119,8 @@ void sync(bool full=true) {
     count["eeemtrig"] = 0;
     count["eemmtrig"] = 0;
     count["mmmetrig"] = 0;
+    count["3l"] = 0;
+    count["3lsfz"] = 0;
     std::cout << "Building unordered set of events" << std::endl;
     for(auto e : events)
         eventSet.insert(e);
@@ -131,6 +134,8 @@ void sync(bool full=true) {
     std::vector<TString> TripleMuonTrig = {"HLT_TripleMu_12_10_5"};
     std::vector<TString> DoubleMuonElecTrig = {"HLT_DiMu9_Ele9_CaloIdL_TrackIdL_DZ"};
     std::vector<TString> DoubleElecMuonTrig = {"HLT_Mu8_DiEle12_CaloIdL_TrackIdL"};
+    std::vector<TString> patience = {
+"Patience is not the ability to wait, but the ability to keep a good attitude while waiting.\n\t\t\t-Anonymous","Patience is bitter, but its fruit is sweet.\n\t\t\t-Aristotle","Trust the process. Your time is coming. Just do the work and the results will handle themselves.\n\t\t\t-Tony Gaskins","God has perfect timing; never early, never late. It takes a little patience and it takes a lot of faith but it's worth the wait.\n\t\t\t-Anonymous","Stay patient and trust the journey.\n\t\t\t-Anonymous","Have patience. All things are difficult before they become easy.\n\t\t\t-Saadi","Be patient. Everything is coming together.\n\t\t\t-Anonymous","Two things define you: your patience when you have nothing and your attitude when you have everything.\n\t\t\t-Anonymous","A man who masters patience masters everything else.\n\t\t\t-Anonymous","Patience is also a form of action.\n\t\t\t-Anonymous","Patience is the calm acceptance that things can happen in a different order than the one you have in your mind.\n\t\t\t-David G Allen","Our patience will achieve more than our force.\n\t\t\t-Edmund Burke","Patience is a conquering virtue.\n\t\t\t-Geoffrey Chaucer","Patience is when you're supposed to get mad, but you choose to understand.\n\t\t\t-Anonymous","Be patient, good things take time.\n\t\t\t-Anonymous","Tolerance and patience should not be read as signs of weakness, they are signs of strength.\n\t\t\t-Anonymous","Patience is the companion of wisdom.\n\t\t\t-Anonymous","The two most powerful warriors are patience and time.\n\t\t\t-Leo Tolstoy","The secret of patience is to do something else in the meantime.\n\t\t\t-Croft M Pentz","My dad said to me - Work hard and be patient. It was the best advice he ever gave me. You have to put the hours in.\n\t\t\t-Simon Cowell","It is easier to find men who will volunteer to die. Than to find those who are willing to endure pain with patience.\n\t\t\t-Julius Caesar","When you encounter various trials, big or small, be full of joy. They're opportunities to learn patience.\n\t\t\t-Scott Curran","Be strong enough to let go and wise enough to wait for what you deserve.\n\t\t\t-Anonymous","Patience and fortitude conquer all things.\n\t\t\t-Ralph Waldo Emerson","With love and patience, nothing is impossible.\n\t\t\t-Daisaku Ikeda","To lose patience is to lose the battle.\n\t\t\t-Mahatma Gandhi","Patience is the key to contentment.\n\t\t\t-The Prophet Muhammad (Peace Be Upon Him)","Patience has its limits. Take it too far, and it's cowardice.\n\t\t\t-George Jackson","I will not be distracted by noise, chatter, or setbacks. Patience, commitment, grace, and purpose will guide me.\n\t\t\t-Louise Hay","Patience is a key element of success.\n\t\t\t-Bill Gates","He that can have patience can have what he will.\n\t\t\t-Benjamin Franklin","Patience attracts happiness; it brings near that which is far.\n\t\t\t-Swahili Proverb","Patience is the road to wisdom.\n\t\t\t-Kao Kalia Yang","All great achievements require time.\n\t\t\t-Maya Angelou","Patience, persistence, and perspiration make an unbeatable combination for success.\n\t\t\t-Napoleon Hill"};
     /*
     for(auto &t : SingleElecTriggers) {
       eeTrig.insert(t.Data());
@@ -150,6 +155,7 @@ void sync(bool full=true) {
     }
     */
 
+    std::cout << "Building unordered set of triggers" << std::endl;
     std::unordered_set<string> *Trig = &eeTrig;
     addTriggers(SingleElecTriggers, Trig);
     addTriggers(DoubleElecTrig, Trig);
@@ -222,6 +228,9 @@ void sync(bool full=true) {
     addTriggers(MuonEGTrig, Trig);
     addTriggers(DoubleMuonElecTrig, Trig);
 
+    std::cout << "Sifthing through the data" << std::endl;
+    auto r = new TRandom3(0);
+    std::cout << patience.at(int(r->Uniform(0, patience.size()))) << std::endl;
     /*
     for(auto &ee : eeTrig) std::cout << ee << "\t";
     std::cout << std::endl;
@@ -229,15 +238,22 @@ void sync(bool full=true) {
     ofstream myfile;
     myfile.open ("test.txt");
     ofstream myhtml;
-    myhtml.open ("/afs/crc.nd.edu/user/b/byates2/www/sync.html");
+    TString htmlname = "/afs/crc.nd.edu/user/b/byates2/www/sync.html";
+    if(isData)
+      htmlname = "/afs/crc.nd.edu/user/b/byates2/www/syncData.html";
+    myhtml.open (htmlname);
     myhtml << "<table>\n";
     //TString path = "/hadoop/store/user/byates/lobster_trees__EFT_syn_2_11_20_central_noNdaud_noMult_noTauClean/ttH/";
     //TString path = "/hadoop/store/user/byates/lobster_trees__EFT_syn_24_11_20_central_noNdaud_noMult_noIso_noSuperCluster_noHoE_noEMuClean/ttH/";
-    //TString path = "/hadoop/store/user/byates/lobster_trees__EFT_syn_14_12_20_central_noNdaud_noMult_noIso_noSuperCluster_noHoE_noEMuClean_minTauIsoID_preselected/ttH/";
+    TString path = "/hadoop/store/user/byates/lobster_trees__EFT_syn_14_12_20_central_noNdaud_noMult_noIso_noSuperCluster_noHoE_noEMuClean_minTauIsoID_preselected/ttH/";
     // Good agreement https://indico.cern.ch/event/955306/attachments/2147494/3620217/Sync.%20Nov.20.pdf
-    //TString path = "/hadoop/store/user/byates/lobster_trees__EFT_syn_10_12_20_central_noNdaud_noMult_noIso_noSuperCluster_noHoE_noEMuClean_minTauIsoID_preselected_tau20pt_tauIDsaved_tauIsolation/ttH/";
-    TString path = "/hadoop/store/user/byates/lobster_trees__EFT_syn_8_1_21_central_noNdaud_noMult_noIso_noSuperCluster_noHoE_noEMuClean_minTauIsoID_preselected_emuClean_v1/ttH/";
+    //TString path = "/hadoop/store/user/byates/lobster_trees__EFT_syn_17_11_20_central_noNdaud_noMult_noTauClean_noIso_noSuperCluster/ttH/";
+    //TString path = "/hadoop/store/user/byates/lobster_trees__EFT_syn_8_1_21_central_noNdaud_noMult_noIso_noSuperCluster_noHoE_noEMuClean_minTauIsoID_preselected_emuClean_v1/ttH/";
     std::vector<TString> files = {"output_tree_1.root","output_tree_2.root","output_tree_3.root"};
+    if(isData) {
+      path = "/hadoop/store/user/byates/lobster_trees__EFT_syn_11_1_21_data_noNdaud_noMult_noIso_noSuperCluster_noHoE_noEMuClean_minTauIsoID_preselected_emuClean_v1/ttH/";
+      files = {"output_tree_1.root","output_tree_2.root"};
+    }
     //std::vector<TString> files = {"/hadoop/store/user/byates/lobster_trees__EFT_syn_29_10_20_central_noNdaud_noMult_rawJets/ttH/output_tree_3.root"};
     //std::vector<TString> files = {"/hadoop/store/user/byates/lobster_trees__EFT_syn_22_10_20_central/ttH/output_tree_3.root"};
     //std::vector<TString> files = {"/hadoop/store/user/byates/lobster_trees__EFT_syn_12_10_20_central_furong/ttH/output_tree_3.root"};
@@ -336,7 +352,7 @@ void sync(bool full=true) {
             count["eemmtrig"] += findHLT(trig, eemmTrig, goodeemmtrig);
             count["mmmetrig"] += findHLT(trig, mmmeTrig, goodmmmetrig);
             //std::cout << eventnum << "\t" << numele << "\t" << nummu << "\t" << numjet << "\t" << bjet << std::endl;
-            TString cat = TString::Format("ele%d", numele > 3 ? 3 : numele);
+            TString cat = TString::Format("ele%d", numele > 4 ? 4 : numele);
             count[cat]++;
             cat = TString::Format("mu%d", nummu > 5 ? 5 : nummu);
             count[cat]++;
@@ -346,6 +362,21 @@ void sync(bool full=true) {
             count[cat]++;
             cat = TString::Format("bjet%d", bjet > 6 ? 6 : bjet);
             count[cat]++;
+            if(numlep == 3) {
+              count["3l"]++;
+              if(abs(lep->at(0).charge + lep->at(1).charge + lep->at(2).charge) == 1) {
+                for(int l1 = 0; l1 < 3; l1++) {
+                  for(int l2 = l1+1; l2 < 3; l2++) {
+                    if(abs(lep->at(l1).pdgID) != abs(lep->at(l2).pdgID)) continue;
+                    if(lep->at(l1).charge == lep->at(l2).charge) continue;
+                    TLorentzVector p1, p2;
+                    p1.SetPtEtaPhiM(lep->at(l1).tlv().Pt(), lep->at(l1).tlv().Eta(), lep->at(l1).tlv().Phi(), lep->at(l1).tlv().M());
+                    p2.SetPtEtaPhiM(lep->at(l2).tlv().Pt(), lep->at(l2).tlv().Eta(), lep->at(l2).tlv().Phi(), lep->at(l2).tlv().M());
+                    if(abs((p1+p2).M() - 91.2) < 10) count["3lsfz"]++;
+                  }
+                }
+              }
+            }
             if(eventnum == 4962182 || eventnum == 4962184) {
                 /*
                 for(size_t i = 0; i < lep->size(); i++) {
@@ -358,6 +389,7 @@ void sync(bool full=true) {
                 }
                 */
                 std::cout << "Event " << eventnum << std::endl;
+                std::cout << "nele=" << ele->size() << std::endl;
                 for(size_t i = 0; i < ele->size(); i++) {
                     auto &e = ele->at(i);
                     std::cout << "Lepton " << i << "\tpdgId=" << e.pdgID << std::endl; 
